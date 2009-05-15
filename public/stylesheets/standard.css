@@ -1,0 +1,132 @@
+body, td {
+	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+	font-size:13px;
+	font-size-adjust:none;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:normal;
+}
+
+
+#top-menu p {
+    line-height:46px;
+    margin:0;
+    padding:0;
+}
+
+p, ul, ol, blockquote {
+    font-size:12px;
+}
+
+#birhead {
+	background-color:#464646;
+	height:46px;
+}
+#top-right-menu {
+	float:right;
+}
+#top-left-menu {
+	float:left;
+}
+
+.birhead-link-menu {
+	color:#999999;
+	font-size:12px;
+	height:46px;
+	line-height:46px;    
+}
+.birhead-link-menu a:hover, #footer a:hover {
+	color:#FFFFFF;
+	text-decoration:underline !important;
+}
+.birhead-link-menu a:link, .birhead-link-menu a:visited {
+    color:#CCCCCC;
+    text-decoration:none;
+}
+
+
+
+#birhead-info {
+	margin:0 0 0 15px;
+	padding-right:15px;
+}
+
+
+#birhead h1 {
+	-x-system-font:none;
+	float:left;
+	font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size:22px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:normal;
+	margin:0;
+	padding:10px 8px 5px;
+}
+h1 {
+	display:block;
+	font-size:2em;
+	font-weight:bold;
+	margin:0.67em 0;
+}
+#birhead h1 a:hover {
+	text-decoration:underline;
+}
+#birhead h1 a  {
+	color:#FFFFFF;
+}
+#fasta-data {
+	font-family:verdana,sans-serif;
+	font-size:11px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:bold;	
+}
+
+table.blast-main-form-table {
+  width: auto;
+}
+table.blast-sub-form-table th {
+
+    vertical-align: top;
+    text-align: right;
+   background-color: transparent !important;
+	color:#555555;
+	font-family:verdana,sans-serif;
+	font-size:11px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:normal;
+}
+div.loading {
+	background: url(/images/active_scaffold/default/indicator.gif);
+	text-indent: -999px;
+}
+div.flash-messages-container {
+border:medium none;
+margin:0 7px;
+width:400px;
+} 
+
+
+div.flash-messages-errorExplanation {
+	background-color:#FFCCCC;
+	border:1px solid #FF6666;
+	margin:2px 0;
+	padding:7px;
+	font-weight:bold;
+
+
+} 
+div.seq {
+    
+}

@@ -1,0 +1,2 @@
+class BiosequencesController < ApplicationController
+end
