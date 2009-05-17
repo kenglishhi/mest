@@ -18,20 +18,22 @@ class FastaFile < ActiveRecord::Base
     end
   end
   def extract_sequences
-    if fasta  # and File.exists?(fasta.path)
+		logger.error("[kenglish] Called Extract Sequence")
+    if fasta  
       unless biodatabase
-        self.biodatabase = Biodatabase.find_by_name(File.basename(label)  ) || Biodatabase.create(:name => File.basename(label), :fasta_file => self  )
-        logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")
-        save
-        unless self.biodatabase.fasta_file == self
-          self.biodatabase.fasta_file = self
-          self.biodatabase.save
+#				Biodatabase.transaction do
+          biodatabase = Biodatabase.create(:name => File.basename(label), :fasta_file => self   )
+          save
+          ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
+          ff.each do |entry|
+              seq = Biosequence.create(:name => entry.definition, :seq => entry.seq, :alphabet => 'dna', :length => entry.seq.length)
+							biodatabase.biosequences << seq
+							puts seq.name
+    			end
+					biodatabase.save
+          logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")
         end
-
-        logger.error("[kenglish] new biodatabase.fasta_file.id = #{self.biodatabase.fasta_file.inspect}")
-
-      end
-      self.biodatabase.load_fasta
+#      end
     end
     #    Bioentry.load_fasta fasta.path
   end

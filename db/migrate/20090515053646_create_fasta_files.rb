@@ -5,7 +5,6 @@ class CreateFastaFiles < ActiveRecord::Migration
       t.string  :fasta_file_name, :fasta_content_type
       t.integer :fasta_file_size
       t.boolean :is_generated, :default => false
-      t.integer :blast_command_id
       
     end
   end

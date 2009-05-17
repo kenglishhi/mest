@@ -18,7 +18,7 @@ development:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: coconutisland_development
+  database: biococonutisland_development
   pool: 5
   username: root
   password: root
@@ -31,7 +31,7 @@ test:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: coconutisland_test
+  database: biococonutisland_test
   pool: 5
   username: root
   password: root
@@ -41,7 +41,7 @@ production:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: coconutisland_production
+  database: biococonutisland_production
   pool: 5
   username: root
   password: root

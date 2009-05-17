@@ -1,0 +1,31 @@
+<div class="active-scaffold">
+  <div class="update-view view">
+<% form_tag  url_for(:action => 'upload_many' ),
+             { :multipart => true, :method => 'post' } do  %>
+
+  <h4>Upload Fasta Files </h4>
+
+<%= error_messages_for :fasta_files %>
+
+<ol class="form" >
+  <% 5.times do | number |  %>
+  <li class="form-element ">
+    <dl>
+    <dt>
+      <label for="record_number<%= number + 1 %>">File <%= number + 1 %>:</label>
+    </dt>
+  <dd>
+      <%= file_field_tag "fasta_files[][uploaded_data]", :size => 100 %>
+  </dd>
+  </dl>
+  </li>
+  <% end %>
+</ol>
+  <p class="form-footer">
+    <%= cancel_button :class => "submit" %>
+    <%= submit_tag 'Upload File(s)',:class => "default"   %>
+  </p>
+<% end -%>
+
+  </div>
+</div>

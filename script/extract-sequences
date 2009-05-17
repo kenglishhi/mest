@@ -1,0 +1,8 @@
+fasta_file = FastaFile.find(:first)
+Biodatabase.delete_all
+Biosequence.delete_all
+BiodatabaseBiosequence.delete_all
+puts fasta_file.inspect
+fasta_file.extract_sequences
+
+

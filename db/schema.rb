@@ -11,6 +11,11 @@
 
 ActiveRecord::Schema.define(:version => 20090515053712) do
 
+  create_table "biodatabase_biosequences", :force => true do |t|
+    t.integer "biodatabase_id"
+    t.integer "biosequence_id"
+  end
+
   create_table "biodatabase_sequences", :force => true do |t|
     t.integer "biodatabase_id"
     t.integer "biosequence_id"
@@ -45,7 +50,6 @@ ActiveRecord::Schema.define(:version => 20090515053712) do
     t.string  "fasta_content_type"
     t.integer "fasta_file_size"
     t.boolean "is_generated",       :default => false
-    t.integer "blast_command_id"
   end
 
   create_table "users", :force => true do |t|
