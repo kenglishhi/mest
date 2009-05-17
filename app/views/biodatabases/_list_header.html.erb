@@ -5,14 +5,23 @@
       <% next if controller.respond_to? link.security_method and !controller.send(link.security_method) -%>
       <%= render_action_link(link, new_params) -%>
     <% end -%>
-
     <%= loading_indicator_tag(:action => :table) %>
+
   </div>
 <% end %>
 <h2><%= active_scaffold_config.list.user.label %></h2>
+<script language="javascript">
+  function filter(value) {
+    var url = '<%= url_for :action => 'index' %>';
+    if (value != "All") {
+      url = url + '?biodatabase_type_id=' + value;
+    }
+    location.href = url;
+  }
+</script>
+Database Type :
+<%= select_tag :biodatabase_type_id,
+  options_for_select([["All","All"]] + BiodatabaseType.find(:all).map{|type|[type.name,type.id] }, @biodatabase_type_id),
+  :onchange => 'filter(this.value);'
 
-Database :
-<%= select_tag :biodatabase_id, 
-  options_for_select([["All",""]] + Biodatabase.find(:all).map{|biodb|[biodb.name,biodb.id] }, @biodatabase_id),
-  :onchange => "location.href = '#{url_for :action => :index }?biodatabase_id=' + this.value; "
   %>

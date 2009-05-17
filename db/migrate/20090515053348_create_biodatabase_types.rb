@@ -6,7 +6,7 @@ class CreateBiodatabaseTypes < ActiveRecord::Migration
     end
     BiodatabaseType.create(:name => 'Raw')
     BiodatabaseType.create(:name => 'Clearned Stage 1')
-    BiodatabaseType.create(:name => 'Clearned Stage 1')
+    BiodatabaseType.create(:name => 'Clearned Stage 2')
   end
 
   def self.down

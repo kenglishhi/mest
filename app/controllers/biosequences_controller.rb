@@ -8,12 +8,12 @@ class BiosequencesController < ApplicationController
     config.show.columns = [ :name, :entire_seq, :length, :alphabet, :biodatabases]
     config.actions.exclude :nested , :create
   end
+
   def conditions_for_collection
     unless params[:biodatabase_id].blank?
       @biodatabase_id = params[:biodatabase_id].to_i
       ['biodatabase_biosequences.biodatabase_id = ? ', @biodatabase_id]
     end
-    
   end
 
 end
