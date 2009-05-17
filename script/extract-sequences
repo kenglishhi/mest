@@ -1,4 +1,4 @@
-fasta_file = FastaFile.find(:first)
+fasta_file = FastaFile.find(:last)
 Biodatabase.delete_all
 Biosequence.delete_all
 BiodatabaseBiosequence.delete_all

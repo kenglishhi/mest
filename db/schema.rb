@@ -16,11 +16,6 @@ ActiveRecord::Schema.define(:version => 20090515053712) do
     t.integer "biosequence_id"
   end
 
-  create_table "biodatabase_sequences", :force => true do |t|
-    t.integer "biodatabase_id"
-    t.integer "biosequence_id"
-  end
-
   create_table "biodatabase_types", :force => true do |t|
     t.string   "name",       :limit => 128, :null => false
     t.datetime "created_at"
@@ -28,9 +23,10 @@ ActiveRecord::Schema.define(:version => 20090515053712) do
   end
 
   create_table "biodatabases", :force => true do |t|
-    t.string   "name",          :limit => 128, :null => false
-    t.string   "authority",     :limit => 128
+    t.string   "name",                :limit => 128, :null => false
+    t.string   "authority",           :limit => 128
     t.text     "description"
+    t.integer  "biodatabase_type_id"
     t.integer  "fasta_file_id"
     t.datetime "created_at"
     t.datetime "updated_at"

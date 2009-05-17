@@ -1,5 +1,5 @@
 class Biodatabase < ActiveRecord::Base
-  belongs_to :biodatabase_types
+  belongs_to :biodatabase_type
   belongs_to :fasta_file
 	has_many :biodatabase_biosequences
   has_many :biosequences, :through => :biodatabase_biosequences

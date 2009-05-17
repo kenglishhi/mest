@@ -11,8 +11,8 @@ class FastaFilesController < ApplicationController
     config.actions.exclude :create, :show
 #    config.action_links.add "Blast", :parameters => {:controller => 'blast'},
 #    :action => 'index', :type => :table, :page => true
-
   end
+  
   def upload_many
     if request.post?
       logger.error("[kenglish] upload_many -- ")

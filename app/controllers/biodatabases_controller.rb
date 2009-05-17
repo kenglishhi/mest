@@ -1,8 +1,6 @@
 class BiodatabasesController < ApplicationController
-  def biosequences
+  active_scaffold :biodatabases do |config|
+    config.list.label = "Databases"
+    config.list.columns = [:name, :biodatabase_type]
   end
-
-  def fasta_files
-  end
-
 end
