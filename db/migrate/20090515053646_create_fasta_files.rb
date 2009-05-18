@@ -6,6 +6,7 @@ class CreateFastaFiles < ActiveRecord::Migration
       t.integer :fasta_file_size
       t.boolean :is_generated, :default => false
       t.integer :biodatabase_id
+      t.timestamps
     end
   end
 
