@@ -43,14 +43,15 @@ ActiveRecord::Schema.define(:version => 20090517231200) do
   create_table "blast_commands", :force => true do |t|
     t.integer  "query_fasta_file_id"
     t.integer  "db_fasta_file_id"
-    t.integer  "term_id"
     t.float    "evalue"
     t.integer  "identity"
     t.integer  "score"
-    t.string   "fasta_file_prefix"
+    t.string   "biodatabase_name"
+    t.integer  "biodatabase_type_id"
     t.string   "output_file_name"
     t.string   "output_content_type"
     t.integer  "output_file_size"
+    t.integer  "biodatabase_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20090517231200) do
     t.string  "fasta_content_type"
     t.integer "fasta_file_size"
     t.boolean "is_generated",       :default => false
+    t.integer "biodatabase_id"
   end
 
   create_table "users", :force => true do |t|

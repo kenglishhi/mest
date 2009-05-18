@@ -6,7 +6,7 @@ class BiosequencesController < ApplicationController
     config.columns[:biodatabases].includes = [:biodatabase_biosequences]
     config.list.columns = [:name, :seq, :length, :alphabet,:biodatabases]
     config.show.columns = [ :name, :entire_seq, :length, :alphabet, :biodatabases]
-    config.actions.exclude :nested , :create
+    config.actions.exclude :nested , :create, :update, :delete
   end
 
   def conditions_for_collection

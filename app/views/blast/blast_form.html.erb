@@ -1,4 +1,3 @@
-
 <div class="active-scaffold active-scaffold-blast blast-view default-theme">
   <% form_for :blast_command, :url=> {:action => 'blast'}  do |f | -%>
   <%= error_messages_for :blast_command  %>
@@ -20,8 +19,8 @@
 <tr><td>
 	<table class='blast-sub-form-table' >
     <tr>
-		<th>Fasta File Prefix</th>
-		<td><%= f.text_field :fasta_file_prefix %></td>
+		<th>New Database Name</th>
+		<td><%= f.text_field :biodatabase_name %></td>
 	</tr>
     <tr>
 		<th>E Value</th>

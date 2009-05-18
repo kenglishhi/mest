@@ -3,16 +3,22 @@ class BlastCommand < ActiveRecord::Base
 
   belongs_to :query_fasta_file, :class_name => 'FastaFile', :foreign_key => 'query_fasta_file_id'
   belongs_to :db_fasta_file,    :class_name => 'FastaFile', :foreign_key => 'db_fasta_file_id'
+  belongs_to :biodatabase
+  belongs_to :biodatabase_type
 
   validates_presence_of :query_fasta_file_id
   validates_presence_of :db_fasta_file_id
   validates_presence_of :evalue
-  validates_presence_of :fasta_file_prefix
+  validates_presence_of :biodatabase_name
 
   attr_accessor :matches
   attr_accessor :number_of_fastas
 
+
   def run_command
+
+  end
+  def run_clean
     options={}
     options[:evalue] = self.evalue || 0.001
 #    db_fasta_file.sequences
@@ -25,71 +31,29 @@ class BlastCommand < ActiveRecord::Base
     output_file_handle = exec_command(options)
     output_file_handle.open
     result_ff = Bio::FlatFile.open(output_file_handle)
-    @number_of_fastas = 0
     @matches = 0
-		biodatabase = Biodatabase.new(:name => fasta_file_prefix)
+		result_biodatabase = Biodatabase.new(:name => biodatabase_name,
+			:biodatabase_type_id =>  biodatabase_type_id )
 
     result_ff.each do |report|
-      fasta_file_handle =nil
       puts "query_def = #{report.query_def}"
-
-      query_biosequence = Biosequence.find_by_name(query_def)
+      query_biosequence = Biosequence.find_by_name(report.query_def)
 #      query_biosequence = query_fasta_file.find_biosequence(report.query_def)
-      puts "query_biosequence = #{query_biosequence.name} "
-      biodatabase.biosequences << query_biosequence
+#      puts "query_biosequence = #{query_biosequence.name} "
+			first_flag = true
       report.each do |hit|
+        if first_flag
+  			  result_biodatabase.biosequences << query_biosequence
+			    first_flag = false
+				end
         @matches += 1
         db_biosequence = Biosequence.find_by_name(hit.target_def)
-        unless fasta_file_handle
-          filename =  "#{fasta_file_prefix}_#{@number_of_fastas+1}.fasta"
-          fasta_file_handle = Tempfile.new(filename)
-          fasta_file_handle.puts(query_bioentry.to_fasta)
-          blast_output_entries << BlastOutputEntry.new(:bioentry_id => query_bioentry.id)
-        end
+			  result_biodatabase.biosequences << db_biosequence
       end
-
 		end
-
-		if false
-      query_bioentry = query_fasta_file.find_bioentry(report.query_def[0..39])
-      blast_output_entries = []
-
-#      transaction do
-        report.each do |hit|
-          @matches += 1
-          unless fasta_file_handle
-            filename =  "#{fasta_file_prefix}_#{@number_of_fastas+1}.fasta"
-            fasta_file_handle = Tempfile.new(filename)
-            fasta_file_handle.puts(query_bioentry.to_fasta)
-            blast_output_entries << BlastOutputEntry.new(:bioentry_id => query_bioentry.id)
-          end
-
-#          puts "calling find_bioentry...#{hit.target_def} "
-          db_bioentry = db_fasta_file.find_bioentry(hit.target_def)
-#          puts "db_bioentry = #{db_bioentry.inspect}"
-
-          fasta_file_handle.puts(db_bioentry.to_fasta)
-          blast_output_entries << BlastOutputEntry.new(:bioentry_id => db_bioentry.id)
-        end
-#          puts    "blast_output_entries = #{blast_output_entries.inspect}"
-        if fasta_file_handle
-          fasta_file = FastaFile.new
-          fasta_file.fasta = fasta_file_handle
-          fasta_file.is_generated = true
-          fasta_file.save
-#            puts "fasta_file = #{fasta_file.fasta.path}"
-           @number_of_fastas += 1
-        end
-        blast_output_entries.each do | entry|
-#          puts "saving "
-          entry.fasta_file_id = fasta_file.id
-          entry.save
-        end
-        puts "matches = #{@matches}, number_of_fastas = #{@number_of_fastas} "
-
-    end
-
-
+		result_biodatabase.save
+		biodatabase_id = result_biodatabase.id
+		save
   end
 
 
@@ -141,7 +105,7 @@ class BlastCommand < ActiveRecord::Base
     system(*command)
 #    puts "output_file_handle.path = #{output_file_handle.path}"
     output_file_handle.close
-    new_output_file_name = "#{fasta_file_prefix}_blast_output.txt"
+    new_output_file_name = "#{biodatabase_name}_blast_output.txt"
     FileUtils.cp(output_file_handle.path,new_output_file_name)
 #    puts "new_output_file_name.path = #{new_output_file_name}"
     self.output = File.open(new_output_file_name)

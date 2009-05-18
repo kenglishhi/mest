@@ -6,16 +6,46 @@ class BlastController < ApplicationController
      @fasta_file_options =  FastaFile.find(:all, :order => 'label' ).map { |ff| [ff.label, ff.id ] }
      render :action => 'blast_form'
   end
-  
+
   def blast
-    @blast_command = BlastCommand.create(params[:blast_command]  )
+    @blast_command = BlastCommand.new(params[:blast_command]  )
     if @blast_command.valid?
       @blast_command.save
-    else 
+    else
       @fasta_file_options =  FastaFile.find(:all,:order => 'label' ).map { |ff| [ff.label, ff.id ] }
       render :action => 'blast_form'
     end
   end
+
+ 	def clean
+    @biodatabase = Biodatabase.find(params[:biodatabase_id] )
+		@new_database_name = @biodatabase.name + "_CLEANED"
+    @blast_command = BlastCommand.new(:evalue => 0.0001, :query_fasta_file_id => @biodatabase.fasta_file_id)
+    @blast_command.biodatabase_type_id = BiodatabaseType.find_by_name("Clearned Stage 1").id
+    @fasta_file_options =  FastaFile.find(:all, :order => 'label' ).map { |ff| [ff.label, ff.id ] }
+    render :action => 'clean_form'
+	end
+
+ 	def blast_clean
+    @blast_command = BlastCommand.new(params[:blast_command]  )
+		@blast_command.db_fasta_file_id = @blast_command.query_fasta_file_id
+		@blast_command.biodatabase_name = FastaFile.find( @blast_command.query_fasta_file_id).label + "_CLEANED"
+
+
+    if @blast_command.valid?
+      @blast_command.save
+#      @blast_command.run_command(BiodatabaseType.find_by_name("Clearned Stage 1"))
+      render :action => 'blast'
+    else
+      @fasta_file_options =  FastaFile.find(:all,:order => 'label' ).map { |ff| [ff.label, ff.id ] }
+      render :action => 'clean_form'
+    end
+
+#    @blast_command = BlastCommand.new(:evalue => 0.0001, :query_fasta_file_id => @biodatabase.fasta_file_id)
+#    @fasta_file_options =  FastaFile.find(:all, :order => 'label' ).map { |ff| [ff.label, ff.id ] }
+
+	end
+
 
   def run
     logger.error("[kenglish] called run" ) 
