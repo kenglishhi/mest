@@ -1,0 +1,10 @@
+<% if record.biodatabase_type.name == "Raw" %>
+	 <% css_id = "clean_#{record.id}" %>
+<span id="<%= css_id %>">
+<%= link_to "Clean the File", :action => "clean", :id =>  record.id %>
+</span>
+
+<% else %>
+   Cleaned
+<% end %>
+

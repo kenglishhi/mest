@@ -17,6 +17,7 @@ class FastaFile < ActiveRecord::Base
       end
     end
   end
+
   def extract_sequences
 		logger.error("[kenglish] Called Extract Sequence")
     if fasta  
@@ -78,15 +79,16 @@ class FastaFile < ActiveRecord::Base
     sequence
   end
   def find_bioentry(query_def)
-
     if self.is_generated
       bioentry = BlastOutputEntry.find(:first,:include => :bioentry, :conditions => ['bioentry.name = ? ',query_def] ).bioentry
     else
       match_sequence_def(query_def)
       # search the file
     end
-
   end
+  def find_biosequence(query_def)
+    Biosequence.find_by_name(query_def)
+	end
 
   def close_fasta_file
     @fasta_file_handle.close if @fasta_file_handle

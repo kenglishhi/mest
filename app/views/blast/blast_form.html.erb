@@ -1,0 +1,49 @@
+
+<div class="active-scaffold active-scaffold-blast blast-view default-theme">
+  <% form_for :blast_command, :url=> {:action => 'blast'}  do |f | -%>
+  <%= error_messages_for :blast_command  %>
+<%= error_messages_for :term  %>
+<div class="new-view blast-view view">
+  <h4>Blast Files </h4>
+      <div class="messages-container" id="blast-create--messages"/>
+    <table class='blast-main-form-table' border=1  >
+	<tr><td>
+    <table class='blast-sub-form-table'   width="100%">
+	<tr>
+		<th>Query File</th>
+		<td><%= f.select  :query_fasta_file_id, @fasta_file_options,{}, :size=>"10" %></td>
+		<th>Db File</th>
+		<td><%= f.select :db_fasta_file_id, @fasta_file_options,{}, :size=>"10"  %></td>
+	</tr>
+	</table>
+</td></tr>
+<tr><td>
+	<table class='blast-sub-form-table' >
+    <tr>
+		<th>Fasta File Prefix</th>
+		<td><%= f.text_field :fasta_file_prefix %></td>
+	</tr>
+    <tr>
+		<th>E Value</th>
+		<td><%= f.text_field :evalue%></td>
+	</tr>
+	<tr>
+		<th>Identity</th>
+		<td><%= f.text_field :identity  %></td>
+	</tr>
+	<tr>
+		<th>Score</th>
+		<td><%= f.text_field :score  %></td>
+	</tr>		
+
+</td></tr>
+<tr><td>
+  <p class="form-footer">
+    <%= submit_tag 'Run Query', :class => 'submit' %>
+  </p>
+</td></tr>
+</table>  
+
+</div>
+</div>
+  <% end -%>
