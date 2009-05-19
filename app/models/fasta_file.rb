@@ -22,19 +22,28 @@ class FastaFile < ActiveRecord::Base
 		logger.error("[kenglish] Called Extract Sequence")
     if fasta  
       unless self.biodatabase
-        self.biodatabase = Biodatabase.create(:name => File.basename(label),
-          :fasta_file => self,
-          :biodatabase_type => BiodatabaseType.find_by_name('Raw'))
-        save
-        ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
-        ff.each do |entry|
-          bioseq = Biosequence.create(:name => entry.definition, :seq => entry.seq,
-            :alphabet => 'dna', :length => entry.seq.length)
-          self.biodatabase.biosequences << bioseq
-          logger.error("[kenglish] bioseq.name = #{bioseq.name}")
-        end
-        self.biodatabase.save
-        logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")
+				transaction do
+					self.biodatabase = Biodatabase.new(:name => File.basename(label),
+						:fasta_file => self,
+						:biodatabase_type => BiodatabaseType.find_by_name('UPLOADED-RAW') )
+					self.biodatabase.save!
+
+					puts "self.biodatabase.valid? == #{self.biodatabase.valid?}"
+					puts self.biodatabase.name
+					puts File.basename(label)
+
+					save!
+					ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
+					ff.each do |entry|
+						bioseq = Biosequence.new(:name => entry.definition, :seq => entry.seq,
+							:alphabet => 'dna', :length => entry.seq.length)
+						bioseq.save!
+						self.biodatabase.biosequences << bioseq
+						logger.error("[kenglish] bioseq.name = #{bioseq.name}")
+					end
+					self.biodatabase.save!
+					logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")
+				end
       end
     end
     #    Bioentry.load_fasta fasta.path

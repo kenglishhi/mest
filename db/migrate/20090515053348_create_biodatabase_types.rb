@@ -5,7 +5,7 @@ class CreateBiodatabaseTypes < ActiveRecord::Migration
       t.timestamps
     end
     BiodatabaseType.create(:name => 'UPLOADED-RAW')
-    BiodatabaseType.create(:name => 'UPLOADED-CLEARNED')
+    BiodatabaseType.create(:name => 'UPLOADED-CLEANED')
     BiodatabaseType.create(:name => 'GENERATED-MASTER')
     BiodatabaseType.create(:name => 'GENERATED-MATCH')
   end

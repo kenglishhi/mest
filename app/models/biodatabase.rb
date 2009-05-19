@@ -1,4 +1,5 @@
 class Biodatabase < ActiveRecord::Base
+	acts_as_tree
   belongs_to :biodatabase_type
   belongs_to :fasta_file
 	has_many :biodatabase_biosequences

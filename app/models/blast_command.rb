@@ -6,25 +6,80 @@ class BlastCommand < ActiveRecord::Base
   belongs_to :biodatabase
   belongs_to :biodatabase_type
 
+  validates_presence_of :biodatabase_type_id
+#  validates_presence_of :biodatabase_name
   validates_presence_of :query_fasta_file_id
-  validates_presence_of :db_fasta_file_id
+#  validates_presence_of :db_fasta_file_id
   validates_presence_of :evalue
-  validates_presence_of :biodatabase_name
+
 
   attr_accessor :matches
   attr_accessor :number_of_fastas
+	after_validation_on_create :check_for_clean_upload_type
 
-
-  def run_command
-
+  def check_for_clean_upload_type
+    query_fasta_file ?  db_fasta_file_id = query_fasta_file.id : db_fasta_file_id =  query_fasta_file_id
+		puts query_fasta_file.label
+    unless biodatabase_name
+      self.biodatabase_name =""
+      self.biodatabase_name << (query_fasta_file ?  query_fasta_file.label : FastaFile.find(query_fasta_file_id).label)
+  		self.biodatabase_name << "-CLEANED"
+		end
+		puts query_fasta_file.label
   end
+	def run
+		puts biodatabase_type.name
+		if biodatabase_type.name == "UPLOADED-CLEANED"
+       run_clean
+		else
+       run_command
+		end
+	end
+
   def run_clean
     options={}
     options[:evalue] = self.evalue || 0.001
 #    db_fasta_file.sequences
-    puts  "db_fasta_file = #{db_fasta_file.inspect}"
-    puts  "db_fasta_file = #{db_fasta_file.inspect}"
-    db_fasta_file.extract_sequences if !db_fasta_file.is_generated && db_fasta_file.biodatabase.nil?
+    self.db_fasta_file = query_fasta_file
+		puts query_fasta_file.label
+
+    query_fasta_file.extract_sequences if !query_fasta_file.is_generated && query_fasta_file.biodatabase.nil?
+    db_fasta_file.formatdb
+
+    output_file_handle = exec_command(options)
+    output_file_handle.open
+    result_ff = Bio::FlatFile.open(output_file_handle)
+    @matches = 0
+		result_biodatabase = Biodatabase.new(:name => biodatabase_name,
+			:biodatabase_type =>  biodatabase_type )
+    puts "result_biodatabase #{result_biodatabase.valid?}.#{result_biodatabase.errors.full_messages.to_sentence }"
+    query_fasta_file.biodatabase.biosequences.each do | row |
+      result_biodatabase.biosequences << row
+		end
+    result_biodatabase.save
+    result_ff.each do |report|
+      query_biosequence = Biosequence.find_by_name(report.query_def)
+			if result_biodatabase.biosequences.include? query_biosequence
+				puts "report.query_def #{report.query_def}"
+      report.each do |hit|
+				puts "hit #{hit.target_def}"
+				unless hit.target_def == report.query_def
+          db_biosequence = Biosequence.find_by_name(hit.target_def)
+  			  result_biodatabase.biosequences.delete( db_biosequence)
+			  end
+      end
+			end
+		end
+    puts result_biodatabase.biosequences.inspect
+		result_biodatabase.save
+		biodatabase_id = result_biodatabase.id
+		save
+
+  end
+  def run_command
+    options={}
+    options[:evalue] = self.evalue || 0.001
+#    db_fasta_file.sequences
     query_fasta_file.extract_sequences if !query_fasta_file.is_generated && query_fasta_file.biodatabase.nil?
     db_fasta_file.formatdb
 
@@ -34,6 +89,7 @@ class BlastCommand < ActiveRecord::Base
     @matches = 0
 		result_biodatabase = Biodatabase.new(:name => biodatabase_name,
 			:biodatabase_type_id =>  biodatabase_type_id )
+    query_fasta_file.biodatabase
 
     result_ff.each do |report|
       puts "query_def = #{report.query_def}"
