@@ -6,6 +6,7 @@ class CreateBiodatabases < ActiveRecord::Migration
       t.text   :description
       t.integer :biodatabase_type_id
       t.integer :fasta_file_id
+      t.integer :parent_id
       t.timestamps
     end
   end
