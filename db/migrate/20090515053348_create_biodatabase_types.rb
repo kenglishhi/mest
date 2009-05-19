@@ -4,9 +4,10 @@ class CreateBiodatabaseTypes < ActiveRecord::Migration
       t.string "name",        :limit => 128, :null => false
       t.timestamps
     end
-    BiodatabaseType.create(:name => 'Raw')
-    BiodatabaseType.create(:name => 'Clearned Stage 1')
-    BiodatabaseType.create(:name => 'Clearned Stage 2')
+    BiodatabaseType.create(:name => 'UPLOADED-RAW')
+    BiodatabaseType.create(:name => 'UPLOADED-CLEARNED')
+    BiodatabaseType.create(:name => 'GENERATED-MASTER')
+    BiodatabaseType.create(:name => 'GENERATED-MATCH')
   end
 
   def self.down
