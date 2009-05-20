@@ -2,7 +2,7 @@ class BiodatabasesController < ApplicationController
 
   active_scaffold :biodatabases do |config|
     config.list.label = "Databases"
-    config.list.columns = [:name, :biodatabase_type, :type_action,:fasta_file]
+    config.list.columns = [:name, :biodatabase_type, :fasta_file,:parent, :number_of_sequences ]
   end
 
 	def clean
@@ -20,7 +20,9 @@ class BiodatabasesController < ApplicationController
       render :action => 'blast_form'
     end
 	end
+
   protected
+
   def conditions_for_collection
 		logger.error("[kenglish] params[:biodatabase_type_id].blank? #{params[:biodatabase_type_id].blank?} ")
     unless params[:biodatabase_type_id].blank?

@@ -6,5 +6,8 @@ class Biosequence < ActiveRecord::Base
   validates_presence_of :seq
   
 
+  def to_fasta
+     ">#{name}\n#{seq}\n"
+  end
 
 end

@@ -1,7 +1,7 @@
 class FastaFile < ActiveRecord::Base
   has_attached_file :fasta
   validates_uniqueness_of :label
-  has_one :biodatabase, :dependent => :destroy
+  has_one :biodatabase
   before_validation :set_label
   before_destroy :remove_fasta_dbs
   def is_generated?
@@ -28,8 +28,6 @@ class FastaFile < ActiveRecord::Base
 						:biodatabase_type => BiodatabaseType.find_by_name('UPLOADED-RAW') )
 					self.biodatabase.save!
 
-					puts "self.biodatabase.valid? == #{self.biodatabase.valid?}"
-					puts self.biodatabase.name
 					puts File.basename(label)
 
 					save!

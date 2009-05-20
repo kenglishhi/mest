@@ -1,11 +1,18 @@
 module BiodatabasesHelper
-  def type_action_column(record)
-   if record.biodatabase_type.name == "Raw"
-    link_to "Clean the File", :controller => 'blast', :action => "clean", :biodatabase_id =>  record.id
+
+  def biodatabase_type_column(record)
+   if record.biodatabase_type.name == "UPLOADED-RAW" and record.children.empty?
+    record.biodatabase_type.name + "  " +
+			link_to("Clean the File", :controller => 'blast', :action => "clean", :biodatabase_id =>  record.id)
    else
-    "Cleaned"
+    record.biodatabase_type.name
    end
   end
+
+	def number_of_sequences_column(record)
+    record.biosequences.count
+	end
+
 	def fasta_file_column(record)
    if record.fasta_file
   	 link_to record.fasta_file.fasta_file_name, record.fasta_file.fasta.url if record.fasta_file

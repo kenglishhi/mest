@@ -1,6 +1,8 @@
 module FastaFilesHelper
  def biodatabase_extract_column(record)
-   if record.biodatabase
+   if record.is_generated
+		 "Generated"
+   elsif record.biodatabase
      "Extracted"
    else
       render  :partial => "/fasta_files/biodatabase_extract_link", :locals => {:record => record}

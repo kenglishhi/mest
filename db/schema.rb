@@ -26,8 +26,9 @@ ActiveRecord::Schema.define(:version => 20090517231200) do
     t.string   "name",                :limit => 128, :null => false
     t.string   "authority",           :limit => 128
     t.text     "description"
-    t.integer  "biodatabase_type_id"
+    t.integer  "biodatabase_type_id",                :null => false
     t.integer  "fasta_file_id"
+    t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -57,12 +58,14 @@ ActiveRecord::Schema.define(:version => 20090517231200) do
   end
 
   create_table "fasta_files", :force => true do |t|
-    t.string  "label"
-    t.string  "fasta_file_name"
-    t.string  "fasta_content_type"
-    t.integer "fasta_file_size"
-    t.boolean "is_generated",       :default => false
-    t.integer "biodatabase_id"
+    t.string   "label"
+    t.string   "fasta_file_name"
+    t.string   "fasta_content_type"
+    t.integer  "fasta_file_size"
+    t.boolean  "is_generated",       :default => false
+    t.integer  "biodatabase_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

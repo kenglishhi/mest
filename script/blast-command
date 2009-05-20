@@ -1,9 +1,0 @@
-
-db_fasta_file = FastaFile.find(:first)
-query_fasta_file = FastaFile.find(:first)
-bc = BlastCommand.create(:db_fasta_file => db_fasta_file, :query_fasta_file => query_fasta_file , :evalue => 0.00001,:fasta_file_prefix => "prefix")
-bc.run_command
-
-
-
-
