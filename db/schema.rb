@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(:version => 20090517231200) do
   end
 
   create_table "blast_commands", :force => true do |t|
-    t.integer  "query_fasta_file_id"
-    t.integer  "db_fasta_file_id"
+    t.integer  "test_fasta_file_id"
+    t.integer  "target_fasta_file_id"
     t.float    "evalue"
     t.integer  "identity"
     t.integer  "score"

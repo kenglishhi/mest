@@ -5,12 +5,12 @@ blast_commands_001:
   identity: 
   updated_at: 2009-05-21 05:55:44
   biodatabase_id: "3"
-  query_fasta_file_id: "1"
+  test_fasta_file_id: "1"
   biodatabase_name: EST_Clade_A_3-CLEANED
   evalue: "0.0001"
   id: "1"
   biodatabase_type_id: "2"
   output_file_name: EST_Clade_A_3-CLEANED_blast_output.txt
-  db_fasta_file_id: "1"
+  target_fasta_file_id: "1"
   output_file_size: "11819"
   score: 
