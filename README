@@ -1,3 +1,11 @@
 == Welcome to Biococonutisland
 
 This is a Rails program customized for University of Hawaii, Coconut Island research facility doing genetic research on coral reef and dinoflagulates.
+
+== INSTALLATION
+
+This is a Ruby on Rails application. You must first install Ruby on Rails. Go to http://rubyonrails.org/download for more information.
+
+1) Clone the repository:
+
+git clone git://github.com/kenglishhi/biococonutisland.git

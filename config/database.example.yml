@@ -20,7 +20,7 @@ development:
   reconnect: false
   database: biococonutisland_development
   pool: 5
-  username: root
+  username: 
   password: root
   socket: /var/run/mysqld/mysqld.sock
 
