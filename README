@@ -15,3 +15,8 @@ git clone git://github.com/kenglishhi/biococonutisland.git
 cp config/database.example.yml config/database.yml
 (Edit database.yml, change username, password & database name to match your setup.)
 
+3) Create the databases:
+
+rake db:rebirth
+
+4) Lauch the server
