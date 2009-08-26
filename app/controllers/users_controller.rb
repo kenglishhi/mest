@@ -1,2 +1,22 @@
 class UsersController < ApplicationController
+  active_scaffold :users do |config|
+    non_editable = [:current_login_at, :current_login_ip, :last_login_at, :last_login_ip, :last_request_at, :token_expires_at]
+
+    config.list.columns = [
+      :email, :full_name,:avatar, :current_login_at, :current_login_ip,
+      :last_login_ip, :last_login_at, :updated_at,
+      :created_at]
+
+    config.columns.add :password
+    config.columns[:password].description = 'minimum 4 characters'
+    config.columns[:email].description = 'minimum 6 characters'
+
+    config.columns.exclude :crypted_password, :password_salt, :persistence_token, :perishable_token, :password, :single_access_token
+
+    config.create.columns.add :password, :password_confirmation
+    config.create.columns.exclude non_editable
+    config.update.columns.add :password, :password_confirmation
+    config.update.columns.exclude non_editable
+  end
+
 end

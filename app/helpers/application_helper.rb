@@ -19,5 +19,9 @@ module ApplicationHelper
     end
     messages
   end
+  def logged_in?
+    current_user
+  end
+
 
 end

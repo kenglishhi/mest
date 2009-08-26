@@ -19,29 +19,19 @@
 
   <div id="birhead-info">
  <div id="top-left-menu"  class="birhead-link-menu">
-  <% if logged_in? %>
-      <%= link_to "Logout", "/logout" %>
-  <% else %>
-      <%= link_to "Login", "/login" %>
-  <% end %>
   </div>
 
   <div id="top-right-menu"  class="birhead-link-menu">
   <p> <span class="turbo-nag hidden" style="display: inline;">
   <% if logged_in? %>
-   Hello <%= current_user.login %>,
-  <%= link_to "Raw Fasta Files", :controller => 'fasta_files' %>
-   |
-  <%= link_to "Databases", :controller => 'biodatabases' %>
-  |
-  <%= link_to "Sequences", :controller => 'biosequences' %>
-   |
-  <%= link_to "Blast Output", :controller => 'blast_commands' %>
-  |
-  <%= link_to "Blast", :controller => 'blast' %>
-
+     <%= link_to current_user.full_name, '/' %>
+  <% end %> | 
+  <% if logged_in? %>
+      <%= link_to "Logout", "/logout" %>
+  <% else %>
+      <%= link_to "Login", "/login" %>
   <% end %>
-
+ 
   </div>
   </div>
 </div>

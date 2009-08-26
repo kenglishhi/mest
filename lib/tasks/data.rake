@@ -6,6 +6,10 @@ namespace :data do
     User.destroy_all 
     User.create do |u|
       u.email = 'kenglish@gmail.com' 
+      u.first_name = 'Kevin' 
+      u.last_name = 'English' 
+      u.mi = 'W' 
+      u.title = '' 
       u.password =  'kevin123'
       u.password_confirmation =  'kevin123'
     end
