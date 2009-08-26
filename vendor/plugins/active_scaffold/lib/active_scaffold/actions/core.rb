@@ -82,7 +82,7 @@ module ActiveScaffold::Actions
         params[:parent_column] = nil
         params[:parent_id] = nil
       end
-      redirect_to params_for(:action => "index")
+      redirect_to params_for(:action => "index", :id => nil)
     end
 
     # Override this method on your controller to define conditions to be used when querying a recordset (e.g. for List). The return of this method should be any format compatible with the :conditions clause of ActiveRecord::Base's find.
@@ -118,6 +118,17 @@ module ActiveScaffold::Actions
         send("#{action}_formats").each do |format|
           type.send(format){ send("#{action}_respond_to_#{format}") }
         end
+      end
+    end
+
+    def response_code_for_rescue(exception)
+      case exception
+        when ActiveScaffold::RecordNotAllowed
+          "403 Record Not Allowed"
+        when ActiveScaffold::ActionNotAllowed
+          "403 Action Not Allowed"
+        else
+          super
       end
     end
   end

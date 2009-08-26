@@ -1,7 +1,7 @@
 module ActiveScaffold::Actions
   module List
     def self.included(base)
-      base.before_filter :list_authorized?, :only => [:index, :table, :update_table, :row, :list]
+      base.before_filter :list_authorized_filter, :only => [:index, :table, :update_table, :row, :list]
     end
 
     def index
@@ -70,7 +70,7 @@ module ActiveScaffold::Actions
       end
 
       page = find_page(options);
-      if page.items.empty?
+      if page.items.blank?
         page = page.pager.first
         active_scaffold_config.list.user.page = 1
       end
@@ -83,6 +83,9 @@ module ActiveScaffold::Actions
       authorized_for?(:action => :read)
     end
     private
+    def list_authorized_filter
+      raise ActiveScaffold::ActionNotAllowed unless list_authorized?
+    end
     def update_table_formats
       (default_formats + active_scaffold_config.formats).uniq
     end

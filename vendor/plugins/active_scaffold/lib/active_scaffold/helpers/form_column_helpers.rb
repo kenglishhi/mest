@@ -6,15 +6,12 @@ module ActiveScaffold
       # It does not do any rendering. It only decides which method is responsible for rendering.
       def active_scaffold_input_for(column, scope = nil)
         options = active_scaffold_input_options(column, scope)
-
         # first, check if the dev has created an override for this specific field
         if override_form_field?(column)
           send(override_form_field(column), @record, options[:name])
-
         # second, check if the dev has specified a valid form_ui for this column
         elsif column.form_ui and override_input?(column.form_ui)
           send(override_input(column.form_ui), column, options)
-
         # fallback: we get to make the decision
         else
           if column.association
@@ -63,8 +60,8 @@ module ActiveScaffold
       end
 
       def javascript_for_update_column(column, scope, options)
-        if column.options[:update_column]
-          url_params = {:action => 'render_field', :id => @record.id}
+        if column.options.is_a?(Hash) && column.options[:update_column]
+          url_params = {:action => 'render_field', :id => params[:id]}
           url_params[:controller] = controller.class.active_scaffold_controller_for(@record.class).controller_path if scope
 
           parameters = "column=#{column.name}"
@@ -80,16 +77,26 @@ module ActiveScaffold
       ## Form input methods
       ##
 
-      def active_scaffold_input_singular_association(column, options)
+      def active_scaffold_input_singular_association(column, html_options)
         associated = @record.send(column.association.name)
 
         select_options = options_for_association(column.association)
         select_options.unshift([ associated.to_label, associated.id ]) unless associated.nil? or select_options.find {|label, id| id == associated.id}
 
         selected = associated.nil? ? nil : associated.id
-        method = column.association.macro == :belongs_to ? column.association.primary_key_name : column.name
-        options[:name] += '[id]'
-        select(:record, method, select_options.uniq, {:selected => selected, :include_blank => as_(:_select_)}, options)
+        method = column.name
+        html_options[:name] += '[id]'
+        options = {:selected => selected, :include_blank => as_(:_select_)}
+
+        # For backwards compatibility, to add method options is needed to set a html_options hash
+        # in other case all column.options will be added as html options
+        if column.options[:html_options]
+          html_options.update(column.options[:html_options])
+          options.update(column.options)
+        else
+          html_options.update(column.options)
+        end
+        select(:record, method, select_options.uniq, options, html_options)
       end
 
       def active_scaffold_input_plural_association(column, options)
@@ -117,13 +124,21 @@ module ActiveScaffold
         html
       end
 
-      def active_scaffold_input_select(column, options)
+      def active_scaffold_input_select(column, html_options)
         if column.singular_association?
-          active_scaffold_input_singular_association(column, options)
+          active_scaffold_input_singular_association(column, html_options)
         elsif column.plural_association?
-          active_scaffold_input_plural_association(column, options)
+          active_scaffold_input_plural_association(column, html_options)
         else
-          select(:record, column.name, column.options, { :selected => @record.send(column.name) }, options)
+          options = { :selected => @record.send(column.name) }
+          if column.options.is_a? Hash
+            options_for_select = column.options[:options]
+            html_options.update(column.options[:html_options] || {})
+            options.update(column.options)
+          else
+            options_for_select = column.options
+          end
+          select(:record, column.name, options_for_select, options, html_options)
         end
       end
 
@@ -203,7 +218,7 @@ module ActiveScaffold
 
       def override_form_field_partial?(column)
         path, partial_name = partial_pieces(override_form_field_partial(column))
-        template_exists?(File.join(path, "_#{partial_name}"))
+        template_exists?(File.join(path, "_#{partial_name}"), true)
       end
 
       # the naming convention for overriding form fields with partials

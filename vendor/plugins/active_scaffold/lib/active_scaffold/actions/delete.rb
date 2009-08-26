@@ -1,7 +1,7 @@
 module ActiveScaffold::Actions
   module Delete
     def self.included(base)
-      base.before_filter :delete_authorized?, :only => [:delete, :destroy]
+      base.before_filter :delete_authorized_filter, :only => [:delete, :destroy]
     end
 
     # this method is for html mode. it provides "the missing action" (http://thelucid.com/articles/2006/07/26/simply-restful-the-missing-action).
@@ -19,7 +19,7 @@ module ActiveScaffold::Actions
 
     protected
     def destroy_respond_to_html
-      flash[:info] = as_(:deleted_model, :model => @record.to_label)
+      flash[:info] = as_(:deleted_model, :model => @record.to_label) if self.successful?
       return_to_main
     end
 
@@ -36,7 +36,7 @@ module ActiveScaffold::Actions
     end
 
     def destroy_respond_to_yaml
-      render :text => successful? ? "" : response_object.to_json, :content_type => Mime::JSON, :status => response_status
+      render :text => successful? ? "" : response_object.to_yaml, :content_type => Mime::YAML, :status => response_status
     end
 
     def destroy_find_record
@@ -47,7 +47,12 @@ module ActiveScaffold::Actions
     # May be overridden to customize the behavior
     def do_destroy
       destroy_find_record
-      self.successful = @record.destroy
+      begin
+        self.successful = @record.destroy
+      rescue
+        flash[:warning] = as_(:cant_destroy_record, :record => @record.to_label)
+        self.successful = false
+      end
     end
 
     # The default security delegates to ActiveRecordPermissions.
@@ -56,6 +61,10 @@ module ActiveScaffold::Actions
       authorized_for?(:action => :destroy)
     end
     private
+    def delete_authorized_filter
+      link = active_scaffold_config.delete.link || active_scaffold_config.delete.class.link
+      raise ActiveScaffold::ActionNotAllowed unless self.send(link.security_method)
+    end
     def destroy_formats
       (default_formats + active_scaffold_config.formats + active_scaffold_config.delete.formats).uniq
     end
