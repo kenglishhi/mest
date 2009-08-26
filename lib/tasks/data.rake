@@ -1,8 +1,14 @@
 namespace :data do
 
   desc "Load seed data"
-  task :seed do
+  task :seed  => :environment  do
     puts "Load seed data --- HERE"
+    User.destroy_all 
+    User.create do |u|
+      u.email = 'kenglish@gmail.com' 
+      u.password =  'kevin123'
+      u.password_confirmation =  'kevin123'
+    end
   end
 end
 
