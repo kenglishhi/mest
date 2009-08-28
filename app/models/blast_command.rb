@@ -27,6 +27,7 @@ class BlastCommand < ActiveRecord::Base
       end
     end
   end
+
   def run
     if biodatabase_type.name == "UPLOADED-CLEANED"
       run_clean
@@ -162,6 +163,7 @@ class BlastCommand < ActiveRecord::Base
         #  fasta_grou
       end
     end
+  end
 
   private
 
@@ -170,20 +172,20 @@ class BlastCommand < ActiveRecord::Base
     output_file_handle = Tempfile.new("blastout_#{id}")
     output_file_handle.close(false)
     command <<  "-o  #{output_file_handle.path} "
-    #    puts "[kenglish] output_file_handle.path = #{output_file_handle.path} "
+   #    puts "[kenglish] output_file_handle.path = #{output_file_handle.path} "
     #    puts "[kenglish]--------------------- "
     #    puts "[kenglish] command = #{command} "
-    system(*command)
-    #    puts "output_file_handle.path = #{output_file_handle.path}"
+   system(*command)
+   #    puts "output_file_handle.path = #{output_file_handle.path}"
     output_file_handle.close
     new_output_file_name = "#{biodatabase_name}_blast_output.txt"
     FileUtils.cp(output_file_handle.path,new_output_file_name)
-    #    puts "new_output_file_name.path = #{new_output_file_name}"
+   #    puts "new_output_file_name.path = #{new_output_file_name}"
     self.output = File.open(new_output_file_name)
     self.save
     #    puts "self.output.path = #{self.output.path}"
     output_file_handle
 
   end
-
+#
 end

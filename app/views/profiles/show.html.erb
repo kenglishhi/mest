@@ -1,0 +1,59 @@
+<div id="bodyblock" align="right">
+  <%= render :partial => '/layouts/profile_menu' %>
+  <h3 align="center"> Welcome <%=current_user.full_name %>,</h3>
+  <%= image_tag(current_user.avatar.url(:thumb),:align => 'left') %>
+  <div>
+    <dl class="info">
+        <dt>Email:</dt><dd><%= current_user.email %></dd>
+        <dt>Orgaziation :</dt><dd><%= current_user.organization %></dd>
+    </dl>
+
+
+</div>
+
+
+
+ <div class='clearfix'>
+    <h3>My Files</h3>
+    <div class='active-scaffold'>
+      <table cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th class='nolink'>Label</th>
+            <th class='nolink'>Size</th>
+            <th class='nolink'>Created at</th>
+          </tr>
+        </thead>
+        <tbody id="as_fasta_files-tbody" class="records">
+          <% current_user.fasta_files.each do | fasta_file | %>
+            <tr class="profile-record ">
+              <td class="label-column ">
+                <%= fasta_file.label %>
+              </td>
+              <td class="fasta_file_name-column ">
+                <%= fasta_file.fasta_file_size %>
+              </td>
+              <td class="biodatabase_extract-column ">
+                <%= fasta_file.created_at %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </p>
+  <p>One drawback we see immediatly is getting equal heights for
+    the left navigation div and right content div. The work around I
+    use for this is: whichever is likely to be the shortest (in
+    height) div, probably the left navigation div, set the background
+    of the #body div the same as this, also the border separating the
+  two divs - that should be on the right content div.</p>
+  <p>Another problem discovered recently was that when you use the
+    float property it can cause the floated divs to "jump out" of
+    their container block. The workaround I found for this was simply
+  to specify a height for the container div.</p>
+  <p>This template has been tested in:</p>
+
+  <br />
+</div>

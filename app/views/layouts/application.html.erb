@@ -23,6 +23,8 @@
 
   <div id="top-right-menu"  class="birhead-link-menu">
   <p> <span class="turbo-nag hidden" style="display: inline;">
+    <%= link_to "Fasta Files", fasta_files_path %>
+    |
   <% if logged_in? %>
      <%= link_to current_user.full_name, '/' %>
   <% end %> | 

@@ -2,8 +2,8 @@ class UsersController < ApplicationController
   active_scaffold :users do |config|
     non_editable = [:current_login_at, :current_login_ip, :last_login_at, :last_login_ip, :last_request_at, :token_expires_at]
 
-    config.list.columns = [
-      :email, :full_name,:avatar, :current_login_at, :current_login_ip,
+    config.list.columns = [:avatar,:full_name,
+      :email,:current_login_at, :current_login_ip,
       :last_login_ip, :last_login_at, :updated_at,
       :created_at]
 

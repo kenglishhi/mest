@@ -10,6 +10,7 @@ namespace :data do
       u.last_name = 'English' 
       u.mi = 'W' 
       u.title = '' 
+      u.avatar = File.open(File.dirname(__FILE__) + '/../../test/fixtures/files/kevin_pic.jpg')
       u.password =  'kevin123'
       u.password_confirmation =  'kevin123'
     end

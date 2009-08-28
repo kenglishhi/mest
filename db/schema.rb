@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20090517231200) do
     t.integer  "biodatabase_type_id",                :null => false
     t.integer  "fasta_file_id"
     t.integer  "parent_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -64,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20090517231200) do
     t.integer  "fasta_file_size"
     t.boolean  "is_generated",       :default => false
     t.integer  "biodatabase_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,92 +1,92 @@
 body, td {
-	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
-	font-size:13px;
-	font-size-adjust:none;
-	font-style:normal;
-	font-variant:normal;
-	font-weight:normal;
-	line-height:normal;
+  font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+  font-size:13px;
+  font-size-adjust:none;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:normal;
+  line-height:normal;
 }
 
 
 #top-menu p {
-    line-height:46px;
-    margin:0;
-    padding:0;
+  line-height:46px;
+  margin:0;
+  padding:0;
 }
 
 p, ul, ol, blockquote {
-    font-size:12px;
+  font-size:12px;
 }
 
 #birhead {
-	background-color:#464646;
-	height:46px;
+  background-color:#464646;
+  height:46px;
 }
 #top-right-menu {
-	float:right;
+  float:right;
 }
 #top-left-menu {
-	float:left;
+  float:left;
 }
 
 .birhead-link-menu {
-	color:#999999;
-	font-size:12px;
-	height:46px;
-	line-height:46px;    
+  color:#999999;
+  font-size:12px;
+  height:46px;
+  line-height:46px;
 }
 .birhead-link-menu a:hover, #footer a:hover {
-	color:#FFFFFF;
-	text-decoration:underline !important;
+  color:#FFFFFF;
+  text-decoration:underline !important;
 }
 .birhead-link-menu a:link, .birhead-link-menu a:visited {
-    color:#CCCCCC;
-    text-decoration:none;
+  color:#CCCCCC;
+  text-decoration:none;
 }
 
 
 
 #birhead-info {
-	margin:0 0 0 15px;
-	padding-right:15px;
+  margin:0 0 0 15px;
+  padding-right:15px;
 }
 
 
 #birhead h1 {
-	-x-system-font:none;
-	float:left;
-	font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	font-size:22px;
-	font-size-adjust:none;
-	font-stretch:normal;
-	font-style:normal;
-	font-variant:normal;
-	font-weight:normal;
-	line-height:normal;
-	margin:0;
-	padding:10px 8px 5px;
+  -x-system-font:none;
+  float:left;
+  font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+  font-size:22px;
+  font-size-adjust:none;
+  font-stretch:normal;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:normal;
+  line-height:normal;
+  margin:0;
+  padding:10px 8px 5px;
 }
 h1 {
-	display:block;
-	font-size:2em;
-	font-weight:bold;
-	margin:0.67em 0;
+  display:block;
+  font-size:2em;
+  font-weight:bold;
+  margin:0.67em 0;
 }
 #birhead h1 a:hover {
-	text-decoration:underline;
+  text-decoration:underline;
 }
 #birhead h1 a  {
-	color:#FFFFFF;
+  color:#FFFFFF;
 }
 #fasta-data {
-	font-family:verdana,sans-serif;
-	font-size:11px;
-	font-size-adjust:none;
-	font-stretch:normal;
-	font-style:normal;
-	font-variant:normal;
-	font-weight:bold;	
+  font-family:verdana,sans-serif;
+  font-size:11px;
+  font-size-adjust:none;
+  font-stretch:normal;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
 }
 
 table.blast-main-form-table {
@@ -94,39 +94,142 @@ table.blast-main-form-table {
 }
 table.blast-sub-form-table th {
 
-    vertical-align: top;
-    text-align: right;
-   background-color: transparent !important;
-	color:#555555;
-	font-family:verdana,sans-serif;
-	font-size:11px;
-	font-size-adjust:none;
-	font-stretch:normal;
-	font-style:normal;
-	font-variant:normal;
-	font-weight:normal;
-	line-height:normal;
+  vertical-align: top;
+  text-align: right;
+  background-color: transparent !important;
+  color:#555555;
+  font-family:verdana,sans-serif;
+  font-size:11px;
+  font-size-adjust:none;
+  font-stretch:normal;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:normal;
+  line-height:normal;
 }
 div.loading {
-	background: url(/images/active_scaffold/default/indicator.gif);
-	text-indent: -999px;
+  background: url(/images/active_scaffold/default/indicator.gif);
+  text-indent: -999px;
 }
 div.flash-messages-container {
-border:medium none;
-margin:0 7px;
-width:400px;
+  border:medium none;
+  margin:0 7px;
+  width:400px;
 } 
 
 
 div.flash-messages-errorExplanation {
-	background-color:#FFCCCC;
-	border:1px solid #FF6666;
-	margin:2px 0;
-	padding:7px;
-	font-weight:bold;
+  background-color:#FFCCCC;
+  border:1px solid #FF6666;
+  margin:2px 0;
+  padding:7px;
+  font-weight:bold;
 
 
 } 
 div.seq {
-    
+
+}
+#outer {
+  text-align:left;
+  border:1px solid #000000;
+  width:650px;
+  margin:auto;
+}
+
+#hdr {
+  height:60px;
+  background:#eeeeee;
+  color: #333333;
+}
+
+#bar {
+  height:25px;
+  background:#c0c0c0;
+  color: #333333;
+  border:solid #000000;
+  border-width:1px 0 1px 0;
+}
+
+#bodyblock {
+  position:relative;
+  background: #dcdcdc;
+  color: #333333;
+  width:650px;
+  padding:0;
+}
+
+#l-col {
+  float:left;
+  background:#dcdcdc;
+  color: #333333;
+  width:145px;
+}
+
+#cont {
+  width:495px;
+  background:#ffffff;
+  color: #333333;
+  border:solid #000000;
+  border-width:0 0 0 1px;
+  text-align:left;
+}
+#cont {
+  width:495px;
+  background:#ffffff;
+  color: #333333;
+  border:solid #000000;
+  border-width:0 0 0 1px;
+  text-align:left;
+}
+
+
+#ftr {
+  height:25px;
+  background:#c0c0c0;
+  color: #333333;
+  border:solid black;
+  border-width:1px 0 0 0;
+  margin:0;
+}
+.active-scaffold th.nolink {
+  font-family:arial,sans-serif;
+  font-size:11px;
+  font-size-adjust:none;
+  font-stretch:normal;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
+  line-height:normal;
+  color:#FFFFFF;
+}
+
+
+.active-scaffold tr.profile-record td {
+  padding: 5px 4px;
+  color: #333;
+  font-family: Verdana, sans-serif;
+  font-size: 11px;
+  background-color: #DCDCDC  ;
+  border-bottom: solid 1px #C5DBF7;
+  border-left: solid 1px #C5DBF7;
+}
+
+
+.clearfix {
+  /*display:block; */
+}
+dl.info {
+  margin-bottom:50px;
+}
+
+dl.info dt {
+  float:left;
+  font-weight:bold;
+  margin-right:10px;
+  padding-left:5px;
+  width:100px;
+}
+
+dl.info dd {
 }
