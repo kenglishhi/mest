@@ -2,18 +2,19 @@ namespace :data do
 
   desc "Load seed data"
   task :seed  => :environment  do
-    puts "Load seed data --- HERE"
     User.destroy_all 
-    User.create do |u|
+    puts "Load seed data --- HERE"
+    user = User.create do |u|
       u.email = 'kenglish@gmail.com' 
       u.first_name = 'Kevin' 
       u.last_name = 'English' 
       u.mi = 'W' 
       u.title = '' 
-      u.avatar = File.open(File.dirname(__FILE__) + '/../../test/fixtures/files/kevin_pic.jpg')
+#      u.avatar = File.new(File.dirname(__FILE__) + '/../../test/fixtures/files/kevin_pic.jpg')
       u.password =  'kevin123'
       u.password_confirmation =  'kevin123'
     end
+      puts "created user #{user.errors.full_messages.to_sentence} "
   end
 end
 

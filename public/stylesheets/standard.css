@@ -155,7 +155,7 @@ div.seq {
   position:relative;
   background: #dcdcdc;
   color: #333333;
-  width:650px;
+  width:800px;
   padding:0;
 }
 
@@ -163,25 +163,26 @@ div.seq {
   float:left;
   background:#dcdcdc;
   color: #333333;
-  width:145px;
+  width:150px;
 }
 
 #cont {
-  width:495px;
+  width:650px;
   background:#ffffff;
   color: #333333;
   border:solid #000000;
   border-width:0 0 0 1px;
   text-align:left;
 }
-#cont {
-  width:495px;
+#cont-form {
+  width:650px;
   background:#ffffff;
   color: #333333;
   border:solid #000000;
   border-width:0 0 0 1px;
   text-align:left;
 }
+
 
 
 #ftr {

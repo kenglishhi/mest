@@ -1,18 +1,22 @@
 <div id="bodyblock" align="right">
   <%= render :partial => '/layouts/profile_menu' %>
-  <h3 align="center"> Welcome <%=current_user.full_name %>,</h3>
+
+<div id="cont">
+  <h3 align="center"> Welcome <%=current_user.full_name %></h3>
+  <% if current_user.avatar.exists? %>
   <%= image_tag(current_user.avatar.url(:thumb),:align => 'left') %>
+  <% end  %>
   <div>
     <dl class="info">
         <dt>Email:</dt><dd><%= current_user.email %></dd>
         <dt>Orgaziation :</dt><dd><%= current_user.organization %></dd>
     </dl>
-
+    <%= link_to "Edit", edit_user_path(@current_user) %>
 
 </div>
 
 
-
+<% unless current_user.fasta_files.empty? %>
  <div class='clearfix'>
     <h3>My Files</h3>
     <div class='active-scaffold'>
@@ -42,6 +46,7 @@
       </table>
     </div>
   </div>
+  <% end %>
   </p>
   <p>One drawback we see immediatly is getting equal heights for
     the left navigation div and right content div. The work around I
@@ -56,4 +61,5 @@
   <p>This template has been tested in:</p>
 
   <br />
+  </div>
 </div>

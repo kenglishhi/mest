@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090517231200) do
+ActiveRecord::Schema.define(:version => 20090830075146) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
@@ -54,6 +54,21 @@ ActiveRecord::Schema.define(:version => 20090517231200) do
     t.string   "output_content_type"
     t.integer  "output_file_size"
     t.integer  "biodatabase_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.string   "job_name"
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.boolean  "run_once"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
