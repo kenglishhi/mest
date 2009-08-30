@@ -1,4 +1,6 @@
 class FastaFilesController < ApplicationController
+
+  before_filter :clear_stored_location, :only => [:index]
   active_scaffold :fasta_files do |config|
 
     config.list.label = "Fasta Files"
@@ -12,26 +14,35 @@ class FastaFilesController < ApplicationController
 #    config.action_links.add "Blast", :parameters => {:controller => 'blast'},
 #    :action => 'index', :type => :table, :page => true
   end
+
   def create
     if request.post?
       logger.error("[kenglish] upload_many -- ")
-      params[:fasta_files].each do | image_param |
-        unless image_param[:uploaded_data].blank?
-          fasta_file = FastaFile.new
-          fasta_file.user = current_user
-          logger.error("[kenglish] uploaded data is #{image_param[:uploaded_data].inspect}")
-          fasta_file.fasta = image_param[:uploaded_data]
-          fasta_file.is_generated = false
-          fasta_file.save
+      if params[:fasta_files]
+        params[:fasta_files].each do | image_param |
+          unless image_param[:uploaded_data].blank?
+            fasta_file = FastaFile.new
+            fasta_file.user = current_user
+            logger.error("[kenglish] uploaded data is #{image_param[:uploaded_data].inspect}")
+            fasta_file.fasta = image_param[:uploaded_data]
+            fasta_file.is_generated = false
+            fasta_file.save
+          end
         end
       end
-      redirect_to :action => :index
+      redirect_back_or_default(:action => :index )
     end
   end
   def new
 
   end
   
+  def after_create_save(record)
+    logger.error("kenglish] called after_update_save " )
+
+    redirect_to users_path
+  end
+
   def extract_sequences
     fasta_file = FastaFile.find(params[:id])
     fasta_file.extract_sequences

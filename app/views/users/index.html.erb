@@ -16,10 +16,18 @@
 </div>
 
 
-<% unless current_user.fasta_files.empty? %>
  <div class='clearfix'>
-    <h3>My Files</h3>
+
     <div class='active-scaffold'>
+
+<div class="active-scaffold-header">
+
+  <div class="actions">
+      <%= link_to "Upload Files", new_fasta_file_path, :class => "new" %>
+  </div>
+
+<h3>My Files</h3>
+  </div>
       <table cellspacing="0" cellpadding="0">
         <thead>
           <tr>
@@ -28,9 +36,11 @@
             <th class='nolink'>Created at</th>
           </tr>
         </thead>
+<% unless current_user.fasta_files.empty? %>
+
         <tbody id="as_fasta_files-tbody" class="records">
           <% current_user.fasta_files.each do | fasta_file | %>
-            <tr class="profile-record ">
+            <tr class="<%= cycle("", "even-record")%> profile-record ">
               <td class="label-column ">
                 <%= fasta_file.label %>
               </td>
@@ -43,10 +53,10 @@
             </tr>
           <% end %>
         </tbody>
+  <% end %>
       </table>
     </div>
   </div>
-  <% end %>
   </p>
   <p>One drawback we see immediatly is getting equal heights for
     the left navigation div and right content div. The work around I

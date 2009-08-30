@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :store_location, :only => [:index]
   def index
   end
   def edit
