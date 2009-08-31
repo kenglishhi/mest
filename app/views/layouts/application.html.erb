@@ -17,7 +17,7 @@
 	<ul>
 		<li><%= link_to "<span>Home</span>", users_path %></li>
 		<li><%= link_to "<span>Fasta Files</span>", fasta_files_path %></li>
-		<li><%= link_to "<span>Users</span>", :controller => 'admin/users/', :action => :index %></li>
+		<li><%= link_to "<span>Users</span>", admin_users_path %></li>
   <% if logged_in? %>
    	<li><%= link_to "<span>Logout</span>", "/logout" %></li>
   <% else %>
