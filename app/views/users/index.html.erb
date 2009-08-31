@@ -1,25 +1,23 @@
-<div id="bodyblock" align="right">
+<% content_for :wrapper_menu_content do %>
   <%= render :partial => '/layouts/profile_menu' %>
+<% end %>
 
-<div id="cont">
   <h3 align="center"> Welcome <%=current_user.full_name %></h3>
   <% if current_user.avatar.exists? %>
   <%= image_tag(current_user.avatar.url(:thumb),:align => 'left') %>
   <% end  %>
-  <div>
-    <dl class="info">
+  <div id='user-profile-info'>
+    <dl class="user-profile-fields">
         <dt>Email:</dt><dd><%= current_user.email %></dd>
         <dt>Orgaziation :</dt><dd><%= current_user.organization %></dd>
     </dl>
-    <%= link_to "Edit", edit_user_path(@current_user) %>
+    <div id='edit-profile-link'>
+      <%= link_to "Edit My Profile", edit_user_path(@current_user) %>
+    </div>
 
-</div>
-
-
- <div class='clearfix'>
-
+   </div>
+  <div class='clearfix'>
     <div class='active-scaffold'>
-
 <div class="active-scaffold-header">
 
   <div class="actions">
@@ -57,19 +55,4 @@
       </table>
     </div>
   </div>
-  </p>
-  <p>One drawback we see immediatly is getting equal heights for
-    the left navigation div and right content div. The work around I
-    use for this is: whichever is likely to be the shortest (in
-    height) div, probably the left navigation div, set the background
-    of the #body div the same as this, also the border separating the
-  two divs - that should be on the right content div.</p>
-  <p>Another problem discovered recently was that when you use the
-    float property it can cause the floated divs to "jump out" of
-    their container block. The workaround I found for this was simply
-  to specify a height for the container div.</p>
-  <p>This template has been tested in:</p>
-
   <br />
-  </div>
-</div>

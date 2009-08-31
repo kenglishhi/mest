@@ -1,118 +1,72 @@
+<%= render :partial => '/layouts/profile_menu' %>
 
-<div id="bodyblock" align="right">
-  <%= render :partial => '/layouts/profile_menu' %>
-
-<div id="cont-form">
-<div class="active-scaffold">
-  <div class="update-view admin/users-view view">
+<h3>Update Profile: <%= @user.full_name %> </h3>
 <% form_for @user, :html => { :multipart => true }  do | f| %>
-
-      <h4>Update kenglish@gmail.com</h4>
-          <%= error_messages_for 'user'%>
-      <ol class="form">
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
-              <label for="record_email_2">Email</label>
-            </dt>
-            <dd>
-              <%= f.text_field :email, :class=> 'text-input' %>
-              <span class="description">minimum 6 characters</span>
-            </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
+<div id="user-profile-info">
+    <dl class="user-profile-fields">
+        <dt class='form-field'>
+         <label for="record_email_2">Email</label>
+        </dt>
+        <dd>
+          <%= f.text_field :email, :class=> 'text-input' %>
+          <span class="description">minimum 6 characters</span>
+        </dd>
+            <dt class='form-field'>
               <label for="record_first_name_2">First name</label>
             </dt>
             <dd>
               <%= f.text_field :first_name , :class=> 'text-input'  %>
             </dd>
-        </dl>  </li>
-        <li class="form-element">
-          <dl class="">
-            <dt>
+            <dt class='form-field'>
               <label for="record_last_name_2">Last name</label>
             </dt>
             <dd>
               <%= f.text_field :last_name , :class=> 'text-input' %>
             </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
+            <dt class='form-field'>
               <label for="record_mi_2">Mi</label>
             </dt>
             <dd>
               <%= f.text_field :mi , :class=> 'text-input' %>
             </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
+            <dt class='form-field'>
               <label for="record_title_2">Title</label>
             </dt>
             <dd>
               <%= f.text_field :title , :class=> 'text-input' %>
             </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
+            <dt class='form-field'>
               <label for="record_organization_2">Organization</label>
             </dt>
             <dd>
               <%= f.text_field :organization , :class=> 'text-input' %>
             </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
+            <dt class='form-field'>
               <label for="record_password_2">Password</label>
             </dt>
             <dd>
               <%= f.password_field :password, :class => "password-input text-input"  %>
               <span class="description">minimum 4 characters</span>
             </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
+            <dt class='form-field'>
               <label for="record_password_confirmation_2">Password confirmation</label>
             </dt>
             <dd>
               <%= f.password_field :password_confirmation , :class => "password-input text-input"  %>
             </dd>
-        </dl>  </li>
-        <li class="form-element">
-          <dl class="">
-            <dt>
+            <dt class='form-field'>
               <label for="record_password_confirmation_2">Avatar</label>
             </dt>
             <dd>
               <%= f.file_field :avatar %>
             </dd>
-        </dl>  </li>
-
-
-      </ol>
-
-
+         </dl>
       <p class="form-footer">
         <%= submit_tag 'Update' %>
         <%= link_to "Cancel", users_path, :class => 'cancel' %>
         <img style="visibility: hidden;" src="/images/active_scaffold/default/indicator.gif?1251613758" id="as_admin__users-update-2-loading-indicator" class="loading-indicator" alt="loading indicator"/>
       </p>
-  </div>
+
+</div>
 
 <% end %>
-</div>
-</div>
-</div>

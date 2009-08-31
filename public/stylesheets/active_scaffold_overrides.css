@@ -1,0 +1,12 @@
+/* kenglish customization begins here */
+.active-scaffold .view {
+  background-color: #E5F0FC;
+  padding: 4px;
+  border: solid 1px ;
+  boder-color: #CCCCCC #CCCCCC -moz-use-text-color
+}
+
+.active-scaffold h4,
+.active-scaffold h5 {
+    color:#5B8FBE ;
+}

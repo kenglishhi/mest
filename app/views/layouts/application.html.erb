@@ -1,47 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>BioFastaCoconutIsland</title>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="University of Hawaii Bioinformatics" />
+	<meta name="keywords" content="Bioinformatics BLAST" />
    <%= javascript_include_tag :defaults %>
    <%= active_scaffold_includes %>
-   <%= stylesheet_link_tag 'standard' %>
-    <!-- BEGIN additional_content_for_head -->
+   <%= stylesheet_link_tag 'style', 'active_scaffold_overrides' %>
     <%= yield :additional_content_for_head %>
-    <!-- END additional_content_for_head -->
 </head>
+
 <body>
 
-<div id="birhead">
-  <h1><%= link_to "BioFastaCoconutIsland", '/' %></h1>
-
-  <div id="birhead-info">
- <div id="top-left-menu"  class="birhead-link-menu">
-  </div>
-
-  <div id="top-right-menu"  class="birhead-link-menu">
-  <p> <span class="turbo-nag hidden" style="display: inline;">
-    <%= link_to "Fasta Files", fasta_files_path %>
-    |
+<div id="menu-top">
+	<ul>
+		<li><%= link_to "<span>Home</span>", users_path %></li>
+		<li><%= link_to "<span>Fasta Files</span>", fasta_files_path %></li>
+		<li><%= link_to "<span>Users</span>", :controller => 'admin/users/', :action => :index %></li>
   <% if logged_in? %>
-     <%= link_to current_user.full_name, '/' %>
-  <% end %> | 
-  <% if logged_in? %>
-      <%= link_to "Logout", "/logout" %>
+   	<li><%= link_to "<span>Logout</span>", "/logout" %></li>
   <% else %>
-      <%= link_to "Login", "/login" %>
+ 	  <li><%= link_to "<span>Login</span>", "/login" %></li>
   <% end %>
- 
-  </div>
-  </div>
-</div>
+
+	</ul>
+</div><!--menu-top-->
+
+<!-- mejobloggs: sorry about all these wrappers. It is a lot of structural markup .
+		If you know how to do this with less structural markup, contact my throught my
+		OWD user page: http://www.openwebdesign.org/userinfo.phtml?user=mejobloggs -->
+<div id="wrapper-header">
+<div id="header">
+<div id="wrapper-header2">
+<div id="wrapper-header3">
+  <h1><%= link_to "BioFastaCoconutIsland", '/' %></h1>
+</div><!--wrapper-header3-->
+</div><!--wrapper-header2-->
+</div><!--header-->
+</div><!--wrapper-header-->
+
+<div id="wrapper-content">
+
+  <%= yield :wrapper_menu_content %>
 
 
-<div id="content">
-<%= yield -%>
-</div>
+	<div id="content">
+  <%= yield -%>
+  </div><!--content-->
+</div><!--wrapper-content-->
+
+<div id="wrapper-footer">
+  <div id="footer">Copyright &copy; 2009 University of Hawaii:: Department of Information and Computer Sciences</div>
+</div><!--wrapper-footer-->
+
 </body>
-
-
+</html>

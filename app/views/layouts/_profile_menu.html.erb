@@ -1,9 +1,16 @@
-  <div id="l-col" align="center">
-    <h4 align="center">Menu</h4>
-    <%= link_to_unless_current "My Profile", users_path %> <br />
-    <a href="#">My Activities</a><br />
-    <a href="#">My Files</a><br />
-    <a href="#">Help</a><br />
-    <br />
-    </div>
+    <div id="wrapper-menu-page">
+    <div id="menu-page">
+      <h3>Menu</h3>
+      <ul>
+        <li> <%= link_to_unless_current "My Profile", users_path %> </li>
+        <li> <%= link_to_unless_current "My Activities", '/activities/'%> </li>
+        <li> <%= link_to_unless_current "My Tools", '/activities/'%> </li>
+      </ul>
 
+      <h3>Running Jobs</h3>
+      <ul>
+        <li><a href="#">Completed Jobs</a></li>
+      </ul>
+
+    </div><!--menu-page-->
+  </div><!--wrapper-menu-page-->
