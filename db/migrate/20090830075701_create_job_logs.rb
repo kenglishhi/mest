@@ -7,6 +7,7 @@ class CreateJobLogs < ActiveRecord::Migration
       t.decimal  :duration_in_seconds, :scale => 4, :precision => 10
       t.boolean  :success
       t.text     :message
+      t.integer :user_id
     end
 
   end

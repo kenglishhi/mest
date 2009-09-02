@@ -13,6 +13,7 @@ class CreateDelayedJobs < ActiveRecord::Migration
       t.boolean  "run_once"
       t.datetime "created_at"
       t.datetime "updated_at"
+      t.integer :user_id
     end
   end
 
