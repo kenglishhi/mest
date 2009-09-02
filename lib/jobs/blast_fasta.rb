@@ -7,7 +7,7 @@ class Jobs::BlastFasta < Jobs::AbstractJob
   def initialize
   end
 
-  def perform
+  def do_perform
     puts "Call Blast" 
     puts @job_config.inspect
     true

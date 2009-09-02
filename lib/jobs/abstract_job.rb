@@ -4,8 +4,8 @@ class Jobs::AbstractJob
     do_perform
   end
   
-#  include Jobs::Chainable
-#  include Jobs::Loggable
+  include Jobs::Chainable
+  include Jobs::Loggable
   
   protected
   
