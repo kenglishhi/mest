@@ -1,5 +1,7 @@
 class Jobs::AbstractJob
   
+  attr_accessor :user
+
   def perform
     do_perform
   end
