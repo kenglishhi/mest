@@ -1,7 +1,7 @@
 <% content_for :wrapper_menu_content do %>
   <%= render :partial => '/layouts/profile_menu' %>
 <% end %>
-
+<div id="user-profile-content">
   <h3 align="center"> Welcome <%=current_user.full_name %></h3>
   <% if current_user.avatar.exists? %>
   <%= image_tag(current_user.avatar.url(:thumb),:align => 'left') %>
@@ -56,3 +56,5 @@
     </div>
   </div>
   <br />
+
+</div>

@@ -14,7 +14,7 @@ body {
 
 /* Set the page width here */
 #menu-top, #header, #wrapper-content, #wrapper-footer {
-	width: 85%;
+	width: 95%;
 	margin: 0 auto;
 	text-align: left;
 }
@@ -93,7 +93,10 @@ body {
 
 #content {
 	background: transparent url('/images/bg02-white-right.png') no-repeat right top;
-	padding: 5px 245px 5px 40px;
+	padding: 5px 20px 5px 20px;
+}
+#user-profile-content {
+  padding: 0px 245px 0px 10px;
 }
 
 #wrapper-menu-page {
@@ -210,7 +213,6 @@ a:hover{ color: #666; text-decoration: none; }
 
 
 dl.user-profile-fields {
-  margin-bottom:50px;
 }
 
 dl.user-profile-fields dt {

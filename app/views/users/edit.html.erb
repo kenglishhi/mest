@@ -1,5 +1,6 @@
 <%= render :partial => '/layouts/profile_menu' %>
 
+<div id="user-profile-content">
 <h3>Update Profile: <%= @user.full_name %> </h3>
 <% form_for @user, :html => { :multipart => true }  do | f| %>
 <div id="user-profile-info">
@@ -49,13 +50,13 @@
               <span class="description">minimum 4 characters</span>
             </dd>
             <dt class='form-field'>
-              <label for="record_password_confirmation_2">Password confirmation</label>
+              <label for="record_password_confirmation_2">Confirm Password</label>
             </dt>
             <dd>
               <%= f.password_field :password_confirmation , :class => "password-input text-input"  %>
             </dd>
             <dt class='form-field'>
-              <label for="record_password_confirmation_2">Avatar</label>
+              <label for="record_avatar">Avatar</label>
             </dt>
             <dd>
               <%= f.file_field :avatar %>
@@ -70,3 +71,4 @@
 </div>
 
 <% end %>
+</div>
