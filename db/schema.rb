@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20090830075701) do
     t.boolean  "run_once"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "fasta_files", :force => true do |t|
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20090830075701) do
     t.decimal  "duration_in_seconds", :precision => 10, :scale => 4
     t.boolean  "success"
     t.text     "message"
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
