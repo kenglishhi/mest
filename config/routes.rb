@@ -7,7 +7,9 @@ ActionController::Routing::Routes.draw do |map|
 #  map.resources :adminusers, :controller => "admin/users", :active_scaffold => true
   map.resource :user_session
   map.resources :users
-  map.resources :jobs
+  map.resources :jobs, :active_scaffold => true
+  map.resources :job_logs, :active_scaffold => true
+
   map.resource :home
   map.namespace(:admin) do |admin|
     admin.resources :users
