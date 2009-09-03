@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20090830075701) do
 
   create_table "job_logs", :force => true do |t|
     t.string   "job_name"
+    t.string   "job_class_name"
     t.datetime "started_at"
     t.datetime "stopped_at"
     t.decimal  "duration_in_seconds", :precision => 10, :scale => 4

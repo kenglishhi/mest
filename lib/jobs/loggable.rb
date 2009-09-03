@@ -17,7 +17,8 @@ module Jobs::Loggable
       if e
         message = "#{e.message}\n#{e.backtrace.join("\n")}"
       end
-      JobLog.create!(:job_name => self.class.to_s,
+      JobLog.create!(:job_name => self.job_name,
+                     :job_class_name => self.class.to_s,
                      :started_at => started_at,
                      :stopped_at => stopped_at,
                      :duration_in_seconds => (stopped_at - started_at),
