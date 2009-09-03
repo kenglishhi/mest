@@ -3,7 +3,7 @@ namespace :data do
   desc "Load seed data"
   task :seed  => :environment  do
     User.destroy_all 
-    puts "Load seed data --- HERE"
+    puts "Loading seed data.... "
     user = User.create do |u|
       u.email = 'kenglish@gmail.com' 
       u.first_name = 'Kevin' 
@@ -14,7 +14,6 @@ namespace :data do
       u.password =  'kevin123'
       u.password_confirmation =  'kevin123'
     end
-      puts "created user #{user.errors.full_messages.to_sentence} "
   end
 end
 
