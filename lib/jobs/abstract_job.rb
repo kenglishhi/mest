@@ -1,7 +1,10 @@
 class Jobs::AbstractJob
   
   attr_accessor :user
-
+  attr_accessor :params
+  def initialize(p  = {} )
+    @params = p
+  end
   def perform
     do_perform
   end

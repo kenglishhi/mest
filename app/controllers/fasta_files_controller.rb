@@ -45,8 +45,13 @@ class FastaFilesController < ApplicationController
 
   def extract_sequences
     fasta_file = FastaFile.find(params[:id])
-    fasta_file.extract_sequences
-    render :inline => 'Extracted'    
+    extract_sequences_job = Jobs::ExtractSequences.new(:fasta_file_id => fasta_file.id)
+
+    Job.create(:job_name => "Extract Sequences #{fasta_file.fasta_file_name}",
+      :handler => extract_sequences_job,
+      :user => current_user)
+
+    render :inline => 'Queued to Extract'    
   end
 
 end
