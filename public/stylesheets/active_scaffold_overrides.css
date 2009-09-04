@@ -10,3 +10,36 @@
 .active-scaffold h5 {
     color:#5B8FBE ;
 }
+
+
+.active-scaffold tr.profile-record td {
+  padding: 5px 4px;
+  color: #333;
+  font-family: Verdana, sans-serif;
+  font-size: 11px;
+  background-color: #DCDCDC  ;
+  border-bottom: solid 1px #C5DBF7;
+  border-left: solid 1px #C5DBF7;
+}
+.active-scaffold tr.even-record td {
+  padding: 5px 4px;
+  color: #333;
+  font-family: Verdana, sans-serif;
+  font-size: 11px;
+  background-color: #FFF ;
+  border-bottom: solid 1px #C5DBF7;
+  border-left: solid 1px #C5DBF7;
+}
+
+.active-scaffold th.no-link {
+  font-family:arial,sans-serif;
+  font-size:11px;
+  font-size-adjust:none;
+  font-stretch:normal;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
+  line-height:normal;
+  color:#FFFFFF;
+}
+

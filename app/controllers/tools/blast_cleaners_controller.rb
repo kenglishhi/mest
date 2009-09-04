@@ -15,7 +15,7 @@ class Tools::BlastCleanersController < ApplicationController
     Job.create(:job_name => job_name,
       :handler => job_handler,
       :user => current_user)
-
+    redirect_back_or_default biodatabases_path
   end
 
 end

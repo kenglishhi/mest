@@ -3,7 +3,7 @@ module BiodatabasesHelper
   def biodatabase_type_column(record)
    if record.biodatabase_type.name == "UPLOADED-RAW" and record.children.empty?
     record.biodatabase_type.name + "  "  +
-			link_to("Clean the File", new_blast_cleaner_path(:biodatabase_id => record.id))
+			link_to("Clean the File", new_tools_blast_cleaner_path(:biodatabase_id => record.id))
    else
     record.biodatabase_type.name
    end

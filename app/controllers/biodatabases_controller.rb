@@ -1,5 +1,6 @@
 class BiodatabasesController < ApplicationController
 
+  before_filter :clear_stored_location, :only => [:index]
   active_scaffold :biodatabases do |config|
     config.list.label = "Databases"
     config.columns = [:name, :biodatabase_type, :parent]

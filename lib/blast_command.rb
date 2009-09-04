@@ -1,13 +1,15 @@
 class BlastCommand 
-  has_attached_file :output
 
   attr_accessor :test_fasta_file
   attr_accessor :target_fasta_files
+  attr_accessor :target_fasta_file
   attr_accessor :biodatabase
   attr_accessor :biodatabase_type
+  attr_accessor :biodatabase_name
 
   attr_accessor :matches
   attr_accessor :number_of_fastas
+  attr_accessor :params
 #  before_validation_on_create :check_for_clean_upload_type
 #
 #  def check_for_clean_upload_type
@@ -20,6 +22,10 @@ class BlastCommand
 #      end
 #    end
 #  end
+  def initialize(p={})
+    @params = p
+    @target_fasta_files = []
+  end
 
   def run
     if biodatabase_type.name == "UPLOADED-CLEANED"
@@ -31,7 +37,7 @@ class BlastCommand
 
   def run_clean
     options={}
-    options[:evalue] = self.evalue || 0.001
+    options[:evalue] = @params[:evalue] || 0.001
     #    target_fasta_file.sequences
     self.target_fasta_file = test_fasta_file
 
@@ -65,9 +71,9 @@ class BlastCommand
 #    logger.error( "[kenglish] result sequences = #{result_biodatabase.biosequences.inspect} ")
     result_biodatabase.save
 #    logger.error( "[kenglish] result_biodatabase.errors.full_messages.to_sentence #{result_biodatabase.errors.full_messages.to_sentence} ")
-    self.biodatabase_id = result_biodatabase.id
-    save
-    logger.error("[kenglish] saved self.biodatabase.id = #{self.biodatabase.id} " )
+#    self.biodatabase_id = result_biodatabase.id
+#    save
+    puts"[kenglish] saved self.biodatabase.id = #{result_biodatabase.id} " 
 
   end
   def run_command
@@ -162,7 +168,7 @@ class BlastCommand
 
   def exec_command(options)
     command = " blastall -p blastn -i #{test_fasta_file.fasta.path} -d #{target_fasta_file.fasta.path} -e #{options[:evalue]}  -b 20 -v 20 "
-    output_file_handle = Tempfile.new("blastout_#{id}")
+    output_file_handle = Tempfile.new("blastout_xkcd")
     output_file_handle.close(false)
     command <<  "-o  #{output_file_handle.path} "
    #    puts "[kenglish] output_file_handle.path = #{output_file_handle.path} "
@@ -171,11 +177,11 @@ class BlastCommand
    system(*command)
    #    puts "output_file_handle.path = #{output_file_handle.path}"
     output_file_handle.close
-    new_output_file_name = "#{biodatabase_name}_blast_output.txt"
-    FileUtils.cp(output_file_handle.path,new_output_file_name)
+#    new_output_file_name = "#{biodatabase_name}_blast_output.txt"
+#    FileUtils.cp(output_file_handle.path,new_output_file_name)
    #    puts "new_output_file_name.path = #{new_output_file_name}"
-    self.output = File.open(new_output_file_name)
-    self.save
+#    self.output = File.open(new_output_file_name)
+#    self.save
     #    puts "self.output.path = #{self.output.path}"
     output_file_handle
 

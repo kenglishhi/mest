@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   active_scaffold :users do |config|
-    non_editable = [:current_login_at, :current_login_ip, :last_login_at, :last_login_ip, :last_request_at, :token_expires_at]
+    non_editable = [:current_login_at, :current_login_ip, :last_login_at,
+      :last_login_ip, :last_request_at, :token_expires_at,:fasta_files,:job_logs,:jobs]
 
     config.list.columns = [:avatar,:full_name,
       :email,:current_login_at, :current_login_ip,
@@ -15,8 +16,7 @@ class Admin::UsersController < ApplicationController
 
     config.columns.exclude :crypted_password, :password_salt, :persistence_token, :perishable_token, :password, :single_access_token
 
-    config.create.columns.add :password, :password_confirmation
-    config.create.columns.exclude non_editable
+    config.create.columns = [:email, :first_name, :mi, :last_name, :password, :password_confirmation]
     config.update.columns.add :password, :password_confirmation
     config.update.columns.exclude non_editable
   end

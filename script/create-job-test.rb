@@ -1,4 +1,3 @@
-
 do_nada = Jobs::DoNada.new({
   'config1' => 'value1', 'config2' => 'value2',
   'config3' => 'value3',
