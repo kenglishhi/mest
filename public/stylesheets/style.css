@@ -39,6 +39,7 @@ body {
 	float: left;
 }
 
+
 #menu-top a {
 	float: left;
 	background:url(/images/menuleft.png) no-repeat left top;
@@ -69,6 +70,37 @@ body {
 
 #menu-top a:hover { background-position:0% -42px; }
 #menu-top a:hover span {	background-position:100% -42px; }
+.nav .sub ul {
+	/*width: 648px;*/
+	height: 38px;
+	float: left;
+	margin: 0;
+	padding-top: 3px;
+	list-style: none;
+	font-size: 15px;
+}
+.nav .sub li {
+	float: left;
+	padding: 0 7px;
+	background: url(images/split.png) no-repeat right center;
+	position: relative;
+	z-index: 1;
+}
+
+.nav li:hover .sub,
+.nav li.hover .sub {
+  display:block;
+}
+.nav li .sub {
+  display: none;
+  position: absolute;
+  top: 27px;
+  left: 6px;
+  background: url(images/submenu_top.png) no-repeat;
+  width: 186px;
+  padding-top: 9px;
+}
+
 
 #wrapper-header {	background: transparent url('/images/bg.png') top center repeat-x; }
 
@@ -232,4 +264,32 @@ dl.user-profile-fields dt.form-field {
 
 
 dl.user-profie-fields dd {
+}
+.nav li:hover .sub,
+.nav li.hover .sub {
+	display:block;
+}
+.nav li .sub {
+	display: none;
+	position: absolute;
+	top: 27px;
+	left: 6px;
+	background: url(images/submenu_top.png) no-repeat;
+	width: 186px;
+	padding-top: 9px;
+}
+
+.nav li a {
+  display: block;
+  line-height: 38px;
+  overflow: hidden;
+  float: left;
+}
+
+.nav .btm-bg {
+	background: url(images/submenu_bottom.png) no-repeat;
+	width: 205px;
+	height: 9px;
+	overflow: hidden;
+	clear: both;
 }

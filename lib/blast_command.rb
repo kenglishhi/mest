@@ -1,32 +1,25 @@
-class BlastCommand < ActiveRecord::Base
+class BlastCommand 
   has_attached_file :output
 
-  belongs_to :test_fasta_file, :class_name => 'FastaFile', :foreign_key => 'test_fasta_file_id'
-  belongs_to :target_fasta_file,    :class_name => 'FastaFile', :foreign_key => 'target_fasta_file_id'
-  belongs_to :biodatabase
-  belongs_to :biodatabase_type
-
-  validates_presence_of :biodatabase_type_id
-  validates_presence_of :biodatabase_name
-  validates_presence_of :test_fasta_file_id
-  #  validates_presence_of :target_fasta_file_id
-  validates_presence_of :evalue
-
+  attr_accessor :test_fasta_file
+  attr_accessor :target_fasta_files
+  attr_accessor :biodatabase
+  attr_accessor :biodatabase_type
 
   attr_accessor :matches
   attr_accessor :number_of_fastas
-  before_validation_on_create :check_for_clean_upload_type
-
-  def check_for_clean_upload_type
-    if !biodatabase_type.nil? &&  biodatabase_type.name == "UPLOADED-CLEANED"
-      test_fasta_file ?  target_fasta_file_id = test_fasta_file.id : target_fasta_file_id =  test_fasta_file_id
-      if biodatabase_name.blank?
-        self.biodatabase_name =""
-        self.biodatabase_name << (test_fasta_file ?  test_fasta_file.label : FastaFile.find(test_fasta_file_id).label)
-        self.biodatabase_name << "-CLEANED"
-      end
-    end
-  end
+#  before_validation_on_create :check_for_clean_upload_type
+#
+#  def check_for_clean_upload_type
+#    if !biodatabase_type.nil? &&  biodatabase_type.name == "UPLOADED-CLEANED"
+#      test_fasta_file ?  target_fasta_file_id = test_fasta_file.id : target_fasta_file_id =  test_fasta_file_id
+#      if biodatabase_name.blank?
+#        self.biodatabase_name =""
+#        self.biodatabase_name << (test_fasta_file ?  test_fasta_file.label : FastaFile.find(test_fasta_file_id).label)
+#        self.biodatabase_name << "-CLEANED"
+#      end
+#    end
+#  end
 
   def run
     if biodatabase_type.name == "UPLOADED-CLEANED"
