@@ -25,8 +25,10 @@ class FastaFile < ActiveRecord::Base
     if fasta  
       unless self.biodatabase
         transaction do
+          puts "[kenglish] user_id = #{self.user_id}"
           self.biodatabase = Biodatabase.new(:name => File.basename(label),
             :fasta_file => self,
+            :user => self.user,
             :biodatabase_type => BiodatabaseType.find_by_name('UPLOADED-RAW') )
           self.biodatabase.save!
 

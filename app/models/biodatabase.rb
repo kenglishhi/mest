@@ -2,6 +2,7 @@ class Biodatabase < ActiveRecord::Base
 	acts_as_tree
   belongs_to :biodatabase_type
   belongs_to :fasta_file
+  belongs_to :user
 	has_many :biodatabase_biosequences, :dependent => :destroy
   has_many :biosequences, :through => :biodatabase_biosequences
   validates_presence_of :name
