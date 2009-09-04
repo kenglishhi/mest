@@ -1,3 +1,4 @@
+require 'pp'
 class Jobs::AbstractJob
   
   attr_accessor :user
@@ -8,6 +9,8 @@ class Jobs::AbstractJob
     @job_name = n
   end
   def perform
+    puts "Running #{@job_name} with :"
+    pp params
     do_perform
   end
   
