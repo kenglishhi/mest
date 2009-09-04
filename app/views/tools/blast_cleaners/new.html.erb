@@ -1,0 +1,44 @@
+<div class="active-scaffold active-scaffold-blast blast-view default-theme">
+<% form_tag :action => 'create' do |f | -%>
+  <%= error_messages_for :blast_command  %>
+  <%= error_messages_for :term  %>
+<div class="new-view blast-view view">
+  <h4>Clean Raw Files with Blast </h4>
+<div class="messages-container" id="blast-create--messages"/>
+<table class='blast-main-form-table' border=1  >
+<tr><td>
+	<table class='blast-sub-form-table' >
+    <%= hidden_field_tag :biodatabase_id, (@biodatabase ?  @biodatabase.id : nil) %>
+	<tr>
+		<th>Test File</th>
+		<td> <%= select_tag  :fasta_file_id, options_for_select(@fasta_file_options,
+      @biodatabase ?   @biodatabase.fasta_file_id : nil) %></td>
+	</tr>
+  <tr>
+		<th>E Value</th>
+		<td><%= text_field_tag :evalue%></td>
+	</tr>
+	<tr>
+		<th>Identity</th>
+		<td><%= text_field_tag :identity  %></td>
+	</tr>
+	<tr>
+		<th>Score</th>
+		<td><%= text_field_tag :score  %></td>
+	</tr>
+
+</table>
+</td></tr>
+<tr><td colspan=2>
+  <p class="form-footer">
+    <%= submit_tag 'Run Query', :class => 'submit' %>
+  </p>
+  <p class="form-footer">
+		This will removed matching sequences creat
+  </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+  <% end -%>
