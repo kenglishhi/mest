@@ -12,6 +12,7 @@ class BlastCommand
   attr_accessor :matches
   attr_accessor :number_of_fastas
   attr_accessor :params
+
   #  before_validation_on_create :check_for_clean_upload_type
   #
   #  def check_for_clean_upload_type
@@ -27,36 +28,33 @@ class BlastCommand
   def initialize(p={})
     @params = p
     @target_fasta_files = []
-  end
-
-  def run
-    if biodatabase_type.name == "UPLOADED-CLEANED"
-      run_clean
-    else
-      run_command
-    end
+    @blast_result = p[:blast_result]
   end
 
   def run_clean
-    raise "output_biodatabase can not be nil" unless output_biodatabase
-    options={}
-    options[:evalue] = @params[:evalue] || 0.001
-    #    target_fasta_file.sequences
-    self.target_fasta_file = test_fasta_file
 
+    raise "output_biodatabase can not be nil" unless output_biodatabase
+    target_fasta_file = test_fasta_file
     test_fasta_file.extract_sequences if !test_fasta_file.is_generated && test_fasta_file.biodatabase.nil?
     target_fasta_file.formatdb
 
-    output_file_handle = exec_command(options)
+    options={}
+    options[:evalue] = @params[:evalue] || 0.001
+
+    output_file_handle = execute_blast_command(options)
     output_file_handle.open
+
     result_ff = Bio::FlatFile.open(output_file_handle)
     @matches = test_fasta_file.biodatabase.biosequences.size
-    @number_of_fastas = 1
+
+    # Copy the sequences to the output_database
     output_biodatabase.parent = test_fasta_file.biodatabase 
     test_fasta_file.biodatabase.biosequences.each do | row |
       output_biodatabase.biosequences << row
     end
     output_biodatabase.save
+
+    # Remove any hits
     result_ff.each do |report|
       test_biosequence = Biosequence.find_by_name(report.query_def)
       if output_biodatabase.biosequences.include? test_biosequence
@@ -69,14 +67,21 @@ class BlastCommand
         end
       end
     end
-    #    logger.error( "[kenglish] result sequences = #{output_biodatabase.biosequences.inspect} ")
+
     output_biodatabase.save
+#    output_file_handle.close
     #    logger.error( "[kenglish] output_biodatabase.errors.full_messages.to_sentence #{output_biodatabase.errors.full_messages.to_sentence} ")
     #    self.biodatabase_id = output_biodatabase.id
     #    save
     puts"[kenglish] saved self.biodatabase.id = #{output_biodatabase.id} "
 
   end
+  def  save_blast_result(output_file_handle)
+#    if @blast_result
+#    end
+
+  end
+
   def run_command
     options={}
     options[:evalue] = self.evalue || 0.001
@@ -85,7 +90,7 @@ class BlastCommand
     target_fasta_file.extract_sequences if !target_fasta_file.is_generated && target_fasta_file.biodatabase.nil?
     target_fasta_file.formatdb
 
-    output_file_handle = exec_command(options)
+    output_file_handle = execute_blast_command(options)
     output_file_handle.open
     result_ff = Bio::FlatFile.open(output_file_handle)
     @matches = 0
@@ -166,7 +171,7 @@ class BlastCommand
 
   private
 
-  def exec_command(options)
+  def execute_blast_command(options)
     command = " blastall -p blastn -i #{test_fasta_file.fasta.path} -d #{target_fasta_file.fasta.path} -e #{options[:evalue]}  -b 20 -v 20 "
     output_file_handle = Tempfile.new("blastout_xkcd")
     output_file_handle.close(false)
@@ -182,7 +187,7 @@ class BlastCommand
     #    puts "new_output_file_name.path = #{new_output_file_name}"
     #    self.output = File.open(new_output_file_name)
     #    self.save
-    #    puts "self.output.path = #{self.output.path}"
+    puts "self.output.path = #{self.output.path}"
     output_file_handle
 
   end

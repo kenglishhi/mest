@@ -1,0 +1,2 @@
+class BlastResultsController < ApplicationController
+end
