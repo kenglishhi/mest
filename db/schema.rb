@@ -59,14 +59,13 @@ ActiveRecord::Schema.define(:version => 20090903233447) do
   end
 
   create_table "blast_results", :force => true do |t|
-    t.string   "title"
-    t.string   "job_log_id"
+    t.string   "name"
     t.string   "output_file_name"
     t.string   "output_content_type"
     t.integer  "output_file_size"
-    t.datetime "job_start_time"
-    t.datetime "job_end_time"
-    t.integer  "execution_time_msec"
+    t.datetime "started_at"
+    t.datetime "stopped_at"
+    t.decimal  "duration_in_seconds", :precision => 10, :scale => 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,5 +1,5 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
-class JobLogTest < ActiveSupport::TestCase
+class JobTest < ActiveSupport::TestCase
   should_belong_to :user
 end

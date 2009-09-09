@@ -1,9 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class FastaFileTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
+
+  should_have_attached_file :fasta
   should_belong_to :user
-  test "the truth" do
-    assert true
-  end
+  should_have_one :biodatabase
+
+  should_validate_uniqueness_of :label
 end
+

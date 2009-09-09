@@ -4,6 +4,7 @@ class BlastCommand
   attr_accessor :target_fasta_files
   attr_accessor :target_fasta_file
   attr_accessor :output_biodatabase
+  attr_accessor :blast_result
 
   attr_accessor :biodatabase
   attr_accessor :biodatabase_type
@@ -13,67 +14,65 @@ class BlastCommand
   attr_accessor :number_of_fastas
   attr_accessor :params
 
-  #  before_validation_on_create :check_for_clean_upload_type
-  #
-  #  def check_for_clean_upload_type
-  #    if !biodatabase_type.nil? &&  biodatabase_type.name == "UPLOADED-CLEANED"
-  #      test_fasta_file ?  target_fasta_file_id = test_fasta_file.id : target_fasta_file_id =  test_fasta_file_id
-  #      if biodatabase_name.blank?
-  #        self.biodatabase_name =""
-  #        self.biodatabase_name << (test_fasta_file ?  test_fasta_file.label : FastaFile.find(test_fasta_file_id).label)
-  #        self.biodatabase_name << "-CLEANED"
-  #      end
-  #    end
-  #  end
   def initialize(p={})
     @params = p
     @target_fasta_files = []
-    @blast_result = p[:blast_result]
   end
 
   def run_clean
+    raise "output_biodatabase can to be nil" unless @output_biodatabase
 
-    raise "output_biodatabase can not be nil" unless output_biodatabase
-    target_fasta_file = test_fasta_file
-    test_fasta_file.extract_sequences if !test_fasta_file.is_generated && test_fasta_file.biodatabase.nil?
-    target_fasta_file.formatdb
+    @target_fasta_file = @test_fasta_file
+    @test_fasta_file.extract_sequences if !@test_fasta_file.is_generated && @test_fasta_file.biodatabase.nil?
+    @target_fasta_file.formatdb
 
     options={}
     options[:evalue] = @params[:evalue] || 0.001
 
+    @blast_result = BlastResult.new(:name => "#{@output_biodatabase.name} Blast Result",
+      :started_at => Time.now
+    )
     output_file_handle = execute_blast_command(options)
     output_file_handle.open
 
-    result_ff = Bio::FlatFile.open(output_file_handle)
-    @matches = test_fasta_file.biodatabase.biosequences.size
+    @blast_result.stopped_at = Time.now
+    @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)
+#    @blast_result.output= output_file_handle
+    @blast_result.save!
 
-    # Copy the sequences to the output_database
-    output_biodatabase.parent = test_fasta_file.biodatabase 
-    test_fasta_file.biodatabase.biosequences.each do | row |
-      output_biodatabase.biosequences << row
+    result_ff = Bio::FlatFile.open(output_file_handle)
+    @matches = @test_fasta_file.biodatabase.biosequences.size
+
+    # Copy the sequences to the output_biodatabase
+    @output_biodatabase.parent = @test_fasta_file.biodatabase
+    @test_fasta_file.biodatabase.biosequences.each do | row |
+      @output_biodatabase.biosequences << row
     end
-    output_biodatabase.save
+    @output_biodatabase.save
 
     # Remove any hits
     result_ff.each do |report|
       test_biosequence = Biosequence.find_by_name(report.query_def)
-      if output_biodatabase.biosequences.include? test_biosequence
+      if @output_biodatabase.biosequences.include? test_biosequence
         report.each do |hit|
           unless hit.target_def == report.query_def
             target_biosequence = Biosequence.find_by_name(hit.target_def)
             @matches = @matches - 1
-            output_biodatabase.biosequences.delete( target_biosequence )
+            @output_biodatabase.biosequences.delete( target_biosequence )
           end
         end
       end
     end
 
-    output_biodatabase.save
+    @output_biodatabase.save
+    @blast_result.output= output_file_handle
+    @blast_result.save!
+    puts"[kenglish] saved self.biodatabase.id = #{output_biodatabase.id} "
+    @blast_result
 #    output_file_handle.close
     #    logger.error( "[kenglish] output_biodatabase.errors.full_messages.to_sentence #{output_biodatabase.errors.full_messages.to_sentence} ")
     #    self.biodatabase_id = output_biodatabase.id
     #    save
-    puts"[kenglish] saved self.biodatabase.id = #{output_biodatabase.id} "
 
   end
   def  save_blast_result(output_file_handle)
@@ -82,57 +81,57 @@ class BlastCommand
 
   end
 
-  def run_command
-    options={}
-    options[:evalue] = self.evalue || 0.001
-
-    test_fasta_file.extract_sequences if !test_fasta_file.is_generated && test_fasta_file.biodatabase.nil?
-    target_fasta_file.extract_sequences if !target_fasta_file.is_generated && target_fasta_file.biodatabase.nil?
-    target_fasta_file.formatdb
-
-    output_file_handle = execute_blast_command(options)
-    output_file_handle.open
-    result_ff = Bio::FlatFile.open(output_file_handle)
-    @matches = 0
-    @number_of_fastas = 0
-
-    transaction do
-      output_biodatabase = Biodatabase.new(:name => biodatabase_name,
-        :biodatabase_type_id =>  biodatabase_type_id,
-        :parent => test_fasta_file.biodatabase)
-      output_biodatabase.save
-
-      self.biodatabase_id = output_biodatabase.id
-      save
-
-      match_biodatabase_type = BiodatabaseType.find_by_name("GENERATED-MATCH")
-      result_ff.each do |report|
-        test_biosequence = Biosequence.find_by_name(report.query_def)
-
-        first_flag = true
-        child_biodatabase =nil
-        report.each do |hit|
-          if first_flag
-            @number_of_fastas += 1
-            child_biodatabase = Biodatabase.new(:name => "#{output_biodatabase.name } #{@number_of_fastas}",
-              :biodatabase_type => match_biodatabase_type,
-              :parent => output_biodatabase)
-
-            child_biodatabase.biosequences << test_biosequence
-            first_flag = false
-          end
-          @matches += 1
-          target_biosequence = Biosequence.find_by_name(hit.target_def)
-          child_biodatabase.biosequences << target_biosequence
-        end
-        child_biodatabase.save unless child_biodatabase.nil? # no matches
-        return
-      end
-      output_biodatabase.save
-      puts "[kenglish] saved new database #{output_biodatabase.name} ( #{output_biodatabase.id} ) "
-    end
-    true
-  end
+#  def run_command
+#    options={}
+#    options[:evalue] = self.evalue || 0.001
+#
+#    test_fasta_file.extract_sequences if !test_fasta_file.is_generated && test_fasta_file.biodatabase.nil?
+#    target_fasta_file.extract_sequences if !target_fasta_file.is_generated && target_fasta_file.biodatabase.nil?
+#    target_fasta_file.formatdb
+#
+#    output_file_handle = execute_blast_command(options)
+#    output_file_handle.open
+#    result_ff = Bio::FlatFile.open(output_file_handle)
+#    @matches = 0
+#    @number_of_fastas = 0
+#
+#    transaction do
+#      output_biodatabase = Biodatabase.new(:name => biodatabase_name,
+#        :biodatabase_type_id =>  biodatabase_type_id,
+#        :parent => test_fasta_file.biodatabase)
+#      output_biodatabase.save
+#
+#      self.biodatabase_id = output_biodatabase.id
+#      save
+#
+#      match_biodatabase_type = BiodatabaseType.find_by_name("GENERATED-MATCH")
+#      result_ff.each do |report|
+#        test_biosequence = Biosequence.find_by_name(report.query_def)
+#
+#        first_flag = true
+#        child_biodatabase =nil
+#        report.each do |hit|
+#          if first_flag
+#            @number_of_fastas += 1
+#            child_biodatabase = Biodatabase.new(:name => "#{output_biodatabase.name } #{@number_of_fastas}",
+#              :biodatabase_type => match_biodatabase_type,
+#              :parent => output_biodatabase)
+#
+#            child_biodatabase.biosequences << test_biosequence
+#            first_flag = false
+#          end
+#          @matches += 1
+#          target_biosequence = Biosequence.find_by_name(hit.target_def)
+#          child_biodatabase.biosequences << target_biosequence
+#        end
+#        child_biodatabase.save unless child_biodatabase.nil? # no matches
+#        return
+#      end
+#      output_biodatabase.save
+#      puts "[kenglish] saved new database #{output_biodatabase.name} ( #{output_biodatabase.id} ) "
+#    end
+#    true
+#  end
 
 
   def create_fastas
@@ -172,8 +171,8 @@ class BlastCommand
   private
 
   def execute_blast_command(options)
-    command = " blastall -p blastn -i #{test_fasta_file.fasta.path} -d #{target_fasta_file.fasta.path} -e #{options[:evalue]}  -b 20 -v 20 "
-    output_file_handle = Tempfile.new("blastout_xkcd")
+    command = " blastall -p blastn -i #{@test_fasta_file.fasta.path} -d #{@target_fasta_file.fasta.path} -e #{options[:evalue]}  -b 20 -v 20 "
+    output_file_handle = Tempfile.new("#{@output_biodatabase.name}_Blast_Result.txt")
     output_file_handle.close(false)
     command <<  "-o  #{output_file_handle.path} "
     #    puts "[kenglish] output_file_handle.path = #{output_file_handle.path} "
@@ -187,9 +186,8 @@ class BlastCommand
     #    puts "new_output_file_name.path = #{new_output_file_name}"
     #    self.output = File.open(new_output_file_name)
     #    self.save
-    puts "self.output.path = #{self.output.path}"
+    puts "self.output.path = #{output_file_handle.inspect}"
     output_file_handle
-
   end
   #
 end

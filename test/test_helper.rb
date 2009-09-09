@@ -36,10 +36,10 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
 class FastaFile < ActiveRecord::Base
   has_attached_file :fasta, :path => ":rails_root/test/fixtures/files/:class/:attachment/:id/:basename.:extension"
 end
-class BlastCommand < ActiveRecord::Base
+class BlastResult < ActiveRecord::Base
   has_attached_file :output, :path => ":rails_root/test/fixtures/files/:class/:attachment/:id/:basename.:extension"
 end
-

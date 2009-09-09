@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :blast_results
+  map.resources :blast_results, :active_scaffold => true
   map.resources :blasts
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -5,8 +5,8 @@ class Jobs::AbstractJob
   attr_accessor :job_name
   attr_accessor :params
   def initialize(n, p  = {} )
-    @params = p
     @job_name = n
+    @params = p
   end
   def perform
     puts "Running #{@job_name} with :"

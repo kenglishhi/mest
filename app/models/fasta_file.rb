@@ -1,8 +1,10 @@
 class FastaFile < ActiveRecord::Base
   has_attached_file :fasta
-  validates_uniqueness_of :label
   has_one :biodatabase
   belongs_to :user
+
+  validates_uniqueness_of :label
+
   before_validation :set_label
   before_destroy :remove_fasta_dbs
 
