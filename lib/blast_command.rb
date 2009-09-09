@@ -38,7 +38,6 @@ class BlastCommand
     @blast_result.stopped_at = Time.now
     @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)
 #    @blast_result.output= output_file_handle
-    @blast_result.save!
 
     result_ff = Bio::FlatFile.open(output_file_handle)
     @matches = @test_fasta_file.biodatabase.biosequences.size
@@ -67,7 +66,6 @@ class BlastCommand
     @output_biodatabase.save
     @blast_result.output= output_file_handle
     @blast_result.save!
-    puts"[kenglish] saved self.biodatabase.id = #{output_biodatabase.id} "
     @blast_result
 #    output_file_handle.close
     #    logger.error( "[kenglish] output_biodatabase.errors.full_messages.to_sentence #{output_biodatabase.errors.full_messages.to_sentence} ")
@@ -175,18 +173,8 @@ class BlastCommand
     output_file_handle = Tempfile.new("#{@output_biodatabase.name}_Blast_Result.txt")
     output_file_handle.close(false)
     command <<  "-o  #{output_file_handle.path} "
-    #    puts "[kenglish] output_file_handle.path = #{output_file_handle.path} "
-    #    puts "[kenglish]--------------------- "
-    #    puts "[kenglish] command = #{command} "
     system(*command)
-    #    puts "output_file_handle.path = #{output_file_handle.path}"
     output_file_handle.close
-    #    new_output_file_name = "#{biodatabase_name}_blast_output.txt"
-    #    FileUtils.cp(output_file_handle.path,new_output_file_name)
-    #    puts "new_output_file_name.path = #{new_output_file_name}"
-    #    self.output = File.open(new_output_file_name)
-    #    self.save
-    puts "self.output.path = #{output_file_handle.inspect}"
     output_file_handle
   end
   #

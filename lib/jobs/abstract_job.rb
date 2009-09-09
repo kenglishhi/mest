@@ -10,7 +10,6 @@ class Jobs::AbstractJob
   end
   def perform
     puts "Running #{@job_name} with :"
-    pp params
     do_perform
   end
   

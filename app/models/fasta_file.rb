@@ -59,6 +59,7 @@ class FastaFile < ActiveRecord::Base
       args = " -i #{fasta.path} -p F -o F -n #{fasta.path} "
       puts "[kenglish] HELLO KEVIN  #{fasta.path} args = #{args}"
       Paperclip.run "formatdb",  args
+      puts "[kenglish] Ran format db"
     end
   end
 
