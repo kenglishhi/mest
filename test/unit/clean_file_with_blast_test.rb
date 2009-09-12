@@ -7,6 +7,7 @@ class CleanFileWithBlastTest < ActiveSupport::TestCase
 
       fasta_file = FastaFile.new
       fasta_file.fasta = tempfile
+      fasta_file.project = projects(:projects_001)
       assert fasta_file.save, "Saving fasta file should succeed #{fasta_file.errors.full_messages.to_sentence}"
       assert File.exists?( fasta_file.fasta.path ), "File should exist after create"
       @job =  Jobs::CleanFileWithBlast.new("Clean #{fasta_file.label}",

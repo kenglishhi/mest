@@ -5,8 +5,6 @@ class Biodatabase < ActiveRecord::Base
   belongs_to :fasta_file
   belongs_to :user
 
-  belongs_to :project
-
 	has_many :biodatabase_biosequences, :dependent => :destroy
   has_many :biosequences, :through => :biodatabase_biosequences
 

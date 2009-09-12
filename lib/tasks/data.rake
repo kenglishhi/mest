@@ -16,12 +16,13 @@ namespace :data do
       u.password_confirmation =  'kevin123'
     end
 
-    user = User.create do |u|
+    xavier_user = User.create do |u|
       u.email = 'pochon@hawaii.edu' 
       u.first_name = 'Xavier' 
       u.last_name = 'Pochon' 
       u.mi = '' 
       u.title = '' 
+      u.avatar = File.new(File.dirname(__FILE__) + '/../../test/fixtures/files/tigershark.jpg')
       u.password =  'xavier123'
       u.password_confirmation =  'xavier123'
     end
@@ -33,6 +34,7 @@ namespace :data do
       u.mi = '' 
       u.title = '' 
       u.password =  'poisson123'
+      u.avatar = File.new(File.dirname(__FILE__) + '/../../test/fixtures/files/poisson.jpg')
       u.password_confirmation =  'poisson123'
     end
 
@@ -42,9 +44,25 @@ namespace :data do
       u.last_name = 'Putnam' 
       u.mi = '' 
       u.title = '' 
+      u.avatar = File.new(File.dirname(__FILE__) + '/../../test/fixtures/files/dolphin.jpg')
       u.password =  'hollie123'
       u.password_confirmation =  'hollie123'
     end
+
+    project = Project.create do |p|
+      p.name = 'Default Project 1'
+      p.description = 'This is the default system project, please rename it.'
+      p.user = xavier_user
+    end
+
+    BiodatabaseGroup.create do |d|
+      d.name = 'Default Database Group 1'
+      d.description = 'This is the default database group.'
+      d.user = xavier_user
+      d.project = project
+    end
+
+
 
   end
 end

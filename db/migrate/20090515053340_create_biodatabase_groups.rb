@@ -4,6 +4,8 @@ class CreateBiodatabaseGroups < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.integer :user_id
+      t.integer :project_id
+      t.integer :parent_id
       t.timestamps
     end
   end

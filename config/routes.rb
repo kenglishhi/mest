@@ -1,8 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :biodatabase_groups
-
-  map.resources :projects
-
+  map.resources :biodatabase_groups, :active_scaffold => true
+  map.resources :projects, :active_scaffold => true
   map.resources :blast_results, :active_scaffold => true
   map.resources :blasts
 

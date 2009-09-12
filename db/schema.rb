@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20090903233447) do
     t.string   "name"
     t.text     "description"
     t.integer  "user_id"
+    t.integer  "project_id"
+    t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -36,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20090903233447) do
     t.text     "description"
     t.integer  "biodatabase_type_id",                 :null => false
     t.integer  "biodatabase_group_id",                :null => false
-    t.integer  "project_id",                          :null => false
     t.integer  "fasta_file_id"
     t.integer  "user_id"
     t.datetime "created_at"
