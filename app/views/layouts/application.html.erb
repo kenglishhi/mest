@@ -15,6 +15,7 @@
 
 <div id="menu-top">
 	<ul>
+  <% if logged_in? %>
 		<li><%= link_to "<span>Home</span>", users_path %></li>
 		<li><%= link_to "<span>Projects</span>", projects_path %></li>
 		<li><%= link_to "<span>Database Groups </span>", biodatabase_groups_path %></li>
@@ -27,10 +28,9 @@
 
 		<li><%= link_to "<span>Blast Results</span>", blast_results_path %></li>
 		<li><%= link_to "<span>Users</span>", admin_users_path %></li>
-  <% if logged_in? %>
    	<li><%= link_to "<span>Logout</span>", "/logout" %></li>
   <% else %>
- 	  <li><%= link_to "<span>Login</span>", "/login" %></li>
+		<li><%= link_to "<span>Home</span>", users_path %></li>
   <% end %>
 
 	</ul>
