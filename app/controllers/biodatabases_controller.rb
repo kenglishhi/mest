@@ -3,10 +3,10 @@ class BiodatabasesController < ApplicationController
   before_filter :clear_stored_location, :only => [:index]
   active_scaffold :biodatabases do |config|
     config.list.label = "Databases"
-    config.columns = [:name, :biodatabase_type, :parent,:user]
-    config.list.columns = [:name, :biodatabase_type, :fasta_file,:parent, :number_of_sequences,:user ]
+    config.columns = [:name, :biodatabase_type, :user]
+    config.list.columns = [:name, :biodatabase_type, :fasta_file,:number_of_sequences,:user ]
     config.columns[:biodatabase_type].form_ui = :select
-    config.columns[:parent].form_ui = :select
+#    config.columns[:parent].form_ui = :select
   end
 
 	def clean

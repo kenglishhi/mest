@@ -11,7 +11,6 @@ class Biodatabase < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :biodatabase_type_id
   validates_presence_of :biodatabase_group_id
-  validates_presence_of :project_id
 
 
 	def generate_fasta

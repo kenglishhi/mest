@@ -8,6 +8,17 @@
 <%= error_messages_for :fasta_files %>
 
 <ol class="form" >
+  <li class="form-element ">
+    <dl>
+    <dt>
+      <label for="record_number_project">Project:</label>
+    </dt>
+  <dd>
+      <%= select_tag "project_id",options_for_select(@projects,params[:project_id] )  %>
+  </dd>
+  </dl>
+  </li>
+
   <% 5.times do | number |  %>
   <li class="form-element ">
     <dl>
@@ -15,7 +26,7 @@
       <label for="record_number<%= number + 1 %>">File <%= number + 1 %>:</label>
     </dt>
   <dd>
-      <%= file_field_tag "fasta_files[][uploaded_data]", :size => 100 %>
+      <%= file_field_tag "fasta_files[][uploaded_data]", :size => 80, :class => 'text-input' %>
   </dd>
   </dl>
   </li>

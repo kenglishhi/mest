@@ -22,6 +22,7 @@ class FastaFilesController < ApplicationController
           unless image_param[:uploaded_data].blank?
             fasta_file = FastaFile.new
             fasta_file.user = current_user
+            fasta_file.project_id = params[:project_id]
             logger.error("[kenglish] uploaded data is #{image_param[:uploaded_data].inspect}")
             fasta_file.fasta = image_param[:uploaded_data]
             fasta_file.is_generated = false
@@ -33,7 +34,7 @@ class FastaFilesController < ApplicationController
     end
   end
   def new
-
+    @projects = Project.find(:all).map { |p| ["#{p.name} (#{p.user.full_name}) ", p.id] }
   end
   
   def after_create_save(record)

@@ -33,9 +33,23 @@ class FastaFile < ActiveRecord::Base
       unless self.biodatabase
         transaction do
           puts "[kenglish] user_id = #{self.user_id}"
+
+          if self.project.biodatabase_groups.empty?
+            biodatabase_group = BiodatabaseGroup.create do |d|
+              d.name = "Default Database Group 1 for project #{project.name}"
+              d.description = 'This is the default database group.'
+              d.user = user
+              d.project = project
+            end
+          else
+             biodatabase_group = self.project.biodatabase_groups.first
+          end
+
+          puts "biodatabase_group:  #{biodatabase_group.name }"
           self.biodatabase = Biodatabase.new(:name => File.basename(label),
             :fasta_file => self,
             :user => self.user,
+            :biodatabase_group => biodatabase_group,
             :biodatabase_type => BiodatabaseType.find_by_name('UPLOADED-RAW') )
           self.biodatabase.save!
 

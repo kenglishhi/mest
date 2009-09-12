@@ -25,6 +25,7 @@ module Jobs::Loggable
                      :success => e.nil?,
                      :message => message,
                      :user => user)
+      true
     end
   end
 
