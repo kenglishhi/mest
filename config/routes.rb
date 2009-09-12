@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user_session
   map.resources :users
   map.resources :jobs, :active_scaffold => true
-  map.resources :job_logs, :active_scaffold => true
+  map.resources :job_logs, :collection => {:delete_all => :post}, :active_scaffold => true
 
   map.resource :home
   map.namespace(:admin) do |admin|
