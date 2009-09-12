@@ -17,7 +17,7 @@ namespace :deploy do
   desc "Restart Application"
   task :restart, :roles => :app do
     run "touch #{current_path}/tmp/restart.txt"
-    run "ruby #{current_path}/script/delayed_job restart"
+    run "ruby #{current_path}/script/delayed_job restart production"
   end
 
 #  desc " Updates the symlink for database.yml file to the just deployed release."
