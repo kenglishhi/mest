@@ -42,7 +42,7 @@ namespace :delayed_job do
   end
   task :stop do
     run <<-CMD
-     ruby #{current_path}/script/delayed_job stop production 
+     ruby #{current_path}/script/delayed_job  stop -f production 
     CMD
   end
 
