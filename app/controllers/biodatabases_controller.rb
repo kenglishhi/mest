@@ -4,7 +4,7 @@ class BiodatabasesController < ApplicationController
   active_scaffold :biodatabases do |config|
     config.list.label = "Databases"
     config.columns = [:name, :biodatabase_type, :user]
-    config.list.columns = [:name, :biodatabase_type, :fasta_file,:number_of_sequences,:user ]
+    config.list.columns = [:name, :biodatabase_type, :biodatabase_group, :fasta_file,:number_of_sequences,:user ]
     config.columns[:biodatabase_type].form_ui = :select
 #    config.columns[:parent].form_ui = :select
   end

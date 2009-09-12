@@ -4,6 +4,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :blast_results, :active_scaffold => true
   map.resources :blasts
 
+  map.resources :queued_jobs, :active_scaffold => true
+  map.resources :running_jobs, :active_scaffold => true
+  map.resources :failed_jobs, :active_scaffold => true
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"
   map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 

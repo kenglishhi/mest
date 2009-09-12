@@ -15,7 +15,7 @@ module BiodatabasesHelper
 
 	def fasta_file_column(record)
    if record.fasta_file
-#  	 link_to record.fasta_file.fasta_file_name, record.fasta_file.fasta.url if record.fasta_file
+  	 link_to record.fasta_file.fasta_file_name, record.fasta_file.fasta.url if record.fasta_file
 	 else
   	 "Generate"
    end
