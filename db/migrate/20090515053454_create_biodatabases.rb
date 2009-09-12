@@ -5,8 +5,9 @@ class CreateBiodatabases < ActiveRecord::Migration
       t.string :authority,   :limit => 128
       t.text   :description
       t.integer :biodatabase_type_id, :null => false
+      t.integer :biodatabase_group_id, :null => false
+      t.integer :project_id, :null => false
       t.integer :fasta_file_id
-      t.integer :parent_id
       t.integer :user_id
       t.timestamps
     end

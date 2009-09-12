@@ -1,12 +1,20 @@
 class Biodatabase < ActiveRecord::Base
-	acts_as_tree
+
   belongs_to :biodatabase_type
+  belongs_to :biodatabase_group
   belongs_to :fasta_file
   belongs_to :user
+
+  belongs_to :project
+
 	has_many :biodatabase_biosequences, :dependent => :destroy
   has_many :biosequences, :through => :biodatabase_biosequences
+
   validates_presence_of :name
   validates_presence_of :biodatabase_type_id
+  validates_presence_of :biodatabase_group_id
+  validates_presence_of :project_id
+
 
 	def generate_fasta
 		if fasta_file_id.nil?

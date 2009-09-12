@@ -16,6 +16,14 @@ ActiveRecord::Schema.define(:version => 20090903233447) do
     t.integer "biosequence_id"
   end
 
+  create_table "biodatabase_groups", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "biodatabase_types", :force => true do |t|
     t.string   "name",       :limit => 128, :null => false
     t.datetime "created_at"
@@ -23,12 +31,13 @@ ActiveRecord::Schema.define(:version => 20090903233447) do
   end
 
   create_table "biodatabases", :force => true do |t|
-    t.string   "name",                :limit => 128, :null => false
-    t.string   "authority",           :limit => 128
+    t.string   "name",                 :limit => 128, :null => false
+    t.string   "authority",            :limit => 128
     t.text     "description"
-    t.integer  "biodatabase_type_id",                :null => false
+    t.integer  "biodatabase_type_id",                 :null => false
+    t.integer  "biodatabase_group_id",                :null => false
+    t.integer  "project_id",                          :null => false
     t.integer  "fasta_file_id"
-    t.integer  "parent_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -93,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20090903233447) do
     t.integer  "fasta_file_size"
     t.boolean  "is_generated",       :default => false
     t.integer  "biodatabase_id"
+    t.integer  "project_id",                            :null => false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -107,6 +117,14 @@ ActiveRecord::Schema.define(:version => 20090903233447) do
     t.boolean  "success"
     t.text     "message"
     t.integer  "user_id"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
