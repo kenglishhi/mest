@@ -1,4 +1,4 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < Admin::BaseController
   active_scaffold :users do |config|
     non_editable = [:current_login_at, :current_login_ip, :last_login_at,
       :last_login_ip, :last_request_at, :token_expires_at,:fasta_files,:job_logs,:jobs]

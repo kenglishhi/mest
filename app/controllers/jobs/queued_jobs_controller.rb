@@ -1,4 +1,4 @@
-class QueuedJobsController < ApplicationController
+class Jobs::QueuedJobsController < Jobs::BaseController 
 
   active_scaffold :jobs do |config|
     config.list.label = 'Queued Jobs'

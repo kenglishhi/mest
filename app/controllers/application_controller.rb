@@ -51,5 +51,10 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
+  def generate_database_sub_nav
+   @content_for_sub_nav = render_to_string(:partial => '/layouts/database_sub_nav')
+  end
+
+
 
 end

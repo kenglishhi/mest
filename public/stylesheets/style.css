@@ -360,3 +360,65 @@ letter-spacing: -1px;
 font: bold 16px arial;
 }
 
+/* Set the page width here */
+#jobs-sub-nav {
+	text-align: left;
+}
+
+#jobs-sub-nav {
+	background: white url('/images/bg02-white-right.png') no-repeat right top;
+	overflow: hidden;
+}
+
+#jobs-sub-nav ul {
+	background: transparent url('/images/bg02-white-left.png') no-repeat left top;
+	margin:0;
+	list-style: none;
+	font-size: 85%;
+	float: left;
+	padding-left: 20px;
+}
+
+#jobs-sub-nav li {
+	display: inline;
+	float: left;
+}
+
+
+#jobs-sub-nav a {
+	float: left;
+	margin:0;
+	padding:0 0 0 4px;
+	text-decoration:none;
+	line-height: 1.5em;
+	background:url(/images/menuleft.png) no-repeat left top;
+}
+
+#jobs-sub-nav a span {
+	padding:5px 15px 4px 6px;
+	color:#5b8fbe;
+	display: block;
+	float: left;
+	cursor: pointer; /* IE doesnt display the hand when you roll over the link for some reason. This fixes it */
+}
+#jobs-sub-nav a.menu-link {
+	padding:5px 15px 4px 6px;
+	color:#5b8fbe;
+	display: block;
+	float: left;
+	cursor: pointer; /* IE doesnt display the hand when you roll over the link for some reason. This fixes it */
+}
+#jobs-sub-nav a.menu-link:hover  {	background-position:100% -42px; }
+
+
+#jobs-sub-nav a:hover { background-position:0% -42px; }
+#jobs-sub-nav a:hover span {	background-position:100% -42px; }
+.nav .sub ul {
+	/*width: 648px;*/
+	height: 38px;
+	float: left;
+	margin: 0;
+	padding-top: 3px;
+	list-style: none;
+	font-size: 15px;
+}

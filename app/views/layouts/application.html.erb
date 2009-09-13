@@ -18,16 +18,11 @@
   <% if logged_in? %>
 		<li><%= link_to "<span>Home</span>", users_path %></li>
 		<li><%= link_to "<span>Projects</span>", projects_path %></li>
-		<li><%= link_to "<span>Database Groups </span>", biodatabase_groups_path %></li>
-		<li><%= link_to "<span>Fasta Files</span>", fasta_files_path %></li>
 		<li><%= link_to "<span>Databases</span>", biodatabases_path %></li>
 
-		<li><%= link_to "<span>Job Logs</span>", job_logs_path %></li>
-    <li><%= link_to "<span>Queued Jobs</span>", queued_jobs_path %></li>
-    <li><%= link_to "<span>Running Jobs</span>", running_jobs_path %></li>
-
+		<li><%= link_to "<span>Job</span>", jobs_job_logs_path %></li>
 		<li><%= link_to "<span>Blast Results</span>", blast_results_path %></li>
-		<li><%= link_to "<span>Users</span>", admin_users_path %></li>
+		<li><%= link_to "<span>Admin</span>", admin_users_path %></li>
    	<li><%= link_to "<span>Logout</span>", "/logout" %></li>
   <% else %>
 		<li><%= link_to "<span>Home</span>", users_path %></li>
@@ -50,8 +45,8 @@
 </div><!--wrapper-header-->
 
 <div id="wrapper-content">
-
   <%= yield :wrapper_menu_content %>
+  <%= yield :sub_nav %>
 
 
 	<div id="content">

@@ -1,4 +1,5 @@
-class JobLogsController < ApplicationController
+class Jobs::JobLogsController < Jobs::BaseController
+  before_filter :generate_sub_nav
 
   active_scaffold :job_logs do |config|
     config.label = "Job Log"
@@ -16,5 +17,7 @@ class JobLogsController < ApplicationController
     JobLog.delete_all
     redirect_to :action => :index
   end
+
+
 end
 
