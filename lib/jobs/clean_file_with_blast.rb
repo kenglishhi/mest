@@ -12,7 +12,8 @@ class Jobs::CleanFileWithBlast < Jobs::AbstractJob
 
     puts "New database name = #{new_name} "
 
-    biodatabase = Biodatabase.new(:biodatabase_type => BiodatabaseType.find_by_name("UPLOADED-CLEANED"),
+    biodatabase = Biodatabase.new(:biodatabase_type => 
+        BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
       :name => new_name,
       :user_id => blast_command.test_fasta_file.user_id )
     blast_command.output_biodatabase  = biodatabase 

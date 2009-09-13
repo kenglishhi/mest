@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090903233447) do
+ActiveRecord::Schema.define(:version => 20090913032148) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
@@ -22,6 +22,21 @@ ActiveRecord::Schema.define(:version => 20090903233447) do
     t.integer  "user_id"
     t.integer  "project_id"
     t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "biodatabase_link_types", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "biodatabase_links", :force => true do |t|
+    t.integer  "biodatabase_id",           :null => false
+    t.integer  "linked_biodatabase_id",    :null => false
+    t.integer  "biodatabase_link_type_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

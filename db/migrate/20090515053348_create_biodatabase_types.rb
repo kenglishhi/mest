@@ -4,13 +4,14 @@ class CreateBiodatabaseTypes < ActiveRecord::Migration
       t.string "name",        :limit => 128, :null => false
       t.timestamps
     end
-    BiodatabaseType.create(:name => 'UPLOADED-RAW')
-    BiodatabaseType.create(:name => 'UPLOADED-CLEANED')
-    BiodatabaseType.create(:name => 'GENERATED-MASTER')
-    BiodatabaseType.create(:name => 'GENERATED-MATCH')
+    BiodatabaseType.create(:name => BiodatabaseType::UPLOADED_RAW)
+    BiodatabaseType.create(:name => BiodatabaseType::UPLOADED_CLEANED)
+    BiodatabaseType.create(:name => BiodatabaseType::GENERATED_MASTER)
+    BiodatabaseType.create(:name => BiodatabaseType::GENERATED_MATCH)
   end
 
   def self.down
     drop_table :biodatabase_types
   end
+
 end

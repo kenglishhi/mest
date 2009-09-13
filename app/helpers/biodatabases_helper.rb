@@ -1,14 +1,19 @@
 module BiodatabasesHelper
 
-  def biodatabase_type_column(record)
-   if record.biodatabase_type.name == "UPLOADED-RAW" 
-    record.biodatabase_type.name + "  "  +
-			link_to("Clean the File", new_tools_blast_cleaner_path(:biodatabase_id => record.id))
-   else
-    record.biodatabase_type.name
+#  def biodatabase_type_column(record)
+#   if record.biodatabase_type.name == "UPLOADED-RAW"
+#    record.biodatabase_type.name + "  "  +
+#			link_to("Clean the File", new_tools_blast_cleaner_path(:biodatabase_id => record.id))
+#   else
+#    record.biodatabase_type.name
+#   end
+#  end
+
+  def blast_actions_column(record)
+   if record.biodatabase_type.name == BiodatabaseType::UPLOADED_RAW
+     link_to("Clean the File", new_tools_blast_cleaner_path(:biodatabase_id => record.id))
    end
   end
-
 	def number_of_sequences_column(record)
     record.biosequences.count
 	end

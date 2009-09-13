@@ -62,8 +62,11 @@ class BlastCommand
         end
       end
     end
-
     @output_biodatabase.save
+    BiodatabaseLink.create(:biodatabase =>@test_fasta_file.biodatabase,
+      :linked_biodatabase => @output_biodatabase,
+      :biodatabase_link_type => BiodatabaseLinkType.cleaned)
+
     @blast_result.output= output_file_handle
     @blast_result.save!
     @blast_result

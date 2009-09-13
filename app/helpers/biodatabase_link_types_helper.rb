@@ -1,0 +1,2 @@
+module BiodatabaseLinkTypesHelper
+end

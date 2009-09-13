@@ -1,21 +1,21 @@
 --- 
 biodatabase_types_001: 
-  name: UPLOADED-RAW
-  created_at: 2009-05-21 05:52:46
-  updated_at: 2009-05-21 05:52:46
+  name: Uploaded Raw Data
+  created_at: 2009-09-13 02:44:18
+  updated_at: 2009-09-13 02:44:18
   id: "1"
 biodatabase_types_002: 
-  name: UPLOADED-CLEANED
-  created_at: 2009-05-21 05:52:46
-  updated_at: 2009-05-21 05:52:46
+  name: Uploaded Cleaned Database
+  created_at: 2009-09-13 02:44:18
+  updated_at: 2009-09-13 02:44:18
   id: "2"
 biodatabase_types_003: 
-  name: GENERATED-MASTER
-  created_at: 2009-05-21 05:52:46
-  updated_at: 2009-05-21 05:52:46
+  name: Generated Master Database
+  created_at: 2009-09-13 02:44:18
+  updated_at: 2009-09-13 02:44:18
   id: "3"
 biodatabase_types_004: 
-  name: GENERATED-MATCH
-  created_at: 2009-05-21 05:52:46
-  updated_at: 2009-05-21 05:52:46
+  name: Generated Match DB
+  created_at: 2009-09-13 02:44:18
+  updated_at: 2009-09-13 02:44:18
   id: "4"

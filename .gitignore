@@ -1,6 +1,12 @@
 log/*.log
+log/
 tmp/**/*
 db/schema.rb
 doc/api
 doc/app
 config/database.yml
+nbproject/
+public/outputs/
+formatdb.log
+public/system/
+tmp/

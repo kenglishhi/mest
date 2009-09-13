@@ -50,7 +50,7 @@ class FastaFile < ActiveRecord::Base
             :fasta_file => self,
             :user => self.user,
             :biodatabase_group => biodatabase_group,
-            :biodatabase_type => BiodatabaseType.find_by_name('UPLOADED-RAW') )
+            :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_RAW) )
           self.biodatabase.save!
 
           puts File.basename(label)
