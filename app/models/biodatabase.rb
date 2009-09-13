@@ -8,6 +8,7 @@ class Biodatabase < ActiveRecord::Base
 	has_many :biodatabase_biosequences, :dependent => :destroy
   has_many :biosequences, :through => :biodatabase_biosequences
   has_many :biodatabase_links, :dependent => :destroy
+  has_many :linked_biodatabase_links, :foreign_key =>'linked_biodatabase_id', :dependent => :destroy
 
 
 

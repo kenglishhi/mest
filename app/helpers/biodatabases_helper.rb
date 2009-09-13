@@ -10,8 +10,9 @@ module BiodatabasesHelper
 #  end
 
   def blast_actions_column(record)
-   if record.biodatabase_type.name == BiodatabaseType::UPLOADED_RAW
-     link_to("Clean the File", new_tools_blast_cleaner_path(:biodatabase_id => record.id))
+   if record.biodatabase_type.name == BiodatabaseType::UPLOADED_RAW &&
+      !record.biodatabase_links.any? {|b| b.biodatabase_link_type == BiodatabaseLinkType.cleaned}
+     link_to("Clean the Database", new_tools_blast_cleaner_path(:biodatabase_id => record.id))
    end
   end
 	def number_of_sequences_column(record)

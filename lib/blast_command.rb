@@ -20,14 +20,21 @@ class BlastCommand
   end
 
   def run_clean
-    raise "output_biodatabase can to be nil" unless @output_biodatabase
+    @test_fasta_file = FastaFile.find(@params[:fasta_file_id] )
+    raise "Target Fasta File does not exist" unless @test_fasta_file 
 
     @target_fasta_file = @test_fasta_file
     @test_fasta_file.extract_sequences if !@test_fasta_file.is_generated && @test_fasta_file.biodatabase.nil?
+
+    if @test_fasta_file.biodatabase.biodatabase_links.any? {|b| b.biodatabase_link_type == BiodatabaseLinkType.cleaned}
+      raise "There already exists a cleaned database for #{ @test_fasta_file.biodatabase.name}"
+    end
+
+    @output_biodatabase = create_clean_output_database(@test_fasta_file.biodatabase)
     @target_fasta_file.formatdb
 
     options={}
-    options[:evalue] = @params[:evalue] || 0.001
+    options[:evalue] = @params[:evalue].blank? ?  0.000001 : @params[:evalue]
 
     @blast_result = BlastResult.new(:name => "#{@output_biodatabase.name} Blast Result",
       :started_at => Time.now
@@ -43,7 +50,6 @@ class BlastCommand
     @matches = @test_fasta_file.biodatabase.biosequences.size
 
     # Copy the sequences to the output_biodatabase
-    @output_biodatabase.parent = @test_fasta_file.biodatabase
     @test_fasta_file.biodatabase.biosequences.each do | row |
       @output_biodatabase.biosequences << row
     end
@@ -66,20 +72,9 @@ class BlastCommand
     BiodatabaseLink.create(:biodatabase =>@test_fasta_file.biodatabase,
       :linked_biodatabase => @output_biodatabase,
       :biodatabase_link_type => BiodatabaseLinkType.cleaned)
-
     @blast_result.output= output_file_handle
     @blast_result.save!
     @blast_result
-#    output_file_handle.close
-    #    logger.error( "[kenglish] output_biodatabase.errors.full_messages.to_sentence #{output_biodatabase.errors.full_messages.to_sentence} ")
-    #    self.biodatabase_id = output_biodatabase.id
-    #    save
-
-  end
-  def  save_blast_result(output_file_handle)
-#    if @blast_result
-#    end
-
   end
 
 #  def run_command
@@ -170,6 +165,16 @@ class BlastCommand
   end
 
   private
+
+  def create_clean_output_database(parent_db)
+    default_new_biodatabase_name =  "#{parent_db.name}-Cleaned"
+    new_name = @params[:new_biodatabase_name].blank? ? default_new_biodatabase_name :  @params[:new_biodatabase_name]
+    Biodatabase.new(:biodatabase_type =>
+        BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
+      :name => new_name,
+      :user_id => parent_db.user_id,
+      :biodatabase_group => parent_db.biodatabase_group)
+  end
 
   def execute_blast_command(options)
     command = " blastall -p blastn -i #{@test_fasta_file.fasta.path} -d #{@target_fasta_file.fasta.path} -e #{options[:evalue]}  -b 20 -v 20 "
