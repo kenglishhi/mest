@@ -6,7 +6,8 @@
 
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base.js",
       "ext-3.0.0/ext-all.js" ,
-      "workbench/example.js"
+      "workbench/example.js",
+     "ext-3.0.0/examples/form/states.js"
   %>
 
 
@@ -45,59 +46,37 @@
     <!-- EXAMPLES -->
 
     <script type="text/javascript">
+
+      Ext.namespace('Ext.workbenchdata');
       Ext.onReady(function(){
+        // BEGIN RAILS data DUMP
+        Ext.workbenchdata.project_options = <%= @project_options.to_json %>;
         var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %></h1> ';
+        // END RAILS data dump  -- no erb code should go beyond this line
 
-        function onItemClick(item){
-          Ext.example.msg('Menu Click', 'You clicked the "{0}" menu item.', item.text);
-        }
-        function onItemCheck(item, checked){
-          Ext.example.msg('Item Check', 'You {1} the "{0}" menu item.', item.text, checked ? 'checked' : 'unchecked');
-        }
 
-        var menu = new Ext.menu.Menu({
-          id: 'mainMenu',
-          style: {
-            overflow: 'visible'     // For the Combo popup
-          },
-          items: [
-            // stick any markup in a menu
-            '<b class="menu-title">Choose a Theme</b>',
-            {
-              text: 'Aero Glass',
-              checked: true,
-              group: 'theme',
-              checkHandler: onItemCheck
-            }, {
-              text: 'Vista Black',
-              checked: false,
-              group: 'theme',
-              checkHandler: onItemCheck
-            }, {
-              text: 'Gray Theme',
-              checked: false,
-              group: 'theme',
-              checkHandler: onItemCheck
-            }, {
-              text: 'Default Theme',
-              checked: false,
-              group: 'theme',
-              checkHandler: onItemCheck
-            }
-          ]
-        });
+         var store = new Ext.data.ArrayStore({
+           fields: ['id', 'name'],
+           data : Ext.workbenchdata.project_options // from states.js
+         });
 
         var projectToolbar = new Ext.Toolbar({
         });
-        projectToolbar.add(
-        {
-          text:'Select Project',
-          iconCls: 'bmenu',  // <-- icon
-          menu: menu  // assign menu by instance
-        }
+//         projectToolbar.render('toolbar');
 
+         // add a combobox to the toolbar
+         var combo = new Ext.form.ComboBox({
+           store: store,
+           displayField: 'name',
+           typeAhead: true,
+           mode: 'local',
+           triggerAction: 'all',
+           emptyText:'Select a Project...',
+           selectOnFocus:true,
+           width:135
+         });
+         projectToolbar.addField(combo);
 
-      );
 
         // NOTE: This is an example showing simple state management. During development,
         // it is generally best to disable state management as dynamically-generated ids

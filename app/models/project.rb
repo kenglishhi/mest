@@ -11,5 +11,7 @@ class Project < ActiveRecord::Base
   def authorized_for_destroy?
     biodatabase_groups.empty? && fasta_files.empty?
   end
-
+  def self.workbench_project_options
+    Project.all.map{|p| [p.id,p.name] }
+  end
 end

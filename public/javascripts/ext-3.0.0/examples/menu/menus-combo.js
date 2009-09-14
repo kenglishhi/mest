@@ -12,6 +12,7 @@ Ext.onReady(function(){
         data : Ext.exampledata.states // from states.js
     });
 
+
     var tb = new Ext.Toolbar();
     tb.render('toolbar');
 
@@ -27,6 +28,24 @@ Ext.onReady(function(){
         width:135
     });
     tb.addField(combo);
+
     tb.doLayout();
+
+    // functions to display feedback
+    function onButtonClick(btn){
+        Ext.example.msg('Button Click','You clicked the "{0}" button.', btn.text);
+    }
+
+    function onItemClick(item){
+        Ext.example.msg('Menu Click', 'You clicked the "{0}" menu item.', item.text);
+    }
+
+    function onItemCheck(item, checked){
+        Ext.example.msg('Item Check', 'You {1} the "{0}" menu item.', item.text, checked ? 'checked' : 'unchecked');
+    }
+
+    function onItemToggle(item, pressed){
+        Ext.example.msg('Button Toggled', 'Button "{0}" was toggled to {1}.', item.text, pressed);
+    }
 
 });
