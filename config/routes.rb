@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+
+#  map.resources :workbench
+
   map.resources :biodatabase_links, :active_scaffold => true
   map.resources :biodatabase_link_types, :active_scaffold => true
 
@@ -31,6 +34,9 @@ ActionController::Routing::Routes.draw do |map|
     jobs.resources :job_logs, :collection => {:delete_all => :post}, :active_scaffold => true
   end
 
+  map.namespace(:workbench) do |admin|
+    admin.resources :home
+  end
 
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.

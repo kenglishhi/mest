@@ -1,0 +1,33 @@
+
+
+h1.north-header{
+  margin:5px;
+  font-size:130%;
+} 
+
+h1.north-header a:hover {
+  text-decoration: underline;
+  color: #0000CC;
+}
+h1.north-header a {
+	color: #083772;
+}
+h1.north-header a:link {
+	color: #083772;
+	text-decoration: none;
+}
+
+h1.north-header a:visited {
+   color: #1e4e8f;
+	text-decoration: none;
+}
+
+h1.north-header a:hover {
+	text-decoration: underline;
+	color: #0000CC;
+}
+
+h1.north-header a:active {
+	text-decoration: none;
+	color: #1e4e8f;
+}
