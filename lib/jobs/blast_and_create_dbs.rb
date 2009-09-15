@@ -1,4 +1,4 @@
-class Jobs::BlastFasta < Jobs::AbstractJob
+class Jobs::BlastAndCreateDbs< Jobs::AbstractJob
 
   def do_perform
     puts "Call Blast" 
