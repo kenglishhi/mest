@@ -1,4 +1,4 @@
-class BlastCommand 
+class Blast::Base
 
   attr_accessor :test_fasta_file
   attr_accessor :target_fasta_files
@@ -16,77 +16,17 @@ class BlastCommand
 
   def initialize(p={})
     @params = p
-    @target_fasta_files = []
   end
 
-  def run_clean
-    @test_fasta_file = FastaFile.find(@params[:fasta_file_id] )
-    raise "Target Fasta File does not exist" unless @test_fasta_file 
-
-    @target_fasta_file = @test_fasta_file
-    @test_fasta_file.extract_sequences if !@test_fasta_file.is_generated && @test_fasta_file.biodatabase.nil?
-
-    if @test_fasta_file.biodatabase.biodatabase_links.any? {|b| b.biodatabase_link_type == BiodatabaseLinkType.cleaned}
-      raise "There already exists a cleaned database for #{ @test_fasta_file.biodatabase.name}"
-    end
-
-    @output_biodatabase = create_clean_output_database(@test_fasta_file.biodatabase)
-    @target_fasta_file.formatdb
-
-    options={}
-    options[:evalue] = @params[:evalue].blank? ?  0.000001 : @params[:evalue]
-
-    @blast_result = BlastResult.new(:name => "#{@output_biodatabase.name} Blast Result",
-      :started_at => Time.now
-    )
-    output_file_handle = execute_blast_command(options)
-    output_file_handle.open
-
-    @blast_result.stopped_at = Time.now
-    @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)
-#    @blast_result.output= output_file_handle
-
-    result_ff = Bio::FlatFile.open(output_file_handle)
-    @matches = @test_fasta_file.biodatabase.biosequences.size
-
-    # Copy the sequences to the output_biodatabase
-    @test_fasta_file.biodatabase.biosequences.each do | row |
-      @output_biodatabase.biosequences << row
-    end
-    @output_biodatabase.save
-
-    # Remove any hits
-    result_ff.each do |report|
-      test_biosequence = Biosequence.find_by_name(report.query_def)
-      if @output_biodatabase.biosequences.include? test_biosequence
-        report.each do |hit|
-          unless hit.target_def == report.query_def
-            target_biosequence = Biosequence.find_by_name(hit.target_def)
-            @matches = @matches - 1
-            @output_biodatabase.biosequences.delete( target_biosequence )
-          end
-        end
-      end
-    end
-    @output_biodatabase.save
-    BiodatabaseLink.create(:biodatabase =>@test_fasta_file.biodatabase,
-      :linked_biodatabase => @output_biodatabase,
-      :biodatabase_link_type => BiodatabaseLinkType.cleaned)
-    @blast_result.output= output_file_handle
-    @blast_result.save!
-    @blast_result
+  def run
+    do_run
   end
 
-  def create_clean_output_database(parent_db)
-    default_new_biodatabase_name =  "#{parent_db.name}-Cleaned"
-    new_name = @params[:new_biodatabase_name].blank? ? default_new_biodatabase_name :  @params[:new_biodatabase_name]
-    Biodatabase.new(:biodatabase_type =>
-        BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
-      :name => new_name,
-      :user_id => parent_db.user_id,
-      :biodatabase_group => parent_db.biodatabase_group)
-  end
+  protected
 
+  def do_run
+    raise "subclasses must implement"
+  end
 
 #  def run_command
 #    options={}
@@ -176,16 +116,6 @@ class BlastCommand
   end
 
   private
-
-  def create_clean_output_database(parent_db)
-    default_new_biodatabase_name =  "#{parent_db.name}-Cleaned"
-    new_name = @params[:new_biodatabase_name].blank? ? default_new_biodatabase_name :  @params[:new_biodatabase_name]
-    Biodatabase.new(:biodatabase_type =>
-        BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
-      :name => new_name,
-      :user_id => parent_db.user_id,
-      :biodatabase_group => parent_db.biodatabase_group)
-  end
 
   def execute_blast_command(options)
     command = " blastall -p blastn -i #{@test_fasta_file.fasta.path} -d #{@target_fasta_file.fasta.path} -e #{options[:evalue]}  -b 20 -v 20 "

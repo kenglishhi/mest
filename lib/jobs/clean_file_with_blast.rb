@@ -4,10 +4,10 @@ class Jobs::CleanFileWithBlast < Jobs::AbstractJob
   end
 
   def do_perform
-    blast_command = BlastCommand.new(params)
+    blast_command = Blast::Clean.new(params)
     puts "Calling run_clean"
     puts "------------"
-    blast_command.run_clean
+    blast_command.run
     puts "------------"
     puts "FINISHED run_clean"
     puts "--------------------------"

@@ -32,8 +32,6 @@ class FastaFile < ActiveRecord::Base
     if fasta  
       unless self.biodatabase
         transaction do
-          puts "[kenglish] user_id = #{self.user_id}"
-
           if self.project.biodatabase_groups.empty?
             biodatabase_group = BiodatabaseGroup.create do |d|
               d.name = "Default Database Group 1 for project #{project.name}"
@@ -45,17 +43,14 @@ class FastaFile < ActiveRecord::Base
              biodatabase_group = self.project.biodatabase_groups.first
           end
 
-          puts "biodatabase_group:  #{biodatabase_group.name }"
           self.biodatabase = Biodatabase.new(:name => File.basename(label),
             :fasta_file => self,
             :user => self.user,
             :biodatabase_group => biodatabase_group,
             :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_RAW) )
           self.biodatabase.save!
-
-          puts File.basename(label)
-
           save!
+
           ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
           ff.each do |entry|
             bioseq = Biosequence.new(:name => entry.definition, :seq => entry.seq,
@@ -69,7 +64,6 @@ class FastaFile < ActiveRecord::Base
         end
       end
     end
-    #    Bioentry.load_fasta fasta.path
   end
 
   def formatdb

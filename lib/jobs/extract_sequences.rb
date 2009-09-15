@@ -4,11 +4,9 @@ class Jobs::ExtractSequences < Jobs::AbstractJob
       raise "Fasta File not provided"
       return
     end
-    puts "fasta_file_id #{params[:fasta_file_id] } "
     fasta_file = FastaFile.find( params[:fasta_file_id] )
-
     fasta_file.extract_sequences
-    puts "extracted  "
+    true
   end
 end
 
