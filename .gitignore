@@ -10,3 +10,7 @@ public/outputs/
 formatdb.log
 public/system/
 tmp/
+*.fasta.nhr
+*.fasta.nin
+*.fasta.nsq
+.*files/blast_results/.*
