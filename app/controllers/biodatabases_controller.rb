@@ -13,21 +13,21 @@ class BiodatabasesController < ApplicationController
 #    config.columns[:parent].form_ui = :select
   end
 
-	def clean
-    @biodatabase = Biodatabase.find(params[:id] )
-    @blast_command = BlastCommand.new(:evalue => 0.0001, :query_fasta_file_id => @biodatabase.fasta_file_id)
-    @fasta_file_options =  FastaFile.find(:all, :order => 'label' ).map { |ff| [ff.label, ff.id ] }
-	end
-
-	def blast
-	  @blast_command = BlastCommand.create(params[:blast_command]  )
-    if @blast_command.valid?
-      @blast_command.save
-    else
-      @fasta_file_options =  FastaFile.find(:all,:order => 'label' ).map { |ff| [ff.label, ff.id ] }
-      render :action => 'blast_form'
-    end
-	end
+#	def clean
+#    @biodatabase = Biodatabase.find(params[:id] )
+#    @blast_command = BlastCommand.new(:evalue => 0.0001, :query_fasta_file_id => @biodatabase.fasta_file_id)
+#    @fasta_file_options =  FastaFile.find(:all, :order => 'label' ).map { |ff| [ff.label, ff.id ] }
+#	end
+#
+#	def blast
+#	  @blast_command = BlastCommand.create(params[:blast_command]  )
+#    if @blast_command.valid?
+#      @blast_command.save
+#    else
+#      @fasta_file_options =  FastaFile.find(:all,:order => 'label' ).map { |ff| [ff.label, ff.id ] }
+#      render :action => 'blast_form'
+#    end
+#	end
 
   protected
 

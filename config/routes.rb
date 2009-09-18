@@ -26,6 +26,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.namespace(:tools) do |tools|
     tools.resources :blast_cleaners
+    tools.resources :blast_create_dbs
   end
   map.namespace(:jobs) do |jobs|
     jobs.resources :queued_jobs, :active_scaffold => true
