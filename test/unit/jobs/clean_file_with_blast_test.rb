@@ -10,14 +10,14 @@ class Jobs::ExtractSequencesTest < ActiveSupport::TestCase
       @fasta_file.project = projects(:projects_001)
       assert @fasta_file.save, "Saving fasta file should succeed #{@fasta_file.errors.full_messages.to_sentence}"
       assert File.exists?( @fasta_file.fasta.path ), "File should exist after create"
-      @job =  Jobs::ExtractSequences.new("Extract #{@fasta_file.label}",
+      @job =  Jobs::CleanFileWithBlast.new("Extract #{@fasta_file.label}",
         {:fasta_file_id => @fasta_file.id })
     end
 
     should "Extract sequences job should run" do
      assert_not_nil @job.do_perform
      assert FastaFile.find(@job.params[:fasta_file_id] ).biodatabase.biosequences.size > 0
-     assert_not_nil Biodatabase.last.fasta_file
+     assert_not_nil Biodatabase.last.fasta_file, "Clean should generate new fasta file"
     end
   end
 end

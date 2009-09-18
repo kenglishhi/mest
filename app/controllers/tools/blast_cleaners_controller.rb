@@ -10,7 +10,7 @@ class Tools::BlastCleanersController < ApplicationController
   def create
     fasta_file = FastaFile.find(params[:fasta_file_id])
     job_name = "Clean File #{fasta_file.fasta_file_name}"
-    job_handler = Jobs::CleanFileWithBlast.new(job_name, params)
+    job_handler = Jobs::CleanFileWithBlast.new(job_name, params.merge(:user_id => current_user.id))
 
     Job.create(:job_name => job_name,
       :handler => job_handler,

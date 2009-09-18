@@ -1,78 +1,80 @@
-
-
-
 <% form_tag :action => 'create' do |f | -%>
   <div class='blast-main-form'>
-  <div class="new-view blast-view view">
-  <div class="messages-container" id="blast-create--messages"/>
-  <%= error_messages_for :blast_command  %>
-  <%= error_messages_for :term  %>
+    <div class="new-view blast-view view">
+      <div class="messages-container" id="blast-create--messages"/>
+        <%= error_messages_for :blast_command  %>
+        <%= error_messages_for :term  %>
 
-      <h4>Clean Raw Files with Blast </h4>
-      <ol class="form">
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
-              <label >Fasta File</label>
-            </dt>
-            <dd>
-              <%= select_tag  :fasta_file_id, options_for_select(@fasta_file_options,
-                @biodatabase ?   @biodatabase.fasta_file_id : nil), :class=>'text-input' %>
-            </dd>
-        </dl>  </li>
-        <li class="form-element">
-          <dl class="">
-            <dt>
-              <label>New Database Name </label>
-            </dt>
-            <dd>
-              <%= text_field_tag :new_biodatabase_name,params[:new_biodatabase_name], :class => 'text-input'  %>
-              <span class="description">If blank, new database will be be name based on the file.
-            </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
-              <label>E Value</label>
-            </dt>
-            <dd>
-              <%= text_field_tag :evalue, params[:evalue], :class => 'text-input' %>
-              <span class="description">E-value must be entered.</span>
-            </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
-              <label >Identity</label>
-            </dt>
-            <dd>
-              <%= text_field_tag :identity, params[:identity], :class => 'text-input'   %>
-              <span class="description"></span>
-            </dd>
-        </dl>  </li>
-        <li class="form-element">
-
-          <dl class="">
-            <dt>
-              <label >Score</label>
-            </dt>
-            <dd>
-              <%= text_field_tag :score , params[:identity], :class => 'text-input' %>
-              <span class="description"></span>
-            </dd>
-        </dl>  </li>
-      </ol>
+        <h4>Clean Raw Files with Blast </h4>
+        <ol class="form">
+          <li class="form-element">
+            <dl class="">
+              <dt>
+                <label>Test Fasta File</label>
+              </dt>
+              <dd>
+                <%= select_tag  :test_fasta_file_id, options_for_select(@fasta_file_options,
+                  @biodatabase ?   @test_fasta_file_id : nil), :class=>'text-input' %>
+              </dd>
+            </dl>
+          </li>
+          <li class="form-element">
+            <dl class="">
+              <dt>
+                <label>Target Fasta File</label>
+              </dt>
+              <dd>
+                <%= select_tag  :target_fasta_file_id, options_for_select(@fasta_file_options,
+                  @biodatabase ?   @target_fasta_file_id : nil), :class=>'text-input' %>
+              </dd>
+            </dl>
+          </li>
+          <li class="form-element">
+            <dl class="">
+              <dt>
+                <label>New Database Name </label>
+              </dt>
+              <dd>
+                <%= text_field_tag :new_biodatabase_name,params[:new_biodatabase_name], :class => 'text-input'  %>
+                <span class="description">If blank, new database will be be name based on the file.
+              </dd>
+            </dl>
+          </li>
+          <li class="form-element">
+            <dl class="">
+              <dt> <label>E Value</label> </dt>
+              <dd>
+                <%= text_field_tag :evalue, params[:evalue], :class => 'text-input' %>
+                <span class="description">E-value must be entered.</span>
+              </dd>
+            </dl>
+          </li>
+          <li class="form-element">
+            <dl class="">
+              <dt> <label >Identity</label> </dt>
+              <dd>
+                <%= text_field_tag :identity, params[:identity], :class => 'text-input'   %>
+                <span class="description"></span>
+              </dd>
+            </dl>
+          </li>
+          <li class="form-element">
+            <dl class="">
+              <dt> <label >Score</label> </dt>
+              <dd>
+                <%= text_field_tag :score , params[:identity], :class => 'text-input' %>
+                <span class="description"></span>
+              </dd>
+            </dl>
+          </li>
+        </ol>
+      </div>
+      <p class="form-footer">
+        <%= submit_tag 'Run Query', :class => 'submit' %>
+        <a class="cancel" href="/admin/users/list">Cancel</a>
+      </p>
 
     </div>
-    <p class="form-footer">
-      <%= submit_tag 'Run Query', :class => 'submit' %>
-      <a class="cancel" href="/admin/users/list">Cancel</a>
-    </p>
-
-  </div>
   </div>
 
 <% end -%>

@@ -15,6 +15,7 @@ class Biodatabase < ActiveRecord::Base
   validates_presence_of :biodatabase_group_id
 
   def generate_fasta
+    puts "Called generate_fasta"
     if fasta_file_id.nil?
       filename =  "#{name}.fasta"
       fasta_file_handle = File.new(filename,"w")
@@ -27,8 +28,10 @@ class Biodatabase < ActiveRecord::Base
       fasta_file_handle = File.new(filename,"r")
       self.fasta_file = FastaFile.new
       self.fasta_file.fasta = fasta_file_handle
+      self.fasta_file.project_id = biodatabase_group.project_id
+      self.fasta_file.user_id = self.user_id
       self.fasta_file.is_generated = true
-      self.fasta_file.save
+      self.fasta_file.save!
       puts "new id #{self.fasta_file.errors.full_messages.to_sentence} "
       save
     end

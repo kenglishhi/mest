@@ -56,6 +56,9 @@ class Blast::CreateDbs < Blast::Base
           child_biodatabase.biosequences << target_biosequence
         end
         child_biodatabase.save! unless child_biodatabase.nil? # no matches
+        if child_biodatabase.nil? # no matches
+           puts "No Matches"
+        end
         return
       end
     end
