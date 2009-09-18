@@ -17,6 +17,7 @@ class Jobs::ExtractSequencesTest < ActiveSupport::TestCase
     should "Extract sequences job should run" do
      assert_not_nil @job.do_perform
      assert FastaFile.find(@job.params[:fasta_file_id] ).biodatabase.biosequences.size > 0
+     assert_not_nil Biodatabase.last.fasta_file
     end
   end
 end
