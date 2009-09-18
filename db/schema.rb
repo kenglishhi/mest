@@ -117,7 +117,6 @@ ActiveRecord::Schema.define(:version => 20090913032148) do
     t.string   "fasta_content_type"
     t.integer  "fasta_file_size"
     t.boolean  "is_generated",       :default => false
-    t.integer  "biodatabase_id"
     t.integer  "project_id",                            :null => false
     t.integer  "user_id"
     t.datetime "created_at"

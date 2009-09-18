@@ -18,7 +18,7 @@ class Blast::Command
     end
 
     command = " blastall -p blastn -i #{options[:test_file_path]} -d #{options[:target_file_path] } -e #{options[:evalue]}  -b 20 -v 20 "
-    output_file_handle = Tempfile.new("#{options[:output_file_prefix]}_Blast_Result.txt")
+    output_file_handle = Tempfile.new("#{options[:output_file_prefix].gsub(/ /,"_")}_Blast_Result.txt")
     output_file_handle.close(false)
     command <<  "-o  #{output_file_handle.path} "
     system(*command)

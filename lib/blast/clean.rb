@@ -20,11 +20,10 @@ class Blast::Clean < Blast::Base
     @output_biodatabase = create_clean_output_database(@test_fasta_file.biodatabase)
     @target_fasta_file.formatdb
 
-
     @blast_result = BlastResult.new(:name => "#{@output_biodatabase.name} Blast Result",
       :started_at => Time.now
     )
-    evalue = @params[:evalue].blank? ?  0.000001 : @params[:evalue]
+    evalue = @params[:evalue] ||   0.000001
     output_file_handle = Blast::Command.execute(:test_file_path => @test_fasta_file.fasta.path,
            :target_file_path => @target_fasta_file.fasta.path,
            :evalue => evalue,
@@ -66,7 +65,7 @@ class Blast::Clean < Blast::Base
 
   def create_clean_output_database(parent_db)
     default_new_biodatabase_name =  "#{parent_db.name}-Cleaned"
-    new_name = @params[:new_biodatabase_name].blank? ? default_new_biodatabase_name :  @params[:new_biodatabase_name]
+    new_name = @params[:new_biodatabase_name] ||  default_new_biodatabase_name 
     Biodatabase.new(:biodatabase_type =>
         BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
       :name => new_name,

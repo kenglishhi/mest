@@ -16,6 +16,7 @@ class Blast::Base
 
   def initialize(p={})
     @params = p
+    @params.delete_if {|key, value| value.blank? }
   end
 
   def run
@@ -27,59 +28,6 @@ class Blast::Base
   def do_run
     raise "subclasses must implement"
   end
-
-#  def run_command
-#    options={}
-#    options[:evalue] = self.evalue || 0.001
-#
-#    test_fasta_file.extract_sequences if !test_fasta_file.is_generated && test_fasta_file.biodatabase.nil?
-#    target_fasta_file.extract_sequences if !target_fasta_file.is_generated && target_fasta_file.biodatabase.nil?
-#    target_fasta_file.formatdb
-#
-#    output_file_handle = execute_blast_command(options)
-#    output_file_handle.open
-#    result_ff = Bio::FlatFile.open(output_file_handle)
-#    @matches = 0
-#    @number_of_fastas = 0
-#
-#    transaction do
-#      output_biodatabase = Biodatabase.new(:name => biodatabase_name,
-#        :biodatabase_type_id =>  biodatabase_type_id,
-#        :parent => test_fasta_file.biodatabase)
-#      output_biodatabase.save
-#
-#      self.biodatabase_id = output_biodatabase.id
-#      save
-#
-#      match_biodatabase_type = BiodatabaseType.find_by_name("GENERATED-MATCH")
-#      result_ff.each do |report|
-#        test_biosequence = Biosequence.find_by_name(report.query_def)
-#
-#        first_flag = true
-#        child_biodatabase =nil
-#        report.each do |hit|
-#          if first_flag
-#            @number_of_fastas += 1
-#            child_biodatabase = Biodatabase.new(:name => "#{output_biodatabase.name } #{@number_of_fastas}",
-#              :biodatabase_type => match_biodatabase_type,
-#              :parent => output_biodatabase)
-#
-#            child_biodatabase.biosequences << test_biosequence
-#            first_flag = false
-#          end
-#          @matches += 1
-#          target_biosequence = Biosequence.find_by_name(hit.target_def)
-#          child_biodatabase.biosequences << target_biosequence
-#        end
-#        child_biodatabase.save unless child_biodatabase.nil? # no matches
-#        return
-#      end
-#      output_biodatabase.save
-#      puts "[kenglish] saved new database #{output_biodatabase.name} ( #{output_biodatabase.id} ) "
-#    end
-#    true
-#  end
-
 
   def create_fastas
     if self.term
@@ -115,16 +63,5 @@ class Blast::Base
     end
   end
 
-  private
 
-  def execute_blast_command(options)
-    command = " blastall -p blastn -i #{@test_fasta_file.fasta.path} -d #{@target_fasta_file.fasta.path} -e #{options[:evalue]}  -b 20 -v 20 "
-    output_file_handle = Tempfile.new("#{@output_biodatabase.name}_Blast_Result.txt")
-    output_file_handle.close(false)
-    command <<  "-o  #{output_file_handle.path} "
-    system(*command)
-    output_file_handle.close
-    output_file_handle
-  end
-  #
 end

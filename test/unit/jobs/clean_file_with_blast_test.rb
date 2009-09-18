@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Jobs::ExtractSequencesTest < ActiveSupport::TestCase
   context "Extract sequences from a Fasta File" do
     setup do
-      filename =  "EST_Clade_A_5.fasta"
+      filename =  "Plate-1_5_Trimmed_Sequences.fasta"
       tempfile = File.open(File.dirname(__FILE__) + "/../../fixtures/files/#{filename}")
 
       @fasta_file = FastaFile.new
@@ -16,7 +16,7 @@ class Jobs::ExtractSequencesTest < ActiveSupport::TestCase
 
     should "Extract sequences job should run" do
      assert_not_nil @job.do_perform
-     assert_equal FastaFile.find(@job.params[:fasta_file_id] ).biodatabase.biosequences.size, 5
+     assert FastaFile.find(@job.params[:fasta_file_id] ).biodatabase.biosequences.size > 0
     end
   end
 end

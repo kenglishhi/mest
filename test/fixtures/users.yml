@@ -1,7 +1,105 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
+--- 
+users_004: 
+  created_at: 2009-09-13 03:46:23
+  last_request_at: 
+  single_access_token: 3VvszfeeP4cvCFcbw8AG
+  avatar_file_size: "2456"
+  avatar_file_name: dolphin.jpg
+  crypted_password: ebc9e1eee788681dedeb59f508229b5c5ac7b8bcad15d2b89d176ec9fb9a15f5cf59d9ce582388e16c9cf025f86582b95481b3da5e6d58342610d3a68b80b96a
+  title: ""
+  updated_at: 2009-09-13 03:46:23
+  perishable_token: HSlQmo8dfevDepBYYtHn
+  current_login_ip: 
+  failed_login_count: "0"
+  id: "4"
+  current_login_at: 
+  password_salt: 73oM-AKw1-s9g5G0ORUK
+  avatar_content_type: image/jpeg
+  mi: ""
+  login_count: "0"
+  persistence_token: ca116f8d5a168ba06d2b1242600f0e1a0745d8f5492a6afa03c99a2049db39945a8d6f6f1af66f84d2bb858508581b79e767f991ad6c3735119ce9588d1cba6e
+  last_name: Putnam
+  last_login_ip: 
+  organization: 
+  last_login_at: 
+  avatar_updated_at: 2009-09-13 03:46:22
+  first_name: Hollie
+  email: hputnam@hawaii.edu
+users_001: 
+  created_at: 2009-09-13 03:46:22
+  last_request_at: 
+  single_access_token: HGzhSefdOKNwxsCVmaoh
+  avatar_file_size: "2758"
+  avatar_file_name: kevin_pic.jpg
+  crypted_password: 18969cd8bffa3b5769d0a1714e932a28e55e121239eb447192af40a42ccd08108eb1182e9eb18c7e5304480ba1738ed5f1b33ba3655545b35952421e959a556c
+  title: ""
+  updated_at: 2009-09-13 03:46:22
+  perishable_token: uqZP29zhxzM3e4mZ4aOM
+  current_login_ip: 
+  failed_login_count: "0"
+  id: "1"
+  current_login_at: 
+  password_salt: TttCGSQq6d0BspTn8rPW
+  avatar_content_type: image/jpeg
+  mi: W
+  login_count: "0"
+  persistence_token: 57578b4fd018e7e18c36a0786f19146f0ca5d451319d011b81d4d861263d402885fd1c6b8469e82c92886297f4567f49a1fbe975791611735dd8b3cd7967071a
+  last_name: English
+  last_login_ip: 
+  organization: 
+  last_login_at: 
+  avatar_updated_at: 2009-09-13 03:46:22
+  first_name: Kevin
+  email: kenglish@gmail.com
+users_002: 
+  created_at: 2009-09-13 03:46:22
+  last_request_at: 2009-09-18 18:20:12
+  single_access_token: KdtgZO5ALtf775drum6s
+  avatar_file_size: "1670"
+  avatar_file_name: tigershark.jpg
+  crypted_password: 6323579c5ab4993953a89a0715176b530eb34332d263107bb352cd14d7177ae4aec04f30a436dcc6c11ed8cc0071837080c23fd70e6f4e2d463cb0cf0526f7cb
+  title: ""
+  updated_at: 2009-09-18 18:20:12
+  perishable_token: bpi3ZYlqS6dJ64pEPKIu
+  current_login_ip: 127.0.1.1
+  failed_login_count: "0"
+  id: "2"
+  current_login_at: 2009-09-13 22:28:06
+  password_salt: sVGnFSlZNOpF9YRNdasE
+  avatar_content_type: image/jpeg
+  mi: ""
+  login_count: "2"
+  persistence_token: f328038d2ba68b29940e83cfff86bfb722a0a3cb189c4573dc1dbd0ea964bf0709275c227d9eba962690d76c9cf0e76917db3e77bfd0e8220f7162b7cccfafa6
+  last_name: Pochon
+  last_login_ip: 127.0.1.1
+  organization: 
+  last_login_at: 2009-09-13 03:46:27
+  avatar_updated_at: 2009-09-13 03:46:22
+  first_name: Xavier
+  email: pochon@hawaii.edu
+users_003: 
+  created_at: 2009-09-13 03:46:22
+  last_request_at: 
+  single_access_token: 77s96hmtjqEy8ozbRv50
+  avatar_file_size: "21779"
+  avatar_file_name: poisson.jpg
+  crypted_password: f16f2de1f921edef89a71b404113be5cc80a3b9755be61d3eb1583ab69979c08eb9888ac151dfa943e9e7e10badec4db02b6265befae71940cc2878051e93000
+  title: ""
+  updated_at: 2009-09-13 03:46:22
+  perishable_token: hHQaV0F_40RwxjGro7So
+  current_login_ip: 
+  failed_login_count: "0"
+  id: "3"
+  current_login_at: 
+  password_salt: 7IFroGKxaXgOEHMMnbc7
+  avatar_content_type: image/jpeg
+  mi: ""
+  login_count: "0"
+  persistence_token: e69bf37eab28c1bdf1a41304672382010fa850806c7a1331db75b9a656f176848f0da468ee894c879c27ab4aac2f65dde63a197ae1daf54d0ae8772da1a41e25
+  last_name: Poisson
+  last_login_ip: 
+  organization: 
+  last_login_at: 
+  avatar_updated_at: 2009-09-13 03:46:22
+  first_name: Guylaine
+  email: guylaine@hawaii.edu

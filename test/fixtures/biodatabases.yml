@@ -17,12 +17,3 @@ biodatabases_002:
   biodatabase_type_id: "1"
   authority: 
   description: 
-biodatabases_003: 
-  name: EST_Clade_A_3-CLEANED
-  created_at: 2009-05-21 05:55:44
-  updated_at: 2009-05-21 05:55:47
-  fasta_file_id: "5"
-  id: "3"
-  biodatabase_type_id: "2"
-  authority: 
-  description: 

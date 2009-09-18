@@ -5,7 +5,6 @@ fasta_files_001:
   created_at: 2009-05-21 05:55:07
   fasta_file_size: "1847"
   updated_at: 2009-05-21 05:55:07
-  biodatabase_id: 
   id: "1"
   is_generated: "0"
   fasta_content_type: application/octet-stream
@@ -16,7 +15,6 @@ fasta_files_002:
   created_at: 2009-05-21 05:55:07
   fasta_file_size: "2569"
   updated_at: 2009-05-21 05:55:07
-  biodatabase_id: 
   id: "2"
   is_generated: "0"
   fasta_content_type: application/octet-stream
@@ -27,7 +25,6 @@ fasta_files_003:
   created_at: 2009-05-21 05:55:07
   fasta_file_size: "4099"
   updated_at: 2009-05-21 05:55:07
-  biodatabase_id: 
   id: "3"
   is_generated: "0"
   fasta_content_type: application/octet-stream
@@ -38,19 +35,17 @@ fasta_files_004:
   created_at: 2009-05-21 05:55:07
   fasta_file_size: "326"
   updated_at: 2009-05-21 05:55:07
-  biodatabase_id: 
   id: "4"
   is_generated: "0"
   fasta_content_type: application/octet-stream
   project_id: 1
-fasta_files_005: 
-  fasta_file_name: EST_Clade_A_3-CLEANED.fasta
-  label: EST_Clade_A_3-CLEANED
+fasta_files_005:
+  fasta_file_name: EST_Clade_A_5.fasta
+  label: EST_Clade_A_5
   created_at: 2009-05-21 05:55:44
   fasta_file_size: "1785"
   updated_at: 2009-05-21 05:55:44
-  biodatabase_id: 
   id: "5"
-  is_generated: "1"
+  is_generated: "0"
   fasta_content_type: application/x-fasta
   project_id: "1"

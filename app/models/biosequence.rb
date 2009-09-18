@@ -9,5 +9,8 @@ class Biosequence < ActiveRecord::Base
   def to_fasta
      ">#{name}\n#{seq}\n"
   end
+  def to_s
+    to_fasta
+  end
 
 end
