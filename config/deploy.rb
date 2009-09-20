@@ -36,14 +36,13 @@ namespace :delayed_job do
 
   desc 'restart delayed job'
   task :start do
-    run <<-CMD
-     ruby #{current_path}/script/delayed_job start production
-    CMD
+    run " ruby #{current_path}/script/delayed_job start production"
   end
   task :stop do
-    run <<-CMD
-     ruby #{current_path}/script/delayed_job  stop -f production 
-    CMD
+    run "ruby #{current_path}/script/delayed_job  stop -f production"
+    run "sleep 2"
+    run "killall biococo_job_runner"
+    run "sleep 2"
   end
 
 
