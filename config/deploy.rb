@@ -41,7 +41,7 @@ namespace :delayed_job do
   task :stop do
     run "ruby #{current_path}/script/delayed_job  stop -f production"
     run "sleep 2"
-    run "killall biococo_job_runner"
+#    run "killall -q biococo_job_runner"
     run "sleep 2"
   end
 

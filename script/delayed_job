@@ -13,13 +13,14 @@ daemon_options = {
 }
  
 Daemons.run_proc('biococo_job_runner', daemon_options) do
-  if ARGV.include?('--')
-    ARGV.slice! 0..ARGV.index('--')
-  else
-    ARGV.clear
-  end
+#  if ARGV.include?('--')
+#    ARGV.slice! 0..ARGV.index('--')
+#  else
+#    ARGV.clear
+#  end
   
   Dir.chdir dir
+  puts "ARGV == #{ARGV.inspect}"
   RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
   puts "Started with RAIL_ENV #{RAILS_ENV}"
   require File.join('config', 'environment')
