@@ -37,10 +37,10 @@ namespace :delayed_job do
   desc 'restart delayed job'
   task :start do
     run "sleep 3"
-    run "ruby #{current_path}/script/delayed_job -e production start"
+    run "export RAILS_ENV=production && ruby #{current_path}/script/delayed_job -e production start"
   end
   task :stop do
-    run "ruby #{current_path}/script/delayed_job -e production stop"
+    run "export RAILS_ENV=production && ruby #{current_path}/script/delayed_job -e production stop"
     run "sleep 3"
   end
 end
