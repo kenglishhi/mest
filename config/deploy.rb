@@ -39,13 +39,10 @@ namespace :delayed_job do
     run " ruby #{current_path}/script/delayed_job start production"
   end
   task :stop do
-    run "ruby #{current_path}/script/delayed_job  stop -f production"
-    run "sleep 2"
-#    run "killall -q biococo_job_runner"
-    run "sleep 2"
+    run "ruby #{current_path}/script/delayed_job -e production stop"
+    run "sleep 3"
+    run "ruby #{current_path}/script/delayed_job -e production start"
   end
-
-
 end
 
 
