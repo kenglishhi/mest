@@ -7,6 +7,8 @@
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base.js",
       "ext-3.0.0/ext-all.js" ,
       "workbench/example.js",
+      "workbench/base.js",
+      "workbench/database-group-tree.js",
      "ext-3.0.0/examples/form/states.js"
   %>
 
@@ -53,7 +55,8 @@
         Ext.workbenchdata.project_options = <%= @project_options.to_json %>;
         var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %></h1> ';
         // END RAILS data dump  -- no erb code should go beyond this line
-
+        var dbGroupTree = <%= BiodatabaseGroup.first.ext_tree.to_json %> ;
+//        var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
 
          var store = new Ext.data.ArrayStore({
            fields: ['id', 'name'],
@@ -154,8 +157,19 @@
               items:[projectToolbar, {
                   xtype: 'treepanel',
                   autoScroll: true,
+                  animate: true,
+                  enableDD: true,
+                  useArrows: true,
                   loader: new Ext.tree.TreeLoader(),
-                  root: new Ext.tree.AsyncTreeNode({
+                  listeners: {
+                    movenode: function( tree, node, oldParent, newParent, index )  {
+                        console.log("called move.")
+                    }
+
+                  },
+                  root: new Ext.tree.AsyncTreeNode(
+                    dbGroupTree
+/*                  {
                     text: "Main Node",
                     expanded: true,
                     children: [{
@@ -168,7 +182,9 @@
                         text: 'Menu Option 3',
                         leaf: true
                       }]
-                  })
+                  }
+*/
+                )
                 }]
 
               /*                layout: {
