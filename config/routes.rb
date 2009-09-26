@@ -10,11 +10,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects, :active_scaffold => true
   map.resources :blast_results, :active_scaffold => true
   map.resources :blasts
+  map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 
+  map.resources :biodatabases, :active_scaffold => true
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"
-  map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 
-  map.resources :biodatabases, :active_scaffold => true
+
 #  map.resources :blast, :active_scaffold => true
 #  map.resources :adminusers, :controller => "admin/users", :active_scaffold => true
   map.resource :user_session
