@@ -11,7 +11,7 @@ class Jobs::CleanFileWithBlastTest < ActiveSupport::TestCase
       assert @fasta_file.save, "Saving fasta file should succeed #{@fasta_file.errors.full_messages.to_sentence}"
       assert File.exists?( @fasta_file.fasta.path ), "File should exist after create"
       @job =  Jobs::CleanFileWithBlast.new("Clean #{@fasta_file.label}",
-        {:fasta_file_id => @fasta_file.id })
+        {:fasta_file_id => @fasta_file.id, :user_id => users(:users_001).id })
     end
 
     should "clean job should run" do
