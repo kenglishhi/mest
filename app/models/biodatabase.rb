@@ -14,6 +14,8 @@ class Biodatabase < ActiveRecord::Base
   validates_presence_of :biodatabase_type_id
   validates_presence_of :biodatabase_group_id
 
+  validates_uniqueness_of :name
+
   def generate_fasta
     puts "Called generate_fasta"
     if fasta_file_id.nil?
