@@ -14,3 +14,5 @@ tmp/
 *.fasta.nin
 *.fasta.nsq
 .*files/blast_results
+test/fixtures/files/fasta_files/*
+test/fixtures/files/blast_results/outputs/*
