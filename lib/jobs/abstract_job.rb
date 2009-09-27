@@ -1,7 +1,7 @@
 require 'pp'
 class Jobs::AbstractJob
   
-  attr_accessor :user
+  attr_accessor :user_id
   attr_accessor :job_name
   attr_accessor :params
   def initialize(n, p  = {} )
