@@ -4,12 +4,14 @@ class BiodatabasesController < ApplicationController
 
   before_filter :clear_stored_location, :only => [:index]
   active_scaffold :biodatabases do |config|
-    config.actions.exclude :nested
+    config.actions.exclude :nested, :create
 
     config.list.label = "Databases"
     config.columns = [:name, :biodatabase_type, :user]
     config.list.columns = [:name, :biodatabase_type, :biodatabase_group, :fasta_file,:number_of_sequences,:user,:blast_actions ]
+    config.update.columns = [:name, :biodatabase_type, :biodatabase_group]
     config.columns[:biodatabase_type].form_ui = :select
+    config.columns[:biodatabase_group].form_ui = :select
 #    config.columns[:parent].form_ui = :select
   end
 
