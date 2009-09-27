@@ -1,69 +1,73 @@
 
-
 Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   dataUrl: null,
   treeData: null,
-  title: 'Units',
+  title: 'Databases',
   initComponent: function() {
 
-
-    // THIS EXAMPLE WORKS, don't delete.
-    //        var rootNode = new Ext.tree.AsyncTreeNode({
-    //            "text": "Office of the Mayor of Honolulu",
-    //            "root": true,
-    //            "leaf": false,
-    //            "id": 75,
-    //            "expandable": true,
-    //             "expanded": true,
-    //             children: [{"view": "", "expanded": false, "parent_id": 75, "text": "CAP Office", "root": false, "name": "CAP Office", "iconCls": "icon-docs", "leaf": true, "id": 1470, "loaded": false, "expandable": false}, {"view": "", "expanded": false, "parent_id": 75, "text": "Department of Emergency Management", "root": false, "name": "Department of Emergency Management", "iconCls": "icon-docs", "leaf": false, "id": 78, "loaded": false, "expandable": true}, {"view": "", "expanded": false, "parent_id": 75, "text": "Department of Emergency Services", "root": false, "name": "Department of Emergency Services", "iconCls": "icon-docs", "leaf": true, "id": 77, "loaded": false, "expandable": false}, {"view": "", "expanded": false, "parent_id": 75, "text": "Honolulu Fire Department", "root": false, "name": "Honolulu Fire Department", "iconCls": "icon-docs", "leaf": false, "id": 74, "loaded": false, "expandable": true}, {"view": "", "expanded": false, "parent_id": 75, "text": "Honolulu Police Department", "root": false, "name": "Honolulu Police Department", "iconCls": "icon-docs", "leaf": true, "id": 76, "loaded": false, "expandable": false}, {"view": "", "expanded": false, "parent_id": 75, "text": "Springer Condo", "root": false, "name": "Springer Condo", "iconCls": "icon-docs", "leaf": true, "id": 1469, "loaded": false, "expandable": false}, {"view": "", "expanded": false, "parent_id": 75, "text": "Venues", "root": false, "name": "Venues", "iconCls": "icon-docs", "leaf": false, "id": 1449, "loaded": false, "expandable": true}]
-    ////                loaded: true,
-    ////                text: 'Tree Root',
-    //            });
-    var rootNode = new Ext.tree.AsyncTreeNode(this.treeData[0]);
-
+    var rootNode = new Ext.tree.AsyncTreeNode(this.treeData);
 
     Ext.apply(this, {
+      border: false,
       autoScroll: true,
-      region: 'west',
-      contentEl: 'tree',
-      width: 250,
-      collapsible: true,
-      split: true,
-      rootVisible: true,
-      loader: new Ext.tree.TreeLoader({
-        dataUrl: this.dataUrl,
-        requestMethod: 'GET'
-      }),
-
+      animate: true,
+      enableDD: true,
+      useArrows: true,
+      loader: new Ext.tree.TreeLoader(),
       root: rootNode
     });
     Ext.bio.DatabaseGroupTree.superclass.initComponent.call(this);
+
   },
   listeners: {
+    movenode: function( tree, node, oldParent, newParent, index )  {
+
+      if (newParent.id != oldParent.id) {
+        console.log("node.attributes.resource = " + node.attributes.resource);
+        params ={};
+        if (node.attributes.resource == 'biodatabase') {
+          url = '/workbench/biodatabases/' + node.id + '/move';
+          params = {
+            new_biodatabase_group_id:  newParent.id,
+            authenticity_token:  FORM_AUTH_TOKEN
+          };
+        } else if (node.attributes.resource == 'biodatabase_group') {
+          url = '/workbench/biodatabase_groups/' + node.id + '/move';
+          params = {
+            new_parent_id:  newParent.id,
+            authenticity_token:  FORM_AUTH_TOKEN
+          };
+        } else {
+          return true;
+        }
+
+        Ext.Ajax.request({
+          url: url,
+          method: 'POST',
+          params: params,
+          headers: {
+            'Accept' : 'text/javascript, text/html, application/xml, text/xml',
+            'AjaxFrom' : 'EXTJS'
+          },
+          success: function(response, options) {
+          },
+          failure: function(response, options) {
+          }
+        });
+
+
+      } 
+    },
     click: function(node) {
-       this.clickAction(node);
+      console.log("click STUB");
     },
     collapsenode: function(node) {
-      if (!this.treecookie) {
-     	  this.treecookie = new Cookie( this.cookieName );
-        this.treecookie.expanded_nodes = [];
-      }
-      this.treecookie.expanded_nodes.remove(node.attributes.id);
-      this.treecookie.store(1);
+      console.log("collapsenode STUB");
     },
     expandnode: function(node) {
-      if (!this.treecookie) {
-     	  this.treecookie = new Cookie( this.cookieName );
-        this.treecookie.expanded_nodes = [];
-      }
-
-
-     if (this.treecookie.expanded_nodes.indexOf(node.attributes.id) == -1) {
-        this.treecookie.expanded_nodes.push(node.attributes.id);
-     }
-     this.treecookie.store(1);
+      console.log("expandnode STUB");
     }
   }
 });
-Ext.reg('database-group-tree', Ext.ux.DatabaseGroupTree);
+Ext.reg('database-group-tree', Ext.bio.DatabaseGroupTree);
 

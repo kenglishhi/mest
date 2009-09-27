@@ -4,22 +4,16 @@
     <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
       "ext-override" %>
 
+    <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
+
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base.js",
       "ext-3.0.0/ext-all.js" ,
       "workbench/example.js",
       "workbench/base.js",
       "workbench/database-group-tree.js",
-     "ext-3.0.0/examples/form/states.js"
+      "ext-3.0.0/examples/form/states.js"
   %>
-
-
     <script type="text/javascript" src="workbench/examples.js"></script>
-
-
-    <!--
-<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
--->
-
     <style type="text/css">
       html, body {
         font:normal 12px verdana;
@@ -55,30 +49,71 @@
         Ext.workbenchdata.project_options = <%= @project_options.to_json %>;
         var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %></h1> ';
         // END RAILS data dump  -- no erb code should go beyond this line
-        var dbGroupTree = <%= BiodatabaseGroup.first.ext_tree.to_json %> ;
-//        var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
+        var dbGroupTree = <%= BiodatabaseGroup.first.ext_tree(:expand_node => true).to_json %> ;
+        //        var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
 
-         var store = new Ext.data.ArrayStore({
-           fields: ['id', 'name'],
-           data : Ext.workbenchdata.project_options // from states.js
-         });
+        var store = new Ext.data.ArrayStore({
+          fields: ['id', 'name'],
+          data : Ext.workbenchdata.project_options // from states.js
+        });
 
         var projectToolbar = new Ext.Toolbar({
         });
-//         projectToolbar.render('toolbar');
+        //         projectToolbar.render('toolbar');
 
-         // add a combobox to the toolbar
-         var combo = new Ext.form.ComboBox({
-           store: store,
-           displayField: 'name',
-           typeAhead: true,
-           mode: 'local',
-           triggerAction: 'all',
-           emptyText:'Select a Project...',
-           selectOnFocus:true,
-           width:135
-         });
-         projectToolbar.addField(combo);
+        // add a combobox to the toolbar
+        var combo = new Ext.form.ComboBox({
+          store: store,
+          displayField: 'name',
+          typeAhead: true,
+          mode: 'local',
+          triggerAction: 'all',
+          emptyText:'Select a Project...',
+          selectOnFocus:true,
+          width:135
+        });
+        projectToolbar.addField(combo);
+        projectToolbar.add('->',{
+          text: 'Add Database Group',
+          handler: function(){
+            Ext.Msg.prompt('New Database group', 'Enter new database group name:',
+            function(btn, text){
+              var dbTree = Ext.getCmp('bio-database-group-tree');
+              if(btn == 'ok' && text) {
+                console.log("new Database Group" + text);
+                url = '/workbench/biodatabase_groups';
+                params = {
+                  parent_id :  dbTree.root.id,
+                  name: text,
+                  authenticity_token:  FORM_AUTH_TOKEN
+                };
+                Ext.Ajax.request({
+                  url: url,
+                  method: 'POST',
+                  params: params,
+                  headers: {
+                    'Accept' : 'text/javascript, text/html, application/xml, text/xml',
+                    'AjaxFrom' : 'EXTJS'
+                  },
+                  success: function(response, options) {
+                    var object =  Ext.util.JSON.decode(response.responseText);
+
+                    var newNode = new Ext.tree.TreeNode({
+                      text: text, expandable:true,
+                      leaf: false,
+                      id: object.id,
+                      resource: 'database_group'
+                    });
+
+                    dbTree.root.appendChild(newNode);
+                  },
+                  failure: function(response, options) {
+                  }
+                });
+              }
+            });
+          }
+        });
 
 
         // NOTE: This is an example showing simple state management. During development,
@@ -150,58 +185,15 @@
               split: true,
               width: 200,
               minSize: 175,
-              maxSize: 400,
+              //              maxSize: 400,
               collapsible: true,
 
               margins: '0 0 0 5',
-              items:[projectToolbar, {
-                  xtype: 'treepanel',
-                  autoScroll: true,
-                  animate: true,
-                  enableDD: true,
-                  useArrows: true,
-                  loader: new Ext.tree.TreeLoader(),
-                  listeners: {
-                    movenode: function( tree, node, oldParent, newParent, index )  {
-                        console.log("called move.")
-                    }
-
-                  },
-                  root: new Ext.tree.AsyncTreeNode(
-                    dbGroupTree
-/*                  {
-                    text: "Main Node",
-                    expanded: true,
-                    children: [{
-                        text: 'Menu Option 1',
-                        leaf: true
-                      }, {
-                        text: 'Menu Option 2',
-                        leaf: true
-                      }, {
-                        text: 'Menu Option 3',
-                        leaf: true
-                      }]
-                  }
-*/
-                )
+              items: [projectToolbar,
+                {id: 'bio-database-group-tree',
+                  xtype:'database-group-tree',
+                  treeData: dbGroupTree
                 }]
-
-              /*                layout: {
-                    type: 'accordion',
-                    animate: true
-                },
-                items: [{
-                    contentEl: 'west',
-                    title: 'Navigation',
-                    border: false,
-                    iconCls: 'nav' // see the HEAD section for style used
-                }, {
-                    title: 'Settings',
-                    html: '<p>Some settings in here.</p>',
-                    border: false,
-                    iconCls: 'settings'
-                }] */
             },
             // in this instance the TabPanel is not wrapped by another panel
             // since no title is needed, this Panel is added directly

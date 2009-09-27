@@ -37,8 +37,8 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
   end
   context "Blast 2 identical dbs and create databases" do
     setup do
-      @test_fasta_file = fasta_files(:fasta_files_006)
-      @target_fasta_file = fasta_files(:fasta_files_006)
+      @test_fasta_file = fasta_files(:fasta_files_004)
+      @target_fasta_file = fasta_files(:fasta_files_004)
 
       assert File.exists?( @test_fasta_file.fasta.path ), "test_fasta_file should exist."
       assert File.exists?( @target_fasta_file.fasta.path ), "target_fasta_file should exist."

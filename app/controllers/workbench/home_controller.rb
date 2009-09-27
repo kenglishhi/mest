@@ -3,5 +3,4 @@ class Workbench::HomeController < ApplicationController
     @project_options =  Project.workbench_project_options
     render :layout => false
   end
-
 end

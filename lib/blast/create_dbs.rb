@@ -40,6 +40,7 @@ class Blast::CreateDbs < Blast::Base
         puts "Creating output_biodatabase_group_name #{output_biodatabase_group_name}"
         output_biodatabase_group = BiodatabaseGroup.create!(:name => output_biodatabase_group_name,
           :project_id => test_fasta_file.project_id,
+	  :parent => test_fasta_file.biodatabase.biodatabase_group,
           :user_id => params[:user_id])
       end
 

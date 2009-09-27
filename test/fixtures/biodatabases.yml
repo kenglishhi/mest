@@ -6,6 +6,7 @@ biodatabases_001:
   fasta_file_id: "1"
   id: "1"
   biodatabase_type_id: "1"
+  biodatabase_group_id: "1"
   authority: 
   description: 
 biodatabases_002: 
@@ -15,5 +16,6 @@ biodatabases_002:
   fasta_file_id: "2"
   id: "2"
   biodatabase_type_id: "1"
+  biodatabase_group_id: "1"
   authority: 
   description: 
