@@ -21,8 +21,7 @@ var reader = new Ext.data.JsonReader({
 }, [
     {name: 'id'},
     {name: 'name', allowBlank: false},
-    {name: 'first', allowBlank: false},
-    {name: 'last', allowBlank: false}
+    {name: 'user_id', allowBlank: false}
 ]);
 
 // The new DataWriter component.
@@ -43,11 +42,10 @@ var store = new Ext.data.Store({
 });
 
 // Let's pretend we rendered our grid-columns with meta-data from our ORM framework.
-var userColumns =  [
+var biodatabaseColumns =  [
     {header: "ID", width: 40, sortable: true, dataIndex: 'id'},
     {header: "Name", width: 100, sortable: true, dataIndex: 'name', editor: new Ext.form.TextField({})},
-    {header: "First", width: 50, sortable: true, dataIndex: 'first', editor: new Ext.form.TextField({})},
-    {header: "Last", width: 50, sortable: true, dataIndex: 'last', editor: new Ext.form.TextField({})}
+    {header: "User Id", width: 50, sortable: true, dataIndex: 'user_id', editor: new Ext.form.TextField({})}
 ];
 
 // load the store immeditately
@@ -63,15 +61,15 @@ Ext.onReady(function() {
 
     // Create a typical GridPanel with RowEditor plugin
     var userGrid = new Ext.grid.GridPanel({
-        renderTo: 'user-grid',
+        renderTo: 'biodatabase-grid',
         iconCls: 'icon-grid',
         frame: true,
-        title: 'Users',
+        title: 'Biodatabases',
         autoScroll: true,
         height: 300,
         store: store,
         plugins: [editor],
-        columns : userColumns,
+        columns : biodatabaseColumns,
         tbar: [{
             text: 'Add',
             iconCls: 'silk-add',
@@ -90,24 +88,24 @@ Ext.onReady(function() {
      * onAdd
      */
     function onAdd(btn, ev) {
-        var u = new userGrid.store.recordType({
+        var u = new biodatabaseGrid.store.recordType({
             first : '',
             last: '',
             email : ''
         });
         editor.stopEditing();
-        userGrid.store.insert(0, u);
+        biodatabaseGrid.store.insert(0, u);
         editor.startEditing(0);
     }
     /**
      * onDelete
      */
     function onDelete() {
-        var rec = userGrid.getSelectionModel().getSelected();
+        var rec = biodatabaseGrid.getSelectionModel().getSelected();
         if (!rec) {
             return false;
         }
-        userGrid.store.remove(rec);
+        biodatabaseGrid.store.remove(rec);
     }
 
 });
