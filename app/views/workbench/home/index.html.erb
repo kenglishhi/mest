@@ -7,13 +7,17 @@
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base.js",
-      "ext-3.0.0/ext-all" ,
+      "ext-3.0.0/ext-all.js" ,
       "workbench/example.js",
       "workbench/base.js",
       "workbench/database-group-tree.js",
       "ext-3.0.0/examples/form/states.js",
-      "workbench/examples.js"
+      "workbench/App.js",
+      "workbench/restful-new.js",
+      "workbench/RowEditor.js"
+
   %>
+    <script type="text/javascript" src="workbench/examples.js"></script>
     <style type="text/css">
       html, body {
         font:normal 12px verdana;
@@ -56,6 +60,62 @@
         // can change across page loads, leading to unpredictable results.  The developer
         // should ensure that stable state ids are set for stateful components in real apps.
         Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+
+    Ext.QuickTips.init();
+
+    // use RowEditor for editing
+    var editor = new Ext.ux.grid.RowEditor({
+        saveText: 'Update'
+    });
+
+    // Create a typical GridPanel with RowEditor plugin
+    var userGrid = new Ext.grid.GridPanel({
+        iconCls: 'icon-grid',
+        frame: true,
+        title: 'Biodatabase',
+        autoScroll: true,
+        height: 300,
+        store: store,
+        plugins: [editor],
+        columns : biodatabaseColumns,
+        tbar: [{
+            text: 'Add',
+            iconCls: 'silk-add',
+            handler: onAdd
+        }, '-', {
+            text: 'Delete',
+            iconCls: 'silk-delete',
+            handler: onDelete
+        }, '-'],
+        viewConfig: {
+            forceFit: true
+        }
+    });
+
+    /**
+     * onAdd
+     */
+    function onAdd(btn, ev) {
+        var u = new biodatabaseGrid.store.recordType({
+            first : '',
+            last: '',
+            email : ''
+        });
+        editor.stopEditing();
+        biodatabaseGrid.store.insert(0, u);
+        editor.startEditing(0);
+    }
+    /**
+     * onDelete
+     */
+    function onDelete() {
+        var rec = biodatabaseGrid.getSelectionModel().getSelected();
+        if (!rec) {
+            return false;
+        }
+        biodatabaseGrid.store.remove(rec);
+    }
+
 
         var viewport = new Ext.Viewport({
           layout: 'border',
@@ -138,9 +198,9 @@
               deferredRender: false,
               activeTab: 0,     // first tab initially active
               items: [{
-                  contentEl: 'center1',
+                  items: userGrid ,
                   title: 'Close Me',
-//                  closable: true,
+                  closable: true,
                   autoScroll: true
                 }, {
                   contentEl: 'center2',
