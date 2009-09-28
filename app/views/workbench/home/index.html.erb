@@ -7,13 +7,13 @@
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base.js",
-      "ext-3.0.0/ext-all.js" ,
+      "ext-3.0.0/ext-all" ,
       "workbench/example.js",
       "workbench/base.js",
       "workbench/database-group-tree.js",
-      "ext-3.0.0/examples/form/states.js"
+      "ext-3.0.0/examples/form/states.js",
+      "workbench/examples.js"
   %>
-    <script type="text/javascript" src="workbench/examples.js"></script>
     <style type="text/css">
       html, body {
         font:normal 12px verdana;
@@ -140,7 +140,7 @@
               items: [{
                   contentEl: 'center1',
                   title: 'Close Me',
-                  closable: true,
+//                  closable: true,
                   autoScroll: true
                 }, {
                   contentEl: 'center2',

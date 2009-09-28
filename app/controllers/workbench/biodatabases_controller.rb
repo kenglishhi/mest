@@ -1,4 +1,9 @@
 class Workbench::BiodatabasesController < ApplicationController
+  def index
+    @biodatabases = Biodatabase.all
+    render :json => { :data => @biodatabases }
+ 
+  end
 
  def move
     respond_to do | type |
