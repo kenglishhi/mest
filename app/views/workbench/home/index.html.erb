@@ -52,71 +52,6 @@
         var dbGroupTree = <%= BiodatabaseGroup.first.ext_tree(:expand_node => true).to_json %> ;
         //        var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
 
-        var store = new Ext.data.ArrayStore({
-          fields: ['id', 'name'],
-          data : Ext.workbenchdata.project_options // from states.js
-        });
-
-        var projectToolbar = new Ext.Toolbar({
-        });
-        //         projectToolbar.render('toolbar');
-
-        // add a combobox to the toolbar
-        var combo = new Ext.form.ComboBox({
-          store: store,
-          displayField: 'name',
-          typeAhead: true,
-          mode: 'local',
-          triggerAction: 'all',
-          emptyText:'Select a Project...',
-          selectOnFocus:true,
-          width:135
-        });
-        projectToolbar.addField(combo);
-        projectToolbar.add('->',{
-          text: 'Add Database Group',
-          handler: function(){
-            Ext.Msg.prompt('New Database group', 'Enter new database group name:',
-            function(btn, text){
-              var dbTree = Ext.getCmp('bio-database-group-tree');
-              if(btn == 'ok' && text) {
-                console.log("new Database Group" + text);
-                url = '/workbench/biodatabase_groups';
-                params = {
-                  parent_id :  dbTree.root.id,
-                  name: text,
-                  authenticity_token:  FORM_AUTH_TOKEN
-                };
-                Ext.Ajax.request({
-                  url: url,
-                  method: 'POST',
-                  params: params,
-                  headers: {
-                    'Accept' : 'text/javascript, text/html, application/xml, text/xml',
-                    'AjaxFrom' : 'EXTJS'
-                  },
-                  success: function(response, options) {
-                    var object =  Ext.util.JSON.decode(response.responseText);
-
-                    var newNode = new Ext.tree.TreeNode({
-                      text: text, expandable:true,
-                      leaf: false,
-                      id: object.id,
-                      resource: 'database_group'
-                    });
-
-                    dbTree.root.appendChild(newNode);
-                  },
-                  failure: function(response, options) {
-                  }
-                });
-              }
-            });
-          }
-        });
-
-
-        // NOTE: This is an example showing simple state management. During development,
         // it is generally best to disable state management as dynamically-generated ids
         // can change across page loads, leading to unpredictable results.  The developer
         // should ensure that stable state ids are set for stateful components in real apps.
@@ -181,7 +116,7 @@
             }, {
               region: 'west',
               id: 'west-panel', // see Ext.getCmp() below
-              title: 'Project Browser',
+              title: 'Database Browser',
               split: true,
               width: 200,
               minSize: 175,
@@ -189,7 +124,7 @@
               collapsible: true,
 
               margins: '0 0 0 5',
-              items: [projectToolbar,
+              items: [
                 {id: 'bio-database-group-tree',
                   xtype:'database-group-tree',
                   treeData: dbGroupTree

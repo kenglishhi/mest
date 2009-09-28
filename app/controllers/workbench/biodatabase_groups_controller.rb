@@ -26,5 +26,7 @@ class Workbench::BiodatabaseGroupsController < ApplicationController
       }
     end
   end
+  def tree
+  end
 
 end
