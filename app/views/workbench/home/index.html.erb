@@ -13,7 +13,7 @@
       "workbench/database-group-tree.js",
       "ext-3.0.0/examples/form/states.js",
       "workbench/App.js",
-      "workbench/restful-biodatabases.js",
+      "workbench/biodatabase-grid.js",
       "workbench/RowEditor.js"
 
   %>
@@ -69,7 +69,11 @@
     });
 
     // Create a typical GridPanel with RowEditor plugin
-    var userGrid = new Ext.grid.GridPanel({
+/*    var biodatabaseGrid = new Ext.bio.BiodatabaseGrid({
+      id: 'my-biodatabase-grid'
+    });
+  */
+/*    Ext.grid.GridPanel({
         iconCls: 'icon-grid',
         frame: true,
         title: 'Biodatabase',
@@ -91,11 +95,12 @@
             forceFit: true
         }
     });
+  */
 
     /**
      * onAdd
      */
-    function onAdd(btn, ev) {
+/*    function onAdd(btn, ev) {
         var u = new biodatabaseGrid.store.recordType({
             first : '',
             last: '',
@@ -105,9 +110,11 @@
         biodatabaseGrid.store.insert(0, u);
         editor.startEditing(0);
     }
+  */
     /**
      * onDelete
      */
+/*
     function onDelete() {
         var rec = biodatabaseGrid.getSelectionModel().getSelected();
         if (!rec) {
@@ -116,6 +123,7 @@
         biodatabaseGrid.store.remove(rec);
     }
 
+     */
 
         var viewport = new Ext.Viewport({
           layout: 'border',
@@ -198,7 +206,8 @@
               deferredRender: false,
               activeTab: 0,     // first tab initially active
               items: [{
-                  items: userGrid ,
+                  items: [{id: 'kevin-biodatabase-grid',
+                    xtype:'biodatabase-grid'}],
                   title: 'Close Me',
                   closable: true,
                   autoScroll: true
