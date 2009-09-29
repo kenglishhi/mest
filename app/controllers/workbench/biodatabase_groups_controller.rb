@@ -1,4 +1,18 @@
 class Workbench::BiodatabaseGroupsController < ApplicationController
+  def index
+    @biodatabase_groups = BiodatabaseGroup.all
+    render :json => { :data => @biodatabase_groups }
+  end
+  def update
+    @biodatabase_group = BiodatabaseGroup.find(params[:id])
+
+    if @biodatabase_group.update_attributes(ActiveSupport::JSON.decode(params[:data]))
+      render :json => { :success => true, :message => "Updated Database Group #{@biodatabase_group.id}", :data => @biodatabase_group }
+    else
+      render :json => { :message => "Failed to update Database Group."}
+    end
+  end
+
   def create
     respond_to do | type |
       type.html { redirect_to '/workbench/'}
@@ -14,7 +28,7 @@ class Workbench::BiodatabaseGroupsController < ApplicationController
       }
     end
   end
- def move
+  def move
     respond_to do | type |
       type.html { redirect_to '/workbench/'}
       type.js{

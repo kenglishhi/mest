@@ -4,8 +4,16 @@ class Workbench::BiodatabasesController < ApplicationController
     render :json => { :data => @biodatabases }
  
   end
+  def update
+    @biodatabase = Biodatabase.find(params[:id])
 
- def move
+    if @biodatabase.update_attributes(ActiveSupport::JSON.decode(params[:data]))
+      render :json => { :success => true, :message => "Updated Database #{@biodatabase.id}", :data => @biodatabase }
+    else
+      render :json => { :message => "Failed to update Database"}
+    end
+  end
+  def move
     respond_to do | type |
       type.html { redirect_to '/workbench/'}
       type.js{
