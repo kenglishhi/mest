@@ -17,7 +17,6 @@
       "workbench/RowEditor.js"
 
   %>
-    <script type="text/javascript" src="workbench/examples.js"></script>
     <style type="text/css">
       html, body {
         font:normal 12px verdana;
@@ -203,33 +202,42 @@
             // as a Container
             new Ext.TabPanel({
               region: 'center', // a center region is ALWAYS required for border layout
-              deferredRender: false,
+              deferredRender: true,
               activeTab: 0,     // first tab initially active
               items: [{
                   items: [
-                    {id: 'kevin-biodatabase-grid',
+                    {id: 'workbench-biosequence-grid',
+                      xtype:'biosequence-grid'}
+                  ],
+                  title: 'Biosequences',
+                  autoScroll: true
+
+                }, {
+                  items: [
+                    {id: 'workbench-biodatabase-group-grid',
+                      xtype:'biodatabase-group-grid'}
+                  ],
+                  title: 'Biodatabase Group',
+                  autoScroll: true
+                }, {
+                  items: [
+                    {id: 'workbench-biodatabase-grid',
                       xtype:'biodatabase-grid'}
                   ],
                   title: 'Databases',
                   autoScroll: true
 
-                }, {
-                  items: [
-                    {id: 'kevin-biodatabase-group-grid',
-                      xtype:'biodatabase-group-grid'}
-                  ],
-                  title: 'Biodatabase Group',
-                  autoScroll: true
+
                 }]
             })]
         });
         // get a reference to the HTML element with id "hideit" and add a click listener to it
-//        Ext.get("hideit").on('click', function(){
-          // get a reference to the Panel that was created with id = 'west-panel'
-//          var w = Ext.getCmp('west-panel');
-          // expand or collapse that Panel based on its collapsed property state
-//          w.collapsed ? w.expand() : w.collapse();
-//        });
+        //        Ext.get("hideit").on('click', function(){
+        // get a reference to the Panel that was created with id = 'west-panel'
+        //          var w = Ext.getCmp('west-panel');
+        // expand or collapse that Panel based on its collapsed property state
+        //          w.collapsed ? w.expand() : w.collapse();
+        //        });
       });
     </script>
   </head>

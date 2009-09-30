@@ -1,6 +1,6 @@
 class Workbench::BiosequencesController < ApplicationController
   def index
-    @biosequences = Biosequences.all
+    @biosequences = Biosequence.all
     render :json => { :data => @biosequences}
   end
 end
