@@ -204,7 +204,15 @@
               region: 'center', // a center region is ALWAYS required for border layout
               deferredRender: true,
               activeTab: 0,     // first tab initially active
-              items: [{
+              items: [
+                {
+                  items: [
+                    {id: 'workbench-biodatabase-grid',
+                      xtype:'biodatabase-grid'}
+                  ],
+                  title: 'Biodatabase',
+                  autoScroll: true
+                },  {
                   items: [
                     {id: 'workbench-biosequence-grid',
                       xtype:'biosequence-grid'}
@@ -212,23 +220,18 @@
                   title: 'Biosequences',
                   autoScroll: true
 
-                }, {
+                },  {
                   items: [
-                    {id: 'workbench-biodatabase-group-grid',
+                    {id: 'workbench-biodatabase-groups-grid',
                       xtype:'biodatabase-group-grid'}
                   ],
-                  title: 'Biodatabase Group',
-                  autoScroll: true
-                }, {
-                  items: [
-                    {id: 'workbench-biodatabase-grid',
-                      xtype:'biodatabase-grid'}
-                  ],
-                  title: 'Databases',
+                  title: 'Biodatabase Groups',
                   autoScroll: true
 
+                }
 
-                }]
+
+              ]
             })]
         });
         // get a reference to the HTML element with id "hideit" and add a click listener to it
