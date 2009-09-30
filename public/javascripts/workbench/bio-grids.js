@@ -94,6 +94,7 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
 Ext.bio.BiodatabaseGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   prefix: 'biodatabase-store',
   dataUrl: '/workbench/biodatabases',
+  useEditorFlag:true,
   displayColumns:  [ {
       header: "ID",
       width: 40,
@@ -116,6 +117,7 @@ Ext.reg('biodatabase-grid', Ext.bio.BiodatabaseGrid);
 Ext.bio.BiodatabaseGroupGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   prefix: 'biodatabase-group-store',
   dataUrl: '/workbench/biodatabase_groups',
+  useEditorFlag:true,
   displayColumns:  [ {
       header: "ID",
       width: 40,
