@@ -84,7 +84,6 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
   } ,
   listeners: {
     render: function( p)  {
-      console.log("they called render")
       this.store.load();
     }
   }

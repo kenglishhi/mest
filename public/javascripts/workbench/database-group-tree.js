@@ -63,7 +63,6 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     movenode: function( tree, node, oldParent, newParent, index )  {
 
       if (newParent.id != oldParent.id) {
-        console.log("node.attributes.resource = " + node.attributes.resource);
         params ={};
         if (node.attributes.resource == 'biodatabase') {
           url = '/workbench/biodatabases/' + node.id + '/move';
@@ -99,13 +98,10 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       } 
     },
     click: function(node) {
-      console.log("click STUB");
     },
     collapsenode: function(node) {
-      console.log("collapsenode STUB");
     },
     expandnode: function(node) {
-      console.log("expandnode STUB");
     }
   },
   addDatabaseGroup: function(){
@@ -113,7 +109,6 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       function(btn, text){
         var dbTree = Ext.getCmp('bio-database-group-tree');
         if(btn == 'ok' && text) {
-          console.log("new Database Group" + text);
           url = '/workbench/biodatabase_groups';
           params = {
             parent_id :  dbTree.root.id,
