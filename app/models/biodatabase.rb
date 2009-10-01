@@ -1,4 +1,7 @@
 class Biodatabase < ActiveRecord::Base
+  include ExtJS::Model
+  extjs_fields :id, :name
+
 
   belongs_to :biodatabase_type
   belongs_to :biodatabase_group

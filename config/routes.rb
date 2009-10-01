@@ -41,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :biodatabase_groups, :member => { :move => :post , :tree => :get }
     admin.resources :biosequences
     admin.resource :tree
+    admin.resources :trees
   end
 
 	map.connect 'workbench',
@@ -50,6 +51,11 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'workbench/home/restful',
 		:controller => 'workbench/home',
 		:action     => 'restful'
+
+	map.connect 'workbench/home/gemtest',
+		:controller => 'workbench/home',
+		:action     => 'gemtest'
+
 
 
 

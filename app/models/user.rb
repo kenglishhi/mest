@@ -1,8 +1,12 @@
 class User < ActiveRecord::Base
+  include ExtJS::Model
+  extjs_fields :id, :first_name, :last_name, :email, :updated_at, :created_at0
+
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   has_many :fasta_files
   has_many :job_logs
   has_many :jobs
+
 
   acts_as_authentic do | config |
     config.login_field = 'email'

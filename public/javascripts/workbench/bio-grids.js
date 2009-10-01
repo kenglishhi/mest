@@ -64,7 +64,7 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
       frame: true,
       autoScroll: true,
       height: 300,
-      store: store,
+//      store: store,
       plugins: plugins,
       columns : this.displayColumns,
       viewConfig: {

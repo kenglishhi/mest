@@ -1,4 +1,5 @@
 class Workbench::BiodatabaseGroupsController < ApplicationController
+  include ExtJS::Controller
   def index
     @biodatabase_groups = BiodatabaseGroup.all
     render :json => { :data => @biodatabase_groups }

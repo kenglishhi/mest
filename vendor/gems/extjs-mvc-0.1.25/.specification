@@ -1,0 +1,81 @@
+--- !ruby/object:Gem::Specification 
+name: extjs-mvc
+version: !ruby/object:Gem::Version 
+  version: 0.1.25
+platform: ruby
+authors: 
+- Chris Scott
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2009-09-12 00:00:00 -10:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: thoughtbot-shoulda
+  type: :development
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: "0"
+    version: 
+description: MVC tools to assist with ExtJS development in Rails and Merb
+email: christocracy@gmail.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- LICENSE
+- README
+- README.rdoc
+files: 
+- LICENSE
+- README
+- README.rdoc
+- Rakefile
+- VERSION
+- lib/action_controller/controller.rb
+- lib/active_record/model.rb
+- lib/dm/model.rb
+- lib/extjs-mvc.rb
+- lib/extjs/component.rb
+- lib/extjs/data/store.rb
+- lib/helpers/component.rb
+- lib/helpers/store.rb
+- lib/mvc.rb
+- test/mvc_test.rb
+- test/test_helper.rb
+has_rdoc: true
+homepage: http://github.com/extjs/mvc
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --charset=UTF-8
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.5
+signing_key: 
+specification_version: 2
+summary: Ruby tools for ExtJS development
+test_files: []
+

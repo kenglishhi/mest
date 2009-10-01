@@ -1,6 +1,9 @@
 class BiodatabaseGroup < ActiveRecord::Base
   acts_as_tree
 
+  include ExtJS::Model
+  extjs_fields :id, :name
+
   belongs_to :user
   belongs_to :project
 

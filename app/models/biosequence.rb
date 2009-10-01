@@ -1,4 +1,8 @@
 class Biosequence < ActiveRecord::Base
+  include ExtJS::Model
+  extjs_fields :id, :name, :alphabet, :length
+
+
   has_many :biodatabase_biosequences
   has_many :biodatabases, :through => :biodatabase_biosequences
   validates_presence_of :name

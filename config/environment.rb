@@ -36,6 +36,7 @@ Rails::Initializer.run do |config|
   config.gem "authlogic"
   config.gem 'daemons'
   config.gem 'rcov'
+  config.gem 'extjs-mvc'
 #  config.gem 'thoughtbot-shoulda'
 
   config.time_zone = 'UTC'
