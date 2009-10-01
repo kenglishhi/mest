@@ -123,7 +123,20 @@
     }
 
          */
-
+        Ext.bio.workbench.updateContent = function(node){
+          params ={};
+          console.log("node.attributes.resource = "  + node.attributes.resource );
+          if (node.attributes.resource =='biodatabase' ) {
+            Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
+            params.biodatabase_id = node.id;
+            Ext.getCmp('workbench-biosequence-grid').updateContent(params);
+          } else if (node.attributes.resource =='biodatabase_group' ) {
+            Ext.getCmp('workbench-grid-tabs').activate('workbench-biodatabase-tab');
+            params.biodatabase_group_id = node.id;
+            Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
+          }
+          console.log("Update Content() " + node.id);
+        };
         var viewport = new Ext.Viewport({
           layout: 'border',
           items: [
@@ -194,39 +207,45 @@
               items: [
                 {id: 'bio-database-group-tree',
                   xtype:'database-group-tree',
-                  treeData: dbGroupTree
+                  treeData: dbGroupTree,
+                  clickAction: Ext.bio.workbench.updateContent
                 }]
             },
             // in this instance the TabPanel is not wrapped by another panel
             // since no title is needed, this Panel is added directly
             // as a Container
             new Ext.TabPanel({
+              id: 'workbench-grid-tabs',
               region: 'center', // a center region is ALWAYS required for border layout
               deferredRender: true,
               activeTab: 0,     // first tab initially active
               items: [
                 {
+
+                  title: 'Database',
+                  autoScroll: true,
+                  id:'workbench-biodatabase-tab',
                   items: [
                     {id: 'workbench-biodatabase-grid',
                       xtype:'biodatabase-grid'}
-                  ],
-                  title: 'Database',
-                  autoScroll: true
+                  ]
                 },  {
+
+                  title: 'Sequences',
+                  autoScroll: true,
+                  id: 'workbench-biosequence-tab',
                   items: [
                     {id: 'workbench-biosequence-grid',
-                      xtype:'biosequence-grid'}
-                  ],
-                  title: 'Sequences',
-                  autoScroll: true
-
+                     xtype:'biosequence-grid'}
+                  ]
                 },  {
+                  title: 'Database Groups',
+                  autoScroll: true,
+                  id:'workbench-biodatabase-group-tab',
                   items: [
                     {id: 'workbench-biodatabase-groups-grid',
                       xtype:'biodatabase-group-grid'}
-                  ],
-                  title: 'Database Groups',
-                  autoScroll: true
+                  ]
 
                 }
 

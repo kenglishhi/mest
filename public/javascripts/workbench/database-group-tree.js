@@ -3,9 +3,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   dataUrl: null,
   treeData: null,
   initComponent: function() {
-
     var rootNode = new Ext.tree.AsyncTreeNode(this.treeData);
-
     var store = new Ext.data.ArrayStore({
       fields: ['id', 'name'],
       data : Ext.workbenchdata.project_options // from states.js
@@ -53,11 +51,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       }) ,
       root: rootNode
     });
-
-
-
     Ext.bio.DatabaseGroupTree.superclass.initComponent.call(this);
-
   },
   listeners: {
     movenode: function( tree, node, oldParent, newParent, index )  {
@@ -93,11 +87,10 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
           failure: function(response, options) {
           }
         });
-
-
       } 
     },
     click: function(node) {
+      this.clickAction(node);
     },
     collapsenode: function(node) {
     },

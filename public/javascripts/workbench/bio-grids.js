@@ -1,17 +1,7 @@
 /*!
- * Ext JS Library 3.0.0
- * Copyright(c) 2006-2009 Ext JS, LLC
- * licensing@extjs.com
- * http://www.extjs.com/license
+ * bio-grids.js
+ * Kevin English, University of Hawaii
  */
-
-Ext.bio.RestfulGrid2 =  Ext.extend(Ext.grid.GridPanel, {
-  prefix: null,
-  dataUrl:null,
-  displayColumns: [ ],
-  readerColumns:[ ]
-});
-
 
 Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
   prefix: null,
@@ -19,6 +9,8 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
   displayColumns: [ ],
   readerColumns:[ ],
   useEditorFlag:false,
+  updateContent: function(params) {
+  },
   initComponent: function() {
     var App = new Ext.App({});
 
@@ -80,7 +72,7 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
       }
     });
 
-    Ext.bio.RestfulGrid2.superclass.initComponent.call(this);
+    Ext.bio.RestfulGrid.superclass.initComponent.call(this);
   } ,
   listeners: {
     render: function( p)  {
@@ -95,21 +87,34 @@ Ext.bio.BiodatabaseGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   dataUrl: '/workbench/biodatabases',
   useEditorFlag:true,
   displayColumns:  [ {
-      header: "ID",
-      width: 40,
-      sortable: true,
-      dataIndex: 'id'
-    }, {
-      header: "Name",
-      width: 100,
-      sortable: true,
-      dataIndex: 'name',
-      editor: new Ext.form.TextField({})
-    } ],
-  readerColumns: [ { name: 'id' }, { name: 'name', allowBlank: false } ] ,
+    header: "ID",
+    width: 40,
+    sortable: true,
+    dataIndex: 'id'
+  }, {
+    header: "Name",
+    width: 100,
+    sortable: true,
+    dataIndex: 'name',
+    editor: new Ext.form.TextField({})
+  } ],
+  readerColumns: [ {
+    name: 'id'
+  }, {
+    name: 'name',
+    allowBlank: false
+  } ] ,
   initComponent: function() {
     Ext.bio.BiodatabaseGrid.superclass.initComponent.call(this);
-  } 
+  } ,
+  listeners: {
+    render: function( p)  {
+    }
+  },
+  updateContent: function(params) {
+    this.store.baseParams.biodatabase_group_id = params.biodatabase_group_id;
+    this.store.load();
+  }
 });
 Ext.reg('biodatabase-grid', Ext.bio.BiodatabaseGrid);
 
@@ -118,21 +123,26 @@ Ext.bio.BiodatabaseGroupGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   dataUrl: '/workbench/biodatabase_groups',
   useEditorFlag:true,
   displayColumns:  [ {
-      header: "ID",
-      width: 40,
-      sortable: true,
-      dataIndex: 'id'
-    }, {
-      header: "Name",
-      width: 100,
-      sortable: true,
-      dataIndex: 'name',
-      editor: new Ext.form.TextField({})
-    } ],
-  readerColumns: [ { name: 'id' }, { name: 'name', allowBlank: false } ] ,
+    header: "ID",
+    width: 40,
+    sortable: true,
+    dataIndex: 'id'
+  }, {
+    header: "Name",
+    width: 100,
+    sortable: true,
+    dataIndex: 'name',
+    editor: new Ext.form.TextField({})
+  } ],
+  readerColumns: [ {
+    name: 'id'
+  }, {
+    name: 'name',
+    allowBlank: false
+  } ] ,
   initComponent: function() {
     Ext.bio.BiodatabaseGroupGrid.superclass.initComponent.call(this);
-  } 
+  }
 });
 Ext.reg('biodatabase-group-grid', Ext.bio.BiodatabaseGroupGrid);
 
@@ -172,6 +182,15 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
   initComponent: function() {
     Ext.bio.BiosequenceGrid.superclass.initComponent.call(this);
+  },
+  listeners: {
+    render: function( p)  {
+    }
+  },
+  updateContent: function(params) {
+    this.store.baseParams.biodatabase_id = params.biodatabase_id;
+    this.store.load();
   }
+
 });
 Ext.reg('biosequence-grid', Ext.bio.BiosequenceGrid);

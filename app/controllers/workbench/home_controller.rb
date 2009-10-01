@@ -4,7 +4,9 @@ class Workbench::HomeController < ApplicationController
     render :layout => false
   end
   def restful
-
+    render :layout => false
+  end
+  def gemtest
     render :layout => false
   end
 end

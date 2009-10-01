@@ -1,6 +1,10 @@
 class Workbench::BiodatabasesController < ApplicationController
   def index
-    @biodatabases = Biodatabase.all
+    if params[:biodatabase_group_id] 
+      @biodatabases = Biodatabase.find_all_by_biodatabase_group_id(params[:biodatabase_group_id])
+    else 
+      @biodatabases = Biodatabase.all
+    end
     render :json => { :data => @biodatabases }
  
   end
