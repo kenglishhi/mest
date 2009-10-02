@@ -72,7 +72,7 @@ class FastaFile < ActiveRecord::Base
     if fasta and File.exists?(fasta.path)
       args = " -i #{fasta.path} -p F -o F -n #{fasta.path} "
       puts "[kenglish] formatdb #{args}"
-      Paperclip.run "formatdb",  args
+      Paperclip.run "/usr/bin/formatdb",  args
       puts "[kenglish] Ran format db"
     end
   end
