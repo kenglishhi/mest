@@ -24,4 +24,10 @@ module ApplicationHelper
   end
 
 
+  def form_auth_token
+    (protect_against_forgery?) ? form_authenticity_token : ''
+  end
+
+
+
 end

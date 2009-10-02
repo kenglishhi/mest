@@ -16,6 +16,11 @@ module Jobs::Loggable
       stopped_at = Time.now
       if e
         message = "#{e.message}\n#{e.backtrace.join("\n")}"
+        puts "---------------  "
+        puts "ERROR: "
+        puts message
+        puts "---------------  "
+
       end
       JobLog.create!(:job_name => self.job_name,
                      :job_class_name => self.class.to_s,
@@ -24,7 +29,7 @@ module Jobs::Loggable
                      :duration_in_seconds => (stopped_at - started_at),
                      :success => e.nil?,
                      :message => message,
-                     :user => user)
+                     :user_id => user_id)
       true
     end
   end

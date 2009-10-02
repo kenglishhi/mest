@@ -1,0 +1,279 @@
+<html>
+  <head>
+    <title>BiococonutIsland :: Workbench </title>
+    <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
+      "ext-override" %>
+
+    <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
+
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base.js",
+      "ext-3.0.0/ext-all.js" ,
+      "workbench/example.js",
+      "workbench/base.js",
+      "workbench/database-group-tree.js",
+      "ext-3.0.0/examples/form/states.js",
+      "workbench/App.js",
+      "workbench/bio-grids.js",
+      "workbench/RowEditor.js"
+
+  %>
+    <style type="text/css">
+      html, body {
+        font:normal 12px verdana;
+        margin:0;
+        padding:0;
+        border:0 none;
+        overflow:hidden;
+        height:100%;
+      }
+      p {
+        margin:5px;
+      }
+      .settings {
+        background-image:url(../shared/icons/fam/folder_wrench.png);
+      }
+      .nav {
+        background-image:url(../shared/icons/fam/folder_go.png);
+      }
+    </style>
+
+    <!-- GC -->
+    <!-- LIBS -->
+    <!-- ENDLIBS -->
+
+
+    <!-- EXAMPLES -->
+
+    <script type="text/javascript">
+
+      Ext.namespace('Ext.workbenchdata');
+      Ext.onReady(function(){
+        // BEGIN RAILS data DUMP
+        Ext.workbenchdata.project_options = <%= @project_options.to_json %>;
+        var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %></h1> ';
+        // END RAILS data dump  -- no erb code should go beyond this line
+        var dbGroupTree = <%= BiodatabaseGroup.first.ext_tree(:expand_node => true).to_json %> ;
+        //        var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
+
+        // it is generally best to disable state management as dynamically-generated ids
+        // can change across page loads, leading to unpredictable results.  The developer
+        // should ensure that stable state ids are set for stateful components in real apps.
+        Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+
+        Ext.QuickTips.init();
+
+        // use RowEditor for editing
+        var editor = new Ext.ux.grid.RowEditor({
+          saveText: 'Update'
+        });
+
+        // Create a typical GridPanel with RowEditor plugin
+        /*    var biodatabaseGrid = new Ext.bio.BiodatabaseGrid({
+      id: 'my-biodatabase-grid'
+    });
+         */
+        /*    Ext.grid.GridPanel({
+        iconCls: 'icon-grid',
+        frame: true,
+        title: 'Biodatabase',
+        autoScroll: true,
+        height: 300,
+        store: store,
+        plugins: [editor],
+        columns : biodatabaseColumns,
+        tbar: [{
+            text: 'Add',
+            iconCls: 'silk-add',
+            handler: onAdd
+        }, '-', {
+            text: 'Delete',
+            iconCls: 'silk-delete',
+            handler: onDelete
+        }, '-'],
+        viewConfig: {
+            forceFit: true
+        }
+    });
+         */
+
+        /**
+         * onAdd
+         */
+        /*    function onAdd(btn, ev) {
+        var u = new biodatabaseGrid.store.recordType({
+            first : '',
+            last: '',
+            email : ''
+        });
+        editor.stopEditing();
+        biodatabaseGrid.store.insert(0, u);
+        editor.startEditing(0);
+    }
+         */
+        /**
+         * onDelete
+         */
+        /*
+    function onDelete() {
+        var rec = biodatabaseGrid.getSelectionModel().getSelected();
+        if (!rec) {
+            return false;
+        }
+        biodatabaseGrid.store.remove(rec);
+    }
+
+         */
+        Ext.bio.workbench.updateContent = function(node){
+          params ={};
+          console.log("node.attributes.resource = "  + node.attributes.resource );
+          if (node.attributes.resource =='biodatabase' ) {
+            Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
+            params.biodatabase_id = node.id;
+            Ext.getCmp('workbench-biosequence-grid').updateContent(params);
+          } else if (node.attributes.resource =='biodatabase_group' ) {
+            params.biodatabase_group_id = node.id;
+            Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
+          }
+          console.log("Update Content() " + node.id);
+        };
+        var viewport = new Ext.Viewport({
+          layout: 'border',
+          items: [
+            // create instance immediately
+            new Ext.BoxComponent({
+              region: 'north',
+              height: 32, // give north and south regions a height
+              autoEl: {
+                tag: 'div',
+                html: north_html
+              }
+            }), {
+              // lazily created panel (xtype:'panel' is default)
+              region: 'south',
+              contentEl: 'south',
+              split: true,
+              height: 100,
+              minSize: 100,
+              maxSize: 200,
+              collapsible: true,
+              title: 'South',
+              margins: '0 0 0 0'
+            }, {
+              region: 'east',
+              title: 'East Side',
+              collapsible: true,
+              split: true,
+              width: 225, // give east and west regions a width
+              minSize: 175,
+              maxSize: 400,
+              margins: '0 5 0 0',
+              layout: 'fit', // specify layout manager for items
+              items:            // this TabPanel is wrapped by another Panel so the title will be applied
+              new Ext.TabPanel({
+                border: false, // already wrapped so don't add another border
+                activeTab: 1, // second tab initially active
+                tabPosition: 'bottom',
+                items: [{
+                    html: '<p>A TabPanel component can be a region.</p>',
+                    title: 'A Tab',
+                    autoScroll: true
+                  }, new Ext.grid.PropertyGrid({
+                    title: 'Property Grid',
+                    closable: true,
+                    source: {
+                      "(name)": "Properties Grid",
+                      "grouping": false,
+                      "autoFitColumns": true,
+                      "productionQuality": false,
+                      "created": new Date(Date.parse('10/15/2006')),
+                      "tested": false,
+                      "version": 0.01,
+                      "borderWidth": 1
+                    }
+                  })]
+              })
+            }, {
+              region: 'west',
+              id: 'west-panel', // see Ext.getCmp() below
+              title: 'Database Browser',
+              split: true,
+              width: 200,
+              minSize: 175,
+              //              maxSize: 400,
+              collapsible: true,
+
+              margins: '0 0 0 5',
+              items: [
+                {id: 'bio-database-group-tree',
+                  xtype:'database-group-tree',
+                  treeData: dbGroupTree,
+                  clickAction: Ext.bio.workbench.updateContent
+                }]
+            },
+            // in this instance the TabPanel is not wrapped by another panel
+            // since no title is needed, this Panel is added directly
+            // as a Container
+            new Ext.TabPanel({
+              id: 'workbench-grid-tabs',
+              region: 'center', // a center region is ALWAYS required for border layout
+              deferredRender: true,
+              activeTab: 0,     // first tab initially active
+              items: [
+                {
+                  items: [
+                    {id: 'workbench-biodatabase-grid',
+                      xtype:'biodatabase-grid'}
+                  ],
+                  title: 'Database',
+                  autoScroll: true
+                },  {
+                  items: [
+                    {id: 'workbench-biosequence-grid',
+                     xtype:'biosequence-grid'}
+                  ],
+                  title: 'Sequences',
+                  autoScroll: true,
+                  id: 'workbench-biosequence-tab'
+                },  {
+                  items: [
+                    {id: 'workbench-biodatabase-groups-grid',
+                      xtype:'biodatabase-group-grid'}
+                  ],
+                  title: 'Database Groups',
+                  autoScroll: true
+
+                }
+
+
+              ]
+            })]
+        });
+        // get a reference to the HTML element with id "hideit" and add a click listener to it
+        //        Ext.get("hideit").on('click', function(){
+        // get a reference to the Panel that was created with id = 'west-panel'
+        //          var w = Ext.getCmp('west-panel');
+        // expand or collapse that Panel based on its collapsed property state
+        //          w.collapsed ? w.expand() : w.collapse();
+        //        });
+      });
+    </script>
+  </head>
+  <body>
+    <!-- use class="x-hide-display" to prevent a brief flicker of the content -->
+    <div id="west" class="x-hide-display">
+      <p>Hi. I'm the west panel.</p>
+    </div>
+    <div id="center1" class="x-hide-display">
+      <p><b>Done reading me? Close me by clicking the X in the top right corner.</b></p>
+      <p>Vestibulum semper. Nullam non odio. Aliquam quam. Mauris eu lectus non nunc auctor ullamcorper. Sed tincidunt molestie enim. Phasellus lobortis justo sit amet quam. Duis nulla erat, varius a, cursus in, tempor sollicitudin, mauris. Aliquam mi velit, consectetuer mattis, consequat tristique, pulvinar ac, nisl. Aliquam mattis vehicula elit. Proin quis leo sed tellus scelerisque molestie. Quisque luctus. Integer mattis. Donec id augue sed leo aliquam egestas. Quisque in sem. Donec dictum enim in dolor. Praesent non erat. Nulla ultrices vestibulum quam.</p>
+      <p>Duis hendrerit, est vel lobortis sagittis, tortor erat scelerisque tortor, sed pellentesque sem enim id metus. Maecenas at pede. Nulla velit libero, dictum at, mattis quis, sagittis vel, ante. Phasellus faucibus rutrum dui. Cras mauris elit, bibendum at, feugiat non, porta id, neque. Nulla et felis nec odio mollis vehicula. Donec elementum tincidunt mauris. Duis vel dui. Fusce iaculis enim ac nulla. In risus.</p>
+      <p>Donec gravida. Donec et enim. Morbi sollicitudin, lacus a facilisis pulvinar, odio turpis dapibus elit, in tincidunt turpis felis nec libero. Nam vestibulum tempus ipsum. In hac habitasse platea dictumst. Nulla facilisi. Donec semper ligula. Donec commodo tortor in quam. Etiam massa. Ut tempus ligula eget tellus. Curabitur id velit ut velit varius commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla facilisi. Fusce ornare pellentesque libero. Nunc rhoncus. Suspendisse potenti. Ut consequat, leo eu accumsan vehicula, justo sem lobortis elit, ac sollicitudin ipsum neque nec ante.</p>
+      <p>Aliquam elementum mauris id sem. Vivamus varius, est ut nonummy consectetuer, nulla quam bibendum velit, ac gravida nisi felis sit amet urna. Aliquam nec risus. Maecenas lacinia purus ut velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sit amet dui vitae lacus fermentum sodales. Donec varius dapibus nisl. Praesent at velit id risus convallis bibendum. Aliquam felis nibh, rutrum nec, blandit non, mattis sit amet, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam varius dignissim nibh. Quisque id orci ac ante hendrerit molestie. Aliquam malesuada enim non neque.</p>
+    </div>
+    <div id="props-panel" class="x-hide-display" style="width:200px;height:200px;overflow:hidden;">
+    </div>
+    <div id="south" class="x-hide-display">
+      <p>south - generally for informational stuff, also could be for status bar</p>
+    </div>
+  </body>
+</html>

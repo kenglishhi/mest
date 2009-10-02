@@ -4,13 +4,14 @@ class BiodatabaseGroupsController < ApplicationController
   active_scaffold :biodatabase_groups do |config|
     config.list.label = "Databases Groups"
 
-    list_show_columns = [:name, :description,:user, :created_at, :updated_at]
+    list_show_columns = [:name, :description, :user, :parent, :created_at]
     config.list.columns = list_show_columns
     config.show.columns = list_show_columns
 
     config.columns[:project].form_ui = :select
+    config.columns[:parent].form_ui = :select
 
-    create_update_columns = [:name, :description,:project]
+    create_update_columns = [:name, :description,:project,:parent]
     config.create.columns = create_update_columns
     config.update.columns = create_update_columns
   end

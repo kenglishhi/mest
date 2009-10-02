@@ -10,11 +10,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects, :active_scaffold => true
   map.resources :blast_results, :active_scaffold => true
   map.resources :blasts
+  map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 
+  map.resources :biodatabases, :active_scaffold => true
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"
-  map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 
-  map.resources :biodatabases, :active_scaffold => true
+
 #  map.resources :blast, :active_scaffold => true
 #  map.resources :adminusers, :controller => "admin/users", :active_scaffold => true
   map.resource :user_session
@@ -36,8 +37,26 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.namespace(:workbench) do |admin|
-    admin.resources :home
+    admin.resources :biodatabases, :member => { :move => :post}
+    admin.resources :biodatabase_groups, :member => { :move => :post , :tree => :get }
+    admin.resources :biosequences
+    admin.resource :tree
+    admin.resources :trees
   end
+
+	map.connect 'workbench',
+		:controller => 'workbench/home',
+		:action     => 'index'
+
+	map.connect 'workbench/home/restful',
+		:controller => 'workbench/home',
+		:action     => 'restful'
+
+	map.connect 'workbench/home/gemtest',
+		:controller => 'workbench/home',
+		:action     => 'gemtest'
+
+
 
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.

@@ -10,6 +10,6 @@ class Job < Delayed::Job
   private
   
   def add_user_to_job
-    self.handler.user = self.user
+    self.handler.user_id = self.user.id
   end
 end

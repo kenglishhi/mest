@@ -14,7 +14,7 @@
               </dt>
               <dd>
                 <%= select_tag  :test_fasta_file_id, options_for_select(@fasta_file_options,
-                  @biodatabase ?   @test_fasta_file_id : nil), :class=>'text-input' %>
+                  @test_biodatabase ?   @test_biodatabase.fasta_file.id : nil), :class=>'text-input' %>
               </dd>
             </dl>
           </li>
