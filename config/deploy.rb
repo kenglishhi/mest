@@ -41,7 +41,7 @@ namespace :delayed_job do
   end
   task :stop do
     run "export RAILS_ENV=production && ruby #{current_path}/script/delayed_job -e production stop"
-    run "sleep 3"
+    run "sleep 5"
   end
 end
 
