@@ -6,6 +6,6 @@ class UserTest < ActiveSupport::TestCase
   def test_conveince_methods
     user = users(:users_001)
     assert_not_nil user.full_name, "Full name shouldn't be nil"
-    assert_equals user.email, user.label, "Label should equal e-mail"
+    assert_equal user.email, user.label, "Label should equal e-mail"
   end
 end

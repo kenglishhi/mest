@@ -10,10 +10,11 @@ class BiodatabaseTest < ActiveSupport::TestCase
   context "Generate fasta file" do
     setup do
       @biodatabase = Biodatabase.create(
-        :name => "New BioDB",
+        :name => "New BioDB 33",
         :biodatabase_type => biodatabase_types(:biodatabase_types_001),
         :biodatabase_group => biodatabase_groups(:biodatabase_groups_001),
         :user => users(:users_001))
+
       @biodatabase.biosequences << biosequences(:biosequences_007)
       @biodatabase.biosequences << biosequences(:biosequences_006)
       @biodatabase.biosequences << biosequences(:biosequences_002)
@@ -24,6 +25,7 @@ class BiodatabaseTest < ActiveSupport::TestCase
 
     should "Generate a fasta file" do
       @biodatabase.reload
+      puts @biodatabase.biosequences
       assert_equal @biodatabase.biosequences.size,3, "Should have 3 sequences in the database"
       assert_not_nil @biodatabase.fasta_file, "Fasta File should not be nil."
     end

@@ -10,15 +10,20 @@ class Blast::Command
   #
   #############################
 
-  def self.execute(options)
+  def self.execute(blast_result, params)
 
-    required_options = [:test_file_path,:target_file_path, :evalue, :output_file_prefix]
-    required_options.each do | required_option|
-      raise "Blast Error: Option #{required_option} is blank" if options[required_option].blank?
+    required_params = [:test_file_path,:target_file_path, :evalue, :output_file_prefix]
+    required_params.each do | required_option|
+      raise "Blast Error: Option #{required_option} is blank" if params[required_option].blank?
     end
-
-    command = " blastall -p blastn -i #{options[:test_file_path]} -d #{options[:target_file_path] } -e #{options[:evalue]}  -b 20 -v 20 "
-    output_file_handle = Tempfile.new("#{options[:output_file_prefix].gsub(/ /,"_")}_Blast_Result.txt")
+    if params[:evalue]  !~ /^10e-/
+       params[:evalue] = "10e-#{params[:evalue]}"
+    end
+    command = " blastall -p blastn -i #{params[:test_file_path]} -d #{params[:target_file_path] } -e #{params[:evalue]}  -b 20 -v 20 "
+    blast_result.command = command if blast_result
+    puts "[kenglish] blast command = #{command}"
+    Delayed::Worker.logger.error("[kenglish] blast command = #{command}") 
+    output_file_handle = Tempfile.new("#{params[:output_file_prefix].gsub(/ /,"_")}_Blast_Result.txt")
 
     output_file_handle.close(false)
     command <<  "-o  #{output_file_handle.path} "

@@ -57,7 +57,6 @@ class FastaFile < ActiveRecord::Base
               :alphabet => 'dna', :length => entry.seq.length)
             bioseq.save!
             self.biodatabase.biosequences << bioseq
-            logger.error("[kenglish] bioseq.name = #{bioseq.name}")
           end
           self.biodatabase.save!
           logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")

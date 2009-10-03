@@ -18,7 +18,9 @@ class Blast::Base
     @params = p
     @params.delete_if {|key, value| value.blank? }
   end
-
+  def logger
+    Delayed::Worker.logger
+  end
   def run
     do_run
   end
