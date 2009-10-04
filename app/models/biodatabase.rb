@@ -1,6 +1,6 @@
 class Biodatabase < ActiveRecord::Base
   include ExtJS::Model
-  extjs_fields :id, :name
+  extjs_fields :name,:number_of_sequences
 
 
   belongs_to :biodatabase_type
@@ -18,6 +18,10 @@ class Biodatabase < ActiveRecord::Base
   validates_presence_of :biodatabase_group_id
 
   validates_uniqueness_of :name
+
+	def number_of_sequences
+    self.biosequences.count
+	end
 
   def generate_fasta
     puts "Called generate_fasta"

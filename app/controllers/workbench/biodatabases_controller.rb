@@ -26,5 +26,10 @@ class Workbench::BiodatabasesController < ApplicationController
       }
     end
   end
+  def show
+    biodatabase = Biodatabase.find(params[:id])
+    render :json =>  {:data => [biodatabase.to_record]}
+  end
+
 
 end

@@ -8,12 +8,11 @@
 
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base.js",
       "ext-3.0.0/ext-all.js" ,
-      "workbench/example.js",
       "workbench/base.js",
       "workbench/database-group-tree.js",
-      "ext-3.0.0/examples/form/states.js",
       "workbench/App.js",
       "workbench/bio-grids.js",
+      "workbench/bio-property-grid.js",
       "workbench/RowEditor.js"
 
   %>
@@ -211,20 +210,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
                 html: '<p>A TabPanel component can be a region.</p>',
                 title: 'A Tab',
                 autoScroll: true
-              }, new Ext.grid.PropertyGrid({
-                title: 'Property Grid',
-                closable: true,
-                source: {
-                  "(name)": "Properties Grid",
-                  "grouping": false,
-                  "autoFitColumns": true,
-                  "productionQuality": false,
-                  "created": new Date(Date.parse('10/15/2006')),
-                  "tested": false,
-                  "version": 0.01,
-                  "borderWidth": 1
-                }
-              })]
+              } , new Ext.bio.DataPropertyGrid() ]
           })
         }, {
           region: 'west',
