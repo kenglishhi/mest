@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Paperclip
   # The Attachment class manages the files for a given attachment. It saves
   # when the model saves, deletes when the model is destroyed, and processes
@@ -76,7 +77,7 @@ module Paperclip
       return nil if uploaded_file.nil?
 
       @queued_for_write[:original]   = uploaded_file.to_tempfile
-      instance_write(:file_name,       uploaded_file.original_filename.strip.gsub(/[^\w\d\.\-]+/, '_'))
+      instance_write(:file_name,       uploaded_file.original_filename.strip.gsub(/[^A-Za-z\d\.\-_]+/, '_'))
       instance_write(:content_type,    uploaded_file.content_type.to_s.strip)
       instance_write(:file_size,       uploaded_file.size.to_i)
       instance_write(:updated_at,      Time.now)
@@ -186,7 +187,7 @@ module Paperclip
     # lives in the <attachment>_updated_at attribute of the model.
     def updated_at
       time = instance_read(:updated_at)
-      time && time.to_i
+      time && time.to_f.to_i
     end
 
     # Paths and URLs can have a number of variables interpolated into them
