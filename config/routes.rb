@@ -4,7 +4,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :biodatabase_link_types, :active_scaffold => true
   map.resources :biodatabase_links, :active_scaffold => true
   map.resources :biodatabase_types, :active_scaffold => true
-  map.resources :biodatabases, :active_scaffold => true # , :member => { :generate_fasta => :post}
+  map.resources :biodatabases, :active_scaffold => true 
+  map.resources :biosequences, :active_scaffold => true 
   map.resources :projects, :active_scaffold => true
   map.resources :blast_results, :active_scaffold => true
   map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 
