@@ -66,16 +66,17 @@ class FastaFile < ActiveRecord::Base
   end
 
   def formatdb
-    puts( "[kenglish] called formatdb fasta = #{fasta} File.exists?(fasta.path) = #{File.exists?(fasta.path)} ")
-    logger.error( "[kenglish-logger] called formatdb fasta = #{fasta} File.exists?(fasta.path) = #{File.exists?(fasta.path)} ")
-
-    if fasta and File.exists?(fasta.path)
+    if fasta && fasta.path && File.exists?(fasta.path)
       args = " -i #{fasta.path} -p F -o F -n #{fasta.path} "
-      puts "[kenglish] formatdb #{args}"
-      logger.error "[kenglish-logger] formatdb #{args}"
       Paperclip.run "formatdb",  args
-      puts "[kenglish] Ran format db"
-      logger.error "[kenglish-logger] Ran format db"
+    else
+      raise "FORMAT DB Error: No fasta file to format"
+    end
+
+    unless File.exists?(fasta.path+".nsq") && 
+        File.exists?(fasta.path+".nin") &&
+        File.exists?(fasta.path+".nhr")
+      raise "FORMAT DB Error: result files do not exist"
     end
   end
 
