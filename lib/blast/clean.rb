@@ -5,8 +5,7 @@
 class Blast::Clean < Blast::Base
 
   protected
-
-  def do_run
+  def init_files_and_databases
     @test_fasta_file = FastaFile.find(@params[:fasta_file_id] )
     raise "Target Fasta File does not exist" unless @test_fasta_file
 
@@ -16,9 +15,16 @@ class Blast::Clean < Blast::Base
     if @test_fasta_file.biodatabase.biodatabase_links.any? {|b| b.biodatabase_link_type == BiodatabaseLinkType.cleaned}
       raise "There already exists a cleaned database for #{ @test_fasta_file.biodatabase.name}"
     end
+    @target_fasta_file.formatdb
+
+  end
+
+
+
+  def do_run
+    init_files_and_databases
 
     @output_biodatabase = create_clean_output_database(@test_fasta_file.biodatabase)
-    @target_fasta_file.formatdb
 
     @blast_result = BlastResult.new(:name => "#{@output_biodatabase.name} Blast Result",
       :started_at => Time.now
