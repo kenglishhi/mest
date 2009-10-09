@@ -1,5 +1,5 @@
 class BiodatabaseLinkTypesController < ApplicationController
-  before_filter :generate_database_sub_nav
+  before_filter :database_sub_nav
   active_scaffold :biodatabase_link_types do |config|
     config.list.label = "Databases Link Types"
 

@@ -1,6 +1,6 @@
 class FastaFilesController < ApplicationController
 
-  before_filter :generate_database_sub_nav
+  before_filter :database_sub_nav
 
   before_filter :clear_stored_location, :only => [:index]
   active_scaffold :fasta_files do |config|

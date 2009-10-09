@@ -1,5 +1,5 @@
 class BiodatabaseGroupsController < ApplicationController
-  before_filter :generate_database_sub_nav
+  before_filter :database_sub_nav
 
   active_scaffold :biodatabase_groups do |config|
     config.list.label = "Databases Groups"

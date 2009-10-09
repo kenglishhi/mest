@@ -1,7 +1,9 @@
 class BiosequencesController < ApplicationController
+
+  before_filter :database_sub_nav
+
   active_scaffold :biosequences do |config|
     config.list.label = "Sequences"
-
     config.columns = [:name, :seq, :length, :alphabet, :biodatabases]
     config.columns[:biodatabases].includes = [:biodatabase_biosequences]
     config.list.columns = [:name, :seq, :length, :alphabet,:biodatabases]
