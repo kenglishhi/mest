@@ -1,6 +1,13 @@
 == Welcome to Biococonutisland
 
 This is a Rails program customized for University of Hawaii, Coconut Island research facility doing genetic research on coral reef and dinoflagulates.
+== REQUIRED GEMS
+
+  authlogic
+  daemons
+  rcov
+  extjs-mvc
+
 
 == INSTALLATION
 
