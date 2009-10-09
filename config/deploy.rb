@@ -32,18 +32,19 @@ namespace :symlink do
   end
 
 end
-#namespace :delayed_job do
-#
-#  desc 'restart delayed job'
-#  task :start do
-#    run "sleep 3"
-#    run "export RAILS_ENV=production && ruby #{current_path}/script/delayed_job start"
-#  end
-#  task :stop do
-#    run "export RAILS_ENV=production && ruby #{current_path}/script/delayed_job stop"
-#    run "sleep 5"
-#  end
-#end
+
+namespace :delayed_job do
+
+  desc 'restart delayed job'
+  task :start do
+    run "sleep 3"
+    run "export RAILS_ENV=production && ruby #{current_path}/script/delayed_job start"
+  end
+ task :stop do
+    run "export RAILS_ENV=production && ruby #{current_path}/script/delayed_job stop"
+    run "sleep 5"
+  end
+end
 
 
 #task :after_update_code, :roles => :app do
