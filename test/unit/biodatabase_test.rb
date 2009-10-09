@@ -20,7 +20,6 @@ class BiodatabaseTest < ActiveSupport::TestCase
       @biodatabase.biosequences << biosequences(:biosequences_002)
       @biodatabase.save!
       @biodatabase.generate_fasta
-
     end
 
     should "Generate a fasta file" do
