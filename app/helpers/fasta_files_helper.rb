@@ -9,6 +9,6 @@ module FastaFilesHelper
    end
  end
  def fasta_file_name_column(record)
-	 link_to record.fasta_file_name, record.fasta.url
+	 link_to record.fasta_file_name, record.fasta.url, :target => "_blank"
  end
 end

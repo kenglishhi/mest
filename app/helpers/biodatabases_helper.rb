@@ -25,9 +25,9 @@ module BiodatabasesHelper
 
 	def fasta_file_column(record)
    if record.fasta_file
-  	 link_to record.fasta_file.fasta_file_name, record.fasta_file.fasta.url if record.fasta_file
+  	 link_to record.fasta_file.fasta_file_name, record.fasta_file.fasta.url,:target => '_blank'
 	 else
-  	 "Generate"
+  	 link_to_remote "Generate Fasta", :url => generate_fasta_biodatabase_path(record)
    end
 	end
 
