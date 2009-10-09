@@ -7,6 +7,7 @@ This is a Rails program customized for University of Hawaii, Coconut Island rese
   daemons
   rcov
   extjs-mvc
+  thoughtbot-shoulda
 
 
 == INSTALLATION
