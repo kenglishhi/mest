@@ -37,7 +37,7 @@ Rails::Initializer.run do |config|
   config.gem 'daemons'
   config.gem 'rcov'
   config.gem 'extjs-mvc'
-#  config.gem 'thoughtbot-shoulda'
+  config.gem "thoughtbot-shoulda", :lib => "shoulda", :source => "http://gems.github.com"
 
   config.time_zone = 'UTC'
 
