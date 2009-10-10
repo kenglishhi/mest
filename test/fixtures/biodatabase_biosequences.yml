@@ -19,22 +19,10 @@ biodatabase_biosequences_009:
   biodatabase_id: "2"
   id: "9"
   biosequence_id: "9"
-biodatabase_biosequences_011: 
-  biodatabase_id: "3"
-  id: "11"
-  biosequence_id: "1"
-biodatabase_biosequences_012: 
-  biodatabase_id: "3"
-  id: "12"
-  biosequence_id: "2"
 biodatabase_biosequences_001: 
   biodatabase_id: "1"
   id: "1"
   biosequence_id: "1"
-biodatabase_biosequences_013: 
-  biodatabase_id: "3"
-  id: "13"
-  biosequence_id: "3"
 biodatabase_biosequences_002: 
   biodatabase_id: "1"
   id: "2"

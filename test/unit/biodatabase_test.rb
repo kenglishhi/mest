@@ -24,10 +24,28 @@ class BiodatabaseTest < ActiveSupport::TestCase
 
     should "Generate a fasta file" do
       @biodatabase.reload
-      puts @biodatabase.biosequences
+      puts "@biodatabase.biosequences.size = #{@biodatabase.biosequences.size} "
       assert_equal @biodatabase.biosequences.size,3, "Should have 3 sequences in the database"
       assert_not_nil @biodatabase.fasta_file, "Fasta File should not be nil."
+      assert @biodatabase.destroy
     end
+  end
+  context "Should Clear References" do
+    setup do
+      @biodatabase = biodatabases(:biodatabases_001)
+      @biosequence_count = Biosequence.count
+      @my_sequence_count = @biodatabase.biosequences.size
+      @biodatabase.destroy
+    end
+    should "Clear fasta file and sequences" do
+
+      assert_equal( @biosequence_count - @my_sequence_count, Biosequence.count)
+    end
+  end
+  def test_number_of_sequences
+    biodatabase = biodatabases(:biodatabases_001)
+    assert_equal  biodatabase.biosequences.size, biodatabase.number_of_sequences
+
   end
 
 end
