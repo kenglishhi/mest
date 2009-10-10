@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :biodatabase_link_types, :active_scaffold => true
   map.resources :biodatabase_links, :active_scaffold => true
   map.resources :biodatabase_types, :active_scaffold => true
-  map.resources :biodatabases, :active_scaffold => true 
+  map.resources :biodatabases, :active_scaffold => true
   map.resources :biosequences, :active_scaffold => true 
   map.resources :projects, :active_scaffold => true
   map.resources :blast_results, :active_scaffold => true
@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace(:tools) do |tools|
     tools.resources :blast_cleaners
     tools.resources :blast_create_dbs
+    tools.resources :biosequence_renamers
   end
 
   map.namespace(:jobs) do |jobs|

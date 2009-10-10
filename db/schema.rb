@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091002214118) do
+ActiveRecord::Schema.define(:version => 20091010012447) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
@@ -60,11 +60,12 @@ ActiveRecord::Schema.define(:version => 20091002214118) do
   end
 
   create_table "biosequences", :force => true do |t|
-    t.string  "name",                              :null => false
+    t.string  "name",                                :null => false
     t.text    "description"
     t.integer "length"
-    t.string  "alphabet",    :limit => 10
-    t.text    "seq",         :limit => 2147483647
+    t.string  "alphabet",      :limit => 10
+    t.text    "seq",           :limit => 2147483647
+    t.string  "original_name"
   end
 
   create_table "blast_commands", :force => true do |t|
