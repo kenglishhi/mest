@@ -1,11 +1,19 @@
 <div id="jobs-sub-nav">
   <div id="jobs-sub-nav-menu-page">
     <ul>
-      <li><%= link_to "<span>Running Jobs</span>", jobs_running_jobs_path %></li>
-      <li><%= link_to "<span>Queued Jobs</span>", jobs_queued_jobs_path %></li>
-      <li><%= link_to "<span>Failed Jobs</span>", jobs_failed_jobs_path %></li>
-      <li><%= link_to "<span>Job Log</span>", jobs_job_logs_path %></li>
+<%
+      css_class ={controller_name.to_sym => "selected"}
+
+      link_text ={} 
+      link_text[:running_jobs] =  "<span class=\"#{css_class[:running_jobs]}\">Running Jobs</span>" 
+      link_text[:queued_jobs] =  "<span class=\"#{css_class[:queued_jobs]}\">Queued Jobs</span>" 
+      link_text[:failed_jobs] =  "<span class=\"#{css_class[:failed_jobs]}\">Failed Jobs</span>"
+      link_text[:job_logs] =  "<span class=\"#{css_class[:job_logs]}\">Job Log</span>"
+%>
+      <li><%= link_to link_text[:running_jobs],  jobs_running_jobs_path %></li>
+      <li><%= link_to link_text[:queued_jobs], jobs_queued_jobs_path %></li>
+      <li><%= link_to link_text[:failed_jobs], jobs_failed_jobs_path %></li>
+      <li><%= link_to link_text[:job_logs], jobs_job_logs_path %></li>
     </ul>
   </div><!--menu-page-->
 </div><!--wrapper-menu-page-->
-

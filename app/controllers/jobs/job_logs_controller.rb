@@ -1,5 +1,5 @@
 class Jobs::JobLogsController < Jobs::BaseController
-  before_filter :generate_sub_nav
+  before_filter :job_sub_nav
 
   active_scaffold :job_logs do |config|
     config.label = "Job Log"
