@@ -6,8 +6,8 @@ class BiosequencesController < ApplicationController
     config.list.label = "Sequences"
     config.columns = [:name, :seq, :length, :alphabet, :biodatabases]
     config.columns[:biodatabases].includes = [:biodatabase_biosequences]
-    config.list.columns = [:name, :seq, :length, :alphabet,:biodatabases,:orginal_name]
-    config.show.columns = [:name, :entire_seq, :length, :alphabet, :biodatabases,:orginal_name]
+    config.list.columns = [:name, :seq, :length, :alphabet,:biodatabases,:original_name]
+    config.show.columns = [:name, :entire_seq, :length, :alphabet, :biodatabases,:original_name]
     config.actions.exclude :nested , :create, :update, :delete
   end
 

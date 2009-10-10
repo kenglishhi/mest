@@ -45,7 +45,16 @@ class BiodatabaseTest < ActiveSupport::TestCase
   def test_number_of_sequences
     biodatabase = biodatabases(:biodatabases_001)
     assert_equal  biodatabase.biosequences.size, biodatabase.number_of_sequences
-
   end
+  def test_rename_sequences
+    new_prefix = "FUCK"
+    biodatabase = biodatabases(:biodatabases_001)
+    biodatabase.rename_sequences(new_prefix)
+    biodatabase.biosequences.each do | seq|
+      assert_match /^#{new_prefix}/, seq.name, "Sequence name should start with #{new_prefix}"
+    end
+    assert_equal  biodatabase.biosequences.size, biodatabase.number_of_sequences
+  end
+
 
 end

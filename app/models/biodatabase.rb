@@ -38,10 +38,12 @@ HAVING COUNT(*) = 1
     self.connection.select_rows sql
   end
 
-
 	def number_of_sequences
     self.biosequences.count
 	end
+  def rename_sequences(prefix)
+
+  end
 
   def generate_fasta
     if fasta_file_id.nil?

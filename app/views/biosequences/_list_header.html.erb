@@ -24,3 +24,8 @@ Database :
   options_for_select([["All","All"]] + Biodatabase.find(:all).map{|biodb|[biodb.name,biodb.id] }, @biodatabase_id),
   :onchange => "filter(this.value); "
 %>
+<% unless @biodatabase_id.blank? %>
+  &nbsp; &nbsp; &nbsp;&nbsp;
+<%= link_to "Rename Sequences in this Database",
+  new_tools_biosequence_renamer_path(:biodatabase_id => @biosequence_id) %>
+<% end %>
