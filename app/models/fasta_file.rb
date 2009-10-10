@@ -53,8 +53,11 @@ class FastaFile < ActiveRecord::Base
 
           ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
           ff.each do |entry|
-            bioseq = Biosequence.new(:name => entry.definition, :seq => entry.seq,
-              :alphabet => 'dna', :length => entry.seq.length)
+            bioseq = Biosequence.new(:name => entry.definition,
+              :seq => entry.seq,
+              :alphabet => 'dna',
+              :length => entry.seq.length,
+              :original_name => entry.definition)
             bioseq.save!
             self.biodatabase.biosequences << bioseq
           end

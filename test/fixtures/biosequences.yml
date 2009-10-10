@@ -1,5 +1,6 @@
 --- 
 biosequences_005: 
+  original_name: "1420600:1"
   name: "1420600:1"
   id: "5"
   length: "160"
@@ -7,6 +8,7 @@ biosequences_005:
   seq: GGGTATGGAAGGTCCTCACAGCTACGCTGTGCTGTGGGCTGCCTGGGTCTCCGGCACGGAAGGCTTGAGGCTGCTGGACGAGGTCATTTCTTGGCAAAGCATTGGTTTGCACCAGTGAGGTGGCCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACATGT
   alphabet: dna
 biosequences_006: 
+  original_name: "1420601:1"
   name: "1420601:1"
   id: "6"
   length: "276"
@@ -14,6 +16,7 @@ biosequences_006:
   seq: GGGGTGATTGGGTTTTTCTGTGCTGGACGCGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACATGTGGCCCCCCCCGCCCCCCAAAAAATTTTAAAAACAATTCTTTGGGGGCGGGGCCCCAAAAGAAAAAGAAAAAGGGCCAAACTTTTTCCCAAAAAAACCCGGGACAGAAAAAGGGTTGGAATTCCCCCAAAA
   alphabet: dna
 biosequences_007: 
+  original_name: "1420602:1"
   name: "1420602:1"
   id: "7"
   length: "364"
@@ -21,6 +24,7 @@ biosequences_007:
   seq: GGGGACGGCGACACTATCACGCCAGGTCGACATGCAGAGGACAGCTACGAGGCCTGGGACTACCATGTGACGCCGCTGCCAAGCAGCGCTCGCGGTGGTGCTCAGGTCAACGGCGTGAGCCCCTTGCATCGACCGCCGCGAAGGCAGCCGATTGCCGAAAACTGGGAGGCTACCCCGGAGGCAGCCAGTCATGGGAGCTTTGCGATTCGAGAGATTCGCTTGGAAGTTCCTCTCACGGCGCCCGTGGAGCCGCAGTTGGGTCAGCTGCTGCTACCAGGCAGCGACTCGGCGTCGCACCTTCCAGACCTGCCAAAGCTTTGCAGAGACGAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAACATGT
   alphabet: dna
 biosequences_008: 
+  original_name: "1420603:1"
   name: "1420603:1"
   id: "8"
   length: "264"
@@ -29,6 +33,7 @@ biosequences_008:
   alphabet: dna
 biosequences_010: 
   name: "1420604:2"
+  original_name: "1420604:2"
   id: "10"
   length: "403"
   description: 
@@ -36,6 +41,7 @@ biosequences_010:
   alphabet: dna
 biosequences_009: 
   name: "1420604:1"
+  original_name: "1420604:1"
   id: "9"
   length: "369"
   description: 
@@ -43,6 +49,7 @@ biosequences_009:
   alphabet: dna
 biosequences_001: 
   name: "1420344:1"
+  original_name: "1420344:1"
   id: "1"
   length: "308"
   description: 
@@ -50,6 +57,7 @@ biosequences_001:
   alphabet: dna
 biosequences_002: 
   name: Contig773
+  original_name: Contig773
   id: "2"
   length: "437"
   description: 
@@ -57,6 +65,7 @@ biosequences_002:
   alphabet: dna
 biosequences_003: 
   name: Contig770
+  original_name: Contig770
   id: "3"
   length: "1004"
   description: 
@@ -64,6 +73,7 @@ biosequences_003:
   alphabet: dna
 biosequences_004: 
   name: "1420599:1"
+  original_name: "1420599:1"
   id: "4"
   length: "563"
   description: 
