@@ -1,13 +1,24 @@
 <div id="jobs-sub-nav">
   <div id="jobs-sub-nav-menu-page">
     <ul>
-		  <li><%= link_to "<span>Databases</span>", biodatabases_path %></li>
-  		<li><%= link_to "<span>Fasta Files</span>", fasta_files_path %></li>
-  		<li><%= link_to "<span>Sequences</span>", biosequences_path %></li>
-  		<li><%= link_to "<span>Database Groups </span>", biodatabase_groups_path %></li>
-  		<li><%= link_to "<span>Database Types</span>", biodatabase_types_path %></li>
-  		<li><%= link_to "<span>Database Links</span>", biodatabase_links_path %></li>
-  		<li><%= link_to "<span>Database Link Types</span>", biodatabase_link_types_path %></li>
+      <% css_class ={controller_name.to_sym => "selected"} %>
+
+      <% tag_end = "</span>" %>
+      <% tag_start = "<span class=\"#{css_class[:biodatabases]}\">" %>
+
+		  <li><%= link_to [tag_start,"Databases",tag_end].join, biodatabases_path %></li>
+      <% tag_start = "<span class=\"#{css_class[:fasta_files]}\">" %>
+  		<li><%= link_to [tag_start,"Fasta Files",tag_end].join, fasta_files_path %></li>
+      <% tag_start = "<span class=\"#{css_class[:biosequences]}\">" %>
+  		<li><%= link_to [tag_start, "Sequences", tag_end].join, biosequences_path %></li>
+      <% tag_start = "<span class=\"#{css_class[:biodatabase_groups]}\">" %>
+  		<li><%= link_to [tag_start, "Database Groups",tag_end], biodatabase_groups_path %></li>
+      <% tag_start = "<span class=\"#{css_class[:biodatabase_types]}\">" %>
+  		<li><%= link_to [tag_start, "Database Types",tag_end] , biodatabase_types_path %></li>
+      <% tag_start = "<span class=\"#{css_class[:biodatabase_links]}\">" %>
+  		<li><%= link_to [tag_start, "Database Links",tag_end] , biodatabase_links_path %></li>
+      <% tag_start = "<span class=\"#{css_class[:biodatabase_link_types]}\">" %>
+  		<li><%= link_to [tag_start, "Database Link Types",tag_end] , biodatabase_link_types_path %></li>
 
 
     </ul>

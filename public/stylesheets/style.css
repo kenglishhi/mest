@@ -401,6 +401,11 @@ font: bold 16px arial;
 	float: left;
 	cursor: pointer; /* IE doesnt display the hand when you roll over the link for some reason. This fixes it */
 }
+#jobs-sub-nav a span.selected {
+  font-weight: bold;
+}
+
+
 #jobs-sub-nav a.menu-link {
 	padding:5px 15px 4px 6px;
 	color:#5b8fbe;

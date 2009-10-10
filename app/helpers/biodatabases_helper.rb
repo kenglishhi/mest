@@ -27,7 +27,6 @@ module BiodatabasesHelper
    if record.fasta_file
   	 link_to record.fasta_file.fasta_file_name, record.fasta_file.fasta.url,:target => '_blank'
 	 else
-
   	 "Generate Fasta"
    end
 	end
