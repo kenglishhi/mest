@@ -402,7 +402,7 @@ font: bold 16px arial;
 	cursor: pointer; /* IE doesnt display the hand when you roll over the link for some reason. This fixes it */
 }
 #jobs-sub-nav a span.selected {
-  font-weight: bold;
+	color:#000000;
 }
 
 
