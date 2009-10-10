@@ -3,7 +3,7 @@ class Biosequence < ActiveRecord::Base
   extjs_fields :id, :name, :alphabet, :length
 
 
-  has_many :biodatabase_biosequences
+  has_many :biodatabase_biosequences, :dependent => :destroy
   has_many :biodatabases, :through => :biodatabase_biosequences
   validates_presence_of :name
   validates_presence_of :alphabet
