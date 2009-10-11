@@ -41,8 +41,16 @@ HAVING COUNT(*) = 1
 	def number_of_sequences
     self.biosequences.count
 	end
-  def rename_sequences(prefix)
 
+  def rename_sequences(prefix)
+    padding = Math.log10(self.biosequences.size).to_i + 1
+    self.biosequences.each_index do |i|
+      new_name = "#{prefix}#{"%0#{padding}d" %   (i+1)  }"
+      logger.error("new name = #{new_name}")
+      biosequences[i].name = new_name
+      biosequences[i].save!
+
+    end
   end
 
   def generate_fasta

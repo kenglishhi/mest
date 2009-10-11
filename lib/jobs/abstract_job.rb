@@ -9,7 +9,7 @@ class Jobs::AbstractJob
     @params = p
   end
   def perform
-    puts "Running #{@job_name} with :"
+    puts "Running #{@job_name} with #{@params.inspect}"
     do_perform
   end
   

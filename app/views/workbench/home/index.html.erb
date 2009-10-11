@@ -217,75 +217,75 @@ extjs_store( :controller => "workbench/biodatabase_groups",
                 id:'workbench-biodatabase-property-grid'
               }
             ]
-            })
-          }, {
-            region: 'west',
-            id: 'west-panel', // see Ext.getCmp() below
-            title: 'Database Browser',
-            split: true,
-            width: 200,
-            minSize: 175,
-            //              maxSize: 400,
-            collapsible: true,
+          })
+        }, {
+          region: 'west',
+          id: 'west-panel', // see Ext.getCmp() below
+          title: 'Database Browser',
+          split: true,
+          width: 200,
+          minSize: 175,
+          //              maxSize: 400,
+          collapsible: true,
 
-            margins: '0 0 0 5',
-            items: [
-              {id: 'bio-database-group-tree',
-                xtype:'database-group-tree',
-                treeData: dbGroupTree,
-                clickAction: Ext.bio.workbench.updateContent
-              }]
-          },
-          new Ext.TabPanel({
-            id: 'workbench-grid-tabs',
-            region: 'center', // a center region is ALWAYS required for border layout
-            deferredRender: true,
-            activeTab: 0,     // first tab initially active
-            items: [
-              {
+          margins: '0 0 0 5',
+          items: [
+            {id: 'bio-database-group-tree',
+              xtype:'database-group-tree',
+              treeData: dbGroupTree,
+              clickAction: Ext.bio.workbench.updateContent
+            }]
+        },
+        new Ext.TabPanel({
+          id: 'workbench-grid-tabs',
+          region: 'center', // a center region is ALWAYS required for border layout
+          deferredRender: true,
+          activeTab: 0,     // first tab initially active
+          items: [
+            {
 
-                title: 'Database',
-                autoScroll: true,
-                id:'workbench-biodatabase-tab',
-                items: [
-                  {id: 'workbench-biodatabase-grid',
-                    xtype:'biodatabase-grid',
-                    store: biodatabaseStore }
-                ]
-              },  {
+              title: 'Database',
+              autoScroll: true,
+              id:'workbench-biodatabase-tab',
+              items: [
+                {id: 'workbench-biodatabase-grid',
+                  xtype:'biodatabase-grid',
+                  store: biodatabaseStore }
+              ]
+            },  {
 
-                title: 'Sequences',
-                autoScroll: true,
-                id: 'workbench-biosequence-tab',
-                items: [
-                  {id: 'workbench-biosequence-grid',
-                    xtype:'biosequence-grid',
-                    store:biosequenceStore }
-                ]
-              },  {
-                title: 'Database Groups',
-                autoScroll: true,
-                id:'workbench-biodatabase-group-tab',
-                items: [
-                  {id: 'workbench-biodatabase-groups-grid',
-                    xtype:'biodatabase-group-grid' ,
-                    store: biodatabaseGroupStore }
-                ]
+              title: 'Sequences',
+              autoScroll: true,
+              id: 'workbench-biosequence-tab',
+              items: [
+                {id: 'workbench-biosequence-grid',
+                  xtype:'biosequence-grid',
+                  store:biosequenceStore }
+              ]
+            },  {
+              title: 'Database Groups',
+              autoScroll: true,
+              id:'workbench-biodatabase-group-tab',
+              items: [
+                {id: 'workbench-biodatabase-groups-grid',
+                  xtype:'biodatabase-group-grid' ,
+                  store: biodatabaseGroupStore }
+              ]
 
-              }
+            }
 
 
-            ]
-          })]
-      });
-      // get a reference to the HTML element with id "hideit" and add a click listener to it
-      //        Ext.get("hideit").on('click', function(){
-      // get a reference to the Panel that was created with id = 'west-panel'
-      //          var w = Ext.getCmp('west-panel');
-      // expand or collapse that Panel based on its collapsed property state
-      //          w.collapsed ? w.expand() : w.collapse();
-      //        });
+          ]
+        })]
     });
+    // get a reference to the HTML element with id "hideit" and add a click listener to it
+    //        Ext.get("hideit").on('click', function(){
+    // get a reference to the Panel that was created with id = 'west-panel'
+    //          var w = Ext.getCmp('west-panel');
+    // expand or collapse that Panel based on its collapsed property state
+    //          w.collapsed ? w.expand() : w.collapse();
+    //        });
+  });
     </script>
   </head>
   <body>

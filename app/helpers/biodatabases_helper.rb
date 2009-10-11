@@ -20,7 +20,7 @@ module BiodatabasesHelper
    links.join("&nbsp;&nbsp;")
   end
 	def number_of_sequences_column(record)
-    record.biosequences.count
+    record.biosequences.count.to_s + "  " + link_to("View", biosequences_path(:biodatabase_id => record.id) )
 	end
 
 	def fasta_file_column(record)

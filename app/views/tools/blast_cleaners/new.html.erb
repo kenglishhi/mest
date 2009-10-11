@@ -17,7 +17,7 @@
               <label >Fasta File</label>
             </dt>
             <dd>
-              <%= select_tag  :fasta_file_id, options_for_select(@fasta_file_options,
+              <%= select_tag  :fasta_file_id, options_for_select(fasta_file_options,
                 @biodatabase ?   @biodatabase.fasta_file_id : nil), :class=>'text-input' %>
             </dd>
         </dl>  </li>

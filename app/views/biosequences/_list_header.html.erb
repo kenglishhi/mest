@@ -27,5 +27,5 @@ Database :
 <% unless @biodatabase_id.blank? %>
   &nbsp; &nbsp; &nbsp;&nbsp;
 <%= link_to "Rename Sequences in this Database",
-  new_tools_biosequence_renamer_path(:biodatabase_id => @biosequence_id) %>
+  new_tools_biosequence_renamer_path(:biodatabase_id => @biodatabase_id ) %>
 <% end %>
