@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091010012447) do
+ActiveRecord::Schema.define(:version => 20091011195702) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(:version => 20091010012447) do
     t.text    "seq",           :limit => 2147483647
     t.string  "original_name"
   end
+
+  add_index "biosequences", ["name"], :name => "index_biosequences_on_name"
 
   create_table "blast_commands", :force => true do |t|
     t.integer  "test_fasta_file_id"

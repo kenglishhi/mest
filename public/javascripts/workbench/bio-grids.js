@@ -32,23 +32,6 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
 
     // Typical Store collecting the Proxy, Reader and Writer together.
 
-    var store = new Ext.data.Store({
-      id: this.prefix+'-store',
-      restful: true,     // <-- This Store is RESTful
-      proxy: proxy,
-      reader: reader,
-      writer: writer,    // <-- plug a DataWriter into the store just as you would a Reader
-      baseParams: {
-        authenticity_token: FORM_AUTH_TOKEN
-      },
-      listeners: {
-        write : function(store, action, result, response, rs) {
-          App.setAlert(response.success, response.message);
-        }
-      }
-    });
-
-    // use RowEditor for editing
     var plugins = [];
     if (this.useEditorFlag){
       plugins[0] = this.editor;
@@ -64,7 +47,6 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
       frame: true,
       autoScroll: true,
       height: 300,
-//      store: store,
       plugins: plugins,
       columns : this.displayColumns,
       viewConfig: {
@@ -150,6 +132,7 @@ Ext.reg('biodatabase-group-grid', Ext.bio.BiodatabaseGroupGrid);
 Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   prefix: 'biosequences',
   dataUrl: '/workbench/biosequences',
+  pageSize: 50,
   displayColumns: [
   {
     header: "Name",
@@ -177,11 +160,11 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
   initComponent: function() {
     var pagingBar = new Ext.PagingToolbar({
-        paramNames:{start: 'x02', limit: 'x03'},
-        pageSize: 15,
-        displayInfo: true,
-        displayMsg: 'Displaying {0} - {1} of {2}',
-        emptyMsg: "No data to display"
+      store: this.store,
+      pageSize: this.pageSize,
+      displayInfo: true,
+      displayMsg: 'Displaying {0} - {1} of {2}',
+      emptyMsg: "No data to display"
     });
 
     Ext.apply(this,{
@@ -196,8 +179,14 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   },
   updateContent: function(params) {
     this.store.baseParams.biodatabase_id = params.biodatabase_id;
-    this.store.load();
-    this.tbar.store = this.store;
+
+    this.store.load({
+      params: {
+        start: 0,
+        limit: this.pageSize
+      }
+    } );
+  //  this.tbar.store = this.store;
   }
 
 });

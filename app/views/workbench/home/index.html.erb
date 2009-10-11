@@ -6,14 +6,14 @@
 
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
-    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base.js",
-      "ext-3.0.0/ext-all.js" ,
-      "workbench/base.js",
-      "workbench/database-group-tree.js",
-      "workbench/App.js",
-      "workbench/bio-grids.js",
-      "workbench/bio-property-grid.js",
-      "workbench/RowEditor.js"
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+      "ext-3.0.0/ext-all" ,
+      "workbench/base",
+      "workbench/database-group-tree",
+      "workbench/App",
+      "workbench/bio-grids",
+      "workbench/bio-property-grid",
+      "workbench/RowEditor"
 
   %>
     <style type="text/css">
@@ -51,6 +51,7 @@
 extjs_store( :controller => "workbench/biosequences",
   :writer => {"encode" => false},
   :config => {
+    "totalProperty" => 'results',
     "autoLoad" => false,
     "autoSave" => true,
     "restful" => true
@@ -65,6 +66,7 @@ extjs_store( :controller => "workbench/biodatabases",
     "autoSave" => true,
     "restful" => true
   }
+
 ).render(false)
 %>;
     var biodatabaseGroupStore = <%=
@@ -77,6 +79,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
   }
 ).render(false)
 %>;
+    var seqPageSize = <%= biosequence_page_size %> ;
 
 
 
@@ -260,6 +263,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
               items: [
                 {id: 'workbench-biosequence-grid',
                   xtype:'biosequence-grid',
+                  pageSize: seqPageSize,
                   store:biosequenceStore }
               ]
             },  {

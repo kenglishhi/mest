@@ -11,4 +11,6 @@ class Workbench::HomeController < ApplicationController
   def gemtest
     render :layout => false
   end
+  def ncbi_window
+  end
 end

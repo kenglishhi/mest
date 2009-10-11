@@ -49,6 +49,10 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'workbench/home/gemtest',
 		:controller => 'workbench/home',
 		:action     => 'gemtest'
+	map.connect 'workbench/home/ncbi_window',
+		:controller => 'workbench/home',
+		:action     => 'ncbi_window'
+
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   # map the login/logout urls
