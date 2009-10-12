@@ -1,7 +1,6 @@
 class Biodatabase < ActiveRecord::Base
   include ExtJS::Model
-  extjs_fields :name,:number_of_sequences
-
+  extjs_fields :name,:created_at
 
   belongs_to :biodatabase_type
   belongs_to :biodatabase_group

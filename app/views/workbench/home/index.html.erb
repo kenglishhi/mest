@@ -52,6 +52,18 @@ extjs_store( :controller => "workbench/biodatabases",
 
 ).render(false)
 %>;
+    var biodatabasePropertyStore = <%=
+extjs_store( :controller => "workbench/biodatabases",
+  :writer => {"encode" => false},
+  :config => {
+    "storeId" => 'biodatabase-property-store',
+    "autoLoad" => false,
+    "autoSave" => true,
+    "restful" => true
+  }
+).render(false)
+%>;
+
     var biodatabaseGroupStore = <%=
 extjs_store( :controller => "workbench/biodatabase_groups",
   :writer => {"encode" => false},
@@ -62,6 +74,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
   }
 ).render(false)
 %>;
+
     var seqPageSize = <%= biosequence_page_size %> ;
 
 
@@ -130,6 +143,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
           items: [ {
               xtype: 'biodatabase-property-grid',
               id:'workbench-biodatabase-property-grid',
+              restfulStore: biodatabasePropertyStore,
               border: false,
               iconCls: 'settings'
             }, {

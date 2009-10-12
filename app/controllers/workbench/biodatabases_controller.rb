@@ -1,12 +1,14 @@
 class Workbench::BiodatabasesController < ApplicationController
   include ExtJS::Controller
   def index
-    if params[:biodatabase_group_id] 
+    if params[:id]
+      biodatabases =[ Biodatabase.find(params[:id])]
+    elsif params[:biodatabase_group_id]
       biodatabases = Biodatabase.find_all_by_biodatabase_group_id(params[:biodatabase_group_id])
     else 
       biodatabases = Biodatabase.all
     end
-    render :json => { :data => biodatabases }
+    render :json => { :data => biodatabases.map{|db|db.to_record}}
  
   end
   def update
