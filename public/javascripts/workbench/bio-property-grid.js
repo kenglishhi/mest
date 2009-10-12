@@ -17,7 +17,19 @@ Ext.bio.BiodatabasePropertyGrid =  Ext.extend(Ext.grid.PropertyGrid, {
       });
     }
     Ext.bio.BiodatabasePropertyGrid.superclass.initComponent.call(this);
-    this.updateContent({});
+    //make the grid readonly
+    this.on({
+      beforeedit: function(e){
+        // Refactor Later to allow edit of multiple Items
+        if (e.record.data.name  != "name") {
+          return false;
+        }
+      },
+      scope: this
+    });
+
+  //    this.updateContent({});
+
   },
   updateContent: function(params) {
     var parentComponentId = this.id;
@@ -46,7 +58,9 @@ Ext.bio.BiodatabasePropertyGrid =  Ext.extend(Ext.grid.PropertyGrid, {
         var params={};
         params = {
           id:record.id,
-          data:{ name: e.record.data.value }
+          data:{ 
+            name: e.record.data.value
+          }
         };
         Ext.Ajax.request({
           url:"/workbench/biodatabases/" + record.id + ".json?" + url_params,

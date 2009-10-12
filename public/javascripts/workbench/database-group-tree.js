@@ -26,6 +26,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       id:'src'
     });
 
+    var parentComponentId = this.id;
     Ext.apply(this,{
       animate: true,
       autowidth: true,
@@ -35,7 +36,16 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       enableDD: true,
       rootVisible: false,
 
-      tbar: [ combo, '->',
+      tbar: [ combo,
+      {
+        iconCls:'x-tbar-loading',
+        handler: function() {
+          var dbTree= Ext.getCmp(parentComponentId);
+          if (dbTree) {
+            dbTree.getLoader().load(dbTree.root);
+          }
+        }
+      }, '->',
       {
         text: 'Add Database Group',
         handler: this.addDatabaseGroup
