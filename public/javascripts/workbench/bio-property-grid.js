@@ -25,7 +25,7 @@ Ext.bio.BiodatabasePropertyGrid =  Ext.extend(Ext.grid.PropertyGrid, {
     });
     // HttpProxy
     var proxy = new Ext.data.HttpProxy({
-      url:"/workbench/biodatabases/1.json"
+      url:"/workbench/biodatabases.json"
     });
     // Typical Store
     var store = new Ext.data.Store({
@@ -35,7 +35,7 @@ Ext.bio.BiodatabasePropertyGrid =  Ext.extend(Ext.grid.PropertyGrid, {
       proxy: proxy,
       reader: reader,
       writer: writer,
-      autoLoad: true,
+      autoLoad: false,
       autoSave: true,
       listeners: {
         load: {
@@ -52,7 +52,9 @@ Ext.bio.BiodatabasePropertyGrid =  Ext.extend(Ext.grid.PropertyGrid, {
       }
     });
 
-   this.restfulStore = store ;
+    this.restfulStore = store ;
+    this.restfulStore.load();
+
     //    Ext.apply(this,{
     //      bbar: [ {text: 'Save', handler: function(){ console.log("submit");} } ]
     //    });
@@ -67,7 +69,7 @@ Ext.bio.BiodatabasePropertyGrid =  Ext.extend(Ext.grid.PropertyGrid, {
       this.biodatabase_id =params.biodatabase_id;
       var biodatabaseStore = new Ext.data.JsonStore( {
         restful:true,
-        url:"/workbench/biodatabases/" + params.biodatabase_id + ".json",
+        url:"/workbench/biodatabases.json",
         fields:[{
           "type":"string",
           "allowBlank":false,
@@ -84,7 +86,7 @@ Ext.bio.BiodatabasePropertyGrid =  Ext.extend(Ext.grid.PropertyGrid, {
         successProperty:"success",
         idProperty:"id",
         storeId:"biodatabase-show-store",
-        autoLoad:true,
+        autoLoad:false,
         writer:new Ext.data.JsonWriter({
           "encode":false
         }),
@@ -111,31 +113,52 @@ Ext.bio.BiodatabasePropertyGrid =  Ext.extend(Ext.grid.PropertyGrid, {
     afteredit: function (e) {
       var myStore = Ext.getCmp('biodatabase-show-store');
       console.log("After edit");
-      var record = this.restfulStore.getAt(0).data;
-      var records = ds.getModifiedRecords();
-      this.restfulStore.save();
-//      this.restfulStore.writer.write("UPDATE",{name:'kenglish'}, record);
-      this.restfulStore.writer.update(record);
-      console.log("After update");
-      return;
+      var record = this.restfulStore.getAt(0);
+
+      //      record.beginEdit();
+      //      record.data.name="PEANUT";
+      //      record.markDirty();
+      //      record.endEdit();
+
+      //      this.restfulStore.save();
+      //      this.restfulStore.writer.update(record);
+      //     console.log("After update");
+      //      return;
       var propGridValues = this.store.getAt(0).data;
       var params={};
       params = {
-        id:this.biodatabase_id
+        id:record.id
       };
       params.data={};
-      params.data[ propGridValues.name] = propGridValues.value;
+      params.data.name = "new_name"; //[ propGridValues.name] = propGridValues.value;
       params.data.id = this.biodatabase_id ;
+      var url_params = Ext.urlEncode({
+        authenticity_token:FORM_AUTH_TOKEN
+      });
+      console.log("url_params = " + url_params);
+
+      var postData = {
+        '_method': 'put',
+        'data': {
+          'name':'test name'
+        },
+        authenticity_token:FORM_AUTH_TOKEN
+      };
+
+
       Ext.Ajax.request({
-        url:"/workbench/biodatabases/" + this.biodatabase_id + ".json?authenticity_token="+FORM_AUTH_TOKEN,
+        url:"/workbench/biodatabases/" + record.id + ".json?" + url_params,
+        //        method: 'POST',
+        //        params: Ext.util.JSON.encode(postData)
+        headers: {
+          'Content-Type':	'application/json'
+        },
+
+
         method: 'PUT',
-        scope: this,
-        params:   params
-      //
-      ////         authenticity_token:  FORM_AUTH_TOKEN,
-      //         data: Ext.util.JSON.encode( params)
-      //         data: Ext.util.JSON.encode( params)
-      //}
+        //        scope: this,
+        params:  Ext.util.JSON.encode( params)
+      //        params:  params
       });
     }
   }
