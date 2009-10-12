@@ -8,19 +8,13 @@ class Workbench::BiosequencesController < ApplicationController
         :include => :biodatabase_biosequences,
         :conditions => ['biodatabase_biosequences.biodatabase_id = ?', params[:biodatabase_id] ],
         :order => 'name'
+      results =  Biosequence.count :include => :biodatabase_biosequences,
+        :conditions => ['biodatabase_biosequences.biodatabase_id = ?', params[:biodatabase_id] ]
     else
       biosequences =  Biosequence.paginate :page => page
+      results =  Biosequence.count
     end
-    hash = {
-      :success=> true,
-      :results=> 2000,
-      :rows=> [
-        { "id"=>  1, "name"=> "Bill", "occupation"=> "Gardener" },
-        { "id"=>  2, "name"=>  "Ben", "occupation"=> "Horticulturalist" }
-      ]
-    } 
 
-#    render :json => hash.to_json  # i{:success => true, :results => 2000, :data => biosequences}
-    render :json => {:results => 2000, :data => biosequences}
+    render :json => {:results => results, :data => biosequences}
   end
 end
