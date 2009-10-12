@@ -1,6 +1,6 @@
 class Biosequence < ActiveRecord::Base
   include ExtJS::Model
-  extjs_fields :id, :name, :alphabet, :length
+  extjs_fields :id, :name, :alphabet, :length, :seq, :original_name
   cattr_reader :per_page
   @@per_page = 200
 

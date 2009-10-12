@@ -47,6 +47,7 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
       frame: true,
       autoScroll: true,
       height: 300,
+      //      autoHeight: true,
       plugins: plugins,
       columns : this.displayColumns,
       viewConfig: {
@@ -107,6 +108,7 @@ Ext.bio.BiodatabaseGroupGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   displayColumns:  [ {
     header: "ID",
     width: 40,
+    autoWidth: true,
     sortable: true,
     dataIndex: 'id'
   }, {
@@ -133,15 +135,18 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   prefix: 'biosequences',
   dataUrl: '/workbench/biosequences',
   pageSize: 50,
+  biosequenceViewId: 'xxxx',
   displayColumns: [
   {
     header: "Name",
-    width: 100,
+    //    width: 25,
     sortable: true,
+    autoWidth: true,
     dataIndex: 'name'
   }, {
     header: "Length",
-    width: 10,
+    //    width: 10,
+    autoWidth: true,
     sortable: true,
     dataIndex: 'length'
 
@@ -169,24 +174,34 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
     Ext.apply(this,{
       tbar: pagingBar
+
     });
 
     Ext.bio.BiosequenceGrid.superclass.initComponent.call(this);
   },
   listeners: {
-    render: function( p)  {
+    afterrender: function( p)  {
+      this.updateContent({
+        biodatabase_id: 2
+      });
+      var viewPanel = Ext.getCmp(this.biosequenceViewId);
+      viewPanel.setSource(this.store);
+    },
+    rowclick: function (grid, rowIndex, e) {
+      var viewPanel = Ext.getCmp(this.biosequenceViewId);
+      var params = {rowIndex: rowIndex};
+      var biosequenceViewId;
+      viewPanel.updateContent(params);
     }
   },
   updateContent: function(params) {
     this.store.baseParams.biodatabase_id = params.biodatabase_id;
-
     this.store.load({
       params: {
         start: 0,
         limit: this.pageSize
       }
     } );
-  //  this.tbar.store = this.store;
   }
 
 });

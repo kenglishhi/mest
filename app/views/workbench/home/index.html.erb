@@ -2,7 +2,8 @@
   <head>
     <title>BiococonutIsland :: Workbench </title>
     <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
-      "ext-override" %>
+      "ext-override",
+      "ncbi-style" %>
 
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
@@ -13,7 +14,8 @@
       "workbench/App",
       "workbench/bio-grids",
       "workbench/bio-property-grid",
-      "workbench/RowEditor"
+      "workbench/RowEditor",
+      "workbench/biosequence-view-panel"
 
   %>
     <style type="text/css">
@@ -103,62 +105,6 @@ extjs_store( :controller => "workbench/biodatabase_groups",
       saveText: 'Update'
     });
 
-    // Create a typical GridPanel with RowEditor plugin
-    /*    var biodatabaseGrid = new Ext.bio.BiodatabaseGrid({
-      id: 'my-biodatabase-grid'
-    });
-     */
-    /*    Ext.grid.GridPanel({
-        iconCls: 'icon-grid',
-        frame: true,
-        title: 'Biodatabase',
-        autoScroll: true,
-        height: 300,
-        store: store,
-        plugins: [editor],
-        columns : biodatabaseColumns,
-        tbar: [{
-            text: 'Add',
-            iconCls: 'silk-add',
-            handler: onAdd
-        }, '-', {
-            text: 'Delete',
-            iconCls: 'silk-delete',
-            handler: onDelete
-        }, '-'],
-        viewConfig: {
-            forceFit: true
-        }
-    });
-     */
-
-    /**
-     * onAdd
-     */
-    /*    function onAdd(btn, ev) {
-        var u = new biodatabaseGrid.store.recordType({
-            first : '',
-            last: '',
-            email : ''
-        });
-        editor.stopEditing();
-        biodatabaseGrid.store.insert(0, u);
-        editor.startEditing(0);
-    }
-     */
-    /**
-     * onDelete
-     */
-    /*
-    function onDelete() {
-        var rec = biodatabaseGrid.getSelectionModel().getSelected();
-        if (!rec) {
-            return false;
-        }
-        biodatabaseGrid.store.remove(rec);
-    }
-
-     */
     Ext.bio.workbench.updateContent = function(node){
       params ={};
       if (node.attributes.resource =='biodatabase' ) {
@@ -185,18 +131,9 @@ extjs_store( :controller => "workbench/biodatabase_groups",
             tag: 'div',
             html: north_html
           }
-        }), {
-          // lazily created panel (xtype:'panel' is default)
-          region: 'south',
-          contentEl: 'south',
-          split: true,
-          height: 100,
-          minSize: 100,
-          maxSize: 200,
-          collapsible: true,
-          title: 'South',
-          margins: '0 0 0 0'
-        }, {
+        }),
+
+        {
           region: 'east',
           title: 'East Side',
           collapsible: true,
@@ -209,9 +146,16 @@ extjs_store( :controller => "workbench/biodatabase_groups",
           items:            // this TabPanel is wrapped by another Panel so the title will be applied
           new Ext.TabPanel({
             border: false, // already wrapped so don't add another border
-            activeTab: 1, // second tab initially active
+            activeTab: 0, // second tab initially active
             tabPosition: 'bottom',
             items: [{
+                tbar:[
+                  {iconCls:'new_fasta',
+                    text:'Sequence',
+                    tooltip:'Create New Sequence Text View',
+                    handler:function() { SeqApp.createSequenceText(-1); } }
+
+                ],
                 html: '<p>A TabPanel component can be a region.</p>',
                 title: 'A Tab',
                 autoScroll: true
@@ -243,7 +187,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
           id: 'workbench-grid-tabs',
           region: 'center', // a center region is ALWAYS required for border layout
           deferredRender: true,
-          activeTab: 0,     // first tab initially active
+          activeTab: 1,     // first tab initially active
           items: [
             {
 
@@ -264,7 +208,11 @@ extjs_store( :controller => "workbench/biodatabase_groups",
                 {id: 'workbench-biosequence-grid',
                   xtype:'biosequence-grid',
                   pageSize: seqPageSize,
-                  store:biosequenceStore }
+                  store:biosequenceStore,
+                  biosequenceViewId: 'biosequence-view'},
+                { id: 'biosequence-view',
+                  xtype: 'biosequence-view-panel'
+                }
               ]
             },  {
               title: 'Database Groups',

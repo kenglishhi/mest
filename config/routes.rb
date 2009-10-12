@@ -38,20 +38,11 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :trees
   end
 
-	map.connect 'workbench',
-		:controller => 'workbench/home',
-		:action     => 'index'
+  map.connect 'workbench',
+    :controller => 'workbench/home',
+    :action     => 'index'
 
-	map.connect 'workbench/home/restful',
-		:controller => 'workbench/home',
-		:action     => 'restful'
 
-	map.connect 'workbench/home/gemtest',
-		:controller => 'workbench/home',
-		:action     => 'gemtest'
-	map.connect 'workbench/home/ncbi_window',
-		:controller => 'workbench/home',
-		:action     => 'ncbi_window'
 
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
