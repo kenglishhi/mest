@@ -11,6 +11,8 @@ class Workbench::BiodatabasesController < ApplicationController
   end
   def update
     biodatabase = Biodatabase.find(params[:id])
+    logger.error("[kenglish] updating biodatabase = #{biodatabase}")
+    logger.error("[kenglish] updating biodatabase = #{params[:data].inspect}")
     render(:text => '', :status => (biodatabase.update_attributes(params["data"])) ? 204 : 500)
   end
 

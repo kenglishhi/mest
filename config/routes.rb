@@ -42,6 +42,11 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'workbench/home',
     :action     => 'index'
 
+  map.connect 'workbench/home/storetest',
+    :controller => 'workbench/home',
+    :action     => 'storetest'
+
+
 
 
 

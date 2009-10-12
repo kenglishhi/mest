@@ -78,7 +78,7 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
             {
               border:0,
               width:'95%',
-              left_nums:"100<br/>200<br/>300<br/>400<br/>500<br/>",
+              left_nums:"0<br/>100<br/>200<br/>300<br/>400<br/>500<br/>",
               topNums:topNums,
               sequence:""
             });
@@ -90,6 +90,7 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
       title: 'View Sequence',
       tbar:[
       {
+        iconCls:'new_fasta',
         text:'Seq',
         id: 'tbar-item-sequence-title'
       },
@@ -109,8 +110,7 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
       }
       ]
     });
-
-    Ext.bio.BiosequenceViewPanel.superclass.initComponent.call(this);
+   Ext.bio.BiosequenceViewPanel.superclass.initComponent.call(this);
   //    this.updateContent();
 
   },
@@ -125,7 +125,8 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
       params.rowIndex = 0;
     }
     this.selectedRowIndex = params.rowIndex;
-    var record = this.store.data.items[params.rowIndex].data ;
+    //var record = this.store.data.items[params.rowIndex].data ;
+    var record = this.store.getAt(params.rowIndex).data ;
 
     Ext.getCmp('tbar-item-sequence-title').setText("Sequence <b>" + record.name + "</b>");
     var sequenceCols = 100;

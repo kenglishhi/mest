@@ -1,17 +1,12 @@
 class Workbench::BiodatabaseGroupsController < ApplicationController
   include ExtJS::Controller
   def index
-    @biodatabase_groups = BiodatabaseGroup.all
-    render :json => { :data => @biodatabase_groups }
+    biodatabase_groups = BiodatabaseGroup.all
+    render :json => { :data => biodatabase_groups }
   end
   def update
-    @biodatabase_group = BiodatabaseGroup.find(params[:id])
-
-    if @biodatabase_group.update_attributes(ActiveSupport::JSON.decode(params[:data]))
-      render :json => { :success => true, :message => "Updated Database Group #{@biodatabase_group.id}", :data => @biodatabase_group }
-    else
-      render :json => { :message => "Failed to update Database Group."}
-    end
+    biodatabase_group = BiodatabaseGroup.find(params[:id])
+    render(:text => '', :status => (biodatabase_group.update_attributes(params["data"])) ? 204 : 500)
   end
 
   def create

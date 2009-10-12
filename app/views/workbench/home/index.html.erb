@@ -18,25 +18,6 @@
       "workbench/biosequence-view-panel"
 
   %>
-    <style type="text/css">
-      html, body {
-        font:normal 12px verdana;
-        margin:0;
-        padding:0;
-        border:0 none;
-        overflow:hidden;
-        height:100%;
-      }
-      p {
-        margin:5px;
-      }
-      .settings {
-        background-image:url(../shared/icons/fam/folder_wrench.png);
-      }
-      .nav {
-        background-image:url(../shared/icons/fam/folder_go.png);
-      }
-    </style>
 
     <!-- GC -->
     <!-- LIBS -->
@@ -135,18 +116,32 @@ extjs_store( :controller => "workbench/biodatabase_groups",
 
         {
           region: 'east',
-          title: 'East Side',
+          title: 'Tools',
           collapsible: true,
           split: true,
-          width: 225, // give east and west regions a width
+          width: 225, 
           minSize: 175,
           maxSize: 400,
           margins: '0 5 0 0',
-          layout: 'fit', // specify layout manager for items
-          items:            // this TabPanel is wrapped by another Panel so the title will be applied
+          layout: {
+            type: 'accordion',
+            animate: true
+          },
+          items: [ {
+              xtype: 'biodatabase-property-grid',
+              id:'workbench-biodatabase-property-grid',
+              border: false,
+              iconCls: 'settings'
+            }, {
+              title: 'Navigation',
+              border: false,
+              iconCls: 'nav' // see the HEAD section for style used
+            } ]
+          //          layout: 'fit',
+          /*          items:
           new Ext.TabPanel({
-            border: false, // already wrapped so don't add another border
-            activeTab: 0, // second tab initially active
+            border: false, 
+            activeTab: 0, 
             tabPosition: 'bottom',
             items: [{
                 tbar:[
@@ -165,6 +160,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
               }
             ]
           })
+           */
         }, {
           region: 'west',
           id: 'west-panel', // see Ext.getCmp() below
@@ -191,6 +187,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
           items: [
             {
 
+              iconCls:'new_view',
               title: 'Database',
               autoScroll: true,
               id:'workbench-biodatabase-tab',
@@ -201,6 +198,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
               ]
             },  {
 
+              iconCls:'new_fasta',
               title: 'Sequences',
               autoScroll: true,
               id: 'workbench-biosequence-tab',
@@ -215,6 +213,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
                 }
               ]
             },  {
+              iconCls:'origin',
               title: 'Database Groups',
               autoScroll: true,
               id:'workbench-biodatabase-group-tab',

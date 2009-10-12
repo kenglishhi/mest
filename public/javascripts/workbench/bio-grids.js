@@ -174,6 +174,16 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
     Ext.apply(this,{
       tbar: pagingBar
+    });
+    var biosequenceViewId = this.biosequenceViewId;
+    this.store.on('load',function() {
+      var viewPanel = Ext.getCmp(biosequenceViewId);
+      if (viewPanel) {
+        var params = {
+          rowIndex: 0
+        };
+        viewPanel.updateContent(params);
+      }
 
     });
 
@@ -181,21 +191,21 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   },
   listeners: {
     afterrender: function( p)  {
-      this.updateContent({
-        biodatabase_id: 2
-      });
       var viewPanel = Ext.getCmp(this.biosequenceViewId);
       viewPanel.setSource(this.store);
     },
     rowclick: function (grid, rowIndex, e) {
       var viewPanel = Ext.getCmp(this.biosequenceViewId);
-      var params = {rowIndex: rowIndex};
+      var params = {
+        rowIndex: rowIndex
+      };
       var biosequenceViewId;
       viewPanel.updateContent(params);
     }
   },
   updateContent: function(params) {
     this.store.baseParams.biodatabase_id = params.biodatabase_id;
+    var viewPanel = Ext.getCmp(this.biosequenceViewId);
     this.store.load({
       params: {
         start: 0,

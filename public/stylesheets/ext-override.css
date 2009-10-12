@@ -10,24 +10,39 @@ h1.north-header a:hover {
   color: #0000CC;
 }
 h1.north-header a {
-	color: #083772;
+  color: #083772;
 }
 h1.north-header a:link {
-	color: #083772;
-	text-decoration: none;
+  color: #083772;
+  text-decoration: none;
 }
 
 h1.north-header a:visited {
-   color: #1e4e8f;
-	text-decoration: none;
+  color: #1e4e8f;
+  text-decoration: none;
 }
 
 h1.north-header a:hover {
-	text-decoration: underline;
-	color: #0000CC;
+  text-decoration: underline;
+  color: #0000CC;
 }
 
 h1.north-header a:active {
-	text-decoration: none;
-	color: #1e4e8f;
+  text-decoration: none;
+  color: #1e4e8f;
+}
+
+.settings { background-image:url(/images/folder_wrench.png); }
+.nav { background-image:url(/images/folder_go.png); }
+
+html, body {
+  font:normal 12px verdana;
+  margin:0;
+  padding:0;
+  border:0 none;
+  overflow:hidden;
+  height:100%;
+}
+p {
+  margin:5px;
 }
