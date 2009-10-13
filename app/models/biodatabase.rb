@@ -1,6 +1,6 @@
 class Biodatabase < ActiveRecord::Base
   include ExtJS::Model
-  extjs_fields :name,:created_at
+  extjs_fields :name,:created_at, :number_of_sequences
   @@per_page = 200
 
   belongs_to :biodatabase_type

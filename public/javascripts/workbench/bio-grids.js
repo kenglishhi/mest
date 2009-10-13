@@ -69,14 +69,17 @@ Ext.bio.BiodatabaseGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     sortable: true,
     dataIndex: 'name',
     editor: new Ext.form.TextField({})
-  } ],
+  },
+  {
+    header: "Number of Seqs",
+    authwidth: true,
+    sortable: true,
+    dataIndex: 'number_of_sequences'
+  }
+  ],
   initComponent: function() {
     Ext.bio.BiodatabaseGrid.superclass.initComponent.call(this);
   } ,
-  //  listeners: {
-  //    render: function( p)  {
-  //    }
-  //  },
   updateContent: function(params) {
     this.store.baseParams.biodatabase_group_id = params.biodatabase_group_id;
     this.store.load();
@@ -180,7 +183,7 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     header: "Output File Name",
     autoWidth: true,
     sortable: true,
-    dataIndex: 'output_file_name'
+    dataIndex: 'output_file_name_display'
   }, {
     header: "Command",
     autoWidth: true,

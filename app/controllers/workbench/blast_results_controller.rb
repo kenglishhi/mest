@@ -2,7 +2,7 @@ class Workbench::BlastResultsController < ApplicationController
  include ExtJS::Controller
   def index
     blast_results = BlastResult.all :order => :stopped_at
-    render :json => { :data => blast_results }
+    render :json => { :data =>blast_results.map{|row|row.to_record} }
   end
   def update
 #    biodatabase_group = BiodatabaseGroup.find(params[:id])

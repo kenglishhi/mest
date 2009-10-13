@@ -70,6 +70,8 @@ module ExtJS
             elsif self.reflections[f]
               assn = self.reflections[f]
               field = {:name => assn.name, :allowBlank => true, :type => 'auto'}
+            else 
+              field = {:name => f, :allowBlank => true, :type => 'auto'}
             end
           },
           "idProperty" => self.primary_key
