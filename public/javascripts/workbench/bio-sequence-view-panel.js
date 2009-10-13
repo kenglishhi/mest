@@ -163,4 +163,4 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
     this.store = s;
   }
 });
-Ext.reg('biosequence-view-panel', Ext.bio.BiosequenceViewPanel);
+Ext.reg('bio-sequence-view-panel', Ext.bio.BiosequenceViewPanel);

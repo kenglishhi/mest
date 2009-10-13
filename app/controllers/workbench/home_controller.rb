@@ -8,4 +8,7 @@ class Workbench::HomeController < ApplicationController
   def storetest
     render :layout => false
   end
+  def rename_form
+    render :layout => false
+  end
 end

@@ -15,7 +15,8 @@
       "workbench/bio-grids",
       "workbench/bio-property-grid",
       "workbench/RowEditor",
-      "workbench/biosequence-view-panel"
+      "workbench/bio-sequence-view-panel",
+      "workbench/bio-db-renamer-form"
 
   %>
 
@@ -147,34 +148,12 @@ extjs_store( :controller => "workbench/biodatabase_groups",
               border: false,
               iconCls: 'settings'
             }, {
-              title: 'Navigation',
+              title: 'Rename Sequences',
               border: false,
-              iconCls: 'nav' // see the HEAD section for style used
+              iconCls: 'nav' ,
+              xtype: 'bio-db-renamer-form',
+              id: 'bio-db-renamer-form'
             } ]
-          //          layout: 'fit',
-          /*          items:
-          new Ext.TabPanel({
-            border: false, 
-            activeTab: 0, 
-            tabPosition: 'bottom',
-            items: [{
-                tbar:[
-                  {iconCls:'new_fasta',
-                    text:'Sequence',
-                    tooltip:'Create New Sequence Text View',
-                    handler:function() { SeqApp.createSequenceText(-1); } }
-
-                ],
-                html: '<p>A TabPanel component can be a region.</p>',
-                title: 'A Tab',
-                autoScroll: true
-              } , {
-                xtype: 'biodatabase-property-grid',
-                id:'workbench-biodatabase-property-grid'
-              }
-            ]
-          })
-           */
         }, {
           region: 'west',
           id: 'west-panel', // see Ext.getCmp() below
@@ -221,9 +200,9 @@ extjs_store( :controller => "workbench/biodatabase_groups",
                   xtype:'biosequence-grid',
                   pageSize: seqPageSize,
                   store:biosequenceStore,
-                  biosequenceViewId: 'biosequence-view'},
-                { id: 'biosequence-view',
-                  xtype: 'biosequence-view-panel'
+                  biosequenceViewId: 'bio-sequence-view'},
+                { id: 'bio-sequence-view',
+                  xtype: 'bio-sequence-view-panel'
                 }
               ]
             },  {
