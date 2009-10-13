@@ -1,8 +1,7 @@
 class Workbench::BiosequencesController < ApplicationController
   include ExtJS::Controller
   def index
-    page = params[:start].blank? ? 1 : ((params[:start].to_i/Biosequence.per_page) + 1)
-    logger.error("[kenglish] page = #{page}, biodatabase_id #{params[:biodatabase_id]}  " )
+    page = get_page(Biosequence)
     if params[:biodatabase_id]
       biosequences = Biosequence.paginate :page => page,
         :include => :biodatabase_biosequences,

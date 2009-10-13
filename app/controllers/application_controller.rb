@@ -54,6 +54,9 @@ class ApplicationController < ActionController::Base
   def database_sub_nav
    @content_for_sub_nav = render_to_string(:partial => '/layouts/database_sub_nav')
   end
+  def get_page(klass)
+    params[:start].blank? ? 1 : ((params[:start].to_i/klass.per_page) + 1)
+  end
 
 
 

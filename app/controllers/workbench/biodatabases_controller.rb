@@ -5,10 +5,12 @@ class Workbench::BiodatabasesController < ApplicationController
       biodatabases =[ Biodatabase.find(params[:id])]
     elsif params[:biodatabase_group_id]
       biodatabases = Biodatabase.find_all_by_biodatabase_group_id(params[:biodatabase_group_id])
+      results = Biodatabase.count :conditions => ['biodatabase_group_id=?', params[:biodatabase_group_id]]
     else 
       biodatabases = Biodatabase.all
+      results = Biodatabase.count
     end
-    render :json => { :data => biodatabases.map{|db|db.to_record}}
+    render :json => {:results => results, :data => biodatabases.map{|db|db.to_record}}
  
   end
   def update

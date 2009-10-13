@@ -1,6 +1,7 @@
 class Biodatabase < ActiveRecord::Base
   include ExtJS::Model
   extjs_fields :name,:created_at
+  @@per_page = 200
 
   belongs_to :biodatabase_type
   belongs_to :biodatabase_group

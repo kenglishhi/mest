@@ -12,25 +12,6 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
   updateContent: function(params) {
   },
   initComponent: function() {
-    var App = new Ext.App({});
-
-    // Create a standard HttpProxy instance.
-    var proxy = new Ext.data.HttpProxy({
-      url: this.dataUrl
-    });
-
-    // Typical JsonReader.  Notice additional meta-data params for defining the core attributes of your json-response
-    var reader = new Ext.data.JsonReader({
-      successProperty: 'success',
-      idProperty: 'id',
-      root: 'data'
-    }, this.readerColumns
-    );
-
-    // The new DataWriter component.
-    var writer = new Ext.data.JsonWriter();
-
-    // Typical Store collecting the Proxy, Reader and Writer together.
 
     var plugins = [];
     if (this.useEditorFlag){
@@ -40,8 +21,20 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
       });
       plugins[0] = editor;
     }
+    var pagingBar = null;
+    if (this.usePagingBarFlag){
+      pagingBar = new Ext.PagingToolbar({
+        store: this.store,
+        pageSize: this.pageSize,
+        displayInfo: true,
+        displayMsg: 'Displaying {0} - {1} of {2}',
+        emptyMsg: "No data to display"
+      });
+    }
+
 
     Ext.apply(this,{
+      tbar: pagingBar,
       loadMask: true,
       iconCls: 'icon-grid',
       frame: true,
@@ -69,31 +62,21 @@ Ext.bio.BiodatabaseGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   prefix: 'biodatabase-store',
   dataUrl: '/workbench/biodatabases',
   useEditorFlag:true,
+  usePagingBarFlag: true,
   displayColumns:  [ {
-    header: "ID",
-    width: 40,
-    sortable: true,
-    dataIndex: 'id'
-  }, {
     header: "Name",
-    width: 100,
+    authwidth: true,
     sortable: true,
     dataIndex: 'name',
     editor: new Ext.form.TextField({})
   } ],
-  readerColumns: [ {
-    name: 'id'
-  }, {
-    name: 'name',
-    allowBlank: false
-  } ] ,
   initComponent: function() {
     Ext.bio.BiodatabaseGrid.superclass.initComponent.call(this);
   } ,
-  listeners: {
-    render: function( p)  {
-    }
-  },
+  //  listeners: {
+  //    render: function( p)  {
+  //    }
+  //  },
   updateContent: function(params) {
     this.store.baseParams.biodatabase_group_id = params.biodatabase_group_id;
     this.store.load();
@@ -105,25 +88,14 @@ Ext.bio.BiodatabaseGroupGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   prefix: 'biodatabase-group-store',
   dataUrl: '/workbench/biodatabase_groups',
   useEditorFlag:true,
+  usePagingBarFlag: true,
   displayColumns:  [ {
-    header: "ID",
-    width: 40,
-    autoWidth: true,
-    sortable: true,
-    dataIndex: 'id'
-  }, {
     header: "Name",
     width: 100,
     sortable: true,
     dataIndex: 'name',
     editor: new Ext.form.TextField({})
   } ],
-  readerColumns: [ {
-    name: 'id'
-  }, {
-    name: 'name',
-    allowBlank: false
-  } ] ,
   initComponent: function() {
     Ext.bio.BiodatabaseGroupGrid.superclass.initComponent.call(this);
   }
@@ -136,45 +108,22 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   dataUrl: '/workbench/biosequences',
   pageSize: 50,
   biosequenceViewId: 'xxxx',
+  usePagingBarFlag: true,
   displayColumns: [
   {
     header: "Name",
-    //    width: 25,
     sortable: true,
     autoWidth: true,
     dataIndex: 'name'
   }, {
     header: "Length",
-    //    width: 10,
     autoWidth: true,
     sortable: true,
     dataIndex: 'length'
-
   }
   ],
-  readerColumns:[
-  {
-    name: 'id'
-  } , {
-    name: 'name',
-    allowBlank: false
-  } , {
-    name: 'length'
-  }
-  ],
-
   initComponent: function() {
-    var pagingBar = new Ext.PagingToolbar({
-      store: this.store,
-      pageSize: this.pageSize,
-      displayInfo: true,
-      displayMsg: 'Displaying {0} - {1} of {2}',
-      emptyMsg: "No data to display"
-    });
 
-    Ext.apply(this,{
-      tbar: pagingBar
-    });
     var biosequenceViewId = this.biosequenceViewId;
     this.store.on('load',function() {
       var viewPanel = Ext.getCmp(biosequenceViewId);
@@ -216,3 +165,32 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
 });
 Ext.reg('biosequence-grid', Ext.bio.BiosequenceGrid);
+
+Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
+  prefix: 'blast-result-group-store',
+  dataUrl: '/workbench/blast_results',
+  useEditorFlag:false,
+  usePagingBarFlag: true,
+  displayColumns:  [ {
+    header: "Name",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'name'
+  }, {
+    header: "Output File Name",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'output_file_name'
+  }, {
+    header: "Command",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'command'
+  }
+  ],
+  initComponent: function() {
+    Ext.bio.BlastResultGrid.superclass.initComponent.call(this);
+  }
+});
+Ext.reg('blast-result-grid', Ext.bio.BlastResultGrid);
+

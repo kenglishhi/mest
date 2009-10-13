@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <title>BiococonutIsland :: Workbench </title>
+    <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
+      "ext-override",
+      "ncbi-style" %>
+
+    <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
+
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+      "ext-3.0.0/ext-all" ,
+      "workbench/base",
+      "workbench/database-group-tree",
+      "workbench/App",
+      "workbench/bio-grids",
+      "workbench/bio-property-grid",
+      "workbench/RowEditor",
+      "workbench/biosequence-view-panel"
+
+  %>
+
+    <!-- GC -->
+    <!-- LIBS -->
+    <!-- ENDLIBS -->
+
+
+    <!-- EXAMPLES -->
+
+    <script type="text/javascript">
+
+      Ext.namespace('Ext.workbenchdata');
+      Ext.onReady(function(){
+        var biodatabaseStore = <%=
+extjs_store( :controller => "workbench/biodatabases",
+  :writer => {"encode" => false},
+  :config => {
+    "autoLoad" => false,
+    "autoSave" => true,
+    "restful" => true
+  }
+
+).render(false)
+%>;
+    var seqPageSize = <%= biosequence_page_size %> ;
+    var win;
+    var button = Ext.get('show-btn');
+
+    //    button.on('click', function(){
+    // create the window on the first click and reuse on subsequent clicks
+    if(!win){
+      win = new Ext.Window({
+        applyTo:'hello-win',
+        layout:'fit',
+        width:500,
+        height:300,
+        closeAction:'hide',
+        plain: true,
+
+        items: new Ext.TabPanel({
+          applyTo: 'hello-tabs',
+          autoTabs:true,
+          activeTab:0,
+          deferredRender:false,
+          border:false,
+
+          items: [ {
+              xtype: 'biodatabase-property-grid',
+              id:'workbench-biodatabase-property-grid',
+              border: false,
+              iconCls: 'settings'
+            }]
+
+        }),
+
+        buttons: [{
+            text:'update',
+            handler: function(){
+              Ext.getCmp('workbench-biodatabase-property-grid').updateContent({biodatabase_id:1});
+
+              console.log("Hey");
+            }
+
+          },{
+            text: 'Close',
+            handler: function(){
+              win.hide();
+            }
+          }]
+      });
+    }
+    win.show(this);
+
+    //////////////////    });
+
+
+    // get a reference to the HTML element with id "hideit" and add a click listener to it
+    //        Ext.get("hideit").on('click', function(){
+    // get a reference to the Panel that was created with id = 'west-panel'
+    //          var w = Ext.getCmp('west-panel');
+    // expand or collapse that Panel based on its collapsed property state
+    //          w.collapsed ? w.expand() : w.collapse();
+    //        });
+  });
+    </script>
+  </head>
+  <body>
+    <h1>Hello World Window</h1>
+    <p>This example shows how to create a very simple modal Window with "autoTabs" from existing markup.</p>
+    <input type="button" id="show-btn" value="Hello World" /><br /><br />
+    <p>Note that the js is not minified so it is readable. See <a href="hello.js">hello.js</a> for the full source code.</p>
+
+    <div id="hello-win" class="x-hidden">
+
+      <div class="x-window-header">Hello Dialog</div>
+      <div id="hello-tabs">
+        <!-- Auto create tab 1 -->
+        <div class="x-tab" title="Hello World 1">
+          <p>Hello...</p>
+        </div>
+        <!-- Auto create tab 2 -->
+        <div class="x-tab" title="Hello World 2">
+
+          <p>... World!</p>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+</html>

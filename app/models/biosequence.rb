@@ -2,9 +2,7 @@ class Biosequence < ActiveRecord::Base
   include ExtJS::Model
   extjs_fields :id, :name, :alphabet, :length, :seq, :original_name
   cattr_reader :per_page
-  @@per_page = 200
-
-
+  @@per_page = 10
 
   has_many :biodatabase_biosequences, :dependent => :destroy
   has_many :biodatabases, :through => :biodatabase_biosequences

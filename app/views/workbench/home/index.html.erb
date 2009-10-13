@@ -46,6 +46,7 @@ extjs_store( :controller => "workbench/biosequences",
 extjs_store( :controller => "workbench/biodatabases",
   :writer => {"encode" => false},
   :config => {
+    "totalProperty" => 'results',
     "autoLoad" => false,
     "autoSave" => true,
     "restful" => true
@@ -69,14 +70,28 @@ extjs_store( :controller => "workbench/biodatabases",
 extjs_store( :controller => "workbench/biodatabase_groups",
   :writer => {"encode" => false},
   :config => {
+    "totalProperty" => 'results',
     "autoLoad" => false,
     "autoSave" => true,
     "restful" => true
   }
 ).render(false)
 %>;
-
+    var blastResultStore = <%=
+extjs_store( :controller => "workbench/blast_results",
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => false,
+    "autoSave" => false,
+    "restful" => true
+  }
+).render(false)
+%>
     var seqPageSize = <%= biosequence_page_size %> ;
+    var dbPageSize = <%= biosequence_page_size %> ;
+    var databaseGroupPageSize = <%= biosequence_page_size %> ;
+    var blastResultPageSize = <%= biosequence_page_size %> ;
 
 
 
@@ -127,34 +142,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
             html: north_html
           }
         }),
-
         {
-          region: 'east',
-          title: 'Tools',
-          collapsible: true,
-          split: true,
-          width: 225, 
-          minSize: 175,
-          maxSize: 400,
-          margins: '0 5 0 0',
-          layout: {
-            type: 'accordion',
-            animate: true
-          },
-          items: [ {
-              xtype: 'biodatabase-property-grid',
-              id:'workbench-biodatabase-property-grid',
-              restfulStore: biodatabasePropertyStore,
-              border: false,
-              iconCls: 'settings'
-            }, {
-              title: 'Rename Sequences',
-              border: false,
-              iconCls: 'nav' ,
-              xtype: 'bio-db-renamer-form',
-              id: 'bio-db-renamer-form'
-            } ]
-        }, {
           region: 'west',
           id: 'west-panel', // see Ext.getCmp() below
           title: 'Database Browser',
@@ -179,18 +167,6 @@ extjs_store( :controller => "workbench/biodatabase_groups",
           activeTab: 1,     // first tab initially active
           items: [
             {
-
-              iconCls:'new_view',
-              title: 'Database',
-              autoScroll: true,
-              id:'workbench-biodatabase-tab',
-              items: [
-                {id: 'workbench-biodatabase-grid',
-                  xtype:'biodatabase-grid',
-                  store: biodatabaseStore }
-              ]
-            },  {
-
               iconCls:'new_fasta',
               title: 'Sequences',
               autoScroll: true,
@@ -206,21 +182,72 @@ extjs_store( :controller => "workbench/biodatabase_groups",
                 }
               ]
             },  {
+              iconCls:'new_view',
+              title: 'Databases',
+              autoScroll: true,
+              id:'workbench-biodatabase-tab',
+              items: [
+                {id: 'workbench-biodatabase-grid',
+                  xtype:'biodatabase-grid',
+                  pageSize: dbPageSize,
+                  store: biodatabaseStore }
+              ]
+            },{
               iconCls:'origin',
               title: 'Database Groups',
               autoScroll: true,
               id:'workbench-biodatabase-group-tab',
               items: [
                 {id: 'workbench-biodatabase-groups-grid',
+                  pageSize: databaseGroupPageSize,
                   xtype:'biodatabase-group-grid' ,
                   store: biodatabaseGroupStore }
               ]
 
+            },  {
+              iconCls:'origin',
+              title: 'Blast Results',
+              autoScroll: true,
+              id:'workbench-blast-result-tab',
+              items: [
+                {id: 'workbench-blast-results-grid',
+                  pageSize: blastResultPageSize,
+                  xtype:'blast-result-grid' ,
+                  store: blastResultStore }
+              ]
+
             }
 
-
           ]
-        })]
+        }),
+        {
+          region: 'east',
+          title: 'Tools',
+          collapsible: true,
+          split: true,
+          width: 225,
+          minSize: 175,
+          maxSize: 400,
+          margins: '0 5 0 0',
+          layout: {
+            type: 'accordion',
+            animate: true
+          },
+          items: [ {
+              xtype: 'biodatabase-property-grid',
+              id:'workbench-biodatabase-property-grid',
+              restfulStore: biodatabasePropertyStore,
+              border: false,
+              iconCls: 'settings'
+            }, {
+              title: 'Rename Sequences',
+              border: false,
+              iconCls: 'nav' ,
+              xtype: 'bio-db-renamer-form',
+              id: 'bio-db-renamer-form'
+            } ]
+        }
+      ]
     });
     // get a reference to the HTML element with id "hideit" and add a click listener to it
     //        Ext.get("hideit").on('click', function(){

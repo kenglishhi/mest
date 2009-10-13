@@ -2,8 +2,9 @@ class BiodatabaseGroup < ActiveRecord::Base
   acts_as_tree
 
   include ExtJS::Model
-  extjs_fields :id, :name
+  extjs_fields :id, :name,:create_at
 
+  @@per_page = 10
   belongs_to :user
   belongs_to :project
 

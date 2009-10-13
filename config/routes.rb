@@ -30,12 +30,13 @@ ActionController::Routing::Routes.draw do |map|
     jobs.resources :job_logs, :collection => {:delete_all => :post}, :active_scaffold => true
   end
 
-  map.namespace(:workbench) do |admin|
-    admin.resources :biodatabases, :member => { :move => :post}
-    admin.resources :biodatabase_groups, :member => { :move => :post , :tree => :get }
-    admin.resources :biosequences
-    admin.resource :tree
-    admin.resources :trees
+  map.namespace(:workbench) do |workbench|
+    workbench.resources :biodatabases, :member => { :move => :post}
+    workbench.resources :biodatabase_groups, :member => { :move => :post , :tree => :get }
+    workbench.resources :biosequences
+    workbench.resource :tree
+    workbench.resources :trees
+    workbench.resources :blast_results
   end
 
   map.connect 'workbench',

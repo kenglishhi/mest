@@ -2,7 +2,8 @@ class Workbench::BiodatabaseGroupsController < ApplicationController
   include ExtJS::Controller
   def index
     biodatabase_groups = BiodatabaseGroup.all
-    render :json => { :data => biodatabase_groups }
+    results = BiodatabaseGroup.count
+    render :json => {:results => results, :data => biodatabase_groups }
   end
   def update
     biodatabase_group = BiodatabaseGroup.find(params[:id])
