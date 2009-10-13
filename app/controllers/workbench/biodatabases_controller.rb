@@ -1,13 +1,15 @@
 class Workbench::BiodatabasesController < ApplicationController
   include ExtJS::Controller
   def index
+    page = get_page(Biodatabase)
     if params[:id]
       biodatabases =[ Biodatabase.find(params[:id])]
     elsif params[:biodatabase_group_id]
-      biodatabases = Biodatabase.find_all_by_biodatabase_group_id(params[:biodatabase_group_id])
-      results = Biodatabase.count :conditions => ['biodatabase_group_id=?', params[:biodatabase_group_id]]
+      condition = ['biodatabase_group_id=?', params[:biodatabase_group_id]]
+      biodatabases = Biodatabase.paginate :page => page, :condition => condition
+      results = Biodatabase.count :condition => condition
     else 
-      biodatabases = Biodatabase.all
+      biodatabases = Biodatabase.paginate :page => page
       results = Biodatabase.count
     end
     render :json => {:results => results, :data => biodatabases.map{|db|db.to_record}}
