@@ -4,7 +4,7 @@ class BlastResult < ActiveRecord::Base
     :url => "/system/:attachment/:id/:style/:normalized_output_file_name"
 
   include ExtJS::Model
-  extjs_fields :id, :name, :command,:output_file_name_display,:output_file_url
+  extjs_fields :id, :name, :command,:output_file_name_display,:output_file_url, :started_at, :stopped_at
 
   @@per_page = 10
   Paperclip.interpolates :normalized_output_file_name do |attachment, style|
