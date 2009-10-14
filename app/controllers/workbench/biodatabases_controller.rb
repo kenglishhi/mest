@@ -3,16 +3,16 @@ class Workbench::BiodatabasesController < ApplicationController
   def index
     page = get_page(Biodatabase)
     if params[:id]
-      biodatabases =[ Biodatabase.find(params[:id])]
+      data =[ Biodatabase.find(params[:id])]
     elsif params[:biodatabase_group_id]
-      condition = ['biodatabase_group_id=?', params[:biodatabase_group_id]]
-      biodatabases = Biodatabase.paginate :page => page, :condition => condition
-      results = Biodatabase.count :condition => condition
+      conditions = ['biodatabase_group_id=?', params[:biodatabase_group_id]]
+      data = Biodatabase.paginate :page => page, :conditions => conditions
+      results = Biodatabase.count :conditions => conditions
     else 
-      biodatabases = Biodatabase.paginate :page => page
+      data = Biodatabase.paginate :page => page
       results = Biodatabase.count
     end
-    render :json => {:results => results, :data => biodatabases.map{|db|db.to_record}}
+    render :json => {:results => results, :data => data.map{|row|row.to_record}}
  
   end
   def update
