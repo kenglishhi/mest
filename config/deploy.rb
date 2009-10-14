@@ -7,7 +7,7 @@ set :repository,  "git@github.com:kenglishhi/biococonutisland.git"
 set :scm, "git"
 set :branch, "master"
 set :shared_dir, "shared"
-set :runner, 'www'
+set :runner, '_www'
 
 set :deploy_to, "/Users/kenglish/webapp/biococonutisland"
 set :deploy_via, :remote_cache
@@ -35,8 +35,8 @@ namespace :symlink do
     CMD
   end
   task :chown_to_www do
-    sudo  "chown -R www:www #{current_path}"
-    sudo  "chown -R www:www #{current_path}/*"
+    sudo  "chown -R _www:_www #{current_path}"
+    sudo  "chown -R _www:_www #{current_path}/*"
   end
 
 end
@@ -73,6 +73,6 @@ def sudo_as_www(cmd)
     cmd =<<-CMD
       sh -c "#{cmd}"
     CMD
-    sudo cmd, :as => 'www'
+    sudo cmd, :as => '_www'
 end
 
