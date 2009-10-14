@@ -2,9 +2,8 @@ class BiodatabaseGroup < ActiveRecord::Base
   acts_as_tree
 
   include ExtJS::Model
-  extjs_fields :id, :name,:create_at
+  extjs_fields :id, :name,:created_at
 
-  @@per_page = 10
   belongs_to :user
   belongs_to :project
 
@@ -15,6 +14,9 @@ class BiodatabaseGroup < ActiveRecord::Base
   validates_presence_of :project_id
 
   validates_uniqueness_of :name, :scope => :project_id
+
+  cattr_reader :per_page
+  @@per_page = 10
   def ext_tree(params={})
     tree_data = { :text =>  self.name,
       :leaf => false,

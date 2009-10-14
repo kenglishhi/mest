@@ -2,8 +2,9 @@ class Workbench::BlastResultsController < ApplicationController
  include ExtJS::Controller
   def index
     page = get_page(BlastResult)
-    blast_results = BlastResult.paginate :page => page, :order => :stopped_at
-    render :json => { :data =>blast_results.map{|row|row.to_record} }
+    data = BlastResult.paginate :page => page, :order => :stopped_at
+    results =BlastResult.count
+    render :json => {:results => results, :data => data.map{|row|row.to_record}}
   end
   def update
 #    biodatabase_group = BiodatabaseGroup.find(params[:id])

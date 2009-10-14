@@ -5,7 +5,7 @@ class BlastResult < ActiveRecord::Base
 
   include ExtJS::Model
   extjs_fields :id, :name, :command,:output_file_name_display,:output_file_url, :started_at, :stopped_at
-
+  cattr_reader :per_page
   @@per_page = 10
   Paperclip.interpolates :normalized_output_file_name do |attachment, style|
     attachment.instance.normalized_output_file_name
