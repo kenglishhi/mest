@@ -30,14 +30,6 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
         displayMsg: 'Displaying {0} - {1} of {2}',
         emptyMsg: "No data to display"
       });
-      pagingBar.add('-', {
-        pressed: true,
-        enableToggle:true,
-        text: 'Detailed View',
-        cls: 'x-btn-text-icon details',
-        toggleHandler: function(){}
-
-      });
     }
 
 
