@@ -56,10 +56,9 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
   initComponent: function() {
     Ext.apply(this,{
       items:[{
-        xtype:'panel',
+        title: 'View Sequence',
         autoScroll: true,
         id:'seq-panel',
-        layout:'fit',
         sequenceViewTmpl: new Ext.Template(
           '<table width="{width}" class="fasta-table" style="border-style:solid;border-width:{border}px;" ><tbody><tr bordercolor="#ffffff"><td id="left_sequence" width=50 valign="top" align="right"><br><em>{left_nums}</em></td>',
           '<td valign="top"><span id="top_sequence"><em>{topNums}</em></span><br/><div id="text_sequence">{sequence}</div></td>',
@@ -87,7 +86,6 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
           }
         }
       }],
-      title: 'View Sequence',
       tbar:[
       {
         iconCls:'new_fasta',
@@ -110,7 +108,7 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
       }
       ]
     });
-   Ext.bio.BiosequenceViewPanel.superclass.initComponent.call(this);
+    Ext.bio.BiosequenceViewPanel.superclass.initComponent.call(this);
   //    this.updateContent();
 
   },

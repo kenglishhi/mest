@@ -17,7 +17,6 @@
       "workbench/RowEditor",
       "workbench/bio-sequence-view-panel",
       "workbench/bio-db-renamer-form"
-
   %>
 
     <!-- GC -->
@@ -93,15 +92,12 @@ extjs_store( :controller => "workbench/blast_results",
     var dbPageSize = <%= biodatabase_page_size %> ;
     var blastResultPageSize = <%= blast_result_page_size %> ;
 
-
-
-
     // BEGIN RAILS data DUMP
     Ext.workbenchdata.project_options = <%= @project_options.to_json %>;
     var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %></h1> ';
     // END RAILS data dump  -- no erb code should go beyond this line
     var dbGroupTree = <%= BiodatabaseGroup.first.ext_tree(:expand_node => true).to_json %> ;
-    //        var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
+    // var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
 
     // it is generally best to disable state management as dynamically-generated ids
     // can change across page loads, leading to unpredictable results.  The developer
@@ -129,6 +125,31 @@ extjs_store( :controller => "workbench/blast_results",
         Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
       }
     };
+    /*
+    {id: 'workbench-biosequence-grid',
+      xtype:'biosequence-grid',
+      pageSize: seqPageSize,
+      store:biosequenceStore,
+      biosequenceViewId: 'bio-sequence-view'},
+    { id: 'bio-sequence-view',
+      xtype: 'bio-sequence-view-panel'
+    }
+     */
+
+    var seqGrid = new Ext.bio.BiosequenceGrid({
+      id: 'workbench-biosequence-grid',
+      pageSize: seqPageSize,
+      store:biosequenceStore,
+      biosequenceViewId: 'bio-sequence-view',
+      region:'north',
+      split:true
+    });
+
+    var seqView =   new  Ext.bio.BiosequenceViewPanel( { 
+      id: 'bio-sequence-view',
+      region: 'center',
+      split:true
+    } );
 
     var viewport = new Ext.Viewport({
       layout: 'border',
@@ -163,22 +184,51 @@ extjs_store( :controller => "workbench/blast_results",
         new Ext.TabPanel({
           id: 'workbench-grid-tabs',
           region: 'center', // a center region is ALWAYS required for border layout
+          collapsible: true,
           deferredRender: true,
-          activeTab: 3,     // first tab initially active
+          activeTab: 0,     // first tab initially active
+
           items: [
             {
+
               iconCls:'new_fasta',
               title: 'Sequences',
-              autoScroll: true,
               id: 'workbench-biosequence-tab',
-              items: [
-                {id: 'workbench-biosequence-grid',
+
+              layout: 'border',
+              region:'west',
+              border: false,
+              split:true,
+              margins: '2 0 5 5',
+              width: 275,
+              minSize: 100,
+              maxSize: 500,
+              //items: [treePanel, detailsPanel]
+
+              items: //[seqGrid,seqView]
+              [
+                {
+
                   xtype:'biosequence-grid',
+                  id: 'workbench-biosequence-grid',
                   pageSize: seqPageSize,
                   store:biosequenceStore,
-                  biosequenceViewId: 'bio-sequence-view'},
-                { id: 'bio-sequence-view',
-                  xtype: 'bio-sequence-view-panel'
+                  biosequenceViewId: 'bio-sequence-view',
+                  region:'north',
+                  split:true
+
+                  //                  id: 'workbench-biosequence-grid',
+                  //                  pageSize: seqPageSize,
+                  //                  store:biosequenceStore,
+                  //                  biosequenceViewId: 'bio-sequence-view'
+                },
+                {
+                  //                  id: 'bio-sequence-view',
+                  xtype: 'bio-sequence-view-panel',
+                  id: 'bio-sequence-view',
+                  region: 'center',
+                  split:true
+
                 }
               ]
             },  {
@@ -239,13 +289,15 @@ extjs_store( :controller => "workbench/blast_results",
               restfulStore: biodatabasePropertyStore,
               border: false,
               iconCls: 'settings'
-            }, {
-              title: 'Rename Sequences',
-              border: false,
-              iconCls: 'nav' ,
-              xtype: 'bio-db-renamer-form',
-              id: 'bio-db-renamer-form'
-            } ]
+            }
+            //            , {
+            //              title: 'Rename Sequences',
+            //              border: false,
+            //              iconCls: 'nav' ,
+            //              xtype: 'bio-db-renamer-form',
+            //              id: 'bio-db-renamer-form'
+            //            }
+          ]
         }
       ]
     });
