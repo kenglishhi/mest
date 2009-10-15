@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def database_sub_nav
-   @content_for_sub_nav = render_to_string(:partial => '/layouts/database_sub_nav')
+    @content_for_sub_nav = render_to_string(:partial => '/layouts/database_sub_nav')
   end
   def get_page(paginated_class)
     params[:start].blank? ? 1 : ((params[:start].to_i/paginated_class.per_page) + 1)
