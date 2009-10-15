@@ -19,8 +19,6 @@ class Blast::Clean < Blast::Base
 
   end
 
-
-
   def do_run
     init_files_and_databases
 
@@ -31,9 +29,9 @@ class Blast::Clean < Blast::Base
     )
     evalue = @params[:evalue] || "25"
     output_file_handle = Blast::Command.execute(@blast_result, :test_file_path => @test_fasta_file.fasta.path,
-           :target_file_path => @target_fasta_file.fasta.path,
-           :evalue => evalue,
-           :output_file_prefix => @output_biodatabase.name)
+      :target_file_path => @target_fasta_file.fasta.path,
+      :evalue => evalue,
+      :output_file_prefix => @output_biodatabase.name)
     output_file_handle.open
 
     @blast_result.stopped_at = Time.now
