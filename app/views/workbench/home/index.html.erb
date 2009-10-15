@@ -145,7 +145,7 @@ extjs_store( :controller => "workbench/blast_results",
       split:true
     });
 
-    var seqView =   new  Ext.bio.BiosequenceViewPanel( { 
+    var seqView =   new  Ext.bio.BiosequenceViewPanel( {
       id: 'bio-sequence-view',
       region: 'center',
       split:true
@@ -178,7 +178,19 @@ extjs_store( :controller => "workbench/blast_results",
             {id: 'bio-database-group-tree',
               xtype:'database-group-tree',
               treeData: dbGroupTree,
-              clickAction: Ext.bio.workbench.updateContent
+              clickAction: function(node) {
+                Ext.bio.workbench.updateContent(node);
+                Ext.getCmp('tree-delete-icon').enable();
+              }
+            }],
+          bbar :[{
+              id:'tree-delete-icon',
+              disabled: true,
+              iconCls:'x-tree-delete',
+              text: 'Delete',
+              handler: function() {
+                Ext.getCmp('bio-database-group-tree').deleteSelectedNode();
+              }
             }]
         },
         new Ext.TabPanel({

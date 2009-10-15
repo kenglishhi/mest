@@ -1,5 +1,6 @@
 class Workbench::BiodatabasesController < ApplicationController
   include ExtJS::Controller
+
   def index
     page = get_page(Biodatabase)
     if params[:id]
@@ -15,11 +16,17 @@ class Workbench::BiodatabasesController < ApplicationController
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
  
   end
+
   def update
     biodatabase = Biodatabase.find(params[:id])
     logger.error("[kenglish] updating biodatabase = #{biodatabase}")
     logger.error("[kenglish] updating biodatabase = #{params[:data].inspect}")
     render(:text => '', :status => (biodatabase.update_attributes(params["data"])) ? 204 : 500)
+  end
+
+  def destroy
+    record = Biodatabase.find(params[:id])
+    render(:text => '', :status => (record.destroy) ? 204 : 500)
   end
 
   def move
@@ -34,6 +41,7 @@ class Workbench::BiodatabasesController < ApplicationController
       }
     end
   end
+
   def show
     biodatabase = Biodatabase.find(params[:id])
     render :json =>  {:data => [biodatabase.to_record]}

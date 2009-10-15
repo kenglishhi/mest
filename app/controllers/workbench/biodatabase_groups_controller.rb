@@ -6,6 +6,7 @@ class Workbench::BiodatabaseGroupsController < ApplicationController
     results = BiodatabaseGroup.count
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
   end
+
   def update
     biodatabase_group = BiodatabaseGroup.find(params[:id])
     render(:text => '', :status => (biodatabase_group.update_attributes(params["data"])) ? 204 : 500)
@@ -26,6 +27,7 @@ class Workbench::BiodatabaseGroupsController < ApplicationController
       }
     end
   end
+
   def move
     respond_to do | type |
       type.html { redirect_to '/workbench/'}
@@ -38,6 +40,13 @@ class Workbench::BiodatabaseGroupsController < ApplicationController
       }
     end
   end
+
+
+  def destroy
+    record = BiodatabaseGroup.find(params[:id])
+    render(:text => '', :status => (record.destroy) ? 204 : 500)
+  end
+
   def tree
   end
 

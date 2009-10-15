@@ -34,6 +34,7 @@ h1.north-header a:active {
 
 .settings { background-image:url(/images/folder_wrench.png); }
 .nav { background-image:url(/images/folder_go.png); }
+.x-delete { background-image:url(/images/delete.png ); }
 
 html, body {
   font:normal 12px verdana;
@@ -45,4 +46,9 @@ html, body {
 }
 p {
   margin:5px;
+}
+
+.x-tree-delete {
+  background-image: url(/images/delete.gif) !important;
+  background-repeat: no-repeat;
 }

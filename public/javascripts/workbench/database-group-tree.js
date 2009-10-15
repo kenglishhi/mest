@@ -42,7 +42,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         handler: function() {
           var dbTree= Ext.getCmp(parentComponentId);
           if (dbTree) {
-            dbTree.getLoader().load(dbTree.root);
+            dbTree.refresh();
           }
         }
       }, '->',
@@ -50,6 +50,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         text: 'Add Database Group',
         handler: this.addDatabaseGroup
       }],
+
       loader: new Ext.tree.TreeLoader({
         dataUrl:'/workbench/tree/',
         requestMethod: "GET",
@@ -63,9 +64,39 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     });
     Ext.bio.DatabaseGroupTree.superclass.initComponent.call(this);
   },
-  listeners: {
-    movenode: function( tree, node, oldParent, newParent, index )  {
+  refresh: function(){
+    this.getLoader().load(this.root);
+  },
+  deleteSelectedNode : function() {
+    var dbTree= this;
 
+    var node = this.getSelectionModel().getSelectedNode();
+    var url;
+    if (node.attributes.resource == 'biodatabase') {
+      url = "/workbench/biodatabases/" + node.id + ".json" ;
+    }
+    else if (node.attributes.resource == 'biodatabase_group') {
+      url = "/workbench/biodatabase_groups/" + node.id + ".json" ;
+    }
+    if (url) {
+      Ext.Ajax.request({
+        url: url ,
+        headers: {
+          'Content-Type':	'application/json'
+        },
+        method: 'DELETE',
+        success: function() {
+          dbTree.refresh();
+        }
+      });
+    }
+  },
+  listeners: {
+    click: function(node) {
+      this.clickAction(node);
+    },
+    movenode: function( tree, node, oldParent, newParent, index )  {
+      console.log("Move Node");
       if (newParent.id != oldParent.id) {
         params ={};
         if (node.attributes.resource == 'biodatabase') {
@@ -97,10 +128,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
           failure: function(response, options) {
           }
         });
-      } 
-    },
-    click: function(node) {
-      this.clickAction(node);
+      }
     },
     collapsenode: function(node) {
     },
