@@ -19,14 +19,19 @@
       "workbench/bio-sequence-view-panel",
       "workbench/bio-db-renamer-form"
   %>
-
-    <!-- GC -->
-    <!-- LIBS -->
-    <!-- ENDLIBS -->
-
-
-    <!-- EXAMPLES -->
-
+    <style type="text/css">
+      .x-window-dlg .ext-mb-download {
+        background:transparent url(images/download.gif) no-repeat top left;
+        height:46px;
+      }
+     #msg-div {
+        position:absolute;
+        left:35%;
+        top:10px;
+       width:250px;
+        z-index:20000;
+      }
+    </style>
     <script type="text/javascript">
 
       Ext.namespace('Ext.workbenchdata');
