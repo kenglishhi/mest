@@ -199,7 +199,6 @@ table.objCoords td{border-width:1px;padding:3px;border-color:gray;border-style:i
 .right-resizer:hover {cursor: e-resize;}
 .locator_rect {position:absolute;height:100%-1px;top:17px;bottom:-2px;width:100%;opacity:0.35;filter:alpha(opacity=35);background-color:#dcdcdc;border:1px solid blue;}
 
-.x-combo-list-item span {display:block;float:left;width:300px;} /* live search */
 
 
 .ideogram_div {height:0px;padding:5px; }

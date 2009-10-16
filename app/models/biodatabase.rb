@@ -1,6 +1,6 @@
 class Biodatabase < ActiveRecord::Base
   include ExtJS::Model
-  extjs_fields :name,:created_at, :number_of_sequences, :fasta_file_name_display,:fasta_file_url
+  extjs_fields :id,:name,:created_at, :number_of_sequences, :fasta_file_name_display,:fasta_file_url
   cattr_reader :per_page
   @@per_page = 10
 

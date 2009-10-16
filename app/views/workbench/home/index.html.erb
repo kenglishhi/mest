@@ -3,7 +3,8 @@
     <title>BiococonutIsland :: Workbench </title>
     <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
       "ext-override",
-      "ncbi-style" %>
+      "ncbi-style"
+  %>
 
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
@@ -58,8 +59,8 @@ extjs_store( :controller => "workbench/biodatabases",
   :writer => {"encode" => false},
   :config => {
     "totalProperty" => 'results',
-    "autoLoad" => true,
-    "autoSave" => true,
+    "autoLoad" => false,
+    "autoSave" => false,
     "restful" => true
   }
 
@@ -138,17 +139,6 @@ extjs_store( :controller => "workbench/blast_results",
         Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
       }
     };
-    /*
-    {id: 'workbench-biosequence-grid',
-      xtype:'biosequence-grid',
-      pageSize: seqPageSize,
-      store:biosequenceStore,
-      biosequenceViewId: 'bio-sequence-view'},
-    { id: 'bio-sequence-view',
-      xtype: 'bio-sequence-view-panel'
-    }
-     */
-
     var seqGrid = new Ext.bio.BiosequenceGrid({
       id: 'workbench-biosequence-grid',
       pageSize: seqPageSize,
@@ -174,6 +164,7 @@ extjs_store( :controller => "workbench/blast_results",
           autoEl: {
             tag: 'div',
             html: north_html
+           
           }
         }),
         {
@@ -310,49 +301,47 @@ extjs_store( :controller => "workbench/blast_results",
             animate: true
           },
           items: [ {
+              id: 'vbox-panel',
+              layout: {
+                type: 'vbox',
+                pack: 'start',
+                align: 'stretch'
+              },
+              defaults: {
+                frame: true
+              },
+              items:  [
+                { contentEl: 'rename-content',
+                  height: 100
+                }, {
+                  height: 100,
+                  contentEl: 'blast-content'
+                } ],
+              title: 'Tools',
+              iconCls: 'settings',
+              border: false
+            }, {
               xtype: 'biodatabase-property-grid',
               id:'workbench-biodatabase-property-grid',
               restfulStore: biodatabasePropertyStore,
-              border: false,
-              iconCls: 'settings'
-            }
-            , {
-              title: 'Tools',
-              border: false,
               iconCls: 'nav' ,
-              tbar:[
-                {
-                  iconCls:'x-tbar-loading',
-                  text:'Rename Seq',
-                  handler: function() {
-                    var win = new Ext.bio.BiodatabaseRenamerWindow({
-                      dbStore: biodatabaseComboStore
-                    });
-                    win.show();
-                  }
-                }],
-              id: 'bio-db-renamer-form'
+              border: false
             }
-
-
-            //            , {
-            //              title: 'Rename Sequences',
-            //              border: false,
-            //              iconCls: 'nav' ,
-            //              xtype: 'bio-db-renamer-form',
-            //              id: 'bio-db-renamer-form'
-            //            }
           ]
         }
       ]
     });
-    // get a reference to the HTML element with id "hideit" and add a click listener to it
-    //        Ext.get("hideit").on('click', function(){
-    // get a reference to the Panel that was created with id = 'west-panel'
-    //          var w = Ext.getCmp('west-panel');
-    // expand or collapse that Panel based on its collapsed property state
-    //          w.collapsed ? w.expand() : w.collapse();
-    //        });
+    var button = Ext.get('rename-biosequences');
+    var winRenameSeq;
+    button.on('click', function(){
+      // create the window on the first click and reuse on subsequent clicks
+      if(!winRenameSeq){
+        winRenameSeq = new Ext.bio.BiodatabaseRenamerWindow({
+          dbStore: biodatabaseStore
+        });
+      }
+      winRenameSeq.show(this);
+    });
   });
     </script>
   </head>
@@ -361,13 +350,19 @@ extjs_store( :controller => "workbench/blast_results",
     <div id="west" class="x-hide-display">
       <p>Hi. I'm the west panel.</p>
     </div>
-    <div id="center1" class="x-hide-display">
+    <div id="rename-content" class="x-hide-display">
+      <input type="button" id="rename-biosequences" value="Rename Sequences" /><br />
+      <p>Allows you to rename sequences sequentially in a database with a prefix and sequential number.</p>
+    </div>
+    <div id="blast-content" class="x-hide-display">
       <p><b>Done reading me? Close me by clicking the X in the top right corner.</b></p>
       <p>Vestibulum semper. Nullam non odio. Aliquam quam. Mauris eu lectus non nunc auctor ullamcorper. Sed tincidunt molestie enim. Phasellus lobortis justo sit amet quam. Duis nulla erat, varius a, cursus in, tempor sollicitudin, mauris. Aliquam mi velit, consectetuer mattis, consequat tristique, pulvinar ac, nisl. Aliquam mattis vehicula elit. Proin quis leo sed tellus scelerisque molestie. Quisque luctus. Integer mattis. Donec id augue sed leo aliquam egestas. Quisque in sem. Donec dictum enim in dolor. Praesent non erat. Nulla ultrices vestibulum quam.</p>
       <p>Duis hendrerit, est vel lobortis sagittis, tortor erat scelerisque tortor, sed pellentesque sem enim id metus. Maecenas at pede. Nulla velit libero, dictum at, mattis quis, sagittis vel, ante. Phasellus faucibus rutrum dui. Cras mauris elit, bibendum at, feugiat non, porta id, neque. Nulla et felis nec odio mollis vehicula. Donec elementum tincidunt mauris. Duis vel dui. Fusce iaculis enim ac nulla. In risus.</p>
       <p>Donec gravida. Donec et enim. Morbi sollicitudin, lacus a facilisis pulvinar, odio turpis dapibus elit, in tincidunt turpis felis nec libero. Nam vestibulum tempus ipsum. In hac habitasse platea dictumst. Nulla facilisi. Donec semper ligula. Donec commodo tortor in quam. Etiam massa. Ut tempus ligula eget tellus. Curabitur id velit ut velit varius commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla facilisi. Fusce ornare pellentesque libero. Nunc rhoncus. Suspendisse potenti. Ut consequat, leo eu accumsan vehicula, justo sem lobortis elit, ac sollicitudin ipsum neque nec ante.</p>
       <p>Aliquam elementum mauris id sem. Vivamus varius, est ut nonummy consectetuer, nulla quam bibendum velit, ac gravida nisi felis sit amet urna. Aliquam nec risus. Maecenas lacinia purus ut velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sit amet dui vitae lacus fermentum sodales. Donec varius dapibus nisl. Praesent at velit id risus convallis bibendum. Aliquam felis nibh, rutrum nec, blandit non, mattis sit amet, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam varius dignissim nibh. Quisque id orci ac ante hendrerit molestie. Aliquam malesuada enim non neque.</p>
     </div>
+
+
     <div id="props-panel" class="x-hide-display" style="width:200px;height:200px;overflow:hidden;">
     </div>
     <div id="south" class="x-hide-display">
