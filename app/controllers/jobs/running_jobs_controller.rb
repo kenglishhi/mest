@@ -6,8 +6,7 @@ class Jobs::RunningJobsController < Jobs::BaseController
     config.list.label = 'Running Jobs'
     config.list.columns = [
       :job_name, :run_at, :priority, :attempts,
-      :last_error, :run_at, :locked_at, :failed_at,
-      :locked_by
+      :last_error, :run_at, :failed_at
     ]
   end
 
