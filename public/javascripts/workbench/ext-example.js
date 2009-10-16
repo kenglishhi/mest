@@ -4,7 +4,6 @@
  * licensing@extjs.com
  * http://www.extjs.com/license
  */
-Ext.BLANK_IMAGE_URL = '../../resources/images/default/s.gif';
 
 Ext.example = function(){
     var msgCt;
@@ -28,23 +27,6 @@ Ext.example = function(){
         },
 
         init : function(){
-            /*
-            var t = Ext.get('exttheme');
-            if(!t){ // run locally?
-                return;
-            }
-            var theme = Cookies.get('exttheme') || 'aero';
-            if(theme){
-                t.dom.value = theme;
-                Ext.getBody().addClass('x-'+theme);
-            }
-            t.on('change', function(){
-                Cookies.set('exttheme', t.getValue());
-                setTimeout(function(){
-                    window.location.reload();
-                }, 250);
-            });*/
-
             var lb = Ext.get('lib-bar');
             if(lb){
                 lb.show();
@@ -53,7 +35,5 @@ Ext.example = function(){
     };
 }();
 
-Ext.example.shortBogusMarkup = '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. Maecenas tortor turpis, interdum non, sodales non, iaculis ac, lacus. Vestibulum auctor, tortor quis iaculis malesuada, libero lectus bibendum purus, sit amet tincidunt quam turpis vel lacus. In pellentesque nisl non sem. Suspendisse nunc sem, pretium eget, cursus a, fringilla vel, urna.';
-Ext.example.bogusMarkup = '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. Maecenas tortor turpis, interdum non, sodales non, iaculis ac, lacus. Vestibulum auctor, tortor quis iaculis malesuada, libero lectus bibendum purus, sit amet tincidunt quam turpis vel lacus. In pellentesque nisl non sem. Suspendisse nunc sem, pretium eget, cursus a, fringilla vel, urna.<br/><br/>Aliquam commodo ullamcorper erat. Nullam vel justo in neque porttitor laoreet. Aenean lacus dui, consequat eu, adipiscing eget, nonummy non, nisi. Morbi nunc est, dignissim non, ornare sed, luctus eu, massa. Vivamus eget quam. Vivamus tincidunt diam nec urna. Curabitur velit.</p>';
 
-Ext.onReady(Ext.example.init, Ext.example);
+//Ext.onReady(Ext.example.init, Ext.example);

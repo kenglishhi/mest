@@ -333,7 +333,6 @@ extjs_store( :controller => "workbench/blast_results",
         }
       ]
     });
-
     var button1 = Ext.get('rename-biosequences');
     var winRenameSeq;
     button1.on('click', function(){
@@ -355,16 +354,11 @@ extjs_store( :controller => "workbench/blast_results",
     });
 
 
-
   });
     </script>
   </head>
   <body>
 
-    <!-- use class="x-hide-display" to prevent a brief flicker of the content -->
-    <div id="west" class="x-hide-display">
-      <p>Hi. I'm the west panel.</p>
-    </div>
     <div id="rename-content" class="x-hide-display">
       <input type="button" id="rename-biosequences" value="Rename Sequences" /><br />
       <p>Allows you to rename sequences sequentially in a database with a prefix and sequential number.</p>
@@ -383,12 +377,5 @@ extjs_store( :controller => "workbench/blast_results",
       <p>more awesome content will go here....</p>
     </div>
 
-
-
-    <div id="props-panel" class="x-hide-display" style="width:200px;height:200px;overflow:hidden;">
-    </div>
-    <div id="south" class="x-hide-display">
-      <p>south - generally for informational stuff, also could be for status bar</p>
-    </div>
   </body>
 </html>
