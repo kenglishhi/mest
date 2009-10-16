@@ -1,5 +1,4 @@
 class Admin::BaseController < ApplicationController
-  before_filter :job_sub_nav
   private
 
   def generate_sub_nav

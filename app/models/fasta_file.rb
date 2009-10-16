@@ -40,7 +40,7 @@ class FastaFile < ActiveRecord::Base
               d.project = project
             end
           else
-             biodatabase_group = self.project.biodatabase_groups.first
+            biodatabase_group = self.project.biodatabase_groups.first
           end
 
           self.biodatabase = Biodatabase.new(:name => File.basename(label),
@@ -50,21 +50,23 @@ class FastaFile < ActiveRecord::Base
             :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_RAW) )
           self.biodatabase.save!
           save!
-
-          ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
-          ff.each do |entry|
-            bioseq = Biosequence.new(:name => entry.definition,
-              :seq => entry.seq,
-              :alphabet => 'dna',
-              :length => entry.seq.length,
-              :original_name => entry.definition)
-            bioseq.save!
-            self.biodatabase.biosequences << bioseq
-          end
-          self.biodatabase.save!
-          logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")
         end
+
+        #        transaction do
+        ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
+        ff.each do |entry|
+          bioseq = Biosequence.new(:name => entry.definition,
+            :seq => entry.seq,
+            :alphabet => 'dna',
+            :length => entry.seq.length,
+            :original_name => entry.definition)
+          bioseq.save!
+          self.biodatabase.biosequences << bioseq
+        end
+        self.biodatabase.save!
+        logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")
       end
+      #      end
     end
   end
 
@@ -76,7 +78,7 @@ class FastaFile < ActiveRecord::Base
       raise "FORMAT DB Error: No fasta file to format"
     end
 
-    unless File.exists?(fasta.path+".nsq") && 
+    unless File.exists?(fasta.path+".nsq") &&
         File.exists?(fasta.path+".nin") &&
         File.exists?(fasta.path+".nhr")
       raise "FORMAT DB Error: result files do not exist"
