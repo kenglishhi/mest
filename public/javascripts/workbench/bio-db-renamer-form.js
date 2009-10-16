@@ -1,32 +1,27 @@
 
 Ext.bio.BiodatabaseRenamerForm =  Ext.extend(Ext.FormPanel,{
+  cancelAction: function() {
+  // Client should override
+  },
   initComponent: function() {
     var parentComponentId = this.id;
     Ext.apply(this,{
       url:'/tools/biosequence_renamers.json',
       method: 'POST',
       labelAlign: 'top',
-      height:500,
       baseParams:{
         authenticity_token: FORM_AUTH_TOKEN
       },
       items: [
       new Ext.form.ComboBox({
-
-        fieldLabel: 'Database',
-        hiddenName:'biodatabase_id',
-        store: new Ext.data.ArrayStore({
-          fields: ['biodatabase_id', 'name'],
-          data : [ ['3', 'EST_Clade_A_6' ] ]
-        }),
-        valueField:'biodatabase_id',
-        displayField:'name',
+        store: this.dbStore,
+        displayField: 'name',
         typeAhead: true,
         mode: 'local',
         triggerAction: 'all',
-        emptyText:'Select a database...',
+        emptyText:'Select a Database...',
         selectOnFocus:true,
-        width:200,
+        width:135,
         allowBlank:false
       }), {
         fieldLabel: 'New Prefix',
@@ -37,12 +32,16 @@ Ext.bio.BiodatabaseRenamerForm =  Ext.extend(Ext.FormPanel,{
       buttons: [{
         text: 'Save',
         handler: function(){
-          console.log("Do Save");
           var form = Ext.getCmp(parentComponentId).getForm()
           form.submit({
             url:'/tools/biosequence_renamers.json',
             method: 'POST'
           });
+        }
+      },{
+        text: 'Cancel',
+        handler: function() {
+          Ext.getCmp(parentComponentId).cancelAction();
         }
       }]
 
@@ -50,7 +49,6 @@ Ext.bio.BiodatabaseRenamerForm =  Ext.extend(Ext.FormPanel,{
     Ext.bio.BiodatabaseRenamerForm.superclass.initComponent.call(this);
   },
   frame:true,
-  title: 'Simple Form',
   bodyStyle:'padding:5px 5px 0',
   defaultType: 'textfield',
   id: 'my-form-panel'
@@ -58,3 +56,29 @@ Ext.bio.BiodatabaseRenamerForm =  Ext.extend(Ext.FormPanel,{
 });
 
 Ext.reg('bio-db-renamer-form', Ext.bio.BiodatabaseRenamerForm) ;
+Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
+  title: 'Rename Sequences',
+  layout:'fit',
+  width:500,
+  height:220,
+  closeAction:'hide',
+  plain: true,
+  id:'bio-db-renamer-window',
+
+  initComponent: function() {
+    var parentComponentId = this.id;
+    Ext.apply(this,{
+      items: [{
+        border: false,
+        iconCls: 'nav' ,
+        dbStore: this.dbStore,
+        xtype: 'bio-db-renamer-form',
+        id: 'bio-db-renamer-form',
+        cancelAction: function() {
+          Ext.getCmp(parentComponentId).hide();
+        }
+      }]
+    });
+    Ext.bio.BiodatabaseRenamerWindow.superclass.initComponent.call(this);
+  }
+});

@@ -51,6 +51,9 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'workbench/home',
     :action     => 'rename_form'
 
+  map.connect 'workbench/home/rename',
+    :controller => 'workbench/home',
+    :action     => 'rename'
 
 
 

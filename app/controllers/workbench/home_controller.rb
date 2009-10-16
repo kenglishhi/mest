@@ -13,5 +13,8 @@ class Workbench::HomeController < ApplicationController
   def rename_form
     render :layout => false
   end
+  def rename
+    render :layout => false
+  end
 
 end

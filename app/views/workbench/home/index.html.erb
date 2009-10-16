@@ -53,6 +53,19 @@ extjs_store( :controller => "workbench/biodatabases",
 
 ).render(false)
 %>;
+    var biodatabaseComboStore = <%=
+extjs_store( :controller => "workbench/biodatabases",
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => true,
+    "autoSave" => true,
+    "restful" => true
+  }
+
+).render(false)
+%>;
+
     var biodatabasePropertyStore = <%=
 extjs_store( :controller => "workbench/biodatabases",
   :writer => {"encode" => false},
@@ -252,7 +265,8 @@ extjs_store( :controller => "workbench/blast_results",
                 {id: 'workbench-biodatabase-grid',
                   xtype:'biodatabase-grid',
                   pageSize: dbPageSize,
-                  store: biodatabaseStore }
+                  store: biodatabaseStore
+                }
               ]
             },{
               iconCls:'origin',
@@ -302,6 +316,25 @@ extjs_store( :controller => "workbench/blast_results",
               border: false,
               iconCls: 'settings'
             }
+            , {
+              title: 'Tools',
+              border: false,
+              iconCls: 'nav' ,
+              tbar:[
+                {
+                  iconCls:'x-tbar-loading',
+                  text:'Rename Seq',
+                  handler: function() {
+                    var win = new Ext.bio.BiodatabaseRenamerWindow({
+                      dbStore: biodatabaseComboStore
+                    });
+                    win.show();
+                  }
+                }],
+              id: 'bio-db-renamer-form'
+            }
+
+
             //            , {
             //              title: 'Rename Sequences',
             //              border: false,

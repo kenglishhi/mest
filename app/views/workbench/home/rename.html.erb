@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <title>BiococonutIsland :: Workbench </title>
+    <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
+      "ext-override",
+      "ncbi-style" %>
+
+    <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
+
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+      "ext-3.0.0/ext-all" ,
+      "workbench/base",
+      "workbench/database-group-tree",
+      "workbench/App",
+      "workbench/bio-grids",
+      "workbench/bio-property-grid",
+      "workbench/bio-db-renamer-form",
+      "workbench/RowEditor",
+      "workbench/biosequence-view-panel"
+
+  %>
+    <script type="text/javascript">
+
+
+      Ext.namespace('Ext.exampledata');
+      Ext.exampledata.biodatabases = [ ['3', 'EST_Clade_A_6' ], ];
+      Ext.namespace('Ext.workbenchdata');
+      Ext.onReady(function(){
+        var biodatabaseStore = <%=
+extjs_store( :controller => "workbench/biodatabases",
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => true,
+    "autoSave" => true,
+    "restful" => true
+  }
+
+).render(false)
+%>
+
+    var win;
+    var button = Ext.get('show-btn');
+
+    button.on('click', function(){
+      // create the window on the first click and reuse on subsequent clicks
+      if(!win){
+        win = new Ext.bio.BiodatabaseRenamerWindow({
+          dbStore: biodatabaseStore
+        });
+      }
+      win.show(this);
+    });
+
+
+    Ext.QuickTips.init();
+
+    // turn on validation errors beside the field globally
+    Ext.form.Field.prototype.msgTarget = 'side';
+
+    //        var bd = Ext.getBody();
+
+    /*
+     * ================  Simple form  =======================
+     */
+    //        bd.createChild({tag: 'h2', html: 'Form 1 - Very Simple'});
+
+    var simple = new Ext.FormPanel({
+      labelWidth: 75, // label settings here cascade unless overridden
+      url:'/tools/biosequence_renamers.json',
+      method: 'POST',
+      baseParams:{authenticity_token: FORM_AUTH_TOKEN},
+      frame:true,
+      title: 'Simple Form',
+      bodyStyle:'padding:5px 5px 0',
+      width: 350,
+      defaults: {width: 230},
+      defaultType: 'textfield',
+      id: 'my-form-panel',
+      items: [
+        new Ext.form.ComboBox({
+          fieldLabel: 'Database',
+          hiddenName:'biodatabase_id',
+          store: new Ext.data.ArrayStore({
+            fields: ['biodatabase_id', 'name'],
+            data : Ext.exampledata.biodatabases
+          }),
+          valueField:'biodatabase_id',
+          displayField:'name',
+          typeAhead: true,
+          mode: 'local',
+          triggerAction: 'all',
+          emptyText:'Select a database...',
+          selectOnFocus:true,
+          width:190,
+          allowBlank:false
+        }), {
+          fieldLabel: 'New Prefix',
+          name: 'prefix',
+          allowBlank:false
+        }
+      ],
+      buttons: [{
+          text: 'Save',
+          handler: function(){
+            Ext.getCmp('my-form-panel').getForm().doSubmit();
+          }
+        }],
+      doSubmit: function() {
+        console.log("get" + Ext.getCmp('my-form-panel').get('biodatabase_id'));
+        this.submit();
+      }
+
+    }
+  );
+
+    //        simple.render(document.body)
+  });
+    </script>
+  </head>
+  <body>
+
+    <h1>Hello World Window</h1>
+    <p>This example shows how to create a very simple modal Window with "autoTabs" from existing markup.</p>
+    <input type="button" id="show-btn" value="Hello World" /><br /><br />
+    <p>Note that the js is not minified so it is readable. See <a href="hello.js">hello.js</a> for the full source code.</p>
+
+    <div id="hello-win" class="x-hidden">
+
+      <div class="x-window-header">Hello Dialog</div>
+      <div id="hello-tabs">
+        <!-- Auto create tab 1 -->
+        <div class="x-tab" title="Hello World 1">
+          <p>Hello...</p>
+        </div>
+        <!-- Auto create tab 2 -->
+        <div class="x-tab" title="Hello World 2">
+
+          <p>... World!</p>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
