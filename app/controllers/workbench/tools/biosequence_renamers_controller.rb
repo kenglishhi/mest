@@ -1,11 +1,5 @@
 class Workbench::Tools::BiosequenceRenamersController < ApplicationController
 
-  def new
-    if Biodatabase.exists?(params[:biodatabase_id] )
-      @biodatabase = Biodatabase.find(params[:biodatabase_id] )
-    end
-  end
-
   def create
     @biodatabase = Biodatabase.find(params[:biodatabase_id] )
 

@@ -17,8 +17,23 @@
       "workbench/bio-property-grid",
       "workbench/RowEditor",
       "workbench/bio-sequence-view-panel",
-      "workbench/bio-db-renamer-form"
+      "workbench/bio-form-windows",
+      "workbench/ext-example"
   %>
+    <style type="text/css">
+      .x-window-dlg .ext-mb-download {
+        background:transparent url(images/download.gif) no-repeat top left;
+        height:46px;
+      }
+      #msg-div {
+        position:absolute;
+        left:35%;
+        top:10px;
+        width:250px;
+        z-index:20000;
+      }
+
+    </style>
 
     <!-- GC -->
     <!-- LIBS -->
@@ -30,6 +45,9 @@
     <script type="text/javascript">
 
       Ext.namespace('Ext.workbenchdata');
+
+
+
       Ext.onReady(function(){
         var biosequenceStore = <%=
 extjs_store( :controller => "workbench/biosequences",
@@ -108,7 +126,7 @@ extjs_store( :controller => "workbench/blast_results",
 
     // BEGIN RAILS data DUMP
     Ext.workbenchdata.project_options = <%= @project_options.to_json %>;
-    var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %></h1> ';
+    var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %>  - <%= link_to "Home", '/' %> </h1> ';
     // END RAILS data dump  -- no erb code should go beyond this line
     var dbGroupTree = <%= BiodatabaseGroup.first.ext_tree(:expand_node => true).to_json %> ;
     // var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
@@ -164,7 +182,7 @@ extjs_store( :controller => "workbench/blast_results",
           autoEl: {
             tag: 'div',
             html: north_html
-           
+
           }
         }),
         {
@@ -224,7 +242,6 @@ extjs_store( :controller => "workbench/blast_results",
               items: //[seqGrid,seqView]
               [
                 {
-
                   xtype:'biosequence-grid',
                   id: 'workbench-biosequence-grid',
                   pageSize: seqPageSize,
@@ -232,14 +249,7 @@ extjs_store( :controller => "workbench/blast_results",
                   biosequenceViewId: 'bio-sequence-view',
                   region:'north',
                   split:true
-
-                  //                  id: 'workbench-biosequence-grid',
-                  //                  pageSize: seqPageSize,
-                  //                  store:biosequenceStore,
-                  //                  biosequenceViewId: 'bio-sequence-view'
-                },
-                {
-                  //                  id: 'bio-sequence-view',
+                }, {
                   xtype: 'bio-sequence-view-panel',
                   id: 'bio-sequence-view',
                   region: 'center',
@@ -315,7 +325,10 @@ extjs_store( :controller => "workbench/blast_results",
                   height: 100
                 }, {
                   height: 100,
-                  contentEl: 'blast-content'
+                  contentEl: 'clean-content'
+                }, {
+                  height: 100,
+                  contentEl: 'more-content'
                 } ],
               title: 'Tools',
               iconCls: 'settings',
@@ -331,21 +344,34 @@ extjs_store( :controller => "workbench/blast_results",
         }
       ]
     });
-    var button = Ext.get('rename-biosequences');
+
+    var button1 = Ext.get('rename-biosequences');
     var winRenameSeq;
-    button.on('click', function(){
-      // create the window on the first click and reuse on subsequent clicks
+    button1.on('click', function(){
       if(!winRenameSeq){
         winRenameSeq = new Ext.bio.BiodatabaseRenamerWindow({
-          dbStore: biodatabaseStore
+          dbStore: biodatabaseComboStore
         });
       }
       winRenameSeq.show(this);
     });
+
+
+
+    var button2 = Ext.get('show-msg');
+    var winRenameSeq;
+    button2.on('click', function(){
+      console.log("click, click");
+      Ext.example.msg('Button Click', 'You clicked the {0} button');
+    });
+
+
+
   });
     </script>
   </head>
   <body>
+
     <!-- use class="x-hide-display" to prevent a brief flicker of the content -->
     <div id="west" class="x-hide-display">
       <p>Hi. I'm the west panel.</p>
@@ -355,12 +381,19 @@ extjs_store( :controller => "workbench/blast_results",
       <p>Allows you to rename sequences sequentially in a database with a prefix and sequential number.</p>
     </div>
     <div id="blast-content" class="x-hide-display">
-      <p><b>Done reading me? Close me by clicking the X in the top right corner.</b></p>
-      <p>Vestibulum semper. Nullam non odio. Aliquam quam. Mauris eu lectus non nunc auctor ullamcorper. Sed tincidunt molestie enim. Phasellus lobortis justo sit amet quam. Duis nulla erat, varius a, cursus in, tempor sollicitudin, mauris. Aliquam mi velit, consectetuer mattis, consequat tristique, pulvinar ac, nisl. Aliquam mattis vehicula elit. Proin quis leo sed tellus scelerisque molestie. Quisque luctus. Integer mattis. Donec id augue sed leo aliquam egestas. Quisque in sem. Donec dictum enim in dolor. Praesent non erat. Nulla ultrices vestibulum quam.</p>
-      <p>Duis hendrerit, est vel lobortis sagittis, tortor erat scelerisque tortor, sed pellentesque sem enim id metus. Maecenas at pede. Nulla velit libero, dictum at, mattis quis, sagittis vel, ante. Phasellus faucibus rutrum dui. Cras mauris elit, bibendum at, feugiat non, porta id, neque. Nulla et felis nec odio mollis vehicula. Donec elementum tincidunt mauris. Duis vel dui. Fusce iaculis enim ac nulla. In risus.</p>
-      <p>Donec gravida. Donec et enim. Morbi sollicitudin, lacus a facilisis pulvinar, odio turpis dapibus elit, in tincidunt turpis felis nec libero. Nam vestibulum tempus ipsum. In hac habitasse platea dictumst. Nulla facilisi. Donec semper ligula. Donec commodo tortor in quam. Etiam massa. Ut tempus ligula eget tellus. Curabitur id velit ut velit varius commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla facilisi. Fusce ornare pellentesque libero. Nunc rhoncus. Suspendisse potenti. Ut consequat, leo eu accumsan vehicula, justo sem lobortis elit, ac sollicitudin ipsum neque nec ante.</p>
-      <p>Aliquam elementum mauris id sem. Vivamus varius, est ut nonummy consectetuer, nulla quam bibendum velit, ac gravida nisi felis sit amet urna. Aliquam nec risus. Maecenas lacinia purus ut velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sit amet dui vitae lacus fermentum sodales. Donec varius dapibus nisl. Praesent at velit id risus convallis bibendum. Aliquam felis nibh, rutrum nec, blandit non, mattis sit amet, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam varius dignissim nibh. Quisque id orci ac ante hendrerit molestie. Aliquam malesuada enim non neque.</p>
+      <input type="button" id="show-msg" value="Show Message" /><br />
+      <p>Allows you to ....</p>
     </div>
+    <div id="clean-content" class="x-hide-display">
+      <input type="button" id="clean-biodatabase" value="Clean Database" /><br />
+      <p>Allows you to ....</p>
+    </div>
+
+    <div id="more-content" class="x-hide-display">
+      <b>More Content.</b>
+      <p>more awesome content will go here....</p>
+    </div>
+
 
 
     <div id="props-panel" class="x-hide-display" style="width:200px;height:200px;overflow:hidden;">

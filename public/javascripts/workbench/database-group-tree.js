@@ -96,7 +96,6 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       this.clickAction(node);
     },
     movenode: function( tree, node, oldParent, newParent, index )  {
-      console.log("Move Node");
       if (newParent.id != oldParent.id) {
         params ={};
         if (node.attributes.resource == 'biodatabase') {
