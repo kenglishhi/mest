@@ -38,7 +38,8 @@
       Ext.namespace('Ext.workbenchdata');
 
       Ext.onReady(function(){
-        var biosequenceStore = <%=
+<%= render :partial => "layouts/user_job_notification" %>
+    var biosequenceStore = <%=
 extjs_store( :controller => "workbench/biosequences",
   :writer => {"encode" => false},
   :config => {
