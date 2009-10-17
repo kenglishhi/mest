@@ -7,7 +7,6 @@
 
 Ext.example = function(){
     var msgCt;
-
     function createBox(t, s){
         return ['<div class="msg">',
                 '<div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>',
@@ -15,6 +14,7 @@ Ext.example = function(){
                 '<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>',
                 '</div>'].join('');
     }
+
     return {
         msg : function(title, format){
             if(!msgCt){
@@ -24,13 +24,6 @@ Ext.example = function(){
             var s = String.format.apply(String, Array.prototype.slice.call(arguments, 1));
             var m = Ext.DomHelper.append(msgCt, {html:createBox(title, s)}, true);
             m.slideIn('t').pause(1).ghost("t", {remove:true});
-        },
-
-        init : function(){
-            var lb = Ext.get('lib-bar');
-            if(lb){
-                lb.show();
-            }
         }
     };
 }();

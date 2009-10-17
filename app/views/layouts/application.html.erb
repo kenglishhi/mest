@@ -1,63 +1,82 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>BioFastaCoconutIsland</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="description" content="University of Hawaii Bioinformatics" />
-	<meta name="keywords" content="Bioinformatics BLAST" />
-   <%= javascript_include_tag :defaults %>
-   <%= active_scaffold_includes %>
-   <%= stylesheet_link_tag 'style', 'active_scaffold_overrides' %>
+  <head>
+    <title>BioFastaCoconutIsland</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="University of Hawaii Bioinformatics" />
+    <meta name="keywords" content="Bioinformatics BLAST" />
+    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+      "ext-3.0.0/ext-all" ,
+      "workbench/ext-example"
+  %>
+    <%= active_scaffold_includes %>
+    <%= stylesheet_link_tag 'style', 'active_scaffold_overrides' %>
     <%= yield :additional_content_for_head %>
-</head>
+    <style type="text/css">
+      .x-window-dlg .ext-mb-download {
+        background:transparent url(images/download.gif) no-repeat top left;
+        height:46px;
+      }
+      #msg-div {
+        position:absolute;
+        left:35%;
+        top:10px;
+        width:250px;
+        z-index:20000;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
 
-<div id="menu-top">
-	<ul>
-  <% if logged_in? %>
-		<li><%= link_to "<span>Home</span>", users_path %></li>
-		<li><%= link_to "<span>Databases</span>", biodatabases_path %></li>
-		<li><%= link_to "<span>Jobs</span>", jobs_running_jobs_path %></li>
-		<li><%= link_to "<span>Blast Results</span>", blast_results_path %></li>
-		<li><%= link_to "<span>Projects</span>", projects_path %></li>
+    <script type="text/javascript">
+    </script>
+    <div id="menu-top">
+      <ul>
+        <% if logged_in? %>
+          <li><%= link_to "<span>Home</span>", users_path %></li>
+          <li><%= link_to "<span>Databases</span>", biodatabases_path %></li>
+          <li><%= link_to "<span>Jobs</span>", jobs_running_jobs_path %></li>
+          <li><%= link_to "<span>Blast Results</span>", blast_results_path %></li>
+          <li><%= link_to "<span>Projects</span>", projects_path %></li>
 
-		<li><%= link_to "<span>Workbench</span>", "/workbench/home" %></li>
-		<li><%= link_to "<span>Admin</span>", admin_users_path %></li>
-   	<li><%= link_to "<span>Logout</span>", "/logout" %></li>
-  <% else %>
-		<li><%= link_to "<span>Home</span>", users_path %></li>
-  <% end %>
+          <li><%= link_to "<span>Workbench</span>", "/workbench/home" %></li>
+          <li><%= link_to "<span>Admin</span>", admin_users_path %></li>
+          <li><%= link_to "<span>Logout</span>", "/logout" %></li>
+        <% else %>
+          <li><%= link_to "<span>Home</span>", users_path %></li>
+        <% end %>
 
-	</ul>
-</div><!--menu-top-->
+      </ul>
+    </div><!--menu-top-->
 
 <!-- mejobloggs: sorry about all these wrappers. It is a lot of structural markup .
-		If you know how to do this with less structural markup, contact my throught my
-		OWD user page: http://www.openwebdesign.org/userinfo.phtml?user=mejobloggs -->
-<div id="wrapper-header">
-<div id="header">
-<div id="wrapper-header2">
-<div id="wrapper-header3">
-  <h1><%= link_to "BioFastaCoconutIsland", '/' %></h1>
-</div><!--wrapper-header3-->
-</div><!--wrapper-header2-->
-</div><!--header-->
-</div><!--wrapper-header-->
+    If you know how to do this with less structural markup, contact my throught my
+    OWD user page: http://www.openwebdesign.org/userinfo.phtml?user=mejobloggs -->
+    <div id="wrapper-header">
+      <div id="header">
+        <div id="wrapper-header2">
+          <div id="wrapper-header3">
+            <h1><%= link_to "BioFastaCoconutIsland", '/' %></h1>
+          </div><!--wrapper-header3-->
+        </div><!--wrapper-header2-->
+      </div><!--header-->
+    </div><!--wrapper-header-->
 
-<div id="wrapper-content">
-  <%= yield :wrapper_menu_content %>
-  <%= yield :sub_nav %>
+    <div id="wrapper-content">
+      <%= yield :wrapper_menu_content %>
+      <%= yield :sub_nav %>
 
 
-	<div id="content">
-  <%= yield -%>
-  </div><!--content-->
-</div><!--wrapper-content-->
+      <div id="content">
+        <%= yield -%>
+      </div><!--content-->
+    </div><!--wrapper-content-->
 
-<div id="wrapper-footer">
-  <div id="footer">Copyright &copy; 2009 University of Hawaii:: Department of Information and Computer Sciences</div>
-</div><!--wrapper-footer-->
+    <div id="wrapper-footer">
+      <div id="footer">Copyright &copy; 2009 University of Hawaii:: Department of Information and Computer Sciences</div>
+    </div><!--wrapper-footer-->
 
-</body>
+  </body>
 </html>
