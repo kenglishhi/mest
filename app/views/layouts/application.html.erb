@@ -20,7 +20,7 @@
       }
       #msg-div {
         position:absolute;
-        left:35%;
+        left:85%;
         top:10px;
         width:250px;
         z-index:20000;
@@ -31,7 +31,20 @@
   <body>
 
     <script type="text/javascript">
+      // Start a simple clock task that updates a div once per second
+      var updateClock = function(){
+
+        Ext.example.msg('Button Click', 'You clicked the button');
+       // Ext.fly('clock').update(new Date().format('g:i:s A'));
+      }
+      // equivalent using TaskMgr
+      Ext.TaskMgr.start({
+        run: updateClock,
+        interval: 5000
+      });
     </script>
+    <div id="clock"/>
+
     <div id="menu-top">
       <ul>
         <% if logged_in? %>

@@ -52,3 +52,11 @@ p {
   background-image: url(/images/delete.gif) !important;
   background-repeat: no-repeat;
 }
+
+#msg-div {
+  position:absolute;
+  left:35%;
+  top:10px;
+  width:250px;
+  z-index:20000;
+}

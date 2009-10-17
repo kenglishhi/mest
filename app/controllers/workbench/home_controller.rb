@@ -16,5 +16,8 @@ class Workbench::HomeController < ApplicationController
   def rename
     render :layout => false
   end
+ def slide
+    render :layout => false
+  end
 
 end
