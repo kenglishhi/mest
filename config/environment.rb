@@ -38,7 +38,7 @@ Rails::Initializer.run do |config|
   config.gem 'rcov'
   config.gem 'extjs-mvc'
   config.gem "thoughtbot-shoulda", :lib => "shoulda", :source => "http://gems.github.com"
-
+  config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
   config.time_zone = 'Hawaii'
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.

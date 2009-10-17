@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091011195702) do
+ActiveRecord::Schema.define(:version => 20091017053535) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
@@ -142,6 +142,14 @@ ActiveRecord::Schema.define(:version => 20091011195702) do
     t.string   "name"
     t.text     "description"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_job_notifications", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "job_log_id"
+    t.boolean  "notified",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

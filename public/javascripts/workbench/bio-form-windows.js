@@ -1,4 +1,3 @@
-
 Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   title: 'Rename Sequences',
   layout:'fit',
@@ -55,7 +54,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
 
             form.submit({
               success: function(form, action) {
-                Ext.example.msg('Sequences Renamed', 'Finished renaming seqeuneces');
+                Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
               }
             });
             Ext.getCmp(parentComponentId).hide();

@@ -1,0 +1,47 @@
+<% if false %>
+  <!-- this is just hear to convince the editor to show me javascript -->
+  <script type="text/javascript">
+<% end %>
+
+
+  var userJobNotificationStore = <%=
+extjs_store( :controller => "user_job_notifications",
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => false,
+    "autoSave" => true,
+    "restful" => true
+  }
+).render(false)
+%>;
+  //      userJobNotificationStore.load();
+  //      Ext.bio.notifier.show('Job Complete', 'Your job has finished');
+  //    }
+  var checkJobNotifications = function(){
+    if  (!Ext.bio.notifier.isVisible() ) {
+      userJobNotificationStore.load({
+        callback: function(store, records, options){
+          if (this.getCount() > 0 ) {
+            var html = 'Following jobs have completed: <ul>';
+            for (var i=0; i< this.getCount(); i++) {
+              html += '<li>"<b>' +  this.getAt(i).data.job_name + '</b>" </li>' ;
+            }
+            html += '</ul>';
+            Ext.bio.notifier.show('Jobs Complete', html);
+          }
+        }
+      });
+    } else {
+    // DO NOTHING
+    }
+  }
+
+  // equivalent using TaskMgr
+  Ext.TaskMgr.start({
+    run: checkJobNotifications,
+    interval: 5000
+  });
+<% if false %>
+  </script>
+<% end %>

@@ -1,6 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
+  include ExtJS::Helpers::Store
   def cancel_button(options=nil)
     if !options
       url=url_for(:action=>'index')

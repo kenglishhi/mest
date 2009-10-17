@@ -8,43 +8,23 @@
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
       "ext-3.0.0/ext-all" ,
-      "workbench/ext-example"
+      "workbench/base",
+      "workbench/bio-notifier"
   %>
     <%= active_scaffold_includes %>
-    <%= stylesheet_link_tag 'style', 'active_scaffold_overrides' %>
+    <%= stylesheet_link_tag 'style', 'active_scaffold_overrides',
+      "/javascripts/ext-3.0.0/resources/css/ext-all.css",
+      "ext-override" %>
     <%= yield :additional_content_for_head %>
-    <style type="text/css">
-      .x-window-dlg .ext-mb-download {
-        background:transparent url(images/download.gif) no-repeat top left;
-        height:46px;
-      }
-      #msg-div {
-        position:absolute;
-        left:85%;
-        top:10px;
-        width:250px;
-        z-index:20000;
-      }
-    </style>
-  </head>
-
-  <body>
-
     <script type="text/javascript">
-      // Start a simple clock task that updates a div once per second
-      var updateClock = function(){
-
-        Ext.example.msg('Button Click', 'You clicked the button');
-       // Ext.fly('clock').update(new Date().format('g:i:s A'));
-      }
-      // equivalent using TaskMgr
-      Ext.TaskMgr.start({
-        run: updateClock,
-        interval: 5000
+      Ext.onReady(function(){
+        <%= render :partial => "layouts/user_job_notification" %>
       });
     </script>
-    <div id="clock"/>
+  </head>
 
+
+  <body>
     <div id="menu-top">
       <ul>
         <% if logged_in? %>
@@ -54,7 +34,7 @@
           <li><%= link_to "<span>Blast Results</span>", blast_results_path %></li>
           <li><%= link_to "<span>Projects</span>", projects_path %></li>
 
-          <li><%= link_to "<span>Workbench</span>", "/workbench/home" %></li>
+          <li><%= link_to "<span>Workbench</span>", "/workbench" %></li>
           <li><%= link_to "<span>Admin</span>", admin_users_path %></li>
           <li><%= link_to "<span>Logout</span>", "/logout" %></li>
         <% else %>
@@ -64,9 +44,9 @@
       </ul>
     </div><!--menu-top-->
 
-<!-- mejobloggs: sorry about all these wrappers. It is a lot of structural markup .
-    If you know how to do this with less structural markup, contact my throught my
-    OWD user page: http://www.openwebdesign.org/userinfo.phtml?user=mejobloggs -->
+    <!-- mejobloggs: sorry about all these wrappers. It is a lot of structural markup .
+        If you know how to do this with less structural markup, contact my throught my
+        OWD user page: http://www.openwebdesign.org/userinfo.phtml?user=mejobloggs -->
     <div id="wrapper-header">
       <div id="header">
         <div id="wrapper-header2">

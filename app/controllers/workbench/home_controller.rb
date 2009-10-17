@@ -19,5 +19,8 @@ class Workbench::HomeController < ApplicationController
  def slide
     render :layout => false
   end
+ def user_job_notifications
+    render :layout => false
+  end
 
 end

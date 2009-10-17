@@ -47,7 +47,7 @@ class FastaFilesController < ApplicationController
 
   def extract_sequences
     fasta_file = FastaFile.find(params[:id])
-    job_name = "Extract Sequences #{fasta_file.fasta_file_name}"
+    job_name = "Extract Sequences from #{fasta_file.fasta_file_name}"
     extract_sequences_job = Jobs::ExtractSequences.new(job_name, :fasta_file_id => fasta_file.id)
     Job.create(:job_name => job_name,
       :handler => extract_sequences_job,

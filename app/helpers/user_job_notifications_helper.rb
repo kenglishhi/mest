@@ -1,0 +1,2 @@
+module UserJobNotificationsHelper
+end

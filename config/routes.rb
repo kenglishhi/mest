@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 
   map.resource :user_session
   map.resources :users
+  map.resources :user_job_notifications
   map.resource :home
 
   map.namespace(:admin) do |admin|
@@ -37,16 +38,20 @@ ActionController::Routing::Routes.draw do |map|
     workbench.resource :tree
     workbench.resources :trees
     workbench.resources :blast_results
-  workbench.namespace(:tools) do |tools|
-    tools.resources :blast_cleaners
-    tools.resources :blast_create_dbs
-    tools.resources :biosequence_renamers
-  end
+    workbench.namespace(:tools) do |tools|
+      tools.resources :blast_cleaners
+      tools.resources :blast_create_dbs
+      tools.resources :biosequence_renamers
+    end
 
 
   end
 
   map.connect 'workbench',
+    :controller => 'workbench/home',
+    :action     => 'index'
+
+  map.connect 'workbench/home',
     :controller => 'workbench/home',
     :action     => 'index'
 
@@ -58,7 +63,6 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'workbench/home',
     :action     => 'slide'
 
-
   map.connect 'workbench/home/rename_form',
     :controller => 'workbench/home',
     :action     => 'rename_form'
@@ -67,6 +71,9 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'workbench/home',
     :action     => 'rename'
 
+  map.connect 'workbench/home/user_job_notifications',
+    :controller => 'workbench/home',
+    :action     => 'user_job_notifications'
 
 
 
@@ -80,7 +87,7 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
+  #  map.connect ':controller/:action/:id'
   #  map.connect ':controller/:action/:id.:format'
 
 end
