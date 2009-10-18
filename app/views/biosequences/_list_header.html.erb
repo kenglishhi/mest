@@ -21,7 +21,7 @@
 </script>
 Database :
 <%= select_tag :biodatabase_id, 
-  options_for_select([["All","All"]] + Biodatabase.find(:all).map{|biodb|[biodb.name,biodb.id] }, @biodatabase_id),
+  options_for_select(Biodatabase.find(:all).map{|biodb|[biodb.name,biodb.id] }, @biodatabase_id),
   :onchange => "filter(this.value); "
 %>
 <% unless @biodatabase_id.blank? %>

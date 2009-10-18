@@ -16,11 +16,13 @@
       "/javascripts/ext-3.0.0/resources/css/ext-all.css",
       "ext-override" %>
     <%= yield :additional_content_for_head %>
-    <script type="text/javascript">
-      Ext.onReady(function(){
-        <%= render :partial => "layouts/user_job_notification" %>
-      });
-    </script>
+    <% if logged_in? %>
+      <script type="text/javascript">
+        Ext.onReady(function(){
+  <%= render :partial => "layouts/user_job_notification" %>
+    });
+      </script>
+    <% end %>
   </head>
 
 

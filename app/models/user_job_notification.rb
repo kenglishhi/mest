@@ -1,6 +1,6 @@
 class UserJobNotification < ActiveRecord::Base
   include ExtJS::Model
-  extjs_fields :id,:job_log_id,:user_id, :job_name
+  extjs_fields :id,:job_log_id,:user_id, :job_name, :success
 
   belongs_to :user
   belongs_to :job_log
@@ -16,5 +16,8 @@ class UserJobNotification < ActiveRecord::Base
   end
   def job_name
     self.job_log.job_name
+  end
+  def success
+    job_log.success
   end
 end
