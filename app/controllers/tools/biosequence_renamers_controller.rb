@@ -1,7 +1,5 @@
 class Tools::BiosequenceRenamersController < ApplicationController
 
-  #  before_filter :database_sub_nav
-
   def new
     if Biodatabase.exists?(params[:biodatabase_id] )
       @biodatabase = Biodatabase.find(params[:biodatabase_id] )
@@ -10,32 +8,36 @@ class Tools::BiosequenceRenamersController < ApplicationController
 
   def create
     @biodatabase = Biodatabase.find(params[:biodatabase_id] )
-
-    #    respond_to do | format |
-    #logger.error("[kenglish] t ype=#{format.inspect}")
-    #      format.js {
-    #unless params[:prefix].blank?
-    #   @biodatabase.rename_sequences(params[:prefix])
-    #      render :json => {:success => true,:msg=> "Data Saved"}
-    #    else
-    #      render :json => {:success => false,:msg=> "FAIL!"}
-    #    end
-    #      }
-    #      format.html {
-
     unless params[:prefix].blank?
-      @biodatabase.rename_sequences(params[:prefix])
-      render :json => {:success => true,:msg=> "Data Saved"}
+      job_name = "Rename sequences in database #{@biodatabase.name}"
+      create_job(job_name)
+
+      respond_to do |format|
+        format.html {
+          redirect_back_or_default  biosequences_path(:biodatabase_id => params[:biodatabase_id] )
+        }
+        format.json {
+          render :json => {:success => true,:msg=> "Data Saved"}
+        }
+      end
     else
       flash[:errors] = "Missing prefix"
-      render :json => {:success => false,:msg=> "FAIL!"}
+      respond_to do |format|
+        format.html {
+          render :action => 'new'
+        }
+        format.json {
+          render :json => {:success => false,:msg=> "FAIL!"}
+        }
+      end
     end
-    #      }
-    #      format.ext_json {
-    #        logger.error("[kenglish] Got Javascript request to create")
-    #
-    #      }
-    #
-    #    end
   end
+  private
+  def create_job(job_name)
+    job_handler = Jobs::RenameSequencesInDb.new(job_name, params.merge(:user_id => current_user.id))
+    Job.create(:job_name => job_name,
+      :handler => job_handler,
+      :user => current_user)
+  end
+
 end

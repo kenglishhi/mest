@@ -1,7 +1,3 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
-
 class Blast::Clean < Blast::Base
 
   protected
@@ -70,7 +66,7 @@ class Blast::Clean < Blast::Base
 
   def create_clean_output_database(parent_db)
     default_new_biodatabase_name =  "#{parent_db.name}-Cleaned"
-    new_name = @params[:new_biodatabase_name] ||  default_new_biodatabase_name 
+    new_name = @params[:new_biodatabase_name] ||  default_new_biodatabase_name
     Biodatabase.new(:biodatabase_type =>
         BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
       :name => new_name,

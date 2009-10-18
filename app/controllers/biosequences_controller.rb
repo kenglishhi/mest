@@ -12,10 +12,9 @@ class BiosequencesController < ApplicationController
   end
 
   def conditions_for_collection
-    unless params[:biodatabase_id].blank?
-      @biodatabase_id = params[:biodatabase_id].to_i
-      ['biodatabase_biosequences.biodatabase_id = ? ', @biodatabase_id]
-    end
+    params[:biodatabase_id] = Biodatabase.first.id if params[:biodatabase_id].blank?
+    @biodatabase_id = params[:biodatabase_id].to_i
+    ['biodatabase_biosequences.biodatabase_id = ? ', @biodatabase_id]
   end
 
 end

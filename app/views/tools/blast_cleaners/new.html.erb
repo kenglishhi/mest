@@ -1,11 +1,8 @@
-
-
-
 <% form_tag :action => 'create' do |f | -%>
   <div class='blast-main-form'>
   <div class="new-view blast-view view">
   <div class="messages-container" id="blast-create--messages"/>
-  <%= error_messages_for :blast_command  %>
+  <%= error_messages_for :new_biodatabase  %>
   <%= error_messages_for :term  %>
 
       <h4>Clean Raw Files with Blast </h4>
@@ -14,12 +11,14 @@
 
           <dl class="">
             <dt>
-              <label >Fasta File</label>
+              <label>Database</label>
             </dt>
+
             <dd>
-              <%= select_tag  :fasta_file_id, options_for_select(fasta_file_options,
-                @biodatabase ?   @biodatabase.fasta_file_id : nil), :class=>'text-input' %>
+              <%= select_tag  :biodatabase_id, options_for_select(biodatabase_options,
+                @biodatabase ?   @biodatabase.id : nil), :class=>'text-input' %>
             </dd>
+
         </dl>  </li>
         <li class="form-element">
           <dl class="">

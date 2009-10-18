@@ -25,7 +25,7 @@ class Biodatabase < ActiveRecord::Base
     biosequence_ids = select_unique_biosequence_ids.map { | row| row.first}
     Biosequence.delete_all(["id in (?) " ,biosequence_ids]) unless biosequence_ids.empty?
     BiodatabaseBiosequence.delete_all(["biodatabase_id = ? " ,self.id])
-    fasta_file.destroy if fasta_file.is_generated?
+    fasta_file.destroy if fasta_file && fasta_file.is_generated?
   end
 
   def select_unique_biosequence_ids
@@ -68,8 +68,6 @@ HAVING COUNT(*) = 1
         fasta_file_handle.puts(seq.to_fasta)
       end
       fasta_file_handle.close
-      puts "generating fasta"
-
       fasta_file_handle = File.new(filename,"r")
       self.fasta_file = FastaFile.new
       self.fasta_file.fasta = fasta_file_handle
@@ -77,7 +75,6 @@ HAVING COUNT(*) = 1
       self.fasta_file.user_id = self.user_id
       self.fasta_file.is_generated = true
       self.fasta_file.save!
-      puts "new id #{self.fasta_file.errors.full_messages.to_sentence} "
       save
     end
   end
