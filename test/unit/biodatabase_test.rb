@@ -46,7 +46,7 @@ class BiodatabaseTest < ActiveSupport::TestCase
     assert_equal  biodatabase.biosequences.size, biodatabase.number_of_sequences
   end
   def test_rename_sequences
-    new_prefix = "FUCK"
+    new_prefix = "KEV_"
     biodatabase = biodatabases(:biodatabases_001)
     biodatabase.rename_sequences(new_prefix)
     biodatabase.biosequences.each do | seq|
