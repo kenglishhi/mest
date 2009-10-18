@@ -136,8 +136,14 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
     for (var i=0;  i< sequenceRows; i++) {
       var startPosition = (i * sequenceCols) ;
       starts += startPosition + "<br/>";
+      var my_seq = record.seq.substring(startPosition, startPosition  + sequenceCols);
+      my_seq = my_seq.toUpperCase();
+      my_seq = my_seq.replace(/(A+)/g, "<span class='dna-a'>$1</span>");
+      my_seq = my_seq.replace(/(T+)/g, "<span class='dna-t'>$1</span>");
+      my_seq = my_seq.replace(/(C+)/g, "<span class='dna-c'>$1</span>");
+//      '<span class="dna-a">' + my_seq + '</span>';
       sequence += "<div class='sequence'><span id='ttl-id1' class='feat-cds' rel='1'>" +
-      record.seq.substring(startPosition, startPosition  + sequenceCols) +
+        my_seq +
       "</span></div>";
     }
     var topNums = "";

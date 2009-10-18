@@ -13,7 +13,10 @@ $Id: style.css 10550 2009-09-08 20:29:29Z rallj $
 
 .fasta-table td span.feat-gene{background-color:#cfc;}
 .fasta-table td span.feat-gene{background-color:#cfc;}
-.fasta-table td span.feat-cds{background-color:#fcc;}
+/*.fasta-table td span.feat-cds{background-color:#fcc;} */
+.fasta-table td span.dna-a {color: green }
+.fasta-table td span.dna-c {color: blue }
+.fasta-table td span.dna-t {color: red }
 .fasta-table td span.feat-exon-a{background-color:#eee;}
 .fasta-table td span.feat-exon-b{background-color:#cfcfcf;}
 .fasta-table td span.feat-mrna,.fasta-table td span.feat-trna,.fasta-table td span.feat-rrna,.fasta-table td span.feat-snorna {background-color:#ccf;}
