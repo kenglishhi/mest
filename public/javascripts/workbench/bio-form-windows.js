@@ -28,7 +28,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
     var form = new Ext.FormPanel({
       id: 'my-bio-form-panel',
       labelWidth: 75, // label settings here cascade unless overridden
-      url:'/workbench/tools/biosequence_renamers.json',
+      url:'/tools/biosequence_renamers.json',
       method: 'POST',
       baseParams:{
         authenticity_token: FORM_AUTH_TOKEN
@@ -51,10 +51,9 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
         handler: function(){
           var form = Ext.getCmp('my-bio-form-panel').getForm();
           if (form && form.isValid()) {
-
             form.submit({
               success: function(form, action) {
-                Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
+                //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
               }
             });
             Ext.getCmp(parentComponentId).hide();
