@@ -3,14 +3,26 @@ class Workbench::BiosequencesController < ApplicationController
   def index
     page = get_page(Biosequence)
     if params[:biodatabase_id]
+      conditions = []
+      if !params[:query].blank?
+        conditions = ['biodatabase_biosequences.biodatabase_id = ? AND name like ? ',
+          params[:biodatabase_id] , "#{params[:query]}%" ]
+      else
+        conditions = ['biodatabase_biosequences.biodatabase_id = ?', params[:biodatabase_id] ]
+      end
       data = Biosequence.paginate :page => page,
         :include => :biodatabase_biosequences,
-        :conditions => ['biodatabase_biosequences.biodatabase_id = ?', params[:biodatabase_id] ],
+        :conditions => conditions,
         :order => 'name'
       results =  Biosequence.count :include => :biodatabase_biosequences,
-        :conditions => ['biodatabase_biosequences.biodatabase_id = ?', params[:biodatabase_id] ]
+        :conditions => conditions
     else
-      data =  Biosequence.paginate :page => page
+      conditions = []
+      if !params[:query].blank?
+        conditions = ['name like ? ', "#{params[:query]}%" ]
+      end
+
+      data =  Biosequence.paginate :page => page, :conditions => conditions
       results =  Biosequence.count
     end
 

@@ -11,7 +11,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
     var combo = new Ext.form.ComboBox({
       fieldLabel: 'Database',
       name:'biodatabase',
-      id:'biodatabase-id-id-field',
+      id:'biodatabase-id-field',
       hiddenName : 'biodatabase_id',
       valueField:'id',
       displayField:'name',
@@ -53,7 +53,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
           if (form && form.isValid()) {
             form.submit({
               success: function(form, action) {
-                //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
+              //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
               }
             });
             Ext.getCmp(parentComponentId).hide();
@@ -76,21 +76,20 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   }
 });
 
-
-Ext.bio.CleanBiodatabaseWindow = Ext.extend(Ext.Window,{
-  title: 'Clean Biodatabase',
+Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
+  title: 'Clean DB with Blasth',
   layout:'fit',
   width:500,
   height:220,
   closeAction:'hide',
   plain: true,
-  id:'bio-db-renamer-window',
+  id:'bio-blast-cleaners-window',
   initComponent: function() {
     var parentComponentId = this.id;
     var combo = new Ext.form.ComboBox({
       fieldLabel: 'Database',
       name:'biodatabase',
-      id:'biodatabase-id-id-field',
+      id:'biodatabase-id-field',
       hiddenName : 'biodatabase_id',
       valueField:'id',
       displayField:'name',
@@ -105,9 +104,9 @@ Ext.bio.CleanBiodatabaseWindow = Ext.extend(Ext.Window,{
       allowBlank:false
     });
     var form = new Ext.FormPanel({
-      id: 'my-bio-form-panel',
-      labelWidth: 75, // label settings here cascade unless overridden
-      url:'/workbench/tools/biosequence_renamers.json',
+      id: 'my-blast-cleaners-form-panel',
+      labelWidth: 120, // label settings here cascade unless overridden
+      url:'/tools/biosequence_renamers.json',
       method: 'POST',
       baseParams:{
         authenticity_token: FORM_AUTH_TOKEN
@@ -118,22 +117,26 @@ Ext.bio.CleanBiodatabaseWindow = Ext.extend(Ext.Window,{
         width: 230
       },
       defaultType: 'textfield',
-      items: [combo
-      , {
-        fieldLabel: 'New Prefix',
-        name: 'prefix',
-        allowBlank:false
+      items: [combo,
+      {
+        fieldLabel: 'New Database Name',
+        name: 'new_biodatabase_name',
+        allowBlank:true
+      } , {
+        fieldLabel: 'E-Value',
+        name: 'evalue',
+        value:'25',
+        allowBlank:true
       }
       ],
       buttons: [{
         text: 'Save',
         handler: function(){
-          var form = Ext.getCmp('my-bio-form-panel').getForm();
+          var form = Ext.getCmp('my-blast-cleaners-form-panel').getForm();
           if (form && form.isValid()) {
-
             form.submit({
               success: function(form, action) {
-                Ext.example.msg('Sequences Renamed', 'Finished renaming seqeuneces');
+              //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
               }
             });
             Ext.getCmp(parentComponentId).hide();
@@ -152,6 +155,7 @@ Ext.bio.CleanBiodatabaseWindow = Ext.extend(Ext.Window,{
     Ext.apply(this,{
       items:   form
     });
-    Ext.bio.CleanBiodatabaseWindow.superclass.initComponent.call(this);
+    Ext.bio.BlastCleanerWindow.superclass.initComponent.call(this);
   }
 });
+

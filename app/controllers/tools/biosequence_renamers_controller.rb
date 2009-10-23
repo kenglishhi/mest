@@ -8,7 +8,17 @@ class Tools::BiosequenceRenamersController < ApplicationController
 
   def create
     @biodatabase = Biodatabase.find(params[:biodatabase_id] )
-    unless params[:prefix].blank?
+    if params[:prefix].blank?
+      flash[:errors] = "Missing prefix"
+      respond_to do |format|
+        format.html {
+          render :action => 'new'
+        }
+        format.json {
+          render :json => {:success => false,:msg=> "FAIL!"}
+        }
+      end
+    else
       job_name = "Rename sequences in database #{@biodatabase.name}"
       create_job(job_name)
 
@@ -18,16 +28,6 @@ class Tools::BiosequenceRenamersController < ApplicationController
         }
         format.json {
           render :json => {:success => true,:msg=> "Data Saved"}
-        }
-      end
-    else
-      flash[:errors] = "Missing prefix"
-      respond_to do |format|
-        format.html {
-          render :action => 'new'
-        }
-        format.json {
-          render :json => {:success => false,:msg=> "FAIL!"}
         }
       end
     end

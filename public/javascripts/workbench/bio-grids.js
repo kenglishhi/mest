@@ -2,6 +2,59 @@
  * bio-grids.js
  * Kevin English, University of Hawaii
  */
+Ext.bio.SeqSearchField = Ext.extend(Ext.form.TwinTriggerField, {
+  initComponent : function(){
+    Ext.bio.SeqSearchField.superclass.initComponent.call(this);
+    this.on('specialkey', function(f, e){
+      if(e.getKey() == e.ENTER){
+        this.onTrigger2Click();
+      }
+    }, this);
+  },
+
+  validationEvent:false,
+  validateOnBlur:false,
+  trigger1Class:'x-form-clear-trigger',
+  trigger2Class:'x-form-search-trigger',
+  hideTrigger1:true,
+  width:180,
+  hasSearch : false,
+  paramName : 'query',
+
+  onTrigger1Click : function(){
+    if(this.hasSearch){
+      this.el.dom.value = '';
+      var o = {
+        start: 0
+      };
+      this.store.baseParams = this.store.baseParams || {};
+      this.store.baseParams[this.paramName] = '';
+      this.store.reload({
+        params:o
+      });
+      this.triggers[0].hide();
+      this.hasSearch = false;
+    }
+  },
+
+  onTrigger2Click : function(){
+    var v = this.getRawValue();
+    if(v.length < 1){
+      this.onTrigger1Click();
+      return;
+    }
+    var o = {
+      start: 0
+    };
+    this.store.baseParams = this.store.baseParams || {};
+    this.store.baseParams[this.paramName] = v;
+    this.store.reload({
+      params:o
+    });
+    this.hasSearch = true;
+    this.triggers[0].show();
+  }
+});
 
 Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
   prefix: null,
@@ -34,7 +87,7 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
 
 
     Ext.apply(this,{
-      tbar: pagingBar,
+      bbar: pagingBar,
       loadMask: true,
       iconCls: 'icon-grid',
       frame: true,
@@ -143,6 +196,16 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
         viewPanel.updateContent(params);
       }
 
+    });
+
+    Ext.apply(this,{
+      tbar:[
+      'Search: ', ' ',
+      new Ext.bio.SeqSearchField({
+        store: this.store,
+        width:320
+      })
+      ]
     });
 
     Ext.bio.BiosequenceGrid.superclass.initComponent.call(this);

@@ -8,16 +8,31 @@ class Tools::BlastCleanersController < ApplicationController
   def create
     biodatabase = Biodatabase.find(params[:biodatabase_id])
     if !params[:new_biodatabase_name].blank? && Biodatabase.exists?(['name =? ', params[:new_biodatabase_name]])
-      @new_biodatabase = Biodatabase.create(:name => params[:new_biodatabase_name],
-        :biodatabase_group =>BiodatabaseGroup.first,
-        :biodatabase_type => BiodatabaseType.first)
+      flash[:errors] = "New Database Name already exists."
+      respond_to do |format|
+        format.html {
+          render :action => 'new'
+        }
+        format.json {
+          render :json => {:success => false,:msg=> flash[:errors]}
+        }
+      end
+
       render :action => 'new'
       return
     else
       job_name = "Clean Database #{biodatabase.name}"
       job_name += " into #{params[:new_biodatabase_name]}" unless params[:new_biodatabase_name].blank?
       create_job(job_name)
-      redirect_back_or_default biodatabases_path
+      respond_to do |format|
+        format.html {
+          redirect_back_or_default biodatabases_path
+        }
+        format.json {
+          render :json => {:success => true,:msg=> "Data Saved"}
+        }
+      end
+
     end
 
   end
