@@ -27,6 +27,9 @@ class Blast::Base
 
   protected
 
+  def get_evalue
+    params[:evalue].blank? ?  25 :  params[:evalue]
+  end
   def do_run
     raise "subclasses must implement"
   end
