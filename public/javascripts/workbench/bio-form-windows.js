@@ -106,7 +106,7 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
     var form = new Ext.FormPanel({
       id: 'my-blast-cleaners-form-panel',
       labelWidth: 120, // label settings here cascade unless overridden
-      url:'/tools/biosequence_renamers.json',
+      url:'/tools/blast_cleaners.json',
       method: 'POST',
       baseParams:{
         authenticity_token: FORM_AUTH_TOKEN
