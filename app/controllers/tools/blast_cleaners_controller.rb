@@ -7,6 +7,7 @@ class Tools::BlastCleanersController < ApplicationController
   end
   def create
     biodatabase = Biodatabase.find(params[:biodatabase_id])
+
     if !params[:new_biodatabase_name].blank? && Biodatabase.exists?(['name =? ', params[:new_biodatabase_name]])
       flash[:errors] = "New Database Name already exists."
       respond_to do |format|
@@ -14,11 +15,13 @@ class Tools::BlastCleanersController < ApplicationController
           render :action => 'new'
         }
         format.json {
-          render :json => {:success => false,:msg=> flash[:errors]}
+          render :json => {:success => false,
+            :errors => [{
+                :id => 'new_biodatabase_name',
+                :msg => "Sorry man, New Database Name already exists." }]
+            }
         }
       end
-
-      render :action => 'new'
       return
     else
       job_name = "Clean Database #{biodatabase.name}"

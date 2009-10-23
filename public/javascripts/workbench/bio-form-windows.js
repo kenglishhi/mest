@@ -11,7 +11,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
     var combo = new Ext.form.ComboBox({
       fieldLabel: 'Database',
       name:'biodatabase',
-      id:'biodatabase-id-field',
+      id:'biodatabase-id-rename-field',
       hiddenName : 'biodatabase_id',
       valueField:'id',
       displayField:'name',
@@ -53,10 +53,10 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
           if (form && form.isValid()) {
             form.submit({
               success: function(form, action) {
+                Ext.getCmp(parentComponentId).hide();
               //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
               }
             });
-            Ext.getCmp(parentComponentId).hide();
           }
         }
       },
@@ -89,7 +89,7 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
     var combo = new Ext.form.ComboBox({
       fieldLabel: 'Database',
       name:'biodatabase',
-      id:'biodatabase-id-field',
+      id:'biodatabase-id-blast-field',
       hiddenName : 'biodatabase_id',
       valueField:'id',
       displayField:'name',
@@ -121,7 +121,8 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
       {
         fieldLabel: 'New Database Name',
         name: 'new_biodatabase_name',
-        allowBlank:true
+        allowBlank:true,
+        msgTarget:'side'
       } , {
         fieldLabel: 'E-Value',
         name: 'evalue',
@@ -135,11 +136,12 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
           var form = Ext.getCmp('my-blast-cleaners-form-panel').getForm();
           if (form && form.isValid()) {
             form.submit({
+              waitMsg:"Submitting...",
               success: function(form, action) {
-              //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
+                //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
+                Ext.getCmp(parentComponentId).hide();
               }
             });
-            Ext.getCmp(parentComponentId).hide();
           }
         }
       },
