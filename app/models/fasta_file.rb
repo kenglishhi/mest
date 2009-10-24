@@ -68,6 +68,7 @@ class FastaFile < ActiveRecord::Base
       end
       #      end
     end
+    self.biodatabase
   end
 
   def formatdb
