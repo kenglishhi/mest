@@ -23,14 +23,13 @@ class Tools::BlastCreateDbsController < ApplicationController
           render :json => {:success => false,
             :errors => [{
                 :id => 'output_biodatabase_group_name',
-                :msg => "Sorry man, Output Database Gropu Name already exists." }]
-            }
+                :msg => "Sorry man, Output Database Group Name already exists." }]
+          }
         }
       end
       return
     else
-      job_name = "Clean Database #{biodatabase.name}"
-      job_name += " into #{params[:new_biodatabase_name]}" unless params[:new_biodatabase_name].blank?
+      job_name = "Blasting #{@test_biodatabase.name} against #{@target_biodatabase.name} "
       create_job(job_name)
       respond_to do |format|
         format.html {
@@ -42,23 +41,12 @@ class Tools::BlastCreateDbsController < ApplicationController
       end
 
     end
-
-
-
-
-
-
-    job_name = "Blasting #{test_fasta_file.label} against #{target_fasta_file.label} "
+  end
+  private
+  def create_job(job_name)
     job_handler = Jobs::BlastAndCreateDbs.new(job_name, params.merge(:user_id => current_user.id))
     Job.create(:job_name => job_name,
       :handler => job_handler,
       :user => current_user)
-
-
-
-
-
-    redirect_back_or_default biodatabases_path
   end
-
 end
