@@ -8,6 +8,11 @@ class Tools::BlastCreateDbsControllerTest < ActionController::TestCase
       UserSession.create(u)
       @delayed_job_count =  Job.count
     end
+    should "Assert Should succeed on post to new with HTML" do
+      get :new, :test_biodatabase_id =>  biodatabases(:biodatabases_001).id
+      assert_response :success
+    end
+
     should "Assert Should succeed on post to create with HTML" do
       assert true
       post :create, :test_biodatabase_id =>  biodatabases(:biodatabases_001).id,

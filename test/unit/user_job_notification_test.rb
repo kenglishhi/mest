@@ -24,5 +24,15 @@ class UserJobNotificationTest < ActiveSupport::TestCase
       assert_equal 0,UserJobNotification.pop_user_job_notifications(@user).size, "Size of notifications should now be zero"
     end
   end
+  should "test job name" do
+    @user = users(:users_001)
+    Factory(:job_log, :started_at => (Time.now - 200),
+       :stopped_at=> (Time.now - 100), :user => @user, :success => true )
+
+    ujn = UserJobNotification.first
+    assert_not_nil ujn.job_name
+    assert_not_nil ujn.success
+
+  end
 
 end

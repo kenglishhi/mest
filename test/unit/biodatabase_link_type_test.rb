@@ -1,8 +1,11 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class BiodatabaseLinkTypeTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  should_have_many :biodatabase_links
+
+  should "test convenience methods" do
+   cleaned_type = BiodatabaseLinkType.cleaned
+   assert_not_nil cleaned_type
+   assert !cleaned_type.authorized_for_destroy?
   end
 end
