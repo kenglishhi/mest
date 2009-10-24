@@ -25,7 +25,7 @@ class Blast::Clean < Blast::Base
     )
 
     evalue = get_evalue
-    output_file_handle = Blast::Command.execute(@blast_result, :test_file_path => @test_fasta_file.fasta.path,
+    output_file_handle = Blast::Command.execute(:blastall,@blast_result, :test_file_path => @test_fasta_file.fasta.path,
       :target_file_path => @target_fasta_file.fasta.path,
       :evalue => evalue,
       :output_file_prefix => @output_biodatabase.name)
