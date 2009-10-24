@@ -5,16 +5,16 @@
         <%= error_messages_for :blast_command  %>
         <%= error_messages_for :term  %>
 
-        <h4>Clean Raw Files with Blast </h4>
+        <h4>Blast Databases</h4>
         <ol class="form">
           <li class="form-element">
             <dl class="">
               <dt>
-                <label>Test Fasta File</label>
+                <label>Test Database</label>
               </dt>
               <dd>
-                <%= select_tag  :test_fasta_file_id, options_for_select(@fasta_file_options,
-                  @test_biodatabase ?   @test_biodatabase.fasta_file.id : nil), :class=>'text-input' %>
+                <%= select_tag  :test_biodatabase_id,  options_for_select(biodatabase_options,
+                  @test_biodatabase ?   @test_biodatabase.id : nil), :class=>'text-input' %>
               </dd>
             </dl>
           </li>
@@ -24,19 +24,19 @@
                 <label>Target Fasta File</label>
               </dt>
               <dd>
-                <%= select_tag  :target_fasta_file_id, options_for_select(@fasta_file_options,
-                  @biodatabase ?   @target_fasta_file_id : nil), :class=>'text-input' %>
+                <%= select_tag  :target_biodatabase_id, options_for_select(biodatabase_options,
+                  @target_biodatabase ?   @target_biodatabase.id : nil), :class=>'text-input' %>
               </dd>
             </dl>
           </li>
           <li class="form-element">
             <dl class="">
               <dt>
-                <label>New Database Name </label>
+                <label>Output Database Group Name </label>
               </dt>
               <dd>
-                <%= text_field_tag :new_biodatabase_name,params[:new_biodatabase_name], :class => 'text-input'  %>
-                <span class="description">If blank, new database will be be name based on the file.
+                <%= text_field_tag :output_biodatabase_group_name, params[:output_biodatabase_group_name], :class => 'text-input'  %>
+                <span class="description">If blank, new database group will be be name based on the databases being Blasted.
               </dd>
             </dl>
           </li>
