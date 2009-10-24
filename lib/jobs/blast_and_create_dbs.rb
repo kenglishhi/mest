@@ -1,6 +1,7 @@
 class Jobs::BlastAndCreateDbs< Jobs::AbstractJob
   def param_keys
-    [:test_biodatabase_id, :target_biodatabase_id, :evalue, :identity,  :score,:user_id]
+    [:test_biodatabase_id, :target_biodatabase_id, :evalue, :identity,
+      :score,:user_id, :output_biodatabase_group_name]
   end
 
   def do_perform
