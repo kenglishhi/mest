@@ -316,6 +316,9 @@ extjs_store( :controller => "workbench/blast_results",
                 }, {
                   height: 80,
                   contentEl: 'clean-content'
+                } , {
+                  height: 80,
+                  contentEl: 'blast-content'
                 } ],
               title: 'Tools',
               iconCls: 'settings',
@@ -331,6 +334,7 @@ extjs_store( :controller => "workbench/blast_results",
         }
       ]
     });
+
     var button1 = Ext.get('rename-biosequences');
     var winRenameSeq;
     button1.on('click', function(){
@@ -355,6 +359,18 @@ extjs_store( :controller => "workbench/blast_results",
       winBlastClean.show(this);
     });
 
+    var button3 = Ext.get('blast-biodatabase');
+    var winBlast;
+    button3.on('click', function(){
+      if(!winBlast){
+        winBlast= new Ext.bio.BlastCreateDbsWindow({
+          dbStore: biodatabaseComboStore
+        });
+      }
+      winBlast.show(this);
+    });
+
+
   });
     </script>
   </head>
@@ -368,6 +384,11 @@ extjs_store( :controller => "workbench/blast_results",
       <input type="button" id="clean-biodatabase" value="Clean Database" /><br />
       <p>Allows you to clean a database with blast.</p>
     </div>
+    <div id="blast-content" class="x-hide-display">
+      <input type="button" id="blast-biodatabase" value="Blast Database" /><br />
+      <p>Allows you to blast databases against one another.</p>
+    </div>
+
 
 <!--
     <div id="showtest-content" class="x-hide-display">
