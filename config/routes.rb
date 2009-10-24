@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :home
 
   map.namespace(:admin) do |admin|
-    admin.resources :users
+    admin.resources :users, :active_scaffold => true
   end
 
   map.namespace(:tools) do |tools|
