@@ -5,13 +5,12 @@ class Workbench::HomeControllerTest < ActionController::TestCase
 
   context "test workbench index" do
     setup do
-      u = users(:users_001)
-      UserSession.create(u)
+      activate_authlogic
+      @user = UserSession.create(users(:users_001))
     end
     should "Assert Should succeed on post to new with HTML" do
       get :index
       assert_response :success
-      puts @response.body
     end
   end
 
