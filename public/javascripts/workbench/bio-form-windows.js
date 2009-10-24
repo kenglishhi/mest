@@ -131,7 +131,7 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
       }
       ],
       buttons: [{
-        text: 'Save',
+        text: 'Submit',
         handler: function(){
           var form = Ext.getCmp('my-blast-cleaners-form-panel').getForm();
           if (form && form.isValid()) {
@@ -236,7 +236,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
         allowBlank:true
       }],
       buttons: [{
-        text: 'Save',
+        text: 'Submit',
         handler: function(){
           var form = Ext.getCmp('my-blast-cleaners-form-panel').getForm();
           if (form && form.isValid()) {
