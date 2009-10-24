@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-class Jobs::ExtractSequencesTest < ActiveSupport::TestCase
+class Jobs::CleanFileWithBlast < ActiveSupport::TestCase
   context "Clean a Fasta File" do
     setup do
       filename =  "Plate-1_5_Trimmed_Sequences.fasta"
