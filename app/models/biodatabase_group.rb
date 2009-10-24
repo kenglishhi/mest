@@ -24,16 +24,15 @@ class BiodatabaseGroup < ActiveRecord::Base
       :expandable => true,
       :resource => 'biodatabase_group'
     }
-		tree_data[:expanded] = true if params[:expand_node]
+    tree_data[:expanded] = true if params[:expand_node]
     tree_data[:children] =  []
     tree_data[:children] +=  children.map do  |db_group|
-			db_group.ext_tree
-		end
+      db_group.ext_tree
+    end
     tree_data[:children] +=  biodatabases.map do  |db|
       {:text => db.name, :leaf => true, :id => db.id, :resource => 'biodatabase' }
     end
     tree_data
-
   end
 
 end

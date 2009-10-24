@@ -7,7 +7,8 @@ class BiodatabaseType < ActiveRecord::Base
 
   has_many :biodatabases
   validates_presence_of :name
+
   def authorized_for_destroy?
-    [UPLOADED_RAW,UPLOADED_CLEANED,GENERATED_MASTER,GENERATED_MATCH].include? self.name
+    ![UPLOADED_RAW,UPLOADED_CLEANED,GENERATED_MASTER,GENERATED_MATCH].include? self.name
   end
 end
