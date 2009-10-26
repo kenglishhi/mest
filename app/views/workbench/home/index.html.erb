@@ -8,7 +8,9 @@
 
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
-    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+    <%= javascript_include_tag'jquery-1.3.2.min.js',
+      "ext-3.0.0/adapter/jquery/ext-jquery-adapter.js",
+      "ext-3.0.0/adapter/ext/ext-base",
       "ext-3.0.0/ext-all" ,
       "workbench/base",
       "workbench/bio-notifier",
@@ -18,7 +20,8 @@
       "workbench/bio-property-grid",
       "workbench/RowEditor",
       "workbench/bio-sequence-view-panel",
-      "workbench/bio-form-windows"
+      "workbench/bio-form-windows",
+      "workbench/ncbi-blast-form"
   %>
     <style type="text/css">
       .x-window-dlg .ext-mb-download {
@@ -319,7 +322,9 @@ extjs_store( :controller => "workbench/blast_results",
                 } , {
                   height: 80,
                   contentEl: 'blast-content'
-                } ],
+                }
+                /*, { height: 60, contentEl: 'ncbi-blast-search' } */
+              ],
               title: 'Tools',
               iconCls: 'settings',
               border: false
@@ -346,8 +351,6 @@ extjs_store( :controller => "workbench/blast_results",
       winRenameSeq.show(this);
     });
 
-
-
     var button2 = Ext.get('clean-biodatabase');
     var winBlastClean;
     button2.on('click', function(){
@@ -370,12 +373,16 @@ extjs_store( :controller => "workbench/blast_results",
       winBlast.show(this);
     });
 
+//    var button4 = Ext.get('ncbi-blast-search');
+//    button4.on('click', function(){
+//      Ext.bio.ncbiBlastSearch("ncbi-blast-search-form");
+//    });
+
 
   });
     </script>
   </head>
   <body>
-
     <div id="rename-content" class="x-hide-display">
       <input type="button" id="rename-biosequences" value="Rename Sequences" /><br />
       <p>Allows you to rename sequences sequentially in a database with a prefix and sequential number.</p>
@@ -388,6 +395,15 @@ extjs_store( :controller => "workbench/blast_results",
       <input type="button" id="blast-biodatabase" value="Blast Database" /><br />
       <p>Allows you to blast databases against one another.</p>
     </div>
+    <div id="ncbi-blast-content" class="x-hide-display">
+      <input type="button" id="ncbi-blast-search" value="NCBI Blast" /><br />
+      <p>Blast Sequence against NCBI.</p>
+
+    </div>
+
+    <form id="ncbi-blast-search-form" class="x-hide-display">
+
+    </form>
 
 
 <!--
