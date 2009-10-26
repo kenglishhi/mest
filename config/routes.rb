@@ -70,6 +70,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'workbench/home/rename',
     :controller => 'workbench/home',
     :action     => 'rename'
+  map.connect 'workbench/home/ncbi_blast',
+    :controller => 'workbench/home',
+    :action     => 'ncbi_blast'
+
 
   map.connect 'workbench/home/user_job_notifications',
     :controller => 'workbench/home',

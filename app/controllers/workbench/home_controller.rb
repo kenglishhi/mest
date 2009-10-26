@@ -22,5 +22,8 @@ class Workbench::HomeController < ApplicationController
  def user_job_notifications
     render :layout => false
   end
+  def ncbi_blast
+    render :layout => false
+  end
 
 end
