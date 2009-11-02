@@ -25,8 +25,9 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
       listWidth: 350,
       allowBlank:false
     });
+
     var form = new Ext.FormPanel({
-      id: 'my-bio-form-panel',
+      id: 'my-renamer-form-panel',
       labelWidth: 75, // label settings here cascade unless overridden
       url:'/tools/biosequence_renamers.json',
       method: 'POST',
@@ -49,7 +50,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
       buttons: [{
         text: 'Save',
         handler: function(){
-          var form = Ext.getCmp('my-bio-form-panel').getForm();
+          var form = Ext.getCmp('my-renamer-form-panel').getForm();
           if (form && form.isValid()) {
             form.submit({
               success: function(form, action) {
@@ -89,7 +90,7 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
     var combo = new Ext.form.ComboBox({
       fieldLabel: 'Database',
       name:'biodatabase',
-      id:'biodatabase-id-cleant-field',
+      id:'biodatabase-id-clean-field',
       hiddenName : 'biodatabase_id',
       valueField:'id',
       displayField:'name',
@@ -238,7 +239,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       buttons: [{
         text: 'Submit',
         handler: function(){
-          var form = Ext.getCmp('my-blast-cleaners-form-panel').getForm();
+          var form = Ext.getCmp('my-blast-form-panel').getForm();
           if (form && form.isValid()) {
             form.submit({
               waitMsg:"Submitting...",
