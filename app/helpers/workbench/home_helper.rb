@@ -11,4 +11,7 @@ module Workbench::HomeHelper
   def blast_result_page_size
     BlastResult.per_page
   end
+  def job_page_size
+    25
+  end
 end

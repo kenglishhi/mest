@@ -57,8 +57,6 @@ Ext.bio.SeqSearchField = Ext.extend(Ext.form.TwinTriggerField, {
 });
 
 Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
-  prefix: null,
-  dataUrl:null,
   displayColumns: [ ],
   readerColumns:[ ],
   useEditorFlag:false,
@@ -112,8 +110,6 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
 
 
 Ext.bio.BiodatabaseGrid =  Ext.extend(Ext.bio.RestfulGrid, {
-  prefix: 'biodatabase-store',
-  dataUrl: '/workbench/biodatabases',
   useEditorFlag:true,
   usePagingBarFlag: true,
   displayColumns:  [ {
@@ -147,8 +143,6 @@ Ext.bio.BiodatabaseGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 Ext.reg('biodatabase-grid', Ext.bio.BiodatabaseGrid);
 
 Ext.bio.BiodatabaseGroupGrid =  Ext.extend(Ext.bio.RestfulGrid, {
-  prefix: 'biodatabase-group-store',
-  dataUrl: '/workbench/biodatabase_groups',
   useEditorFlag:true,
   usePagingBarFlag: true,
   displayColumns:  [ {
@@ -166,8 +160,6 @@ Ext.reg('biodatabase-group-grid', Ext.bio.BiodatabaseGroupGrid);
 
 
 Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
-  prefix: 'biosequences',
-  dataUrl: '/workbench/biosequences',
   pageSize: 50,
   biosequenceViewId: 'xxxx',
   usePagingBarFlag: true,
@@ -239,8 +231,6 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 Ext.reg('biosequence-grid', Ext.bio.BiosequenceGrid);
 
 Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
-  prefix: 'blast-result-group-store',
-  dataUrl: '/workbench/blast_results',
   useEditorFlag:false,
   usePagingBarFlag: true,
   displayColumns:  [ {
@@ -279,3 +269,70 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 });
 Ext.reg('blast-result-grid', Ext.bio.BlastResultGrid);
 
+Ext.bio.JobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
+  useEditorFlag:false,
+  usePagingBarFlag: true,
+  displayColumns:  [ {
+    header: "Job Name",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'job_name'
+  }, {
+    header: "Run At",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'run_at'
+  }, {
+    header: "Priority",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'priority'
+  }
+  ],
+  updateContent: function(params) {
+    console.log("Called updateContent() " + params.option );
+    if(this.store.baseParams.option != params.option) {
+      this.store.baseParams.option = params.option;
+      this.store.load();
+    }
+  },
+  initComponent: function() {
+    var jobOptionStore = new Ext.data.ArrayStore({
+      fields: ['option'],
+      data : [['Running'], ['Queued'], ['Failed'] ]
+    });
+
+    var combo = new Ext.form.ComboBox({
+      store: jobOptionStore ,
+      displayField: 'option',
+      allowBlank: false,
+      editable: false,
+      mode: 'local',
+      triggerAction: 'all',
+      selectOnFocus:true,
+      forceSelection:true,
+      width:135
+    });
+    var cmpId = this.id;
+
+    combo.on('select', function(cmb, record) {
+      console.log("Select has been applied " + record.data.option );
+      Ext.getCmp(cmpId).updateContent( record.data);
+    });
+
+    //    combo.on('change', function(cmb, newValue, oldValue) {
+    //      console.log("Change : " + newValue + ", " + oldValue );
+    //    });
+
+    combo.setValue("Running");
+
+    Ext.apply(this,{
+      tbar:[
+      'Show: ', ' ', combo
+      ]
+    });
+
+    Ext.bio.JobGrid.superclass.initComponent.call(this);
+  }
+});
+Ext.reg('job-grid', Ext.bio.JobGrid);

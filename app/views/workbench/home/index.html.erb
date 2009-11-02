@@ -16,7 +16,14 @@
       "workbench/bio-notifier",
       "workbench/database-group-tree",
       "workbench/App",
-      "workbench/bio-grids",
+#      "workbench/bio-grids",
+      "workbench/restful-grid",
+      "workbench/biosequence-grid",
+      "workbench/biodatabase-grid",
+      "workbench/biodatabase-group-grid",
+      "workbench/blast-result-grid",
+      "workbench/job-grid",
+#      "workbench/job-log-grid",
       "workbench/bio-property-grid",
       "workbench/RowEditor",
       "workbench/bio-sequence-view-panel",
@@ -112,10 +119,41 @@ extjs_store( :controller => "workbench/blast_results",
   }
 ).render(false)
 %>
+
+
+    var jobStore = <%=
+extjs_store( :controller => "workbench/jobs",
+    :model => 'Job',
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => false,
+    "autoSave" => true,
+    "restful" => true
+  }
+
+).render(false)
+%>;
+
+    var jobLogStore = <%=
+extjs_store( :controller => "workbench/job_logs",
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => true,
+    "autoSave" => true,
+    "restful" => true
+  }
+
+).render(false)
+%>;
+
+
     var seqPageSize = <%= biosequence_page_size %> ;
     var databaseGroupPageSize = <%= biodatabase_group_page_size %> ;
     var dbPageSize = <%= biodatabase_page_size %> ;
     var blastResultPageSize = <%= blast_result_page_size %> ;
+    var jobPageSize=  <%= job_page_size %> ;
 
     // BEGIN RAILS data DUMP
     Ext.workbenchdata.project_options = <%= @project_options.to_json %>;
@@ -213,15 +251,12 @@ extjs_store( :controller => "workbench/blast_results",
           region: 'center', // a center region is ALWAYS required for border layout
           collapsible: true,
           deferredRender: true,
-          activeTab: 0,     // first tab initially active
-
+          activeTab: 5,     // first tab initially active
           items: [
             {
-
               iconCls:'new_fasta',
               title: 'Sequences',
               id: 'workbench-biosequence-tab',
-
               layout: 'border',
               region:'west',
               border: false,
@@ -230,11 +265,7 @@ extjs_store( :controller => "workbench/blast_results",
               width: 275,
               minSize: 100,
               maxSize: 500,
-              //items: [treePanel, detailsPanel]
-
-              items: //[seqGrid,seqView]
-              [
-                {
+              items: [ {
                   xtype:'biosequence-grid',
                   id: 'workbench-biosequence-grid',
                   pageSize: seqPageSize,
@@ -248,8 +279,7 @@ extjs_store( :controller => "workbench/blast_results",
                   region: 'center',
                   split:true
 
-                }
-              ]
+                } ]
             },  {
               iconCls:'new_view',
               title: 'Databases',
@@ -257,12 +287,12 @@ extjs_store( :controller => "workbench/blast_results",
               id:'workbench-biodatabase-tab',
               items: [
                 {id: 'workbench-biodatabase-grid',
-                  xtype:'biodatabase-grid',
+                  xtype:'biodatabase-grid', 
                   pageSize: dbPageSize,
                   store: biodatabaseStore
                 }
               ]
-            },{
+            }, {
               iconCls:'origin',
               title: 'Database Groups',
               autoScroll: true,
@@ -286,8 +316,30 @@ extjs_store( :controller => "workbench/blast_results",
                   store: blastResultStore }
               ]
 
-            }
+            }, {
+              iconCls:'origin',
+              title: 'Running Jobs',
+              autoScroll: true,
+              id:'workbench-running-jobs-tab',
+              items: [
+                {id: 'workbench-jobs-grid',
+                  pageSize: jobPageSize,
+                  xtype:'job-grid' ,
+                  store: jobStore }
+              ]
 
+            }, { iconCls:'origin',
+              title: 'Job Log',
+              autoScroll: true,
+              id:'workbench-job-log-tab',
+              items: [
+                {id: 'workbench-job-logs-grid',
+                  pageSize: jobPageSize,
+                  xtype:'job-log-grid' ,
+                  store: jobLogStore }
+              ]
+
+            }
           ]
         }),
         {
@@ -373,10 +425,10 @@ extjs_store( :controller => "workbench/blast_results",
       winBlast.show(this);
     });
 
-//    var button4 = Ext.get('ncbi-blast-search');
-//    button4.on('click', function(){
-//      Ext.bio.ncbiBlastSearch("ncbi-blast-search-form");
-//    });
+    //    var button4 = Ext.get('ncbi-blast-search');
+    //    button4.on('click', function(){
+    //      Ext.bio.ncbiBlastSearch("ncbi-blast-search-form");
+    //    });
 
 
   });
@@ -406,7 +458,7 @@ extjs_store( :controller => "workbench/blast_results",
     </form>
 
 
-<!--
+    <!--
     <div id="showtest-content" class="x-hide-display">
       <input type="button" id="show-msg" value="Show Message" /><br />
       <input type="button" id="hide-msg" value="Hide Message" /><br />
