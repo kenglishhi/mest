@@ -267,7 +267,7 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
     var record = this.store.getAt(params.rowIndex).data ;
     this.record = record;
 
-    Ext.getCmp('tbar-item-sequence-title').setText("Sequence <b>" + record.name + "</b>");
+    Ext.getCmp('tbar-item-sequence-title').setText("Sequence <b>" + record.name.substr(0,50) + "</b>");
     var sequenceCols = 100;
     var sequenceRows = Math.floor(record.length / sequenceCols) + 1;
 

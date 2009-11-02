@@ -9,7 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091017053535) do
+ActiveRecord::Schema.define(:version => 20091102054053) do
+
+  create_table "alignments", :force => true do |t|
+    t.string   "label"
+    t.integer  "fasta_file_id"
+    t.string   "aln_file_name"
+    t.string   "aln_content_type"
+    t.integer  "aln_file_size"
+    t.integer  "project_id",       :null => false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
