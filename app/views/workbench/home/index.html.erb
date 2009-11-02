@@ -16,14 +16,13 @@
       "workbench/bio-notifier",
       "workbench/database-group-tree",
       "workbench/App",
-#      "workbench/bio-grids",
       "workbench/restful-grid",
       "workbench/biosequence-grid",
       "workbench/biodatabase-grid",
       "workbench/biodatabase-group-grid",
       "workbench/blast-result-grid",
       "workbench/job-grid",
-#      "workbench/job-log-grid",
+      "workbench/job-log-grid",
       "workbench/bio-property-grid",
       "workbench/RowEditor",
       "workbench/bio-sequence-view-panel",
@@ -251,7 +250,7 @@ extjs_store( :controller => "workbench/job_logs",
           region: 'center', // a center region is ALWAYS required for border layout
           collapsible: true,
           deferredRender: true,
-          activeTab: 5,     // first tab initially active
+          activeTab: 0,     // first tab initially active
           items: [
             {
               iconCls:'new_fasta',

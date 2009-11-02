@@ -6,30 +6,38 @@
 Ext.bio.JobLogGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   useEditorFlag:false,
   usePagingBarFlag: true,
-  displayColumns:  [ {
+  displayColumns:  [  {
     header: "Job Name",
     autoWidth: true,
     sortable: true,
     dataIndex: 'job_name'
-  }
-  /*, {
-    header: "Run At",
+  } , {
+    header: "User",
     autoWidth: true,
     sortable: true,
-    dataIndex: 'run_at'
-  }, {
-    header: "Priority",
+    dataIndex: 'user_email'
+  }  , {
+    header: "Duration (hh:mm:ss)",
     autoWidth: true,
     sortable: true,
-    dataIndex: 'priority'
-  }
-  */
-  ],
+    dataIndex: 'duration_display'
+  } , {
+    header: "Finished",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'stopped_at',
+    renderer: Ext.util.Format.dateRenderer('m/d/Y H:i:s')
+  } , {
+    header: "Success",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'success'
+  } ],
   updateContent: function(params) {
-      this.store.load();
   },
   initComponent: function() {
     Ext.bio.JobLogGrid.superclass.initComponent.call(this);
   }
 });
+
 Ext.reg('job-log-grid', Ext.bio.JobLogGrid);

@@ -290,7 +290,6 @@ Ext.bio.JobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   }
   ],
   updateContent: function(params) {
-    console.log("Called updateContent() " + params.option );
     if(this.store.baseParams.option != params.option) {
       this.store.baseParams.option = params.option;
       this.store.load();
@@ -316,13 +315,8 @@ Ext.bio.JobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     var cmpId = this.id;
 
     combo.on('select', function(cmb, record) {
-      console.log("Select has been applied " + record.data.option );
       Ext.getCmp(cmpId).updateContent( record.data);
     });
-
-    //    combo.on('change', function(cmb, newValue, oldValue) {
-    //      console.log("Change : " + newValue + ", " + oldValue );
-    //    });
 
     combo.setValue("Running");
 
