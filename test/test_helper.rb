@@ -49,3 +49,6 @@ end
 class BlastResult < ActiveRecord::Base
   has_attached_file :output, :path => ":rails_root/test/fixtures/files/:class/:attachment/:id/:basename.:extension"
 end
+class Alignment < ActiveRecord::Base
+  has_attached_file :aln, :path => ":rails_root/test/fixtures/files/:class/:attachment/:id/:basename.:extension"
+end

@@ -5,10 +5,18 @@ class Alignment < ActiveRecord::Base
 
 
   def self.generate_alignment(target_fasta_file,user=nil)
-    clustalw = Bio::ClustalW.new
-    clustalw.query_by_filename(target_fasta_file.fasta.path)
-    puts clustalw.output
-    create(:label => 'Alignment xxxx', :user => user)
+    output_file_handle = Tempfile.new("#{target_fasta_file.label}_align.aln")
+    command = " clustalw -infile=#{target_fasta_file.fasta.path} -outfile=#{output_file_handle.path} "
+    puts "command = #{command} "
+    system(*command)
+    create(:label => 'Alignment xxxx',
+      :user => user,
+      :aln => output_file_handle,
+      :fasta_file => target_fasta_file)
   end
-
+  def report
+    if aln
+      Bio::ClustalW::Report.new(File.read(aln.path ))
+    end
+  end
 end
