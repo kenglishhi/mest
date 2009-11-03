@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(:version => 20091102054053) do
     t.string   "aln_file_name"
     t.string   "aln_content_type"
     t.integer  "aln_file_size"
-    t.integer  "project_id",       :null => false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
