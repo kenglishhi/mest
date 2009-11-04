@@ -14,7 +14,7 @@ bc = BlastCommand.create(:db_fasta_file => db_fasta_file,
 #bc = BlastCommand.create(:db_fasta_file => db_fasta_file,
 #	:query_fasta_file => query_fasta_file , :evalue => 0.00001,:fasta_file_prefix => "prefix")
 bc.run_command
-bc.biodatabase.generate_fasta
+FastaFile.generate_fasta(bc.biodatabase)
 
 
 

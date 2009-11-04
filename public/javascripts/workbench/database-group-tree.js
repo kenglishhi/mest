@@ -2,23 +2,27 @@
 Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   dataUrl: null,
   treeData: null,
+  projectOptions:null,
   initComponent: function() {
     var rootNode = new Ext.tree.AsyncTreeNode(this.treeData);
     var store = new Ext.data.ArrayStore({
       fields: ['id', 'name'],
-      data : Ext.workbenchdata.project_options // from states.js
+      data : this.projectOptions
     })
     var combo = new Ext.form.ComboBox({
       store: store,
       displayField: 'name',
-      typeAhead: true,
+      typeAhead: false,
+      allowBlank: false,
+      editable: false,
       mode: 'local',
       triggerAction: 'all',
       emptyText:'Select a Project...',
       selectOnFocus:true,
+      forceSelection:true,
       width:135
     });
-
+//    combo.setValue(8);
     // set the root node
     var rootNode = new Ext.tree.AsyncTreeNode({
       text: 'Ext JS',

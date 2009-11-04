@@ -28,13 +28,14 @@ class FastaFilesController < ApplicationController
             logger.error("[kenglish] uploaded data is #{image_param[:uploaded_data].inspect}")
             fasta_file.fasta = image_param[:uploaded_data]
             fasta_file.is_generated = false
-            fasta_file.save
+            fasta_file.save!
           end
         end
       end
       redirect_back_or_default(:action => :index )
     end
   end
+
   def new
     @projects = Project.find(:all).map { |p| ["#{p.name} (#{p.user.full_name}) ", p.id] }
   end
@@ -56,4 +57,13 @@ class FastaFilesController < ApplicationController
     render :inline => 'Queued to Extract'    
   end
 
+  def conditions_for_collection
+		logger.error("[kenglish] params[:biodatabase_type_id].blank? #{params[:biodatabase_type_id].blank?} ")
+    unless params[:biodatabase_type_id].blank?
+		  logger.error("[kenglish] params[:biodatabase_type_id].blank? #{params[:biodatabase_type_id].blank?} ")
+      @biodatabase_type_id = params[:biodatabase_type_id].to_i
+#      [' biodatabases.biodatabase_type_id  = ? ', @biodatabase_type_id]
+    end
+     ['fasta_files.project_id = ?', current_user.active_project.id ]
+  end
 end

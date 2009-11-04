@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091102054053) do
+ActiveRecord::Schema.define(:version => 20091104025619) do
 
   create_table "alignments", :force => true do |t|
     t.string   "label"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20091102054053) do
     t.string   "last_login_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "default_project_id"
   end
 
 end

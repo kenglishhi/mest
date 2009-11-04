@@ -70,7 +70,11 @@
     </div><!--wrapper-content-->
 
     <div id="wrapper-footer">
-      <div id="footer">Copyright &copy; 2009 University of Hawaii:: Department of Information and Computer Sciences</div>
+      <div id="footer">
+        <p>Logged in as <b><%= current_user.email %></b></p>
+        <p>Active Project: <b><%= current_user.active_project.name %></b></p>
+        <p>Copyright &copy; 2009 University of Hawaii:: Department of Information and Computer Sciences</p>
+      </div>
     </div><!--wrapper-footer-->
 
   </body>

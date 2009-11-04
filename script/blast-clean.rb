@@ -8,7 +8,7 @@ bc = BlastCommand.create(:query_fasta_file => query_fasta_file,
 	:evalue => 0.00001,
 	:biodatabase_type => BiodatabaseType.find_by_name('UPLOADED-CLEANED'))
 bc.run
-bc.biodatabase.generate_fasta
+FastaFile.generate_fasta(bc.biodatabase)
 
 
 

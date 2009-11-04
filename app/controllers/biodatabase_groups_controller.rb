@@ -19,4 +19,7 @@ class BiodatabaseGroupsController < ApplicationController
   def before_create_save(record)
     record.user_id = current_user.id
    end
+   def conditions_for_collection
+     ['biodatabase_groups.project_id = ?', current_user.active_project.id ]
+   end
 end

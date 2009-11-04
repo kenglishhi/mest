@@ -14,7 +14,7 @@
       <label for="record_number_project">Project:</label>
     </dt>
   <dd>
-      <%= select_tag "project_id",options_for_select(@projects,params[:project_id] )  %>
+      <%= select_tag "project_id",options_for_select(@projects,current_user.active_project.id )  %>
   </dd>
   </dl>
   </li>

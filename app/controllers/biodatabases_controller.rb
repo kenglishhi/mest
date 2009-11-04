@@ -23,7 +23,7 @@ class BiodatabasesController < ApplicationController
       @biodatabase_type_id = params[:biodatabase_type_id].to_i
 #      [' biodatabases.biodatabase_type_id  = ? ', @biodatabase_type_id]
     end
-		[]
+     ['biodatabase_groups.project_id = ?', current_user.active_project.id ]
   end
 
 end
