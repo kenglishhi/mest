@@ -76,8 +76,8 @@ class Blast::CreateDbs < Blast::Base
         if child_biodatabase.nil? # no matches
           #           logger.error "No Matches"
         else
-          child_biodatabase.save!
-          child_biodatabase.generate_fasta
+          FastaFile.generate_fasta(child_biodatabase)
+
         end
       end
     end

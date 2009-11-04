@@ -5,7 +5,6 @@ class FastaFile < ActiveRecord::Base
 
   belongs_to :user
 
-  validates_uniqueness_of :label
   validates_presence_of :project_id
 
   belongs_to :project
@@ -130,4 +129,25 @@ class FastaFile < ActiveRecord::Base
   def close_fasta_file
     @fasta_file_handle.close if @fasta_file_handle
   end
+
+  def self.generate_fasta(biodatabase)
+    filename =  "#{biodatabase.name}.fasta"
+    fasta_file_handle = File.new(filename,"w")
+    biosequences.each do | seq |
+      fasta_file_handle.puts(seq.to_fasta)
+    end
+    fasta_file_handle.close
+    fasta_file_handle = File.new(filename,"r")
+    fasta_file = FastaFile.new
+    fasta_file.fasta = fasta_file_handle
+    fasta_file.project_id = biodatabase.biodatabase_group.project_id
+    fasta_file.user_id = self.user_id
+    fasta_file.is_generated = true
+    fasta_file.save!
+    biodatabase.fasta_file = fasta_file
+    biodatabase.save
+
+  end
+
+
 end

@@ -18,7 +18,7 @@ class Biodatabase < ActiveRecord::Base
   validates_presence_of :biodatabase_type_id
   validates_presence_of :biodatabase_group_id
 
-  validates_uniqueness_of :name
+#  validates_uniqueness_of :name
   before_destroy :clear_references
 
   def clear_references
@@ -85,24 +85,24 @@ class Biodatabase < ActiveRecord::Base
     end
   end
 
-  def generate_fasta
-    if fasta_file_id.nil?
-      filename =  "#{name}.fasta"
-      fasta_file_handle = File.new(filename,"w")
-      biosequences.each do | seq |
-        fasta_file_handle.puts(seq.to_fasta)
-      end
-      fasta_file_handle.close
-      fasta_file_handle = File.new(filename,"r")
-      self.fasta_file = FastaFile.new
-      self.fasta_file.fasta = fasta_file_handle
-      self.fasta_file.project_id = biodatabase_group.project_id
-      self.fasta_file.user_id = self.user_id
-      self.fasta_file.is_generated = true
-      self.fasta_file.save!
-      save
-    end
-  end
-
+#  def generate_fasta
+#    if fasta_file_id.nil?
+#      filename =  "#{name}.fasta"
+#      fasta_file_handle = File.new(filename,"w")
+#      biosequences.each do | seq |
+#        fasta_file_handle.puts(seq.to_fasta)
+#      end
+#      fasta_file_handle.close
+#      fasta_file_handle = File.new(filename,"r")
+#      self.fasta_file = FastaFile.new
+#      self.fasta_file.fasta = fasta_file_handle
+#      self.fasta_file.project_id = biodatabase_group.project_id
+#      self.fasta_file.user_id = self.user_id
+#      self.fasta_file.is_generated = true
+#      self.fasta_file.save!
+#      save
+#    end
+#  end
+###
   private
 end

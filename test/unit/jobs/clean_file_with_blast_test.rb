@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-class Jobs::CleanFileWithBlast < ActiveSupport::TestCase
+class Jobs::CleanFileWithBlastTest < ActiveSupport::TestCase
   context "Clean a Fasta File" do
     setup do
       filename =  "Plate-1_5_Trimmed_Sequences.fasta"
@@ -10,8 +10,7 @@ class Jobs::CleanFileWithBlast < ActiveSupport::TestCase
       @fasta_file.project = projects(:projects_001)
       assert @fasta_file.save, "Saving fasta file should succeed #{@fasta_file.errors.full_messages.to_sentence}"
       assert File.exists?( @fasta_file.fasta.path ), "File should exist after create"
-      @job =  Jobs::CleanFileWithBlast.new("Extract #{@fasta_file.label}",
-        {:fasta_file_id => @fasta_file.id,  :user_id => users(:users_001).id  })
+      @job =  Jobs::CleanFileWithBlast.new("Extract #{@fasta_file.label}",  {:fasta_file_id => @fasta_file.id,  :user_id => users(:users_001).id  })
       @number_of_blast_results = BlastResult.count
     end
 

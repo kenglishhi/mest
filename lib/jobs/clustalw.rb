@@ -13,7 +13,7 @@ class Jobs::Clustalw < Jobs::AbstractJob
     puts "  Calling biodatabse.destroy  #{params.inspect}  "
     puts "------------"
     biodatabase = Biodatabase.find(params[:biodatabase_id])
-    biodatabase.generate_fasta unless biodatabase.fasta_file
+    FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
     Alignment.generate_alignment(biodatabase.fasta_file, User.find(params[:user_id]) )
     puts "------------"
     puts "  Finished biodatabse.destroy  "

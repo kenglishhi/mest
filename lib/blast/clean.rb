@@ -54,7 +54,7 @@ class Blast::Clean < Blast::Base
       end
     end
     @output_biodatabase.save
-    @output_biodatabase.generate_fasta
+    FastaFile.generate_fasta(@output_biodatabase)
     BiodatabaseLink.create(:biodatabase =>@test_fasta_file.biodatabase,
       :linked_biodatabase => @output_biodatabase,
       :biodatabase_link_type => BiodatabaseLinkType.cleaned)
