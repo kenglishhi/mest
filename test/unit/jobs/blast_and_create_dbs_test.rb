@@ -15,7 +15,8 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
       @job =  Jobs::BlastAndCreateDbs.new("Blasting #{@test_biodatabase.name} against #{@target_biodatabase.name}",
         {:test_biodatabase_id => @test_biodatabase.id,
           :target_biodatabase_id => @target_biodatabase.id,
-          :user_id => users(:users_001).id})
+          :user_id => users(:users_001).id,
+          :project_id => users(:users_001).active_project.id})
       @number_of_biodatabase_groups = BiodatabaseGroup.count
       @number_of_blast_results = BlastResult.count
     end
@@ -58,7 +59,8 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
       @job =  Jobs::BlastAndCreateDbs.new("Blasting #{@test_fasta_file.label} against #{@target_fasta_file.label} ",
         {:test_biodatabase_id => @test_biodatabase.id,
           :target_biodatabase_id => @target_biodatabase.id,
-          :user_id => users(:users_001).id})
+          :user_id => users(:users_001).id,
+          :project_id => users(:users_001).active_project.id})
     end
 
     should "Create new databases" do

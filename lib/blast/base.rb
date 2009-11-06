@@ -67,6 +67,11 @@ class Blast::Base
       end
     end
   end
-
+  def new_blast_result(blast_result_name)
+    @blast_result = BlastResult.create!(:name => blast_result_name,
+      :started_at => Time.now,
+      :user_id => params[:user_id],
+      :project_id => params[:project_id])
+  end
 
 end

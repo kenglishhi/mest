@@ -21,7 +21,9 @@ class Jobs::CleanDatabaseWithBlastTest < ActiveSupport::TestCase
       assert !@fasta_file.biodatabase.biosequences.empty?
 
       @job =  Jobs::CleanDatabaseWithBlast.new("Clean Database #{@fasta_file.biodatabase.name}",
-        {:biodatabase_id => @fasta_file.biodatabase.id,  :user_id => users(:users_001).id  })
+        {:biodatabase_id => @fasta_file.biodatabase.id,  
+          :user_id => users(:users_001).id ,
+          :project_id => users(:users_001).active_project.id  })
       @number_of_blast_results = BlastResult.count
 
     end

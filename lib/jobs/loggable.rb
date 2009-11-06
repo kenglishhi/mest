@@ -29,7 +29,8 @@ module Jobs::Loggable
                      :duration_in_seconds => (stopped_at - started_at),
                      :success => e.nil?,
                      :message => message,
-                     :user_id => user_id)
+                     :user_id => user_id,
+                     :project_id => project_id)
       true
     end
   end

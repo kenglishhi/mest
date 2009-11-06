@@ -2,14 +2,15 @@ require 'pp'
 class Jobs::AbstractJob
   
   attr_accessor :user_id
+  attr_accessor :project_id
   attr_accessor :job_name
   attr_accessor :params
   def initialize(n, p  = {} )
     @job_name = n
-    @params = p
+#    @params = p
+    @params = {:user_id => user_id, :project_id => project_id}.merge(p)
   end
   def perform
-    puts "Running #{@job_name} with #{@params.inspect}"
     do_perform
   end
   

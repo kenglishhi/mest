@@ -29,7 +29,6 @@ class Blast::Command
     end
     command = " blastall -p blastn -i #{params[:test_file_path]} -d #{params[:target_file_path] } -e #{params[:evalue]}  -b 20 -v 20 "
     blast_result.command = command if blast_result
-    puts "[kenglish] blast command = #{command}"
     Delayed::Worker.logger.error("[kenglish] blast command = #{command}")
     output_file_handle = Tempfile.new("#{params[:output_file_prefix].gsub(/ /,"_")}_Blast_Result.txt")
 

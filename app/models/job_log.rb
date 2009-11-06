@@ -8,6 +8,11 @@ class JobLog < ActiveRecord::Base
   @@per_page = 25
 
   belongs_to :user
+  belongs_to :project
+
+  validates_presence_of :user_id
+  validates_presence_of :project_id
+
   after_create :create_user_job_notification
   def create_user_job_notification
     UserJobNotification.create!(:user_id => self.user_id, :job_log => self)

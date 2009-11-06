@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   active_scaffold :projects do |config|
     config.actions.exclude :nested
     config.list.label = "Projects"
-
+    config.columns[:user].label = "Owner"
     list_show_columns = [:name, :description,:user, :created_at, :updated_at]
     config.list.columns = list_show_columns
     config.show.columns = list_show_columns 

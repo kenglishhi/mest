@@ -1,11 +1,11 @@
 class Jobs::BlastRemote < Jobs::AbstractJob
   def param_keys
     [:test_biodatabase_id, :evalue, :identity,
-      :score,:user_id, :output_biodatabase_group_name]
+      :score, :output_biodatabase_group_name]
   end
 
   def do_perform
-    [ :test_biodatabase_id, :user_id ].each do | required_param_key |
+    [ :test_biodatabase_id, :user_id , :project_id].each do | required_param_key |
        raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
     end
     blast_command = Blast::Remote.new(params)

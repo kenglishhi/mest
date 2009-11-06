@@ -158,6 +158,7 @@ extjs_store( :controller => "workbench/job_logs",
 
     // BEGIN RAILS data DUMP
     Ext.workbenchdata.projectOptions = <%= @project_options.to_json %>;
+    Ext.workbenchdata.changeProjectUrl = '<%= url_for :controller => 'workbench/home', :action => 'change_project' %>';
     var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %>  - <%= link_to "Home", '/' %> </h1> ';
     // END RAILS data dump  -- no erb code should go beyond this line
     var dbGroupTree = <%= @biodatabase_group.ext_tree(:expand_node => true).to_json %> ;
@@ -234,7 +235,7 @@ extjs_store( :controller => "workbench/job_logs",
 
     projectCombo.setValue( currentProjectId );
     projectCombo.on('select', function(box, record) {
-        var controllerUrl = '/?active_project_id=' + record.data.id ;
+        var controllerUrl =Ext.workbenchdata.changeProjectUrl + '/' + record.data.id ;
         //controllerUrl = controllerUrl.replace(/xxx_new_selected_unit/,record.data.unit_id );
         window.location = controllerUrl;
 

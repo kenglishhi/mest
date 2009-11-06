@@ -4,10 +4,10 @@ class FastaFile < ActiveRecord::Base
   has_one :biodatabase
 
   belongs_to :user
+  belongs_to :project
 
   validates_presence_of :project_id
 
-  belongs_to :project
 
   before_validation :set_label
   before_destroy :remove_fasta_dbs
@@ -133,7 +133,7 @@ class FastaFile < ActiveRecord::Base
   def self.generate_fasta(biodatabase)
     filename =  "#{biodatabase.name}.fasta"
     fasta_file_handle = File.new(filename,"w")
-    biosequences.each do | seq |
+    biodatabase.biosequences.each do | seq |
       fasta_file_handle.puts(seq.to_fasta)
     end
     fasta_file_handle.close
@@ -141,7 +141,7 @@ class FastaFile < ActiveRecord::Base
     fasta_file = FastaFile.new
     fasta_file.fasta = fasta_file_handle
     fasta_file.project_id = biodatabase.biodatabase_group.project_id
-    fasta_file.user_id = self.user_id
+    fasta_file.user_id = biodatabase.biodatabase_group.user_id
     fasta_file.is_generated = true
     fasta_file.save!
     biodatabase.fasta_file = fasta_file

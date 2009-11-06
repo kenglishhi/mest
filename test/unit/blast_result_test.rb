@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class BlastResultTest < ActiveSupport::TestCase
   should_have_attached_file :output
+  should_belong_to :project, :user
+  should_validate_presence_of :project_id, :user_id
   should "test convenience methods" do
     Factory(:blast_result)
     blast_result = BlastResult.first

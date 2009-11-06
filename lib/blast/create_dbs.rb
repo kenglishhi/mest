@@ -19,9 +19,9 @@ class Blast::CreateDbs < Blast::Base
 
     output_biodatabase_group_name = params[:output_biodatabase_group_name] ||
       "#{@test_fasta_file.biodatabase.name} vs #{@target_fasta_file.biodatabase.name}"
-    @blast_result = BlastResult.new(:name => "#{output_biodatabase_group_name} Blast Result",
-      :started_at => Time.now
-    )
+
+    @blast_result = new_blast_result("#{output_biodatabase_group_name} Blast Result")
+
     output_file_handle = Blast::Command.execute(:blastall, @blast_result, :test_file_path => @test_fasta_file.fasta.path,
       :target_file_path => @target_fasta_file.fasta.path,
       :evalue => evalue,
@@ -38,11 +38,9 @@ class Blast::CreateDbs < Blast::Base
     BiodatabaseGroup.transaction do
       output_biodatabase_group  = ""
       if BiodatabaseGroup.exists? :name => output_biodatabase_group_name
-        puts "output_biodatabase_group_name exists! #{output_biodatabase_group_name}"
         logger.error "output_biodatabase_group_name exists! #{output_biodatabase_group_name}"
         output_biodatabase_group  = BiodatabaseGroup.find_by_name(output_biodatabase_group_name)
       else
-        puts "Creating output_biodatabase_group_name #{output_biodatabase_group_name}"
         logger.error "Creating output_biodatabase_group_name #{output_biodatabase_group_name}"
         output_biodatabase_group = BiodatabaseGroup.create!(:name => output_biodatabase_group_name,
           :project_id => @test_fasta_file.project_id,
@@ -81,7 +79,7 @@ class Blast::CreateDbs < Blast::Base
         end
       end
     end
-    @blast_result.output= output_file_handle
+    @blast_result.output = output_file_handle
     @blast_result.save!
     logger.error( "Saved blast Results ")
     @blast_result

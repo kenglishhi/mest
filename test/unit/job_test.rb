@@ -10,10 +10,11 @@ class JobTest < ActiveSupport::TestCase
     params = {}
     delayed_job_count =  Job.count
     job_name = "Say Hello to my little friend"
-    job_handler = Jobs::CleanDatabaseWithBlast.new(job_name, params.merge(:user_id => current_user.id))
+    job_handler = Jobs::CleanDatabaseWithBlast.new(job_name )
     Job.create(:job_name => job_name,
       :handler => job_handler,
-      :user => current_user )
+      :user => current_user,
+      :project => current_user.active_project)
 
     assert_equal delayed_job_count + 1,Job.count
   end

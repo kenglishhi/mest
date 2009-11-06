@@ -20,9 +20,7 @@ class Blast::Clean < Blast::Base
 
     @output_biodatabase = create_clean_output_database(@test_fasta_file.biodatabase)
 
-    @blast_result = BlastResult.new(:name => "#{@output_biodatabase.name} Blast Result",
-      :started_at => Time.now
-    )
+    @blast_result = new_blast_result("#{@output_biodatabase.name} Blast Result")
 
     evalue = get_evalue
     output_file_handle = Blast::Command.execute(:blastall,@blast_result, :test_file_path => @test_fasta_file.fasta.path,

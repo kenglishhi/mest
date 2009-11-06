@@ -3,7 +3,12 @@ class BlastResult < ActiveRecord::Base
     :path => ":rails_root/public/system/:attachment/:id/:style/:normalized_output_file_name",
     :url => "/system/:attachment/:id/:style/:normalized_output_file_name"
 
+
   include ExtJS::Model
+  belongs_to :user
+  belongs_to :project
+  validates_presence_of :project_id
+  validates_presence_of :user_id
   extjs_fields :id, :name, :command,:output_file_name_display,:output_file_url, :started_at, :stopped_at
   cattr_reader :per_page
   @@per_page = 10

@@ -6,7 +6,6 @@ class Blast::Remote < Blast::Base
     @test_database = Biodatabase.find(@params[:test_biodatabase_id] )
     seq = Biosequence.first_in_biodatabase(@test_database).first
     f = File.open("#{seq.name}.fasta", 'w') {|f| f.write(seq.to_fasta) }
-    puts f.inspect
 #    @test_fasta_file = @test_database.fasta_file
 #    raise "Target Fasta File does not exist" unless @test_fasta_file
 #    @target_fasta_file = @test_fasta_file

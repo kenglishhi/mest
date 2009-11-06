@@ -1,105 +1,109 @@
 --- 
 users_004: 
-  created_at: 2009-09-13 03:46:23
+  created_at: 2009-11-06 06:12:09
   last_request_at: 
-  single_access_token: 3VvszfeeP4cvCFcbw8AG
+  single_access_token: VtBvAyDf9_1P2i7oPieM
   avatar_file_size: "2456"
   avatar_file_name: dolphin.jpg
-  crypted_password: ebc9e1eee788681dedeb59f508229b5c5ac7b8bcad15d2b89d176ec9fb9a15f5cf59d9ce582388e16c9cf025f86582b95481b3da5e6d58342610d3a68b80b96a
+  crypted_password: 4d723c79f3f75872d8cf6eb16224cf3088b2820c8f12e4fb9c5d64e90cdae98ffdfab7dc8fc449cade380316167ce08f728ee5c30b4cf6967066c06320bf772f
   title: ""
-  updated_at: 2009-09-13 03:46:23
-  perishable_token: HSlQmo8dfevDepBYYtHn
+  updated_at: 2009-11-06 06:12:10
+  perishable_token: LjfB4y3OtJ4WNABz40Qo
   current_login_ip: 
   failed_login_count: "0"
   id: "4"
   current_login_at: 
-  password_salt: 73oM-AKw1-s9g5G0ORUK
+  password_salt: i-prvrxfMfc_qWzc-QMB
   avatar_content_type: image/jpeg
   mi: ""
   login_count: "0"
-  persistence_token: ca116f8d5a168ba06d2b1242600f0e1a0745d8f5492a6afa03c99a2049db39945a8d6f6f1af66f84d2bb858508581b79e767f991ad6c3735119ce9588d1cba6e
+  persistence_token: e5d65533c624fd6129304e4866cbb1d942de2382641afef0c2156d7194c7ff308c2a9bbdc55941acd14f5f5702e661a1b1458a8664b961d597497c40ff4d3e81
   last_name: Putnam
   last_login_ip: 
   organization: 
+  default_project_id: "4"
   last_login_at: 
-  avatar_updated_at: 2009-09-13 03:46:22
+  avatar_updated_at: 2009-11-06 06:12:09
   first_name: Hollie
   email: hputnam@hawaii.edu
 users_001: 
-  created_at: 2009-09-13 03:46:22
+  created_at: 2009-11-06 06:12:09
   last_request_at: 
-  single_access_token: HGzhSefdOKNwxsCVmaoh
+  single_access_token: QuYWIEAX_zItQCDic5WL
   avatar_file_size: "2758"
   avatar_file_name: kevin_pic.jpg
-  crypted_password: 18969cd8bffa3b5769d0a1714e932a28e55e121239eb447192af40a42ccd08108eb1182e9eb18c7e5304480ba1738ed5f1b33ba3655545b35952421e959a556c
+  crypted_password: bb75df9f333f31db022f2c73af4a6d763b94c71a6a51fb17da8055a0d7ad063972c2d75bd05a0be8be87a7873d604ce622c4ed764ddfc6d490884f322f016d11
   title: ""
-  updated_at: 2009-09-13 03:46:22
-  perishable_token: uqZP29zhxzM3e4mZ4aOM
+  updated_at: 2009-11-06 06:12:09
+  perishable_token: 6_ZWAzjSd4cYlaqmAvHL
   current_login_ip: 
   failed_login_count: "0"
   id: "1"
   current_login_at: 
-  password_salt: TttCGSQq6d0BspTn8rPW
+  password_salt: 2mqGaCCqvpxrsMLgZqbG
   avatar_content_type: image/jpeg
   mi: W
   login_count: "0"
-  persistence_token: 57578b4fd018e7e18c36a0786f19146f0ca5d451319d011b81d4d861263d402885fd1c6b8469e82c92886297f4567f49a1fbe975791611735dd8b3cd7967071a
+  persistence_token: a76be0687ccd2e39fe60be4c44ec7a1d759baa4eb1333a8fedd45c89e8e7edc840b2e58f33d4fa1f8ab6f818abf3c86837a7508889e892cac92ef4e5816d106a
   last_name: English
   last_login_ip: 
   organization: 
+  default_project_id: "1"
   last_login_at: 
-  avatar_updated_at: 2009-09-13 03:46:22
+  avatar_updated_at: 2009-11-06 06:12:08
   first_name: Kevin
   email: kenglish@gmail.com
 users_002: 
-  created_at: 2009-09-13 03:46:22
-  last_request_at: 2009-09-18 18:20:12
-  single_access_token: KdtgZO5ALtf775drum6s
+  created_at: 2009-11-06 06:12:09
+  last_request_at: 2009-11-06 06:35:58
+  single_access_token: R0BTNWWBZhmMbLuCTzU0
   avatar_file_size: "1670"
   avatar_file_name: tigershark.jpg
-  crypted_password: 6323579c5ab4993953a89a0715176b530eb34332d263107bb352cd14d7177ae4aec04f30a436dcc6c11ed8cc0071837080c23fd70e6f4e2d463cb0cf0526f7cb
+  crypted_password: 5eb0c97a2ceed90515b27e33b98e449873d4203eea0ba2da8340c3649830ac6d6e12e0771033ba00507882871e354c6730a1e57f9476ecb96538f8f29fa13888
   title: ""
-  updated_at: 2009-09-18 18:20:12
-  perishable_token: bpi3ZYlqS6dJ64pEPKIu
-  current_login_ip: 127.0.1.1
+  updated_at: 2009-11-06 06:35:58
+  perishable_token: 6zHe5vPZ5Eq-CoCvOOPf
+  current_login_ip: 127.0.0.1
   failed_login_count: "0"
   id: "2"
-  current_login_at: 2009-09-13 22:28:06
-  password_salt: sVGnFSlZNOpF9YRNdasE
+  current_login_at: 2009-11-06 06:12:27
+  password_salt: FoMPfuziIFKywU9wDABA
   avatar_content_type: image/jpeg
   mi: ""
-  login_count: "2"
-  persistence_token: f328038d2ba68b29940e83cfff86bfb722a0a3cb189c4573dc1dbd0ea964bf0709275c227d9eba962690d76c9cf0e76917db3e77bfd0e8220f7162b7cccfafa6
+  login_count: "1"
+  persistence_token: 1cf02bea5faaa25889296ecd45a2e0be80fc059aef4ca2345936fc6067f5f8319ea5412fc462a95636b55749076dbd6328df31c6f749b3f5886524d72af4cc3e
   last_name: Pochon
-  last_login_ip: 127.0.1.1
+  last_login_ip: 
   organization: 
-  last_login_at: 2009-09-13 03:46:27
-  avatar_updated_at: 2009-09-13 03:46:22
+  default_project_id: "2"
+  last_login_at: 
+  avatar_updated_at: 2009-11-06 06:12:09
   first_name: Xavier
   email: pochon@hawaii.edu
 users_003: 
-  created_at: 2009-09-13 03:46:22
+  created_at: 2009-11-06 06:12:09
   last_request_at: 
-  single_access_token: 77s96hmtjqEy8ozbRv50
+  single_access_token: 7s3eyeGHGQHpEHxI7lIl
   avatar_file_size: "21779"
   avatar_file_name: poisson.jpg
-  crypted_password: f16f2de1f921edef89a71b404113be5cc80a3b9755be61d3eb1583ab69979c08eb9888ac151dfa943e9e7e10badec4db02b6265befae71940cc2878051e93000
+  crypted_password: 0d0addd50f1b4a75caeb0651b4c06c323d8426b569ba329560ce514afd4a1675fec1aa1caf2d9409915d1cac4a827e1362e00dc1c2a564429e995e42d75e39ba
   title: ""
-  updated_at: 2009-09-13 03:46:22
-  perishable_token: hHQaV0F_40RwxjGro7So
+  updated_at: 2009-11-06 06:12:09
+  perishable_token: wznfCqew1VBEyLHTd6xF
   current_login_ip: 
   failed_login_count: "0"
   id: "3"
   current_login_at: 
-  password_salt: 7IFroGKxaXgOEHMMnbc7
+  password_salt: 01hRvr1fyHSDfxkfGoxi
   avatar_content_type: image/jpeg
   mi: ""
   login_count: "0"
-  persistence_token: e69bf37eab28c1bdf1a41304672382010fa850806c7a1331db75b9a656f176848f0da468ee894c879c27ab4aac2f65dde63a197ae1daf54d0ae8772da1a41e25
+  persistence_token: 82d457be4a00b1f8f2248de7f8e7cd4ba5906d0a1b1c60785fc40df5edf9360c9a2c395f852376724565eadc45934326cba3ca7067cc9cf43a567d6d485b1046
   last_name: Poisson
   last_login_ip: 
   organization: 
+  default_project_id: "3"
   last_login_at: 
-  avatar_updated_at: 2009-09-13 03:46:22
+  avatar_updated_at: 2009-11-06 06:12:09
   first_name: Guylaine
   email: guylaine@hawaii.edu

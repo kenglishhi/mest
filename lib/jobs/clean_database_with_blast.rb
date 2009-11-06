@@ -5,7 +5,7 @@ class Jobs::CleanDatabaseWithBlast < Jobs::AbstractJob
 
   def do_perform
 
-    [:user_id, :biodatabase_id].each do | required_param_key |
+    [ :biodatabase_id ].each do | required_param_key |
       raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
     end
     params.merge!(:blast_result_name => "#{job_name} Blast Results" ) 

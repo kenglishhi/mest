@@ -43,10 +43,11 @@ class Tools::BlastCleanersController < ApplicationController
   private
 
   def create_job(job_name)
-    job_handler = Jobs::CleanDatabaseWithBlast.new(job_name, params.merge(:user_id => current_user.id))
+    job_handler = Jobs::CleanDatabaseWithBlast.new(job_name)
     Job.create(:job_name => job_name,
       :handler => job_handler,
-      :user => current_user)
+      :user => current_user,
+      :project => current_user.active_project )
   end
 
 end

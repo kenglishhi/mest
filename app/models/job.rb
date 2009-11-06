@@ -5,17 +5,20 @@ class Job < Delayed::Job
   @@per_page = 25
   set_table_name 'delayed_jobs'
   belongs_to :user
+  belongs_to :project
   
 
 
   validates_presence_of :job_name
   validates_presence_of :user_id
+  validates_presence_of :project_id
                          
   before_create :add_user_to_job
   
   private
   
   def add_user_to_job
-    self.handler.user_id = self.user.id
+    self.handler.user_id = self.user.id || self.user_id
+    self.handler.project_id = self.project.id || self.project_id
   end
 end

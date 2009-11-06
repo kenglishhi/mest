@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => '8447460760525a05bf14b9942b939c70'
 
   before_filter :require_user
+  before_filter :check_for_session_data
+
 
   private
 
@@ -59,6 +61,13 @@ class ApplicationController < ActionController::Base
   end
   def project_conditions
     ['project_id = ? ', current_user.active_project.id]
+  end
+  def check_for_session_data
+    return unless session[:active_project_id]
+    current_user.active_project = Project.find(session[:active_project_id])
+  end
+ def change_active_project(project)
+    session[:active_project_id] = project.id
   end
 
 

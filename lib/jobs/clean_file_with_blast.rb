@@ -5,7 +5,7 @@ class Jobs::CleanFileWithBlast < Jobs::AbstractJob
 
   def do_perform
 
-    [:user_id, :fasta_file_id].each do | required_param_key |
+    [ :fasta_file_id ].each do | required_param_key |
        raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
     end
     blast_command = Blast::Clean.new(params)

@@ -12,25 +12,30 @@ class User < ActiveRecord::Base
   belongs_to :default_project,:class_name => "Project"
 
   after_create :create_default_project
+  attr_accessor :active_project
+
+  acts_as_authentic do | config |
+    config.login_field = 'email'
+  end
 
   def create_default_project
     self.default_project = Project.new(:name => "#{self.first_name} #{self.last_name} Project 1",
       :description => "This is the default project for #{self.first_name} #{self.last_name}",
       :user => self)
     self.save
+    biodatabase_group = BiodatabaseGroup.create(:name => 'Main Group',:user => self,
+      :project => self.default_project)
+
   end
 
-  acts_as_authentic do | config |
-    config.login_field = 'email'
-  end
 
   # for active scaffold
   def label
     email
   end
   def active_project
-    if @active_project_id  
-      Project.find(@active_project_id)
+    if @active_project  
+      @active_project
     else
       self.default_project
     end

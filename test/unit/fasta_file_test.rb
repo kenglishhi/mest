@@ -6,7 +6,6 @@ class FastaFileTest < ActiveSupport::TestCase
   should_belong_to :user
   should_have_one :biodatabase
 
-  should_validate_uniqueness_of :label
 
   context "Format DB should fail if no fasta file exists" do
     setup do
