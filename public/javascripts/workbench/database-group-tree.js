@@ -1,30 +1,9 @@
-
 Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   dataUrl: null,
   treeData: null,
   projectOptions:null,
   initComponent: function() {
-    var rootNode = new Ext.tree.AsyncTreeNode(this.treeData);
-    var store = new Ext.data.ArrayStore({
-      fields: ['id', 'name'],
-      data : this.projectOptions
-    })
-    var combo = new Ext.form.ComboBox({
-      store: store,
-      displayField: 'name',
-      typeAhead: false,
-      allowBlank: false,
-      editable: false,
-      mode: 'local',
-      triggerAction: 'all',
-      emptyText:'Select a Project...',
-      selectOnFocus:true,
-      forceSelection:true,
-      width:135
-    });
-//    combo.setValue(8);
-    // set the root node
-    var rootNode = new Ext.tree.AsyncTreeNode({
+   var rootNode = new Ext.tree.AsyncTreeNode({
       text: 'Ext JS',
       draggable:false, // disable root node dragging
       id:'src'
@@ -40,7 +19,11 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       enableDD: true,
       rootVisible: false,
 
-      tbar: [ combo,
+      tbar: [ 
+      {
+        text: 'Add Database Group',
+        handler: this.addDatabaseGroup
+      },'->',
       {
         iconCls:'x-tbar-loading',
         handler: function() {
@@ -49,11 +32,8 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
             dbTree.refresh();
           }
         }
-      }, '->',
-      {
-        text: 'Add Database Group',
-        handler: this.addDatabaseGroup
-      }],
+      }, 
+      ],
 
       loader: new Ext.tree.TreeLoader({
         dataUrl:'/workbench/tree/',

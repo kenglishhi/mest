@@ -57,6 +57,9 @@ class ApplicationController < ActionController::Base
   def get_page(paginated_class)
     params[:start].blank? ? 1 : ((params[:start].to_i/paginated_class.per_page) + 1)
   end
+  def project_conditions
+    ['project_id = ? ', current_user.active_project.id]
+  end
 
 
 

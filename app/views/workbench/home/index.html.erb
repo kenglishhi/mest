@@ -122,7 +122,7 @@ extjs_store( :controller => "workbench/blast_results",
 
     var jobStore = <%=
 extjs_store( :controller => "workbench/jobs",
-    :model => 'Job',
+  :model => 'Job',
   :writer => {"encode" => false},
   :config => {
     "totalProperty" => 'results',
@@ -148,6 +148,8 @@ extjs_store( :controller => "workbench/job_logs",
 %>;
 
 
+    var currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
+    var currentProjectId = <%= current_user.active_project.id %>;
     var seqPageSize = <%= biosequence_page_size %> ;
     var databaseGroupPageSize = <%= biodatabase_group_page_size %> ;
     var dbPageSize = <%= biodatabase_page_size %> ;
@@ -202,19 +204,74 @@ extjs_store( :controller => "workbench/job_logs",
       split:true
     } );
 
+    //   var mainMenuToolbar = new Ext.Toolbar() ;
+    //
+    //    mainMenuToolbar.addFill();
+    //    mainMenuToolbar.addText(" Unit: ");
+    //    mainMenuToolbar.addField(projectCombo );
+
+    var projectStore = new Ext.data.ArrayStore({
+      fields: ['id', 'name'],
+      data : Ext.workbenchdata.projectOptions
+    });
+
+    var projectCombo = new Ext.form.ComboBox({
+      store: projectStore,
+      displayField: 'name',
+      valueField:'id',
+      typeAhead: false,
+      allowBlank: false,
+      editable: false,
+      mode: 'local',
+      triggerAction: 'all',
+      emptyText:'Select a Project...',
+      selectOnFocus:true,
+      forceSelection:true,
+      autowidth:true,
+      width:200
+    });
+
+
+    projectCombo.setValue( currentProjectId );
+    projectCombo.on('select', function(box, record) {
+        var controllerUrl = '/?active_project_id=' + record.data.id ;
+        //controllerUrl = controllerUrl.replace(/xxx_new_selected_unit/,record.data.unit_id );
+        window.location = controllerUrl;
+
+    });
+
     var viewport = new Ext.Viewport({
       layout: 'border',
       items: [
         // create instance immediately
-        new Ext.BoxComponent({
+        {
+          xtype: 'toolbar',
+          region: 'north',
+          height: 30,
+          items: [ 
+            {
+              xtype: 'tbtext',
+              text: north_html ,
+              cls:'north-header',
+              id: 'main-menu-title'
+            },
+
+            '   ',
+            'Logged in as <b>' + currentUserDisplayName + '</b>',
+            '->',
+            'Select Project ',
+            ' ' ,
+            projectCombo
+          ]
+        },
+        /*        new Ext.BoxComponent({
+
           region: 'north',
           height: 32, // give north and south regions a height
-          autoEl: {
-            tag: 'div',
-            html: north_html
 
-          }
+          el: 'my-header-div'
         }),
+         */
         {
           region: 'west',
           id: 'west-panel', // see Ext.getCmp() below
@@ -293,7 +350,7 @@ extjs_store( :controller => "workbench/job_logs",
                 }
               ]
             }, {
-              iconCls:'origin',
+              iconCls:'book',
               title: 'Database Groups',
               autoScroll: true,
               id:'workbench-biodatabase-group-tab',
@@ -305,7 +362,7 @@ extjs_store( :controller => "workbench/job_logs",
               ]
 
             },  {
-              iconCls:'origin',
+              iconCls:'cog_edit',
               title: 'Blast Results',
               autoScroll: true,
               id:'workbench-blast-result-tab',
@@ -317,18 +374,19 @@ extjs_store( :controller => "workbench/job_logs",
               ]
 
             }, {
-              iconCls:'origin',
+              iconCls:'grid_icon',
               title: 'Running Jobs',
               autoScroll: true,
               id:'workbench-running-jobs-tab',
               items: [
-                {id: 'workbench-jobs-grid',
+                { id: 'workbench-jobs-grid',
                   pageSize: jobPageSize,
                   xtype:'job-grid' ,
                   store: jobStore }
               ]
 
-            }, { iconCls:'origin',
+            }, { 
+              iconCls:'image_add',
               title: 'Job Log',
               autoScroll: true,
               id:'workbench-job-log-tab',
@@ -425,16 +483,19 @@ extjs_store( :controller => "workbench/job_logs",
       winBlast.show(this);
     });
 
-    //    var button4 = Ext.get('ncbi-blast-search');
-    //    button4.on('click', function(){
-    //      Ext.bio.ncbiBlastSearch("ncbi-blast-search-form");
-    //    });
 
 
   });
     </script>
   </head>
   <body>
+    <div id="my-header-div" >
+      <div style='float:left;' class="north-header"> <%= link_to "BioFastaCoconutIsland", '/' %>  - <%= link_to "Home", '/' %></div>
+      <div  style='float: right; width: 500px;' >
+        <div id='project-options-header' />
+      </div>
+    </div>
+
     <div id="rename-content" class="x-hide-display">
       <input type="button" id="rename-biosequences" value="Rename Sequences" /><br />
       <p>Allows you to rename sequences sequentially in a database with a prefix and sequential number.</p>

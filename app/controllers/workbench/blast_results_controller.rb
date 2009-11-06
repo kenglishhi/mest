@@ -2,7 +2,8 @@ class Workbench::BlastResultsController < ApplicationController
  include ExtJS::Controller
   def index
     page = get_page(BlastResult)
-    data = BlastResult.paginate :page => page, :order => 'stopped_at DESC'
+    data = BlastResult.paginate :page => page, :order => 'stopped_at DESC',
+      :conditions => project_conditions
     results =BlastResult.count
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
   end

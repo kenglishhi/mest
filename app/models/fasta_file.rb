@@ -33,8 +33,8 @@ class FastaFile < ActiveRecord::Base
         transaction do
           if self.project.biodatabase_groups.empty?
             biodatabase_group = BiodatabaseGroup.create do |d|
-              d.name = "Default Database Group 1 for project #{project.name}"
-              d.description = 'This is the default database group.'
+              d.name = "Main Group"
+              d.description = 'This is the main database group.'
               d.user = user
               d.project = project
             end
