@@ -7,10 +7,13 @@ class Jobs::AbstractJob
   attr_accessor :params
   def initialize(n, p  = {} )
     @job_name = n
-#    @params = p
-    @params = {:user_id => user_id, :project_id => project_id}.merge(p)
+    @params = p
   end
   def perform
+    user_data = {:user_id => user_id, :project_id => project_id}
+    params.merge!(user_data)
+    puts "perform = params = #{params.inspect}"
+    puts "perform = user_data =  #{user_data.inspect}  "
     do_perform
   end
   
