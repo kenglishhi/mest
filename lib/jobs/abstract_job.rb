@@ -12,8 +12,6 @@ class Jobs::AbstractJob
   def perform
     user_data = {:user_id => user_id, :project_id => project_id}
     params.merge!(user_data)
-    puts "perform = params = #{params.inspect}"
-    puts "perform = user_data =  #{user_data.inspect}  "
     do_perform
   end
   
