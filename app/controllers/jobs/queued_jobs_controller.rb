@@ -11,6 +11,8 @@ class Jobs::QueuedJobsController < Jobs::BaseController
       :job_name, :run_at, :priority, :attempts,
       :last_error, :failed_at, :created_at
     ]
+
+    config.list.sorting = [{:created_at => :desc}]
   end
 
   protected

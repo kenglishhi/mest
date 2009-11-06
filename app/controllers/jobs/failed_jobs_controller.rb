@@ -6,6 +6,7 @@ class Jobs::FailedJobsController < Jobs::BaseController
       :job_name, :run_at, :priority, :attempts,
       :last_error, :run_at, :failed_at
     ]
+    config.list.sorting = [{:failed_at => :desc}]
   end
 
   protected

@@ -8,6 +8,8 @@ class Jobs::RunningJobsController < Jobs::BaseController
       :job_name, :run_at, :priority, :attempts,
       :last_error, :run_at, :failed_at
     ]
+
+    config.list.sorting = [{:run_at => :desc}]
   end
 
   protected
