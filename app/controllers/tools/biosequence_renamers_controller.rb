@@ -34,7 +34,7 @@ class Tools::BiosequenceRenamersController < ApplicationController
   end
   private
   def create_job(job_name)
-    job_handler = Jobs::RenameSequencesInDb.new(job_name)
+    job_handler = Jobs::RenameSequencesInDb.new(job_name,params)
     Job.create(:job_name => job_name,
       :handler => job_handler,
       :user => current_user,
