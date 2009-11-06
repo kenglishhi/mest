@@ -19,7 +19,7 @@ class Tools::BlastCleanersController < ApplicationController
             :errors => [{
                 :id => 'new_biodatabase_name',
                 :msg => "Sorry man, New Database Name already exists." }]
-            }
+          }
         }
       end
       return
@@ -43,7 +43,9 @@ class Tools::BlastCleanersController < ApplicationController
   private
 
   def create_job(job_name)
-    job_handler = Jobs::CleanDatabaseWithBlast.new(job_name)
+    job_handler = Jobs::CleanDatabaseWithBlast.new(job_name,
+      {:biodatabase_id => params[:biodatabase_id],
+        :new_biodatabase_name=> params[:new_biodatabase_name]} )
     Job.create(:job_name => job_name,
       :handler => job_handler,
       :user => current_user,
