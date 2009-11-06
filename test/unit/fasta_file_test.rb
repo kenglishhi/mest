@@ -19,6 +19,52 @@ class FastaFileTest < ActiveSupport::TestCase
       end
     end
   end
+  context "Generate fasta file" do
+    setup do
+      @biodatabase = Biodatabase.create(
+        :name => "New BioDB 33",
+        :biodatabase_type => biodatabase_types(:biodatabase_types_001),
+        :biodatabase_group => biodatabase_groups(:biodatabase_groups_001),
+        :user => users(:users_001))
+
+      @biodatabase.biosequences << biosequences(:biosequences_007)
+      @biodatabase.biosequences << biosequences(:biosequences_006)
+      @biodatabase.biosequences << biosequences(:biosequences_002)
+      @biodatabase.save!
+      FastaFile.generate_fasta @biodatabase
+    end
+
+    should "Generate a fasta file" do
+      @biodatabase.reload
+      assert_equal @biodatabase.biosequences.size,3, "Should have 3 sequences in the database"
+      assert_not_nil @biodatabase.fasta_file, "Fasta File should not be nil."
+      assert @biodatabase.destroy
+    end
+  end
+  context "Overwrite fasta file" do
+    setup do
+      @biodatabase = Biodatabase.create(
+        :name => "New BioDB 33",
+        :biodatabase_type => biodatabase_types(:biodatabase_types_001),
+        :biodatabase_group => biodatabase_groups(:biodatabase_groups_001),
+        :user => users(:users_001))
+
+      @biodatabase.biosequences << biosequences(:biosequences_007)
+      @biodatabase.biosequences << biosequences(:biosequences_006)
+      @biodatabase.biosequences << biosequences(:biosequences_002)
+      @biodatabase.save!
+      FastaFile.generate_fasta @biodatabase
+    end
+
+    should "Generate a fasta file" do
+      @biodatabase.reload
+      assert_equal @biodatabase.biosequences.size,3, "Should have 3 sequences in the database"
+      assert_not_nil @biodatabase.fasta_file, "Fasta File should not be nil."
+      assert @biodatabase.destroy
+    end
+  end
+
+
 
   should "do a save" do
     @fasta_file = FastaFile.new

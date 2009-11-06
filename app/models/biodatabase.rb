@@ -81,28 +81,27 @@ class Biodatabase < ActiveRecord::Base
       logger.error("new name = #{new_name}")
       biosequences[i].name = new_name
       biosequences[i].save!
-
     end
   end
 
-#  def generate_fasta
-#    if fasta_file_id.nil?
-#      filename =  "#{name}.fasta"
-#      fasta_file_handle = File.new(filename,"w")
-#      biosequences.each do | seq |
-#        fasta_file_handle.puts(seq.to_fasta)
-#      end
-#      fasta_file_handle.close
-#      fasta_file_handle = File.new(filename,"r")
-#      self.fasta_file = FastaFile.new
-#      self.fasta_file.fasta = fasta_file_handle
-#      self.fasta_file.project_id = biodatabase_group.project_id
-#      self.fasta_file.user_id = self.user_id
-#      self.fasta_file.is_generated = true
-#      self.fasta_file.save!
-#      save
-#    end
-#  end
-###
+  def generate_fasta
+    if fasta_file_id.nil?
+      filename =  "#{name}.fasta"
+      fasta_file_handle = File.new(filename,"w")
+      biosequences.each do | seq |
+        fasta_file_handle.puts(seq.to_fasta)
+      end
+      fasta_file_handle.close
+      fasta_file_handle = File.new(filename,"r")
+      self.fasta_file = FastaFile.new
+      self.fasta_file.fasta = fasta_file_handle
+      self.fasta_file.project_id = biodatabase_group.project_id
+     self.fasta_file.user_id = self.user_id
+      self.fasta_file.is_generated = true
+      self.fasta_file.save!
+      save
+    end
+  end
+
   private
 end

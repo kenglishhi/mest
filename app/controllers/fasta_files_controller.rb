@@ -52,7 +52,8 @@ class FastaFilesController < ApplicationController
     extract_sequences_job = Jobs::ExtractSequences.new(job_name, :fasta_file_id => fasta_file.id)
     Job.create(:job_name => job_name,
       :handler => extract_sequences_job,
-      :user => current_user)
+      :user => current_user,
+      :project => current_user.active_project)
 
     render :inline => 'Queued to Extract'    
   end

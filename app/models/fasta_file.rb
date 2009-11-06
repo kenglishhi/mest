@@ -131,14 +131,32 @@ class FastaFile < ActiveRecord::Base
   end
 
   def self.generate_fasta(biodatabase)
-    filename =  "#{biodatabase.name}.fasta"
+    filename =  "#{RAILS_ROOT}/tmp/#{biodatabase.name}.fasta"
+    self.write_sequences_to_file(biodatabase, filename)
+
+    fasta_file_handle = File.new(filename,"r")
+    fasta_file = FastaFile.new
+    fasta_file.fasta = fasta_file_handle
+    fasta_file.project_id = biodatabase.biodatabase_group.project_id
+    fasta_file.user_id = biodatabase.biodatabase_group.user_id
+    fasta_file.is_generated = true
+    fasta_file.save!
+
+    biodatabase.fasta_file = fasta_file
+    biodatabase.save
+
+  end
+
+  def overwrite_fasta
+    filename =  "#{RAILS_ROOT}/tmp/#{biodatabase.name}.fasta"
     fasta_file_handle = File.new(filename,"w")
+
+    self.write_sequences_to_file(biodatabase, filename)
+
     biodatabase.biosequences.each do | seq |
       fasta_file_handle.puts(seq.to_fasta)
     end
     fasta_file_handle.close
-    fasta_file_handle = File.new(filename,"r")
-    fasta_file = FastaFile.new
     fasta_file.fasta = fasta_file_handle
     fasta_file.project_id = biodatabase.biodatabase_group.project_id
     fasta_file.user_id = biodatabase.biodatabase_group.user_id
@@ -148,6 +166,17 @@ class FastaFile < ActiveRecord::Base
     biodatabase.save
 
   end
+  private
+  def self.write_sequences_to_file(biodatabase, filename)
+    fasta_file_handle = File.new(filename,"w")
+    biodatabase.biosequences.each do | seq |
+      fasta_file_handle.puts(seq.to_fasta)
+    end
+    fasta_file_handle.close
+
+  end
+
 
 
 end
+
