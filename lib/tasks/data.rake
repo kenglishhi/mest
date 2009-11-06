@@ -49,20 +49,16 @@ namespace :data do
       u.password_confirmation =  'hollie123'
     end
 
-    project = Project.create do |p|
-      p.name = 'Default Project 1'
-      p.description = 'This is the default system project, please rename it.'
-      p.user = xavier_user
+    user = User.create do |u|
+      u.email = 'burkif@interchange.ubc.ca' 
+      u.first_name = 'Burki' 
+      u.last_name = 'Fabien' 
+      u.mi = '' 
+      u.title = '' 
+      u.avatar = File.new(File.dirname(__FILE__) + '/../../test/fixtures/files/dolphin.jpg')
+      u.password =  'burki123'
+      u.password_confirmation =  'burki123'
     end
-
-    BiodatabaseGroup.create do |d|
-      d.name = 'Default Database Group 1'
-      d.description = 'This is the default database group.'
-      d.user = xavier_user
-      d.project = project
-    end
-
-
 
   end
 end
