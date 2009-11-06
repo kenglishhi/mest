@@ -63,7 +63,6 @@ class ApplicationController < ActionController::Base
     ['project_id = ? ', current_user.active_project.id]
   end
   def check_for_session_data
-    logger.error("[kenglish] check_for_session = (current_user.nil? = #{current_user.nil? } && session[:active_project_id].blank? =  #{session[:active_project_id].blank?} ")
     return if (current_user.nil? || session[:active_project_id].blank? )
     current_user.active_project = Project.find(session[:active_project_id])
   end

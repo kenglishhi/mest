@@ -48,11 +48,14 @@ class Blast::CleanDb < Blast::Base
             target_biosequence = Biosequence.find_by_name(hit.target_def)
             @matches = @matches - 1
             @output_biodatabase.biosequences.delete( target_biosequence )
+            BiodatabaseBiosequence.delete_all(['biodatabase_id =?  AND  biosequence_id =?', 
+                @output_biodatabase.id,
+                target_biosequence.id])
           end
         end
       end
     end
-    @output_biodatabase.save
+#    @output_biodatabase.save
     FastaFile.generate_fasta(@output_biodatabase)
     BiodatabaseLink.create(:biodatabase =>@test_fasta_file.biodatabase,
       :linked_biodatabase => @output_biodatabase,

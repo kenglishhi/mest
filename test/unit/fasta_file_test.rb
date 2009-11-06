@@ -6,7 +6,6 @@ class FastaFileTest < ActiveSupport::TestCase
   should_belong_to :user
   should_have_one :biodatabase
 
-
   context "Format DB should fail if no fasta file exists" do
     setup do
       @fasta_file = FastaFile.new
@@ -19,6 +18,7 @@ class FastaFileTest < ActiveSupport::TestCase
       end
     end
   end
+
   context "Generate fasta file" do
     setup do
       @biodatabase = Biodatabase.create(
@@ -43,16 +43,10 @@ class FastaFileTest < ActiveSupport::TestCase
   end
   context "Overwrite fasta file" do
     setup do
-      @biodatabase = Biodatabase.create(
-        :name => "New BioDB 33",
-        :biodatabase_type => biodatabase_types(:biodatabase_types_001),
-        :biodatabase_group => biodatabase_groups(:biodatabase_groups_001),
-        :user => users(:users_001))
+      @biodatabase = biodatabases(:biodatabases_001)
+     @biodatabase.rename_sequences("XXX")
+      @biodatabase.fasta_file.overwrite_fasta
 
-      @biodatabase.biosequences << biosequences(:biosequences_007)
-      @biodatabase.biosequences << biosequences(:biosequences_006)
-      @biodatabase.biosequences << biosequences(:biosequences_002)
-      @biodatabase.save!
       FastaFile.generate_fasta @biodatabase
     end
 

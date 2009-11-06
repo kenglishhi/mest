@@ -131,7 +131,7 @@ class FastaFile < ActiveRecord::Base
   end
 
   def self.generate_fasta(biodatabase)
-    filename =  "#{RAILS_ROOT}/tmp/#{biodatabase.name}.fasta"
+    filename =  "#{biodatabase.name}.fasta"
     self.write_sequences_to_file(biodatabase, filename)
 
     fasta_file_handle = File.new(filename,"r")
