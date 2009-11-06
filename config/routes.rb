@@ -52,6 +52,10 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'workbench/home',
     :action     => 'index'
 
+  map.connect 'workbench/home/change_project/:id',
+    :controller => 'workbench/home',
+    :action     => 'change_project'
+
   map.connect 'workbench/home',
     :controller => 'workbench/home',
     :action     => 'index'
