@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091104025619) do
+ActiveRecord::Schema.define(:version => 20091106072206) do
 
   create_table "alignments", :force => true do |t|
     t.string   "label"
@@ -108,6 +108,8 @@ ActiveRecord::Schema.define(:version => 20091104025619) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "command"
+    t.integer  "user_id"
+    t.integer  "project_id"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -124,6 +126,7 @@ ActiveRecord::Schema.define(:version => 20091104025619) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "project_id"
   end
 
   create_table "fasta_files", :force => true do |t|
@@ -147,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20091104025619) do
     t.boolean  "success"
     t.text     "message"
     t.integer  "user_id"
+    t.integer  "project_id"
   end
 
   create_table "projects", :force => true do |t|
