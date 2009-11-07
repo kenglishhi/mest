@@ -9,6 +9,7 @@ class CreateJobLogs < ActiveRecord::Migration
       t.boolean  :success
       t.text     :message
       t.integer :user_id
+      t.integer :project_id
     end
 
   end
