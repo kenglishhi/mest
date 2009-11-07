@@ -1,6 +1,5 @@
 class FastaFile < ActiveRecord::Base
   has_attached_file :fasta
-
   has_one :biodatabase
 
   belongs_to :user
@@ -54,12 +53,22 @@ class FastaFile < ActiveRecord::Base
         #        transaction do
         ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
         ff.each do |entry|
-          bioseq = Biosequence.new(:name => entry.definition,
-            :seq => entry.seq,
-            :alphabet => 'dna',
-            :length => entry.seq.length,
-            :original_name => entry.definition)
-          bioseq.save!
+          begin
+            bioseq = Biosequence.new(:name => entry.definition,
+              :seq => entry.seq,
+              :alphabet => 'dna',
+              :length => entry.seq.length,
+              :original_name => entry.definition)
+            bioseq.save!
+          rescue ActiveRecord::RecordInvalid =>  e
+            suffix = "_#{self.biodatabase.id}_#{self.biodatabase.biosequences.size}"
+            if ((bioseq.name.size + suffix.size) > 255)
+              bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
+            else
+              bioseq.name += suffix
+            end
+            bioseq.save!
+          end
           self.biodatabase.biosequences << bioseq
         end
         self.biodatabase.save!
@@ -148,27 +157,15 @@ class FastaFile < ActiveRecord::Base
   end
 
   def overwrite_fasta
-    filename =  "#{RAILS_ROOT}/tmp/#{biodatabase.name}.fasta"
-    fasta_file_handle = File.new(filename,"w")
 
-    self.write_sequences_to_file(biodatabase, filename)
-
-    biodatabase.biosequences.each do | seq |
-      fasta_file_handle.puts(seq.to_fasta)
+    if self.fasta
+      FastaFile.write_sequences_to_file(biodatabase, self.fasta.path )
     end
-    fasta_file_handle.close
-    fasta_file.fasta = fasta_file_handle
-    fasta_file.project_id = biodatabase.biodatabase_group.project_id
-    fasta_file.user_id = biodatabase.biodatabase_group.user_id
-    fasta_file.is_generated = true
-    fasta_file.save!
-    biodatabase.fasta_file = fasta_file
-    biodatabase.save
 
   end
-  private
+
   def self.write_sequences_to_file(biodatabase, filename)
-    fasta_file_handle = File.new(filename,"w")
+    fasta_file_handle = File.new(filename,"w+")
     biodatabase.biosequences.each do | seq |
       fasta_file_handle.puts(seq.to_fasta)
     end
@@ -176,6 +173,7 @@ class FastaFile < ActiveRecord::Base
 
   end
 
+  protected
 
 
 end

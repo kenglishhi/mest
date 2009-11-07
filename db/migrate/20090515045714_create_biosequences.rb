@@ -7,6 +7,8 @@ class CreateBiosequences < ActiveRecord::Migration
       t.string  "alphabet", :limit => 10
       t.text    "seq",      :limit => 2147483647
     end
+
+    add_index :biosequences , :name, :unique => true
   end
 
   def self.down

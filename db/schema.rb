@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20091106072206) do
     t.string  "original_name"
   end
 
-  add_index "biosequences", ["name"], :name => "index_biosequences_on_name"
+  add_index "biosequences", ["name"], :name => "index_biosequences_on_name", :unique => true
 
   create_table "blast_commands", :force => true do |t|
     t.integer  "test_fasta_file_id"

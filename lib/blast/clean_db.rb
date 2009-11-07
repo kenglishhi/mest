@@ -40,6 +40,9 @@ class Blast::CleanDb < Blast::Base
     copy_database(@test_fasta_file.biodatabase, @output_biodatabase )
 
     # Remove any hits
+    biosequence_ids_to_delete = []
+    threshold = 25 # every 25, we will purge
+
     result_ff.each do |report|
       test_biosequence = Biosequence.find_by_name(report.query_def)
       if @output_biodatabase.biosequences.include? test_biosequence
@@ -48,14 +51,14 @@ class Blast::CleanDb < Blast::Base
             target_biosequence = Biosequence.find_by_name(hit.target_def)
             @matches = @matches - 1
             @output_biodatabase.biosequences.delete( target_biosequence )
-            BiodatabaseBiosequence.delete_all(['biodatabase_id =?  AND  biosequence_id =?', 
-                @output_biodatabase.id,
-                target_biosequence.id])
+            # BiodatabaseBiosequence.delete_all(['biodatabase_id =?  AND  biosequence_id =?',
+            #    @output_biodatabase.id,
+            #    target_biosequence.id])
           end
         end
       end
     end
-#    @output_biodatabase.save
+    @output_biodatabase.save
     FastaFile.generate_fasta(@output_biodatabase)
     BiodatabaseLink.create(:biodatabase =>@test_fasta_file.biodatabase,
       :linked_biodatabase => @output_biodatabase,
@@ -82,6 +85,11 @@ class Blast::CleanDb < Blast::Base
       dest_db.biosequences << row
     end
     dest_db.save
+  end
+  def purge_sequences(db,seq_ids)
+    BiodatabaseBiosequence.delete_all(['biodatabase_id =?  AND  biosequence_id in (?)',
+        db.id,
+        seq_ids])
   end
 
 end

@@ -7,7 +7,6 @@ class Alignment < ActiveRecord::Base
   def self.generate_alignment(target_fasta_file,user=nil)
     output_file_handle = Tempfile.new("#{target_fasta_file.label}_align.aln")
     command = " clustalw -infile=#{target_fasta_file.fasta.path} -outfile=#{output_file_handle.path} "
-    puts "command = #{command} "
     system(*command)
     create(:label => 'Alignment xxxx',
       :user => user,
