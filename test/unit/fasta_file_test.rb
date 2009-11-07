@@ -56,7 +56,6 @@ class FastaFileTest < ActiveSupport::TestCase
       @biodatabase.reload
       assert_equal @biodatabase.biosequences.size,3, "Should have 3 sequences in the database"
       assert_not_nil @biodatabase.fasta_file, "Fasta File should not be nil."
-      puts File.read(@biodatabase.fasta_file.fasta.path)
     end
   end
 
@@ -77,9 +76,6 @@ class FastaFileTest < ActiveSupport::TestCase
     end
     db1 = create_cambodia
     db2 =  create_cambodia
-    puts "db1 size #{db1.biosequences.size} db2 size = #{  db2.biosequences.size}"
-    puts "#{db1.biosequences.inspect}"
-    puts "#{db2.biosequences.inspect}"
     assert_equal db1.biosequences.size, db2.biosequences.size
 
   end
