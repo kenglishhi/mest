@@ -1,12 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   # Active Scaffold Based controllers
   map.resources :biodatabase_groups, :active_scaffold => true
-  map.resources :biodatabase_link_types, :active_scaffold => true
   map.resources :biodatabase_links, :active_scaffold => true
-  map.resources :biodatabase_types, :active_scaffold => true
   map.resources :biodatabases, :active_scaffold => true
   map.resources :biosequences, :active_scaffold => true 
-  map.resources :projects, :active_scaffold => true
   map.resources :blast_results, :active_scaffold => true
   map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 
   map.resource :user_session
@@ -16,6 +13,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace(:admin) do |admin|
     admin.resources :users, :active_scaffold => true
+    admin.resources :projects, :active_scaffold => true
+    admin.resources :biodatabase_types, :active_scaffold => true
+    admin.resources :biodatabase_link_types, :active_scaffold => true
   end
 
   map.namespace(:tools) do |tools|
