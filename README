@@ -1,6 +1,6 @@
-== Welcome to Biococonutisland
+== Welcome to the MEST: Multiple EST Tool
 
-This is a Rails program customized for University of Hawaii, Coconut Island research facility doing genetic research on coral reef and dinoflagulates.
+This is a Rails program customized for University of Hawaii, HIMB research facility doing genetic research on coral reef and dinoflagulates.
 == REQUIRED GEMS
 
   authlogic
@@ -16,7 +16,7 @@ This is a Ruby on Rails application. You must first install Ruby on Rails. Go to
 
 1) Clone the repository:
 
-git clone git://github.com/kenglishhi/biococonutisland.git
+git clone git://github.com/kenglishhi/mest.git
 
 2) Configure your  database.
 
