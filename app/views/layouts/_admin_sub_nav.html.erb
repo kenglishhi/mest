@@ -1,0 +1,24 @@
+<div id="jobs-sub-nav">
+  <div id="jobs-sub-nav-menu-page">
+    <ul>
+<%
+      css_class ={controller_name.to_sym => "selected"}
+
+      link_text ={}
+      link_text[:users] =  "<span class=\"#{css_class[:users]}\">Users</span>"
+      link_text[:projects] =  "<span class=\"#{css_class[:projects]}\">Projects</span>"
+
+      link_text[:biodatabase_types] =  "<span class=\"#{css_class[:biodatabase_types]}\">Database Types </span>"
+      link_text[:biodatabase_link_types] =  "<span class=\"#{css_class[:biodatabase_link_types]}\">Database Link Types</span>"
+
+%>
+
+		  <li><%= link_to link_text[:users], admin_users_path %></li>
+  		<li><%= link_to link_text[:projects], admin_projects_path %></li>
+  		<li><%= link_to link_text[:biodatabase_types], admin_biodatabase_types_path %></li>
+  		<li><%= link_to link_text[:biodatabase_link_types], admin_biodatabase_link_types_path %></li>
+
+    </ul>
+  </div><!--menu-page-->
+</div><!--wrapper-menu-page-->
+

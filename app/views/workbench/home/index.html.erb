@@ -1,14 +1,14 @@
 <html>
   <head>
     <title>BiococonutIsland :: Workbench </title>
-    <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
+    <%= stylesheet_link_tag  "/javascripts/ext-3.0.0/resources/css/ext-all.css",
       "ext-override",
       "ncbi-style"
   %>
 
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
-    <%= javascript_include_tag'jquery-1.3.2.min.js',
+    <%= javascript_include_tag 'jquery-1.3.2.min.js',
       "ext-3.0.0/adapter/jquery/ext-jquery-adapter.js",
       "ext-3.0.0/adapter/ext/ext-base",
       "ext-3.0.0/ext-all" ,
@@ -27,7 +27,8 @@
       "workbench/RowEditor",
       "workbench/bio-sequence-view-panel",
       "workbench/bio-form-windows",
-      "workbench/ncbi-blast-form"
+      "workbench/ncbi-blast-form",
+      "workbench/top-menu-toolbar"
   %>
     <style type="text/css">
       .x-window-dlg .ext-mb-download {
@@ -44,6 +45,7 @@
     </style>
     <script type="text/javascript">
 
+      Ext.namespace('Ext.workbenchMenu');
       Ext.namespace('Ext.workbenchdata');
 
       Ext.onReady(function(){
@@ -159,7 +161,7 @@ extjs_store( :controller => "workbench/job_logs",
     // BEGIN RAILS data DUMP
     Ext.workbenchdata.projectOptions = <%= @project_options.to_json %>;
     Ext.workbenchdata.changeProjectUrl = '<%= url_for :controller => 'workbench/home', :action => 'change_project' %>';
-    var north_html = '<h1 class="north-header"><%= link_to "BioFastaCoconutIsland", '/' %>  - <%= link_to "Home", '/' %> </h1> ';
+    var north_html = '<h1 class="north-header"><%= link_to "MEST", '/' %>  - <%= link_to "Home", '/' %> </h1> ';
     // END RAILS data dump  -- no erb code should go beyond this line
     var dbGroupTree = <%= @biodatabase_group.ext_tree(:expand_node => true).to_json %> ;
     // var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
@@ -191,64 +193,48 @@ extjs_store( :controller => "workbench/job_logs",
       }
     };
     var seqGrid = new Ext.bio.BiosequenceGrid({
+      region:'north',
       id: 'workbench-biosequence-grid',
       pageSize: seqPageSize,
       store:biosequenceStore,
       biosequenceViewId: 'bio-sequence-view',
-      region:'north',
       split:true
     });
 
     var seqView =   new  Ext.bio.BiosequenceViewPanel( {
-      id: 'bio-sequence-view',
       region: 'center',
+      id: 'bio-sequence-view',
       split:true
     } );
 
-    //   var mainMenuToolbar = new Ext.Toolbar() ;
-    //
-    //    mainMenuToolbar.addFill();
-    //    mainMenuToolbar.addText(" Unit: ");
-    //    mainMenuToolbar.addField(projectCombo );
-
-    var projectStore = new Ext.data.ArrayStore({
-      fields: ['id', 'name'],
-      data : Ext.workbenchdata.projectOptions
-    });
-
-    var projectCombo = new Ext.form.ComboBox({
-      store: projectStore,
-      displayField: 'name',
-      valueField:'id',
-      typeAhead: false,
-      allowBlank: false,
-      editable: false,
-      mode: 'local',
-      triggerAction: 'all',
-      emptyText:'Select a Project...',
-      selectOnFocus:true,
-      forceSelection:true,
-      autowidth:true,
-      width:200
-    });
+    Ext.workbenchMenu.currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
+    Ext.workbenchMenu.currentProjectId = <%= current_user.active_project.id %>;
+    Ext.workbenchMenu.projectOptions = <%= @project_options.to_json %>;
+    Ext.workbenchMenu.changeProjectUrl = '<%= url_for :controller => 'workbench/home', :action => 'change_project' %>';
 
 
-    projectCombo.setValue( currentProjectId );
-    projectCombo.on('select', function(box, record) {
-        var controllerUrl =Ext.workbenchdata.changeProjectUrl + '/' + record.data.id ;
-        //controllerUrl = controllerUrl.replace(/xxx_new_selected_unit/,record.data.unit_id );
-        window.location = controllerUrl;
+    Ext.workbenchMenu.mest_html = 'MEST';
+    Ext.workbenchMenu.home_html = '<%= link_to "Home", '/' %>  ';
+    Ext.workbenchMenu.workbench_html = '<%= link_to 'Workbench',  "/workbench"  %>' ;
+    Ext.workbenchMenu.databases_html = '<%= link_to 'Databases', fasta_files_path  %>' ;
+    Ext.workbenchMenu.jobs_html = '<%= link_to 'Jobs', jobs_running_jobs_path %>';
+    Ext.workbenchMenu.admin_html = '<%= link_to 'Admin', admin_users_path  %>';
 
+    var tb = new Ext.bio.TopMenuToolbar({
+      id:'top-menu-toolbar',
+      menuData:Ext.workbenchMenu
     });
 
     var viewport = new Ext.Viewport({
       layout: 'border',
       items: [
-        // create instance immediately
-        {
+        {  region: 'north',
+          items: [tb],
+          height: 32 // give north and south regions a height
+        },
+
+        /*
           xtype: 'toolbar',
-          region: 'north',
-          height: 30,
           items: [ 
             {
               xtype: 'tbtext',
@@ -264,7 +250,7 @@ extjs_store( :controller => "workbench/job_logs",
             ' ' ,
             projectCombo
           ]
-        },
+         */
         /*        new Ext.BoxComponent({
 
           region: 'north',
@@ -324,17 +310,17 @@ extjs_store( :controller => "workbench/job_logs",
               minSize: 100,
               maxSize: 500,
               items: [ {
+                  region:'north',
                   xtype:'biosequence-grid',
                   id: 'workbench-biosequence-grid',
                   pageSize: seqPageSize,
                   store:biosequenceStore,
                   biosequenceViewId: 'bio-sequence-view',
-                  region:'north',
                   split:true
                 }, {
+                  region: 'center',
                   xtype: 'bio-sequence-view-panel',
                   id: 'bio-sequence-view',
-                  region: 'center',
                   split:true
 
                 } ]
@@ -490,8 +476,9 @@ extjs_store( :controller => "workbench/job_logs",
     </script>
   </head>
   <body>
-    <div id="my-header-div" >
-      <div style='float:left;' class="north-header"> <%= link_to "BioFastaCoconutIsland", '/' %>  - <%= link_to "Home", '/' %></div>
+
+    <div id="my-header-div"  class="x-hide-display">
+      <div style='float:left;' class="north-header"> <%= link_to "MEST", '/' %>  - <%= link_to "Home", '/' %></div>
       <div  style='float: right; width: 500px;' >
         <div id='project-options-header' />
       </div>

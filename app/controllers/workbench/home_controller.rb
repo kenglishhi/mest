@@ -2,7 +2,6 @@ class Workbench::HomeController < ApplicationController
   helper ExtJS::Helpers::Component
   helper ExtJS::Helpers::Store
   def index
-    @project_options =  Project.workbench_project_options
     @biodatabase_group = BiodatabaseGroup.main_group_in_project(current_user.active_project).first
     render :layout => false
   end

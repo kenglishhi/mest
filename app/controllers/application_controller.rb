@@ -63,10 +63,12 @@ class ApplicationController < ActionController::Base
     ['project_id = ? ', current_user.active_project.id]
   end
   def check_for_session_data
+
+    @project_options =  Project.workbench_project_options
     return if (current_user.nil? || session[:active_project_id].blank? )
     current_user.active_project = Project.find(session[:active_project_id])
   end
- def change_active_project(project)
+  def change_active_project(project)
     session[:active_project_id] = project.id
   end
 

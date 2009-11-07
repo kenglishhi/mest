@@ -1,6 +1,8 @@
-.north-header{
-  font-size:130%;
-  font-weight:bold;
+.north-header {
+  font-size:130% !important;
+  font-weight:bold !important;
+  color: #0000CC;
+  margin:5px;
 } 
 
 .north-header a:hover {
@@ -57,3 +59,15 @@ p {
 .settings { background-image:url(/images/folder_wrench.png); }
 .nav { background-image:url(/images/folder_go.png); }
 .x-delete { background-image:url(/images/delete.png ); }
+
+
+#top-menu {
+  border: 5px;
+}
+
+#top-menu-toolbar {
+  margin-left:2.5%;
+  margin-right:2.5%;
+  background-image:url('/images/xxxxx.png') !important ;
+  background-color:#FFF !important ;
+}

@@ -2,14 +2,12 @@
     <div id="menu-page">
       <h3>Menu</h3>
       <ul>
-        <li> <%= link_to_unless_current "My Profile", users_path %> </li>
-        <li> <%= link_to_unless_current "My Activities", '/activities/'%> </li>
-        <li> <%= link_to_unless_current "My Tools", '/activities/'%> </li>
+        <li> <%= link_to_unless_current "Edit My Profile", edit_user_path(@current_user) %> </li>
       </ul>
 
-      <h3>Running Jobs</h3>
+      <h3>Jobs</h3>
       <ul>
-        <li><a href="#">Completed Jobs</a></li>
+        <li> <%= link_to_unless_current "Running Jobs", jobs_running_jobs_path  %> </li>
       </ul>
 
     </div><!--menu-page-->

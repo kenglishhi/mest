@@ -11,50 +11,9 @@
         <dt>Email:</dt><dd><%= current_user.email %></dd>
         <dt>Orgaziation :</dt><dd><%= current_user.organization %></dd>
     </dl>
-    <div id='edit-profile-link'>
-      <%= link_to "Edit My Profile", edit_user_path(@current_user) %>
-    </div>
 
    </div>
-  <div class='clearfix'>
-    <div class='active-scaffold'>
-<div class="active-scaffold-header">
-
-  <div class="actions">
-      <%= link_to "Upload Files", new_fasta_file_path, :class => "new" %>
-  </div>
-
-<h3>My Files</h3>
-  </div>
-      <table cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th class='no-link'>Label</th>
-            <th class='no-link'>Size</th>
-            <th class='no-link'>Created at</th>
-          </tr>
-        </thead>
-<% unless current_user.fasta_files.empty? %>
-
-        <tbody id="as_fasta_files-tbody" class="records">
-          <% current_user.fasta_files.each do | fasta_file | %>
-            <tr class="<%= cycle("", "even-record")%> profile-record ">
-              <td class="label-column ">
-                <%= fasta_file.label %>
-              </td>
-              <td class="fasta_file_name-column ">
-                <%= fasta_file.fasta_file_size %>
-              </td>
-              <td class="biodatabase_extract-column ">
-                <%= fasta_file.created_at %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-  <% end %>
-      </table>
-    </div>
-  </div>
+  <div class='clearfix' />
   <br />
 
 </div>

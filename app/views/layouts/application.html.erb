@@ -1,62 +1,68 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>BioFastaCoconutIsland</title>
+    <title>MEST</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="description" content="University of Hawaii Bioinformatics" />
     <meta name="keywords" content="Bioinformatics BLAST" />
     <%= javascript_include_tag :defaults %>
-    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+    <%= javascript_include_tag 'jquery-1.3.2.min.js',
+      "ext-3.0.0/adapter/jquery/ext-jquery-adapter.js",
+      "ext-3.0.0/adapter/ext/ext-base",
       "ext-3.0.0/ext-all" ,
       "workbench/base",
-      "workbench/bio-notifier"
+      "workbench/bio-notifier",
+      "workbench/top-menu-toolbar"
   %>
     <%= active_scaffold_includes %>
     <%= stylesheet_link_tag 'style', 'active_scaffold_overrides',
       "/javascripts/ext-3.0.0/resources/css/ext-all.css",
-      "ext-override" %>
+      "ext-override"
+  %>
     <%= yield :additional_content_for_head %>
     <% if logged_in? %>
       <script type="text/javascript">
+
+        Ext.namespace('Ext.workbenchMenu');
         Ext.onReady(function(){
   <%= render :partial => "layouts/user_job_notification" %>
+
+    Ext.workbenchMenu.currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
+    Ext.workbenchMenu.currentProjectId = <%= current_user.active_project.id %>;
+    Ext.workbenchMenu.projectOptions = <%= @project_options.to_json %>;
+    Ext.workbenchMenu.changeProjectUrl = '<%= url_for :controller => 'workbench/home', :action => 'change_project' %>';
+
+
+    Ext.workbenchMenu.mest_html = 'MEST';
+    Ext.workbenchMenu.home_html = '<%= link_to "Home", '/' %>  ';
+    Ext.workbenchMenu.workbench_html = '<%= link_to 'Workbench',  "/workbench"  %>' ;
+    Ext.workbenchMenu.databases_html = '<%= link_to 'Databases', fasta_files_path  %>' ;
+    Ext.workbenchMenu.jobs_html = '<%= link_to 'Jobs', jobs_running_jobs_path %>';
+    Ext.workbenchMenu.admin_html = '<%= link_to 'Admin', admin_users_path  %>';
+
+    var tb = new  Ext.bio.TopMenuToolbar({
+      id:'top-menu-toolbar',
+      renderTo: 'top-menu',
+      menuData:Ext.workbenchMenu
     });
+    tb.doLayout();
+
+
+  });
       </script>
     <% end %>
   </head>
 
 
   <body>
-    <div id="menu-top">
-      <ul>
-        <% if logged_in? %>
-          <li><%= link_to "<span>Home</span>", users_path %></li>
-          <li><%= link_to "<span>Workbench</span>", "/workbench" %></li>
-          <li><%= link_to "<span>Databases</span>", biodatabases_path %></li>
-          <li><%= link_to "<span>Jobs</span>", jobs_running_jobs_path %></li>
+    <div id="container">
+      <div id="top-menu"></div>
+    </div>
 
-          <li><%= link_to "<span>Admin</span>", admin_users_path %></li>
-          <li><%= link_to "<span>Logout</span>", "/logout" %></li>
-        <% else %>
-          <li><%= link_to "<span>Home</span>", users_path %></li>
-        <% end %>
-
-      </ul>
-    </div><!--menu-top-->
 
     <!-- mejobloggs: sorry about all these wrappers. It is a lot of structural markup .
         If you know how to do this with less structural markup, contact my throught my
         OWD user page: http://www.openwebdesign.org/userinfo.phtml?user=mejobloggs -->
-    <div id="wrapper-header">
-      <div id="header">
-        <div id="wrapper-header2">
-          <div id="wrapper-header3">
-            <h1><%= link_to "BioFastaCoconutIsland", '/' %></h1>
-          </div><!--wrapper-header3-->
-        </div><!--wrapper-header2-->
-      </div><!--header-->
-    </div><!--wrapper-header-->
-
     <div id="wrapper-content">
       <%= yield :wrapper_menu_content %>
       <%= yield :sub_nav %>
