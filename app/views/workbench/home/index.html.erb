@@ -229,72 +229,14 @@ extjs_store( :controller => "workbench/job_logs",
         {  region: 'north',
           items: [tb],
           height: 32 // give north and south regions a height
-        },
-
-        /*
-          xtype: 'toolbar',
-          items: [ 
-            {
-              xtype: 'tbtext',
-              text: north_html ,
-              cls:'north-header',
-              id: 'main-menu-title'
-            },
-
-            '   ',
-            'Logged in as <b>' + currentUserDisplayName + '</b>',
-            '->',
-            'Select Project ',
-            ' ' ,
-            projectCombo
-          ]
-         */
-        /*        new Ext.BoxComponent({
-
-          region: 'north',
-          height: 32, // give north and south regions a height
-
-          el: 'my-header-div'
-        }),
-         */
-        /*************** OLD
-        {
-          region: 'west',
-          id: 'west-panel', 
-          split: true,
-          width: 200,
-          minSize: 175,
-          collapsible: true,
-
-          items: [
-            {id: 'bio-database-group-tree',
-              xtype:'database-group-tree',
-              treeData: dbGroupTree,
-              projectOptions: Ext.workbenchdata.projectOptions,
-              clickAction: function(node) {
-                Ext.bio.workbench.updateContent(node);
-                Ext.getCmp('tree-delete-icon').enable();
-              }
-            }],
-          bbar :[{
-              id:'tree-delete-icon',
-              disabled: true,
-              iconCls:'x-tree-delete',
-              text: 'Delete',
-              handler: function() {
-                Ext.getCmp('bio-database-group-tree').deleteSelectedNode();
-              }
-            }]
-        },
-         ******************* END OLD
-         */
-        {
+        }, {
           region: 'west',
           title: 'Database Browser',
           width: 200,
           minSize: 175,
           margins: '0 0 0 5',
           collapsible: true,
+          split: true,
           id: 'bio-database-group-tree',
           xtype:'database-group-tree',
           treeData: dbGroupTree,
@@ -303,17 +245,13 @@ extjs_store( :controller => "workbench/job_logs",
             Ext.bio.workbench.updateContent(node);
             Ext.getCmp('tree-delete-icon').enable();
           }
-        } ,
-
-        new Ext.TabPanel({
+        } , new Ext.TabPanel({
           id: 'workbench-grid-tabs',
           region: 'center', // a center region is ALWAYS required for border layout
           collapsible: true,
           deferredRender: true,
           activeTab: 0,     // first tab initially active
-          items: [
-            {
-              iconCls:'new_fasta',
+          items: [ { iconCls:'new_fasta',
               title: 'Sequences',
               id: 'workbench-biosequence-tab',
               layout: 'border',
@@ -344,44 +282,42 @@ extjs_store( :controller => "workbench/job_logs",
               title: 'Databases',
               autoScroll: true,
               id:'workbench-biodatabase-tab',
-              items: [
-                {id: 'workbench-biodatabase-grid',
+              items: [ {
+                  id: 'workbench-biodatabase-grid',
                   xtype:'biodatabase-grid',
                   pageSize: dbPageSize,
                   store: biodatabaseStore
-                }
-              ]
+                } ]
             }, {
               iconCls:'book',
               title: 'Database Groups',
               autoScroll: true,
               id:'workbench-biodatabase-group-tab',
-              items: [
-                {id: 'workbench-biodatabase-groups-grid',
+              items: [ {
+                  id: 'workbench-biodatabase-groups-grid',
                   pageSize: databaseGroupPageSize,
                   xtype:'biodatabase-group-grid' ,
-                  store: biodatabaseGroupStore }
-              ]
+                  store: biodatabaseGroupStore 
+                } ]
 
             },  {
               iconCls:'cog_edit',
               title: 'Blast Results',
               autoScroll: true,
               id:'workbench-blast-result-tab',
-              items: [
-                {id: 'workbench-blast-results-grid',
+              items: [ {
+                  id: 'workbench-blast-results-grid',
                   pageSize: blastResultPageSize,
                   xtype:'blast-result-grid' ,
-                  store: blastResultStore }
-              ]
+                  store: blastResultStore 
+                } ]
 
             }, {
               iconCls:'grid_icon',
               title: 'Running Jobs',
               autoScroll: true,
               id:'workbench-running-jobs-tab',
-              items: [
-                { id: 'workbench-jobs-grid',
+              items: [ { id: 'workbench-jobs-grid',
                   pageSize: jobPageSize,
                   xtype:'job-grid' ,
                   store: jobStore }
