@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def biodatabase_options
-    Biodatabase.find(:all, :order => 'name' ).map { |ff| [ff.name, ff.id ] }
+    Biodatabase.by_project(current_user.active_project.id).map { |ff| [ff.name, ff.id ] }
   end
 
 end

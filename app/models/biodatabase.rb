@@ -18,8 +18,14 @@ class Biodatabase < ActiveRecord::Base
   validates_presence_of :biodatabase_type_id
   validates_presence_of :biodatabase_group_id
 
-#  validates_uniqueness_of :name
+  #  validates_uniqueness_of :name
   before_destroy :clear_references
+  named_scope :by_project, lambda { |project_id| { 
+      :include => :biodatabase_group,
+      :conditions => ['biodatabase_groups.project_id = ?', project_id],
+      :order => 'biodatabases.name'
+    } }
+
 
   def clear_references
     BiodatabaseBiosequence.delete_all(["biodatabase_id = ? " ,self.id])
@@ -53,12 +59,12 @@ class Biodatabase < ActiveRecord::Base
     HAVING COUNT(*) = 1
     ORDER BY biosequence_id
     LIMIT 100
-    EOSQL
+      EOSQL
 
       rows = self.connection.select_rows( sql)
       logger.error( "rows #{rows.inspect}")
       biosequence_ids = rows.map { | row | row.first }
-#      delete_sql = "DELETE FROM `biosequences` WHERE (id in ())  "
+      #      delete_sql = "DELETE FROM `biosequences` WHERE (id in ())  "
       values = Biosequence.delete_all(["id in (?) " ,biosequence_ids])  unless biosequence_ids.empty?
       logger.error( "RETURNED #{values}")
     end # until biosequence_ids.empty?
@@ -96,7 +102,7 @@ class Biodatabase < ActiveRecord::Base
       self.fasta_file = FastaFile.new
       self.fasta_file.fasta = fasta_file_handle
       self.fasta_file.project_id = biodatabase_group.project_id
-     self.fasta_file.user_id = self.user_id
+      self.fasta_file.user_id = self.user_id
       self.fasta_file.is_generated = true
       self.fasta_file.save!
       save
