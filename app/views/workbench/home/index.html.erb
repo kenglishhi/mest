@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>BiococonutIsland :: Workbench </title>
+    <title>M E S T :: Workbench </title>
     <%= stylesheet_link_tag  "/javascripts/ext-3.0.0/resources/css/ext-all.css",
       "ext-override",
       "ncbi-style"
@@ -8,9 +8,7 @@
 
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
-    <%= javascript_include_tag 'jquery-1.3.2.min.js',
-      "ext-3.0.0/adapter/jquery/ext-jquery-adapter.js",
-      "ext-3.0.0/adapter/ext/ext-base",
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
       "ext-3.0.0/ext-all" ,
       "workbench/base",
       "workbench/bio-notifier",
@@ -259,17 +257,15 @@ extjs_store( :controller => "workbench/job_logs",
           el: 'my-header-div'
         }),
          */
+        /*************** OLD
         {
           region: 'west',
-          id: 'west-panel', // see Ext.getCmp() below
-          title: 'Database Browser',
+          id: 'west-panel', 
           split: true,
           width: 200,
           minSize: 175,
-          //              maxSize: 400,
           collapsible: true,
 
-          margins: '0 0 0 5',
           items: [
             {id: 'bio-database-group-tree',
               xtype:'database-group-tree',
@@ -290,6 +286,25 @@ extjs_store( :controller => "workbench/job_logs",
               }
             }]
         },
+         ******************* END OLD
+         */
+        {
+          region: 'west',
+          title: 'Database Browser',
+          width: 200,
+          minSize: 175,
+          margins: '0 0 0 5',
+          collapsible: true,
+          id: 'bio-database-group-tree',
+          xtype:'database-group-tree',
+          treeData: dbGroupTree,
+          projectOptions: Ext.workbenchdata.projectOptions,
+          clickAction: function(node) {
+            Ext.bio.workbench.updateContent(node);
+            Ext.getCmp('tree-delete-icon').enable();
+          }
+        } ,
+
         new Ext.TabPanel({
           id: 'workbench-grid-tabs',
           region: 'center', // a center region is ALWAYS required for border layout
@@ -331,7 +346,7 @@ extjs_store( :controller => "workbench/job_logs",
               id:'workbench-biodatabase-tab',
               items: [
                 {id: 'workbench-biodatabase-grid',
-                  xtype:'biodatabase-grid', 
+                  xtype:'biodatabase-grid',
                   pageSize: dbPageSize,
                   store: biodatabaseStore
                 }
@@ -372,7 +387,7 @@ extjs_store( :controller => "workbench/job_logs",
                   store: jobStore }
               ]
 
-            }, { 
+            }, {
               iconCls:'image_add',
               title: 'Job Log',
               autoScroll: true,
