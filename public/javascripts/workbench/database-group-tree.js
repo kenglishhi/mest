@@ -136,6 +136,37 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     },
     expandnode: function(node) {
       node.getUI().removeClass('x-tree-node-loading');
+    },
+    contextmenu: function(node){
+      //Set up some buttons
+      var myId = this.id;
+      var deleteButton = new Ext.menu.Item({
+        iconCls:'x-tree-delete',
+        text: 'Delete',
+        handler: function() {
+          Ext.getCmp(myId).deleteSelectedNode();
+        }
+      });
+
+      var renameButton = new Ext.menu.Item({
+        text: "Rename Sequences"
+      });
+      var blastButton = new Ext.menu.Item({
+        text: "Blast"
+      });
+      var cleanButton = new Ext.menu.Item({
+        text: "Clean DB"
+      });
+
+      //Create the context menu to hold the buttons
+      var contextMenu = new Ext.menu.Menu({
+        items: [renameButton, cleanButton, blastButton,'-',deleteButton]
+      });
+      //      contextMenu.add(button1, button2);
+
+
+      //Show the menu
+      contextMenu.show(node.ui.getAnchor());
     }
   },
   addDatabaseGroup: function(){

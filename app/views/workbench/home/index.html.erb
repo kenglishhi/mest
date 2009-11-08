@@ -96,7 +96,7 @@ extjs_store( :controller => "workbench/biodatabases",
 ).render(false)
 %>;
 
-    var biodatabaseGroupStore = <%=
+/*    var biodatabaseGroupStore = <%=
 extjs_store( :controller => "workbench/biodatabase_groups",
   :writer => {"encode" => false},
   :config => {
@@ -107,6 +107,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
   }
 ).render(false)
 %>;
+    */
     var blastResultStore = <%=
 extjs_store( :controller => "workbench/blast_results",
   :writer => {"encode" => false},
@@ -277,7 +278,7 @@ extjs_store( :controller => "workbench/job_logs",
                   split:true
 
                 } ]
-            },  {
+            }, /* {
               iconCls:'new_view',
               title: 'Databases',
               autoScroll: true,
@@ -300,7 +301,7 @@ extjs_store( :controller => "workbench/job_logs",
                   store: biodatabaseGroupStore 
                 } ]
 
-            },  {
+            },*/  {
               iconCls:'cog_edit',
               title: 'Blast Results',
               autoScroll: true,
