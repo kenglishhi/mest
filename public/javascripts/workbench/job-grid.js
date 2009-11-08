@@ -36,6 +36,9 @@ Ext.bio.JobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
       this.store.load();
     }
   },
+  refreshContent: function(params) {
+    this.store.load();
+  },
   initComponent: function() {
     var jobOptionStore = new Ext.data.ArrayStore({
       fields: ['option'],
@@ -66,7 +69,14 @@ Ext.bio.JobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
     Ext.apply(this,{
       tbar:[
-      'Show: ', ' ', combo
+      'Show: ', ' ', combo,
+      {
+        iconCls:'x-tbar-loading',
+        handler: function() {
+          Ext.getCmp(cmpId).refreshContent( );
+        }
+      },
+
       ]
     });
 

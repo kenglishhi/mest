@@ -3,7 +3,8 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   treeData: null,
   projectOptions:null,
   initComponent: function() {
-   var rootNode = new Ext.tree.AsyncTreeNode({
+    var myId = this.id;
+    var rootNode = new Ext.tree.AsyncTreeNode({
       text: 'Ext JS',
       draggable:false, // disable root node dragging
       id:'src'
@@ -15,6 +16,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       autowidth: true,
       autoheight: true,
       autoScroll:true,
+      containerScroll: true,
       border: false,
       enableDD: true,
       rootVisible: false,
@@ -32,9 +34,17 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
             dbTree.refresh();
           }
         }
-      }, 
+      },
       ],
-
+      bbar :[{
+        id:'tree-delete-icon',
+        disabled: true,
+        iconCls:'x-tree-delete',
+        text: 'Delete',
+        handler: function() {
+          Ext.getCmp(myId).deleteSelectedNode();
+        }
+      }],
       loader: new Ext.tree.TreeLoader({
         dataUrl:'/workbench/tree/',
         requestMethod: "GET",
