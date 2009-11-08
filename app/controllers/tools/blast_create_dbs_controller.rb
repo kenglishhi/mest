@@ -1,8 +1,6 @@
 class Tools::BlastCreateDbsController < ApplicationController
   def new
-    if params[:test_biodatabase_id]
 
-    end
     if Biodatabase.exists?(params[:test_biodatabase_id] )
       @test_biodatabase = Biodatabase.find(params[:test_biodatabase_id] )
     end
@@ -11,7 +9,7 @@ class Tools::BlastCreateDbsController < ApplicationController
 
   def create
     @test_biodatabase = Biodatabase.find(params[:test_biodatabase_id] )
-    @target_biodatabase = Biodatabase.find(params[:test_biodatabase_id] )
+    @target_biodatabase = Biodatabase.find(params[:target_biodatabase_id] )
 
     if !params[:output_biodatabase_group_name].blank? && BiodatabaseGroup.exists?(['name =? ', params[:output_biodatabase_group_name]])
       flash[:errors] = "Output Database Group Name already exists."
