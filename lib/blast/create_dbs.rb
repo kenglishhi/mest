@@ -71,11 +71,8 @@ class Blast::CreateDbs < Blast::Base
           target_biosequence = Biosequence.find_by_name(hit.target_def)
           child_biodatabase.biosequences << target_biosequence
         end
-        if child_biodatabase.nil? # no matches
-          #           logger.error "No Matches"
-        else
+        unless child_biodatabase.nil? 
           FastaFile.generate_fasta(child_biodatabase)
-
         end
       end
     end
