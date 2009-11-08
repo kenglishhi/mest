@@ -140,7 +140,9 @@ class FastaFile < ActiveRecord::Base
   end
 
   def self.generate_fasta(biodatabase)
-    filename =  "#{biodatabase.name}.fasta"
+    filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"
+
+
     self.write_sequences_to_file(biodatabase, filename)
 
     fasta_file_handle = File.new(filename,"r")
@@ -172,9 +174,8 @@ class FastaFile < ActiveRecord::Base
     fasta_file_handle.close
 
   end
-
-  protected
-
+  def self.temp_path
+    File.dirname(__FILE__) + '/../../tmp'
+  end
 
 end
-
