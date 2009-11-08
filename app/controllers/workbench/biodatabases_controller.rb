@@ -10,8 +10,11 @@ class Workbench::BiodatabasesController < ApplicationController
       data = Biodatabase.paginate :page => page, :conditions => conditions
       results = Biodatabase.count :conditions => conditions
     else 
-      data = Biodatabase.paginate :page => page
-      results = Biodatabase.count
+      data = Biodatabase.paginate :page => page, :include => :biodatabase_group,
+        :conditions => ['biodatabase_groups.project_id = ?', current_user.active_project.id],
+        :order => 'biodatabases.name'
+      results = Biodatabase.count(:include => :biodatabase_group,
+        :conditions => ['biodatabase_groups.project_id = ?', current_user.active_project.id])
     end
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
  
