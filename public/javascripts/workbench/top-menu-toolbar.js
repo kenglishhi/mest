@@ -62,8 +62,15 @@ Ext.bio.TopMenuToolbar =  Ext.extend(Ext.Toolbar, {
         text: this.menuData.admin_html ,
         cls:'north-header',
         id: 'admin-menu-title'
-      }, '-',
+      },
+      '->',
+      '-',
       'Logged in as <b>' + this.menuData.currentUserDisplayName + '</b>',
+     '-',
+      'Select Project ',
+      ' ' ,
+      projectCombo,
+      '    ' ,
       '-',
       {
         text: '<b>Logout</b>',
@@ -71,12 +78,6 @@ Ext.bio.TopMenuToolbar =  Ext.extend(Ext.Toolbar, {
           window.location = '/logout';
         }
       },
-      '->',
-      '-',
-      'Select Project ',
-      ' ' ,
-      projectCombo,
-      '    ' 
 
       ]
     });

@@ -12,7 +12,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
 
     var parentComponentId = this.id;
     Ext.apply(this,{
-      animate: true,
+      //      animate: true,
       autowidth: true,
       autoheight: true,
       autoScroll:true,
@@ -65,6 +65,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     var dbTree= this;
 
     var node = this.getSelectionModel().getSelectedNode();
+    node.getUI().addClass('x-tree-node-loading');
     var url;
     if (node.attributes.resource == 'biodatabase') {
       url = "/workbench/biodatabases/" + node.id + ".json" ;
@@ -123,9 +124,18 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         });
       }
     },
+    beforecollapsenode: function(node) {
+      node.getUI().addClass('x-tree-node-loading');
+    },
     collapsenode: function(node) {
+      node.getUI().removeClass('x-tree-node-loading');
+    },
+
+    beforeexpandnode: function(node) {
+      node.getUI().addClass('x-tree-node-loading');
     },
     expandnode: function(node) {
+      node.getUI().removeClass('x-tree-node-loading');
     }
   },
   addDatabaseGroup: function(){
