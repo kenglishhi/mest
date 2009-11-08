@@ -1,4 +1,4 @@
-Ext.bio.ncbiBlastSearch = function (node_id,params) {
+Ext.bio.ncbiBlastSearch = function (params) {
   var baseParams = {};
   baseParams.ALIGNMENT_VIEW = "Pairwise";
   baseParams.ALIGNMENTS = "100";
@@ -31,7 +31,7 @@ Ext.bio.ncbiBlastSearch = function (node_id,params) {
   baseParams.GENETIC_CODE = ''
   baseParams.GET_SEQUENCE = true;
   baseParams.I_THRESH = "";
-  baseParams.JOB_TITLE = 'MaybeHiVxxxxxxyyyy';
+  baseParams.JOB_TITLE = 'THIS-DOES-NOT-WORK';
   baseParams.LCASE_MASK  = 'on'
   baseParams.MASK_CHAR = "2";
   baseParams.MASK_COLOR ="1";
@@ -54,7 +54,7 @@ Ext.bio.ncbiBlastSearch = function (node_id,params) {
   baseParams.PHI_PATTERN  = ''
   baseParams.PROGRAM = "blastn" ;
   baseParams.PSSM = ''
-  baseParams.QUERY = "GAAGAGATAGTAATTAGATCTGCCAATTTCACAGACAATGCTAAAATCATAATAGTACAGCTAAATGCATCTGTAGAAATTAATTGTACAAGACCCAACAACAATACAAGAAAAGGTATAAATATAGGACCAGGGAGGGCATTTTATGCAACAGGAGGAATAATAGGAGATATAAGACAAGCACATTGTAACATTAGTGAGGAAAAATGGAATAATACTTTAAAACAGGTAGTTACAAAATTAAGAGAACAATTTGGGAATAAAACAATAATCTTCAATCACTCCTCAGGAGGGGACCCAGAAATTGT";
+  baseParams.QUERY = "";
   baseParams.QUERY_BELIEVE_DEFLINE="";
   baseParams.QUERY_FROM = ''
   baseParams.QUERY_INDEX = "";
@@ -87,38 +87,27 @@ Ext.bio.ncbiBlastSearch = function (node_id,params) {
   baseParams.USER_WORD_SIZE="";
   baseParams.WORD_SIZE = '28';
   baseParams.WWW_BLAST_TYPE = "";
+
+
   if (params){
     for(var key in params) {
       baseParams[key] = params[key];
     }
-
   }
 
 
-  var url = 'http://blast.ncbi.nlm.nih.gov/Blast.cgi';
-  var form = document.createElement("form");
-  form.setAttribute("target", "_blank");
-  form.setAttribute("method", "POST");
-  form.setAttribute("action", url);
-  form.setAttribute("enctype","multipart/form-data");
-  form.setAttribute("class", "f-wrap-1 all");
-  form.setAttribute("id",node_id);// "ncbi-blast-search-form");
-
+  var form = $('ncbi-blast-search-form');
   for(var key in baseParams) {
-    var hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type", "hidden");
-    hiddenField.setAttribute("name", key);
-    hiddenField.setAttribute("id", key);
-    hiddenField.setAttribute("value", baseParams[key]);
+    $(key).setValue(baseParams[key]);
+  //    var hiddenField = document.createElement("input");
+  //    hiddenField.setAttribute("type", "hidden");
+  //    hiddenField.setAttribute("name", key);
+  //    hiddenField.setAttribute("id", key);
+  //    hiddenField.setAttribute("value", baseParams[key]);
 
-    form.appendChild(hiddenField);
-  }
-  var node =$("#" + node_id) ;
-  if (node){
-    node.replaceWith(form);
-
-  } else {
+  //   form.appendChild(hiddenField);
   }
   form.submit();
+
 }
 

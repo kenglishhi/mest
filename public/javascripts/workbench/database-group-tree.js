@@ -140,6 +140,25 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     contextmenu: function(node){
       //Set up some buttons
       var myId = this.id;
+
+      var renameButton = new Ext.menu.Item({
+        iconCls:'new_fasta',
+        text: "Rename Sequences",
+        handler: function() {
+          Ext.bio.showRenamefFormWindow();
+        }
+      });
+
+      var cleanButton = new Ext.menu.Item({
+        iconCls:'book',
+        text: "Clean DB"
+      });
+
+      var blastButton = new Ext.menu.Item({
+        iconCls:'new_view',
+        text: "Blast"
+      });
+
       var deleteButton = new Ext.menu.Item({
         iconCls:'x-tree-delete',
         text: 'Delete',
@@ -148,22 +167,9 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         }
       });
 
-      var renameButton = new Ext.menu.Item({
-        text: "Rename Sequences"
-      });
-      var blastButton = new Ext.menu.Item({
-        text: "Blast"
-      });
-      var cleanButton = new Ext.menu.Item({
-        text: "Clean DB"
-      });
-
-      //Create the context menu to hold the buttons
       var contextMenu = new Ext.menu.Menu({
         items: [renameButton, cleanButton, blastButton,'-',deleteButton]
       });
-      //      contextMenu.add(button1, button2);
-
 
       //Show the menu
       contextMenu.show(node.ui.getAnchor());

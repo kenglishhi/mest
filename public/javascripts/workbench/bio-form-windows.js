@@ -266,3 +266,15 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
     Ext.bio.BlastCreateDbsWindow.superclass.initComponent.call(this);
   }
 });
+
+
+Ext.bio.showRenamefFormWindow = function(biodatabase_id) {
+  var winRenameSeq  = Ext.getCmp( 'bio-db-renamer-window');
+  if(!winRenameSeq){
+    winRenameSeq = new Ext.bio.BiodatabaseRenamerWindow({
+      dbStore: Ext.workbenchdata.biodatabaseComboStore,
+      id: 'bio-db-renamer-window'
+    });
+  }
+  winRenameSeq.show(this);
+}

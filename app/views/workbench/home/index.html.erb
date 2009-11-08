@@ -6,6 +6,7 @@
       "ncbi-style"
   %>
 
+    <%= javascript_include_tag :defaults %>
     <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
 
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
@@ -71,8 +72,9 @@ extjs_store( :controller => "workbench/biodatabases",
 
 ).render(false)
 %>;
-    var biodatabaseComboStore = <%=
-extjs_store( :controller => "workbench/biodatabases",
+Ext.workbenchdata.biodatabaseComboStore = <%=
+extjs_store( :controller => "workbench/raw_biodatabases",
+  :model => "biodatabase",
   :writer => {"encode" => false},
   :config => {
     "storeId" => 'biodatabase-combo-store',
@@ -96,7 +98,7 @@ extjs_store( :controller => "workbench/biodatabases",
 ).render(false)
 %>;
 
-/*    var biodatabaseGroupStore = <%=
+    /*    var biodatabaseGroupStore = <%=
 extjs_store( :controller => "workbench/biodatabase_groups",
   :writer => {"encode" => false},
   :config => {
@@ -107,7 +109,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
   }
 ).render(false)
 %>;
-    */
+     */
     var blastResultStore = <%=
 extjs_store( :controller => "workbench/blast_results",
   :writer => {"encode" => false},
@@ -302,7 +304,7 @@ extjs_store( :controller => "workbench/job_logs",
                 } ]
 
             },*/  {
-              iconCls:'cog_edit',
+              iconCls:'new_view',
               title: 'Blast Results',
               autoScroll: true,
               id:'workbench-blast-result-tab',
@@ -390,15 +392,7 @@ extjs_store( :controller => "workbench/job_logs",
     });
 
     var button1 = Ext.get('rename-biosequences');
-    var winRenameSeq;
-    button1.on('click', function(){
-      if(!winRenameSeq){
-        winRenameSeq = new Ext.bio.BiodatabaseRenamerWindow({
-          dbStore: biodatabaseComboStore
-        });
-      }
-      winRenameSeq.show(this);
-    });
+    button1.on('click', Ext.bio.showRenamefFormWindow);
 
     var button2 = Ext.get('clean-biodatabase');
     var winBlastClean;
@@ -454,8 +448,8 @@ extjs_store( :controller => "workbench/job_logs",
 
     </div>
 
-    <form id="ncbi-blast-search-form" class="x-hide-display">
-
+    <form target="_blank" method="POST" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" enctype="multipart/form-data" class="f-wrap-1 all" id="ncbi-blast-search-form">
+      <input type="hidden" name="ALIGNMENT_VIEW" id="ALIGNMENT_VIEW" value=""/><input type="hidden" name="ALIGNMENTS" id="ALIGNMENTS" value="100"/><input type="hidden" name="BLAST_PROGRAMS" id="BLAST_PROGRAMS" value="blastn"/><input type="hidden" name="BLAST_SPEC" id="BLAST_SPEC" value=""/><input type="hidden" name="CLIENT" id="CLIENT" value="web"/><input type="hidden" name="CMD" id="CMD" value="request"/><input type="hidden" name="COMPOSITION_BASED_STATISTICS" id="COMPOSITION_BASED_STATISTICS" value=""/><input type="hidden" name="DATABASE" id="DATABASE" value="nr"/><input type="hidden" name="db" id="db" value="nucleotide"/><input type="hidden" name="DB_ABBR" id="DB_ABBR" value=""/><input type="hidden" name="DB_DIR_PREFIX" id="DB_DIR_PREFIX" value=""/><input type="hidden" name="DBTYPE" id="DBTYPE" value="gc"/><input type="hidden" name="DEFAULT_PROG" id="DEFAULT_PROG" value="megaBlast"/><input type="hidden" name="DESCRIPTIONS" id="DESCRIPTIONS" value="100"/><input type="hidden" name="EQ_MENU" id="EQ_MENU" value=""/><input type="hidden" name="EQ_TEXT" id="EQ_TEXT" value=""/><input type="hidden" name="EXCLUDE_MODELS" id="EXCLUDE_MODELS" value="on"/><input type="hidden" name="EXCLUDE_SEQ_UNCULT" id="EXCLUDE_SEQ_UNCULT" value="on"/><input type="hidden" name="EXPECT" id="EXPECT" value="25"/><input type="hidden" name="EXPECT_HIGH" id="EXPECT_HIGH" value=""/><input type="hidden" name="EXPECT_LOW" id="EXPECT_LOW" value=""/><input type="hidden" name="FILTER" id="FILTER" value=""/><input type="hidden" name="FORMAT_EQ_TEXT" id="FORMAT_EQ_TEXT" value=""/><input type="hidden" name="FORMAT_OBJECT" id="FORMAT_OBJECT" value="Alignment"/><input type="hidden" name="FORMAT_ORGANISM" id="FORMAT_ORGANISM" value=""/><input type="hidden" name="FORMAT_TYPE" id="FORMAT_TYPE" value="HTML"/><input type="hidden" name="GAPCOSTS" id="GAPCOSTS" value=""/><input type="hidden" name="GENETIC_CODE" id="GENETIC_CODE" value=""/><input type="hidden" name="GET_SEQUENCE" id="GET_SEQUENCE" value="true"/><input type="hidden" name="I_THRESH" id="I_THRESH" value=""/><input type="hidden" name="JOB_TITLE" id="JOB_TITLE" value="HIMB-A100"/><input type="hidden" name="LCASE_MASK" id="LCASE_MASK" value="on"/><input type="hidden" name="MASK_CHAR" id="MASK_CHAR" value="2"/><input type="hidden" name="MASK_COLOR" id="MASK_COLOR" value="1"/><input type="hidden" name="MATCH_SCORES" id="MATCH_SCORES" value="1,-2"/><input type="hidden" name="MATRIX_NAME" id="MATRIX_NAME" value=""/><input type="hidden" name="MAX_NUM_SEQ" id="MAX_NUM_SEQ" value="20"/><input type="hidden" name="MEGABLAST" id="MEGABLAST" value="on"/><input type="hidden" name="NCBI_GI" id="NCBI_GI" value="false"/><input type="hidden" name="NEW_VIEW" id="NEW_VIEW" value="true"/><input type="hidden" name="NEWWIN" id="NEWWIN" value="on"/><input type="hidden" name="NO_COMMON" id="NO_COMMON" value=""/><input type="hidden" name="NUM_DIFFS" id="NUM_DIFFS" value="1"/><input type="hidden" name="NUM_OPTS_DIFFS" id="NUM_OPTS_DIFFS" value="0"/><input type="hidden" name="NUM_ORG" id="NUM_ORG" value="1"/><input type="hidden" name="NUM_OVERVIEW" id="NUM_OVERVIEW" value="100"/><input type="hidden" name="OLD_BLAST" id="OLD_BLAST" value="false"/><input type="hidden" name="ORG_EXCLUDE" id="ORG_EXCLUDE" value=""/><input type="hidden" name="PAGE" id="PAGE" value="MegaBlast"/><input type="hidden" name="PAGE_TYPE" id="PAGE_TYPE" value="BlastSearch"/><input type="hidden" name="PHI_PATTERN" id="PHI_PATTERN" value=""/><input type="hidden" name="PROGRAM" id="PROGRAM" value="blastn"/><input type="hidden" name="PSSM" id="PSSM" value=""/><input type="hidden" name="QUERY" id="QUERY" value="GGGGAGACCAACCCTATCTCTTGCACTTTCGACTCCAAGGCTGGCATCATGCTGGACCCCACCTTCGTCAAGGTGGTGTGCTGGTATGACAACGAGTGGGGCTACAGCTGCCGAGTTGTCGACTTGATCAAGCACATGGCGAAGGAGGATGCCAAGGCATAAGCTTGTCCACCCGAGGCTGCAAGTGTTGAAACACAATTAGAAGATTCCTAGAGGTTGATTAAATCAACCTACTCTTGCTCCTCTCGGACTCTCCGAGCTTATTTTTCCTTATTGCTGCCGAGCACACGGGCATGCCCCACCTCGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACATGT"/><input type="hidden" name="QUERY_BELIEVE_DEFLINE" id="QUERY_BELIEVE_DEFLINE" value=""/><input type="hidden" name="QUERY_FROM" id="QUERY_FROM" value=""/><input type="hidden" name="QUERY_INDEX" id="QUERY_INDEX" value=""/><input type="hidden" name="QUERY_TO" id="QUERY_TO" value=""/><input type="hidden" name="QUERYFILE" id="QUERYFILE" value=""/><input type="hidden" name="REPEATS" id="REPEATS" value=""/><input type="hidden" name="RUN_PSIBLAST" id="RUN_PSIBLAST" value=""/><input type="hidden" name="SAVED_PSSM" id="SAVED_PSSM" value=""/><input type="hidden" name="SAVED_SEARCH" id="SAVED_SEARCH" value="true"/><input type="hidden" name="SELECTED_PROG_TYPE" id="SELECTED_PROG_TYPE" value="megaBlast"/><input type="hidden" name="SERVICE" id="SERVICE" value="plain"/><input type="hidden" name="SHORT_QUERY_ADJUST" id="SHORT_QUERY_ADJUST" value=""/><input type="hidden" name="SHOW_CDS_FEATURE" id="SHOW_CDS_FEATURE" value="false"/><input type="hidden" name="SHOW_LINKOUT" id="SHOW_LINKOUT" value="true"/><input type="hidden" name="SHOW_OVERVIEW" id="SHOW_OVERVIEW" value="true"/><input type="hidden" name="stype" id="stype" value="nucleotide"/><input type="hidden" name="SUBJECTFILE" id="SUBJECTFILE" value=""/><input type="hidden" name="SUBJECTS" id="SUBJECTS" value=""/><input type="hidden" name="SUBJECTS_FROM" id="SUBJECTS_FROM" value=""/><input type="hidden" name="SUBJECTS_TO" id="SUBJECTS_TO" value=""/><input type="hidden" name="TEMPLATE_LENGTH" id="TEMPLATE_LENGTH" value=""/><input type="hidden" name="TEMPLATE_TYPE" id="TEMPLATE_TYPE" value=""/><input type="hidden" name="TWO_HITS" id="TWO_HITS" value=""/><input type="hidden" name="UNIQ_DEFAULTS_NAME" id="UNIQ_DEFAULTS_NAME" value="A_SearchDefaults_1N2ADa_oee_1Z5H3Q7o1_GTR6V_1OgPIQ"/><input type="hidden" name="USER_DATABASE" id="USER_DATABASE" value=""/><input type="hidden" name="USER_DEFAULT_MATCH_SCORES" id="USER_DEFAULT_MATCH_SCORES" value="0"/><input type="hidden" name="USER_DEFAULT_PROG_TYPE" id="USER_DEFAULT_PROG_TYPE" value="megaBlast"/><input type="hidden" name="USER_FORMAT_DEFAULTS" id="USER_FORMAT_DEFAULTS" value=""/><input type="hidden" name="USER_MATCH_SCORES" id="USER_MATCH_SCORES" value=""/><input type="hidden" name="USER_WORD_SIZE" id="USER_WORD_SIZE" value=""/><input type="hidden" name="WORD_SIZE" id="WORD_SIZE" value="28"/><input type="hidden" name="WWW_BLAST_TYPE" id="WWW_BLAST_TYPE" value=""/>
     </form>
 
 

@@ -5,6 +5,8 @@ class BiodatabaseType < ActiveRecord::Base
   GENERATED_MASTER = 'Generated Master Database'
   GENERATED_MATCH = 'Generated Match DB'
 
+  named_scope :raw_db_types, :conditions => ['name in (?)',[UPLOADED_RAW,UPLOADED_CLEANED]]
+
   has_many :biodatabases
   validates_presence_of :name
 

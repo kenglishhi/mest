@@ -33,6 +33,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace(:workbench) do |workbench|
     workbench.resources :biodatabases, :member => { :move => :post}
+    workbench.resources :raw_biodatabases
     workbench.resources :biodatabase_groups, :member => { :move => :post , :tree => :get }
     workbench.resources :biosequences
     workbench.resources :jobs
