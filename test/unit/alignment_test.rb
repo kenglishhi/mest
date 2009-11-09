@@ -2,13 +2,13 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class AlignmentTest < ActiveSupport::TestCase
   # Replace this with your real tests.
-  should_belong_to :fasta_file
+  should_belong_to :biodatabase
 
   context "Test alignment with ClustalW"  do
     setup do
-      @test_fasta_file = fasta_files(:fasta_files_001)
+      @test_db = biodatabases(:biodatabases_001)
       @old_alignment_count = Alignment.count
-      @new_aln  = Alignment.generate_alignment(@test_fasta_file,users(:users_001))
+      @new_aln  = Alignment.generate_alignment(@test_db,users(:users_001))
     end
     should "Generate a new alignment file" do
       assert @new_aln.aln

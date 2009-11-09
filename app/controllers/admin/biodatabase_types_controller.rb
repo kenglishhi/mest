@@ -1,5 +1,4 @@
-class BiodatabaseTypesController < Admin::BaseController  
-  before_filter :database_sub_nav
+class Admin::BiodatabaseTypesController < Admin::BaseController  
 
   active_scaffold :biodatabase_types do |config|
     config.list.label = "Databases Types"

@@ -10,6 +10,7 @@ class Biodatabase < ActiveRecord::Base
   belongs_to :user
 
   has_many :biodatabase_biosequences
+  has_one  :alignment
   has_many :biosequences, :through => :biodatabase_biosequences, :order => 'name'
   has_many :biodatabase_links, :dependent => :destroy
   has_many :linked_biodatabase_links, :class_name =>'BiodatabaseLink', :foreign_key =>'linked_biodatabase_id', :dependent => :destroy

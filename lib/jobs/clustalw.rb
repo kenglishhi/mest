@@ -10,11 +10,11 @@ class Jobs::Clustalw < Jobs::AbstractJob
     end
 
     puts "------------"
-    puts "  Calling biodatabse.destroy  #{params.inspect}  "
+    puts "  Calling clustalw #{params.inspect}  "
     puts "------------"
     biodatabase = Biodatabase.find(params[:biodatabase_id])
     FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
-    Alignment.generate_alignment(biodatabase.fasta_file, User.find(params[:user_id]) )
+    Alignment.generate_alignment(biodatabase, User.find(params[:user_id]) )
     puts "------------"
     puts "  Finished biodatabse.destroy  "
     puts "--------------------------"

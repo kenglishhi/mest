@@ -175,10 +175,16 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
             Ext.bio.showBlastCreateDbsWindow(node.id);
           }
         });
-
+        var clustalwButton = new Ext.menu.Item({
+          iconCls:'clustalw',
+          text: "ClustalW",
+          handler: function() {
+            Ext.bio.showClustalwWindow(node.id);
+          }
+        });
 
         contextMenu  = new Ext.menu.Menu({
-          items: [renameButton, cleanButton, blastButton,'-',deleteButton]
+          items: [renameButton, cleanButton, blastButton, clustalwButton,'-',deleteButton]
         });
 
       }

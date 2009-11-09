@@ -1,0 +1,2 @@
+class AlignmentsController < ApplicationController
+end

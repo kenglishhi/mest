@@ -72,71 +72,6 @@ extjs_store( :controller => "workbench/biodatabases",
 
 ).render(false)
 %>;
-Ext.workbenchdata.biodatabaseComboStore = <%=
-extjs_store( :controller => "workbench/raw_biodatabases",
-  :model => "biodatabase",
-  :writer => {"encode" => false},
-  :config => {
-    "storeId" => 'biodatabase-combo-store',
-    "autoLoad" => true,
-    "autoSave" => false,
-    "restful" => true
-  }
-
-).render(false)
-%>;
-
-    var biodatabasePropertyStore = <%=
-extjs_store( :controller => "workbench/biodatabases",
-  :writer => {"encode" => false},
-  :config => {
-    "storeId" => 'biodatabase-property-store',
-    "autoLoad" => false,
-    "autoSave" => true,
-    "restful" => true
-  }
-).render(false)
-%>;
-
-    /*    var biodatabaseGroupStore = <%=
-extjs_store( :controller => "workbench/biodatabase_groups",
-  :writer => {"encode" => false},
-  :config => {
-    "totalProperty" => 'results',
-    "autoLoad" => false,
-    "autoSave" => true,
-    "restful" => true
-  }
-).render(false)
-%>;
-     */
-    var blastResultStore = <%=
-extjs_store( :controller => "workbench/blast_results",
-  :writer => {"encode" => false},
-  :config => {
-    "totalProperty" => 'results',
-    "autoLoad" => false,
-    "autoSave" => false,
-    "restful" => true
-  }
-).render(false)
-%>
-
-
-    var jobStore = <%=
-extjs_store( :controller => "workbench/jobs",
-  :model => 'Job',
-  :writer => {"encode" => false},
-  :config => {
-    "totalProperty" => 'results',
-    "autoLoad" => false,
-    "autoSave" => true,
-    "restful" => true
-  }
-
-).render(false)
-%>;
-
     var jobLogStore = <%=
 extjs_store( :controller => "workbench/job_logs",
   :writer => {"encode" => false},
@@ -149,6 +84,88 @@ extjs_store( :controller => "workbench/job_logs",
 
 ).render(false)
 %>;
+
+    Ext.workbenchdata.rawDbsComboStore = <%=
+extjs_store( :controller => "workbench/raw_biodatabases",
+  :model => "biodatabase",
+  :writer => {"encode" => false},
+  :config => {
+    "storeId" => 'raw-dbs-combo-store',
+    "autoLoad" => true,
+    "autoSave" => false,
+    "restful" => true
+  }
+
+).render(false)
+%>;
+
+    Ext.workbenchdata.generatedDbsComboStore = <%=
+extjs_store( :controller => "workbench/generated_biodatabases",
+  :model => "biodatabase",
+  :writer => {"encode" => false},
+  :config => {
+    "storeId" => 'generated-dbs-combo-store',
+    "autoLoad" => true,
+    "autoSave" => false,
+    "restful" => true
+  }
+).render(false)
+%>;
+
+
+
+
+    var biodatabasePropertyStore = <%=
+extjs_store( :controller => "workbench/biodatabases",
+  :writer => {"encode" => false},
+  :config => {
+    "storeId" => 'biodatabase-property-store',
+    "autoLoad" => false,
+    "autoSave" => true,
+    "restful" => true
+  }
+).render(false)
+%>;
+    var jobStore = <%=
+extjs_store( :controller => "workbench/jobs",
+  :model => 'Job',
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => false,
+    "autoSave" => true,
+    "restful" => true
+  }
+).render(false)
+%>;
+
+    /*    var biodatabaseGroupStore = <%=
+#extjs_store( :controller => "workbench/biodatabase_groups",
+#  :writer => {"encode" => false},
+#  :config => {
+#    "totalProperty" => 'results',
+#    "autoLoad" => false,
+#    "autoSave" => true,
+#    "restful" => true
+#  }
+#).render(false)
+%>;
+     */
+    var blastResultStore = <%=
+extjs_store( :controller => "workbench/blast_results",
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => false,
+    "autoSave" => false,
+    "restful" => true
+  }
+).render(false)
+%>;
+
+
+
+
 
 
     var currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
@@ -190,7 +207,7 @@ extjs_store( :controller => "workbench/job_logs",
       } else if (node.attributes.resource =='biodatabase_group' ) {
         Ext.getCmp('workbench-grid-tabs').activate('workbench-biodatabase-tab');
         params.biodatabase_group_id = node.id;
-//        Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
+        //        Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
       }
     };
     var seqGrid = new Ext.bio.BiosequenceGrid({

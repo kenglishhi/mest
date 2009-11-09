@@ -22,6 +22,7 @@ ActionController::Routing::Routes.draw do |map|
     tools.resources :blast_cleaners
     tools.resources :blast_create_dbs
     tools.resources :biosequence_renamers
+    tools.resources :clustalws
   end
 
   map.namespace(:jobs) do |jobs|
@@ -34,6 +35,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace(:workbench) do |workbench|
     workbench.resources :biodatabases, :member => { :move => :post}
     workbench.resources :raw_biodatabases
+    workbench.resources :generated_biodatabases
     workbench.resources :biodatabase_groups, :member => { :move => :post , :tree => :get }
     workbench.resources :biosequences
     workbench.resources :jobs
