@@ -138,6 +138,11 @@ class FastaFile < ActiveRecord::Base
   def close_fasta_file
     @fasta_file_handle.close if @fasta_file_handle
   end
+  def alignemnt_exists?
+    aln_file = self.fasta.path.sub(/fasta$/,'aln')
+    File.exists? aln_file
+  end
+
 
   def self.generate_fasta(biodatabase)
     filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"

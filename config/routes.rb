@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   # Active Scaffold Based controllers
+  map.resources :alignments, :active_scaffold => true
   map.resources :biodatabase_groups, :active_scaffold => true
   map.resources :biodatabase_links, :active_scaffold => true
   map.resources :biodatabases, :active_scaffold => true
