@@ -37,7 +37,7 @@ class BiodatabaseGroup < ActiveRecord::Base
       db_group.ext_tree
     end
     tree_data[:children] +=  biodatabases.map do  |db|
-      {:text => db.name, :leaf => true, :id => db.id, :resource => 'biodatabase' }
+      {:text => db.name, :leaf => true, :id => db.id, :resource => 'biodatabase', :db_type=> db.biodatabase_type.name  }
     end
     tree_data
   end
