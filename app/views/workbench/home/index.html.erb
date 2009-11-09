@@ -190,7 +190,7 @@ extjs_store( :controller => "workbench/job_logs",
       } else if (node.attributes.resource =='biodatabase_group' ) {
         Ext.getCmp('workbench-grid-tabs').activate('workbench-biodatabase-tab');
         params.biodatabase_group_id = node.id;
-        Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
+//        Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
       }
     };
     var seqGrid = new Ext.bio.BiosequenceGrid({
@@ -392,29 +392,13 @@ extjs_store( :controller => "workbench/job_logs",
     });
 
     var button1 = Ext.get('rename-biosequences');
-    button1.on('click', Ext.bio.showRenamefFormWindow);
+    button1.on('click', Ext.bio.showBiodatabaseRenamerWindow);
 
     var button2 = Ext.get('clean-biodatabase');
-    var winBlastClean;
-    button2.on('click', function(){
-      if(!winBlastClean){
-        winBlastClean = new Ext.bio.BlastCleanerWindow({
-          dbStore: biodatabaseComboStore
-        });
-      }
-      winBlastClean.show(this);
-    });
+    button2.on('click', Ext.bio.showBlastCleanerWindow);
 
     var button3 = Ext.get('blast-biodatabase');
-    var winBlast;
-    button3.on('click', function(){
-      if(!winBlast){
-        winBlast= new Ext.bio.BlastCreateDbsWindow({
-          dbStore: biodatabaseComboStore
-        });
-      }
-      winBlast.show(this);
-    });
+    button3.on('click', Ext.bioshowBlastCreateDbsWindow);
 
 
 

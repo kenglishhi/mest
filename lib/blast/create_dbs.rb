@@ -6,6 +6,8 @@ class Blast::CreateDbs < Blast::Base
     @target_database = Biodatabase.find(Biodatabase.find(@params[:target_biodatabase_id]) )
     @test_fasta_file = @test_database.fasta_file
     @target_fasta_file = @target_database.fasta_file
+    @test_fasta_file.overwrite_fasta
+    @target_fasta_file.overwrite_fasta
     if @test_fasta_file.nil? || @target_fasta_file.nil?
       raise "Target or Test Fasta File does not exist"
     end

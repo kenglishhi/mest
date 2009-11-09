@@ -12,7 +12,7 @@ class Jobs::ExtractSequences < Jobs::AbstractJob
     fasta_file.extract_sequences
     puts "------------"
     puts "  Finished Jobs::ExtractSequences "
-    puts "--------------------------
+    puts "--------------------------"
     true
 
   end

@@ -5,6 +5,7 @@ class Blast::CleanDb < Blast::Base
   def init_files_and_databases
     @test_database = Biodatabase.find(@params[:biodatabase_id] )
     @test_fasta_file = @test_database.fasta_file
+    @test_fasta_file.overwrite_fasta
     raise "Target Fasta File does not exist" unless @test_fasta_file
 
     @target_fasta_file = @test_fasta_file

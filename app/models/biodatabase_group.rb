@@ -7,7 +7,7 @@ class BiodatabaseGroup < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
 
-  has_many :biodatabases, :dependent => :destroy
+  has_many :biodatabases, :dependent => :destroy, :order => 'name'
 
   validates_presence_of :name
   validates_presence_of :user_id

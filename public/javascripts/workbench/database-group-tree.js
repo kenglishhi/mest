@@ -42,7 +42,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         iconCls:'x-tree-delete',
         text: 'Delete',
         handler: function() {
-          Ext.getCmp(myId).deleteSelectedNode();
+          Ext.getCmp(myId).deleteSelectedNode;
         }
       }],
       loader: new Ext.tree.TreeLoader({
@@ -61,10 +61,11 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   refresh: function(){
     this.getLoader().load(this.root);
   },
-  deleteSelectedNode : function() {
+  deleteSelectedNode : function(node) {
     var dbTree= this;
-
-    var node = this.getSelectionModel().getSelectedNode();
+    if (!node) {
+      var node = this.getSelectionModel().getSelectedNode();
+    }
     node.getUI().addClass('x-tree-node-loading');
     var url;
     if (node.attributes.resource == 'biodatabase') {
@@ -140,36 +141,52 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     contextmenu: function(node){
       //Set up some buttons
       var myId = this.id;
-
-      var renameButton = new Ext.menu.Item({
-        iconCls:'new_fasta',
-        text: "Rename Sequences",
-        handler: function() {
-          Ext.bio.showRenamefFormWindow();
-        }
-      });
-
-      var cleanButton = new Ext.menu.Item({
-        iconCls:'book',
-        text: "Clean DB"
-      });
-
-      var blastButton = new Ext.menu.Item({
-        iconCls:'new_view',
-        text: "Blast"
-      });
+      var contextMenu;
 
       var deleteButton = new Ext.menu.Item({
         iconCls:'x-tree-delete',
         text: 'Delete',
         handler: function() {
-          Ext.getCmp(myId).deleteSelectedNode();
+          Ext.getCmp(myId).deleteSelectedNode(node);
         }
       });
 
-      var contextMenu = new Ext.menu.Menu({
-        items: [renameButton, cleanButton, blastButton,'-',deleteButton]
-      });
+      if (node.attributes.resource == 'biodatabase') {
+        var renameButton = new Ext.menu.Item({
+          iconCls:'new_fasta',
+          text: "Rename Sequences",
+          handler: function() {
+            Ext.bio.showBiodatabaseRenamerWindow(node.id);
+          }
+        });
+
+        var cleanButton = new Ext.menu.Item({
+          iconCls:'book',
+          text: "Clean DB",
+          handler: function() {
+            Ext.bio.showBlastCleanerWindow(node.id);
+          }
+        });
+
+        var blastButton = new Ext.menu.Item({
+          iconCls:'new_view',
+          text: "Blast",
+          handler: function() {
+            Ext.bio.showBlastCreateDbsWindow(node.id);
+          }
+        });
+
+
+        contextMenu  = new Ext.menu.Menu({
+          items: [renameButton, cleanButton, blastButton,'-',deleteButton]
+        });
+
+      }
+      else if (node.attributes.resource == 'biodatabase_group') {
+        contextMenu  = new Ext.menu.Menu({
+          items: [deleteButton]
+        });
+      }
 
       //Show the menu
       contextMenu.show(node.ui.getAnchor());
