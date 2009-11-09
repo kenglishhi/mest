@@ -2,8 +2,8 @@
 
 
 
-set :application, "biococonutisland"
-set :repository,  "git@github.com:kenglishhi/biococonutisland.git"
+set :application, "mest"
+set :repository,  "git@github.com:kenglishhi/mest.git"
 set :scm, "git"
 set :branch, "master"
 set :shared_dir, "shared"
