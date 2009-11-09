@@ -152,19 +152,12 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       });
 
       if (node.attributes.resource == 'biodatabase') {
+
         var renameButton = new Ext.menu.Item({
           iconCls:'new_fasta',
           text: "Rename Sequences",
           handler: function() {
             Ext.bio.showBiodatabaseRenamerWindow(node.id);
-          }
-        });
-
-        var cleanButton = new Ext.menu.Item({
-          iconCls:'book',
-          text: "Clean DB",
-          handler: function() {
-            Ext.bio.showBlastCleanerWindow(node.id);
           }
         });
 
@@ -175,26 +168,47 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
             Ext.bio.showBlastCreateDbsWindow(node.id);
           }
         });
-        var clustalwButton = new Ext.menu.Item({
-          iconCls:'clustalw',
-          text: "ClustalW",
-          handler: function() {
-            Ext.bio.showClustalwWindow(node.id);
-          }
-        });
 
-        contextMenu  = new Ext.menu.Menu({
-          items: [renameButton, cleanButton, blastButton, clustalwButton,'-',deleteButton]
-        });
+        if (node.attributes.db_type == "Generated Match DB") {
+          var clustalwButton = new Ext.menu.Item({
+            iconCls:'clustalw',
+            text: "ClustalW",
+            handler: function() {
+              Ext.bio.showClustalwWindow(node.id);
+            }
+          });
 
+          contextMenu  = new Ext.menu.Menu({
+            items: [ clustalwButton,'-',deleteButton]
+          });
+        } else if (node.attributes.db_type == "Uploaded Cleaned Database") {
+          contextMenu  = new Ext.menu.Menu({
+            items: [renameButton, blastButton, '-', deleteButton]
+          });
+        } else if (node.attributes.db_type == "Uploaded Raw Data") {
+          var cleanButton = new Ext.menu.Item({
+            iconCls:'book',
+            text: "Clean DB",
+            handler: function() {
+              Ext.bio.showBlastCleanerWindow(node.id);
+            }
+          });
+
+          contextMenu  = new Ext.menu.Menu({
+            items: [renameButton, cleanButton, blastButton, '-', deleteButton]
+          });
+        } else {
+
+          contextMenu  = new Ext.menu.Menu({
+            items: [deleteButton]
+          });
+        }
       }
       else if (node.attributes.resource == 'biodatabase_group') {
         contextMenu  = new Ext.menu.Menu({
           items: [deleteButton]
         });
       }
-
-      //Show the menu
       contextMenu.show(node.ui.getAnchor());
     }
   },
