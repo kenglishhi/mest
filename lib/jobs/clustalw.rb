@@ -16,7 +16,7 @@ class Jobs::Clustalw < Jobs::AbstractJob
     FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
     Alignment.generate_alignment(biodatabase, User.find(params[:user_id]) )
     puts "------------"
-    puts "  Finished biodatabse.destroy  "
+    puts "  Finished clustalw "
     puts "--------------------------"
     true
 
