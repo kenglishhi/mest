@@ -101,7 +101,7 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
           var record = Ext.getCmp(this.viewPanelId).record;
           if (record) {
             var params = {};
-            params.JOB_TITLE = 'HIMB-'+record.name;
+            params.JOB_TITLE = 'MEST-'+record.name;
             params.QUERY     = record.seq;
             Ext.bio.ncbiBlastSearch(params);
           }
