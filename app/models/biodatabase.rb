@@ -1,6 +1,6 @@
 class Biodatabase < ActiveRecord::Base
   include ExtJS::Model
-  extjs_fields :id,:name,:created_at, :number_of_sequences, :fasta_file_name_display,:fasta_file_url
+  extjs_fields :id,:name,:created_at, :number_of_sequences, :fasta_file_name_display,:fasta_file_url, :alignment_file_url
   cattr_reader :per_page
   @@per_page = 10
 
@@ -79,6 +79,9 @@ class Biodatabase < ActiveRecord::Base
   end
   def fasta_file_url
     self.fasta_file.fasta.url if fasta_file
+  end
+  def alignment_file_url
+    self.fasta_file.alignment_file_url if fasta_file
   end
 
   def rename_sequences(prefix)

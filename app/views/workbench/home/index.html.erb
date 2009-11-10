@@ -202,7 +202,7 @@ extjs_store( :controller => "workbench/blast_results",
         Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
         params.biodatabase_id = node.id;
         Ext.getCmp('workbench-biosequence-grid').updateContent(params);
-        Ext.getCmp('workbench-biodatabase-property-grid').updateContent(params);
+//        Ext.getCmp('workbench-biodatabase-property-grid').updateContent(params);
 
       } else if (node.attributes.resource =='biodatabase_group' ) {
         Ext.getCmp('workbench-grid-tabs').activate('workbench-biodatabase-tab');
@@ -288,6 +288,7 @@ extjs_store( :controller => "workbench/blast_results",
                   id: 'workbench-biosequence-grid',
                   pageSize: seqPageSize,
                   store:biosequenceStore,
+                  biodatabasePropertyStore: biodatabasePropertyStore,
                   biosequenceViewId: 'bio-sequence-view',
                   split:true
                 }, {
@@ -396,13 +397,14 @@ extjs_store( :controller => "workbench/blast_results",
               title: 'Tools',
               iconCls: 'settings',
               border: false
-            }, {
-              xtype: 'biodatabase-property-grid',
-              id:'workbench-biodatabase-property-grid',
-              restfulStore: biodatabasePropertyStore,
-              iconCls: 'nav' ,
-              border: false
             }
+//            , {
+//              xtype: 'biodatabase-property-grid',
+//              id:'workbench-biodatabase-property-grid',
+//              restfulStore: biodatabasePropertyStore,
+//              iconCls: 'nav' ,
+//              border: false
+//            }
           ]
         }
       ]

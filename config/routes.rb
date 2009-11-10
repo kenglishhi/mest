@@ -24,6 +24,7 @@ ActionController::Routing::Routes.draw do |map|
     tools.resources :blast_create_dbs
     tools.resources :biosequence_renamers
     tools.resources :clustalws
+    tools.resources :generate_fastas
   end
 
   map.namespace(:jobs) do |jobs|
