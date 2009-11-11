@@ -26,4 +26,8 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
-NR_DATABASE_DIRECTORY = '/opt/local/var/data'
+
+config.after_initialize do
+  Blast::Command.nr_database_directory = '/opt/local/var/data/nr'
+  Blast::Command.nt_database_directory = '/opt/local/var/data/nt'
+end

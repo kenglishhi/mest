@@ -16,4 +16,9 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-NR_DATABASE_DIRECTORY = '/home/kenglish/Documents/Data/ncbi'
+config.after_initialize do
+
+
+  Blast::Command.nr_database_directory = '/home/kenglish/Documents/Data/ncbi/nr'
+  Blast::Command.nt_database_directory = '/home/kenglish/Documents/Data/ncbi/nt'
+end

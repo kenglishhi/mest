@@ -5,13 +5,7 @@ class Jobs::GenerateFasta < Jobs::AbstractJob
       return
     end
 
-    puts "------------"
-    puts "  Running Jobs::GenerateFasta #{params.inspect}  "
-    puts "------------"
     FastaFile.generate_fasta(Biodatabase.find( params[:biodatabase_id]) )
-    puts "------------"
-    puts "  Finished Jobs::GenerateFasta "
-    puts "--------------------------"
     true
   end
 end

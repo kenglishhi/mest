@@ -1,6 +1,8 @@
 require 'pp'
 class Jobs::AbstractJob
-  
+
+  DEBUG = false
+  cattr_accessor :nt_database_directory
   attr_accessor :user_id
   attr_accessor :project_id
   attr_accessor :job_name
@@ -15,15 +17,15 @@ class Jobs::AbstractJob
     user_data = {:user_id => user_id, :project_id => project_id}
     params.merge!(user_data)
 
-    puts "------------"
-    puts "Calling #{self.class}( params = #{params.inspect})  "
-    puts "------------"
+    logger.error("------------") 
+    logger.error "Calling #{self.class}( params = #{params.inspect})  " 
+    logger.error "------------" 
 
     do_perform
 
-    puts "------------"
-    puts "FINISHED #{self.class}"
-    puts "--------------------------"
+    logger.error "------------" 
+    logger.error "FINISHED #{self.class}" 
+    logger.error "--------------------------" 
   end
   
   include Jobs::Chainable

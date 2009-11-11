@@ -135,7 +135,6 @@ class BlastCommand
 #        return
 #      end
 #      output_biodatabase.save
-#      puts "[kenglish] saved new database #{output_biodatabase.name} ( #{output_biodatabase.id} ) "
 #    end
 #    true
 #  end

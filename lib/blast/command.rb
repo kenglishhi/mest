@@ -10,6 +10,21 @@ class Blast::Command
   #
   #############################
 
+  cattr_accessor :nr_database_directory
+  cattr_accessor :nt_database_directory
+  ########################################3
+  #  nr.*tar.gz:	Non-redundant protein sequence database with entries from
+  #     GenPept, Swissprot, PIR, PDF, PDB, and NCBI RefSeq.
+  #     NOTE that nr does NOT contain sequences found in pataa and env_nr databases.
+  #
+  #  nt.*tar.gz:	Nucleotide sequence database, with entries from all traditional
+  #    divisions of GenBank, EMBL, and DDBJ excluding bulk divisions (gss, sts,
+  #    pat, est, and htg) as well as wgs entries. Minimally non-redundant.
+  #
+  ########################################3
+
+
+
   def self.execute(program, blast_result, params)
     if program.to_sym == :blastall
       self.execute_blastall(blast_result,params)
@@ -19,6 +34,7 @@ class Blast::Command
       raise "Invalid program '#{program} called for Blast::Command.execute"
     end
   end
+
   def self.execute_blastall(blast_result, params)
     required_params = [:test_file_path,:target_file_path, :evalue, :output_file_prefix]
     required_params.each do | required_option|
@@ -27,7 +43,14 @@ class Blast::Command
     if params[:evalue]  !~ /^10e-/
       params[:evalue] = "10e-#{params[:evalue]}"
     end
-    command = " blastall -p blastn -i #{params[:test_file_path]} -d #{params[:target_file_path] } -e #{params[:evalue]}  -b 20 -v 20 "
+    cli ={}
+    cli['-d'] = params[:nt] ? nt_database_directory : params[:target_file_path]
+    cli['-i'] = params[:test_file_path]
+    cli['-e'] = params[:evalue]
+    cli['-b'] = 20 
+    cli['-v'] = 20 
+    options =  cli.to_a.join(' ')
+    command = " blastall -p blastn  #{options} "
     blast_result.command = command if blast_result
     Delayed::Worker.logger.error("[kenglish] blast command = #{command}")
     output_file_handle = Tempfile.new("#{params[:output_file_prefix].gsub(/ /,"_")}_Blast_Result.txt")

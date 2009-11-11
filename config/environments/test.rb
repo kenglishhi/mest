@@ -26,4 +26,7 @@ config.action_mailer.delivery_method = :test
 # This is necessary if your schema can't be completely dumped by the schema dumper,
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
-NR_DATABASE_DIRECTORY = '/home/kenglish/Documents/Data/ncbi'
+config.after_initialize do
+  Blast::Command.nr_database_directory = '/home/kenglish/Data/ncbi/nr'
+  Blast::Command.nt_database_directory = '/home/kenglish/Data/ncbi/nt'
+end

@@ -10,14 +10,7 @@ class Jobs::CleanDatabaseWithBlast < Jobs::AbstractJob
     end
     params.merge!(:blast_result_name => "#{job_name} Blast Results" ) 
     blast_command = Blast::CleanDb.new(params)
-    puts "Calling Blast::Clean( params = #{params.inspect})  "
-    puts "------------"
     blast_command.run
-    puts "------------"
-    puts "Finished Blast::Clean"
-    puts "--------------------------"
-    true
-
   end
 end
 

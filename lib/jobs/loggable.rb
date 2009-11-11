@@ -16,10 +16,10 @@ module Jobs::Loggable
       stopped_at = Time.now
       if e
         message = "#{e.message}\n#{e.backtrace.join("\n")}"
-        puts "---------------  "
-        puts "ERROR: "
-        puts message
-        puts "---------------  "
+        logger.error "---------------  "
+        logger.error "ERROR: "
+        logger.error message
+        logger.error "---------------  "
 
       end
       JobLog.create!(:job_name => self.job_name,

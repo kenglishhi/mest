@@ -152,12 +152,11 @@ class FastaFile < ActiveRecord::Base
     alignment_file_path
   end
 
-  end
   def alignment_file_url
 
     self.fasta.url.sub(/fasta$/,'aln') if alignemnt_exists?
   end
-  def alignemnt_exists?
+  def alignment_exists?
     File.exists? alignment_file_path
   end
 

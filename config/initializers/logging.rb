@@ -1,0 +1,1 @@
+LogBuddy.init
