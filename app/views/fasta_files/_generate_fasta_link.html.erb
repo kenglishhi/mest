@@ -1,0 +1,11 @@
+<% css_id = "activate-or-deactivate_#{record.id}" %>
+<span id="<%= css_id %>">
+  <%= link_to_remote "Generate",
+    :update => css_id,
+    :url => {:controller =>'tools/generate_fastas', :biodatabase_id => record.id},
+    :method => :post,
+    :loading => "$('#{css_id}').update('Generating Fasta'); $('extract-sequence-warning').show(); ",
+    :loaded => "$('extract-sequence-warning').hide(); $('#{css_id}').update('Generating'); "
+
+%>
+</span>

@@ -138,6 +138,7 @@ class FastaFile < ActiveRecord::Base
   def close_fasta_file
     @fasta_file_handle.close if @fasta_file_handle
   end
+
   def alignment_file_path
     self.fasta.path.sub(/fasta$/,'aln')
   end
@@ -146,10 +147,19 @@ class FastaFile < ActiveRecord::Base
   end
   def generate_alignment
     command = " clustalw -infile=#{self.fasta.path}"
+    puts "CLUSTALLW : #{command}"
     system(*command)
     alignment_file_path
   end
 
+  end
+  def alignment_file_url
+
+    self.fasta.url.sub(/fasta$/,'aln') if alignemnt_exists?
+  end
+  def alignemnt_exists?
+    File.exists? alignment_file_path
+  end
 
   def self.generate_fasta(biodatabase)
     filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"

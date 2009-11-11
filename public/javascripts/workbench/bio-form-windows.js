@@ -282,8 +282,8 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
 Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
   title: 'ClustalW',
   layout:'fit',
-  width:500,
-  height:50,
+  width:550,
+  height:180,
   closeAction:'hide',
   plain: true,
   id: 'bio-clustalw-window',
@@ -302,13 +302,13 @@ Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
       triggerAction: 'all',
       emptyText:'Select a database...',
       selectOnFocus:true,
-      width: 450,
-      listWidth: 450,
+      width: 400,
+      listWidth: 400,
       allowBlank:false
     });
     var form = new Ext.FormPanel({
       id: 'my-clustalw-form-panel',
-      labelWidth: 120, // label settings here cascade unless overridden
+      labelWidth: 70, // label settings here cascade unless overridden
       url:'/tools/clustalws.json',
       method: 'POST',
       baseParams:{
@@ -317,7 +317,7 @@ Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
       frame:true,
       bodyStyle:'padding:5px 5px 0',
       defaults: {
-        width: 450
+        width: 400
       },
       defaultType: 'textfield',
       items: [ combo ],

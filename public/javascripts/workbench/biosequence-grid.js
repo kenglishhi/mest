@@ -17,7 +17,7 @@ Ext.bio.SeqSearchField = Ext.extend(Ext.form.TwinTriggerField, {
   trigger1Class:'x-form-clear-trigger',
   trigger2Class:'x-form-search-trigger',
   hideTrigger1:true,
-  width:180,
+  width:50,
   hasSearch : false,
   paramName : 'query',
 
@@ -86,14 +86,36 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
       }
 
     });
+    var cmpId = this.id;
 
     Ext.apply(this,{
-      tbar:[
-      'Search: ', ' ',
+      tbar:[       'Search: ', ' ',
       new Ext.bio.SeqSearchField({
         store: this.store,
-        width:320
-      })
+        width:200
+      }),
+      '->', {
+        iconCls:'new_fasta',
+        text: 'Fasta File',
+        id:'seq-grid-fasta-toolbar-item',
+        hidden: true,
+        handler: function() {
+          var strUrl = Ext.getCmp(cmpId).biodatabasePropertyStore.getAt(0).data.fasta_file_url;
+          window.open(strUrl);
+        }
+      },'-',
+      {
+        iconCls:'clustalw',
+        text: 'Alignment File',
+        id:'seq-grid-alignment-toolbar-item',
+        hidden: true,
+        labelStyle: 'font-weight:bold;',
+        handler: function() {
+          var strUrl = Ext.getCmp(cmpId).biodatabasePropertyStore.getAt(0).data.alignment_file_url;
+          window.open(strUrl);
+        }
+      },
+
       ]
     });
 
@@ -114,15 +136,38 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     }
   },
   updateContent: function(params) {
-    this.store.baseParams.biodatabase_id = params.biodatabase_id;
-    var viewPanel = Ext.getCmp(this.biosequenceViewId);
-    this.store.load({
-      params: {
-        start: 0,
-        limit: this.pageSize
-      }
-    } );
-  }
+    if (params.biodatabase_id) {
+      this.store.baseParams.biodatabase_id = params.biodatabase_id;
+      var viewPanel = Ext.getCmp(this.biosequenceViewId);
+      this.store.load({
+        params: {
+          start: 0,
+          limit: this.pageSize
+        }
+      } );
+      this.biodatabasePropertyStore.load({
+        params:{
+          id:params.biodatabase_id
+        },
+        callback: function(store, records, options){
+          if (this.getAt(0).data.fasta_file_url){
+            Ext.getCmp('seq-grid-fasta-toolbar-item').show();
+          } else {
+            Ext.getCmp('seq-grid-fasta-toolbar-item').hide();
+          }
+          if (this.getAt(0).data.alignment_file_url){
+            Ext.getCmp('seq-grid-alignment-toolbar-item').show();
+          } else {
+            Ext.getCmp('seq-grid-alignment-toolbar-item').hide();
+          }
 
+        //          var propGrid = Ext.getCmp(parentComponentId);
+        //          if (propGrid) {
+        //            propGrid.setSource(this.getAt(0).data);
+        //          }
+        }
+      });
+    }
+  }
 });
 Ext.reg('biosequence-grid', Ext.bio.BiosequenceGrid);

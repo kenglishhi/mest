@@ -26,3 +26,4 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
+NR_DATABASE_DIRECTORY = '/opt/local/var/data'

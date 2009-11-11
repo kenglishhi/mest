@@ -14,7 +14,10 @@ class Jobs::Clustalw < Jobs::AbstractJob
     puts "------------"
     biodatabase = Biodatabase.find(params[:biodatabase_id])
     FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
-    Alignment.generate_alignment(biodatabase, User.find(params[:user_id]) )
+    biodatabase.fasta_file.generate_alignment
+    puts " alignemnt_exists:    #{biodatabase.fasta_file.alignemnt_exists?}"
+    puts " alignment_file_path: #{biodatabase.fasta_file.alignment_file_path}"
+    puts " alignment_file_url:  #{biodatabase.fasta_file.alignment_file_url}"
     puts "------------"
     puts "  Finished clustalw "
     puts "--------------------------"
