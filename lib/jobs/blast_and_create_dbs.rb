@@ -9,12 +9,7 @@ class Jobs::BlastAndCreateDbs< Jobs::AbstractJob
        raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
     end
     blast_command = Blast::CreateDbs.new(params)
-    puts "Calling Blast::CreateDbs( params = #{params.inspect})  "
-    puts "------------"
     blast_command.run
-    puts "------------"
-    puts "FINISHED Blast::CreateDbs"
-    puts "--------------------------"
     true
   end
 

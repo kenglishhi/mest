@@ -13,7 +13,7 @@ ActiveRecord::Schema.define(:version => 20091108074423) do
 
   create_table "alignments", :force => true do |t|
     t.string   "label"
-    t.integer  "biodatabase_id"
+    t.integer  "fasta_file_id"
     t.string   "aln_file_name"
     t.string   "aln_content_type"
     t.integer  "aln_file_size"

@@ -14,7 +14,7 @@ class Jobs::ClustalWTest < ActiveSupport::TestCase
     end
 
     should "Create new databases" do
-      assert_not_nil @job.do_perform
+      @job.perform
       assert_equal @number_of_alignments+1 , Alignment.count, "Should generate a new alignment."
       assert_not_nil Alignment.last.report
       assert File.exists?(Alignment.last.aln.path)

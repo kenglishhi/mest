@@ -1,4 +1,3 @@
-
 require File.dirname(__FILE__) + '/../../test_helper'
 class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
   context "Blast 2 dbs and create databases" do
@@ -22,8 +21,7 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
     end
 
     should "Create new databases" do
-
-      assert_not_nil @job.do_perform
+      @job.perform
       assert_equal @number_of_biodatabase_groups+1, BiodatabaseGroup.count, "We should have a new biodatabase group"
       assert_equal @number_of_blast_results+1, BlastResult.count, "We should have a new biodatabase group"
       assert !BiodatabaseGroup.last.biodatabases.empty?, "There should not be any empty databases."
@@ -37,7 +35,7 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
         {:test_biodatabase_id => @biodatabase.id,:target_biodatabase_id => ""})
     end
     should "Raise Error when test_fasta_id parameter is missing" do
-      assert_raise(RuntimeError) { @job.do_perform}
+      assert_raise(RuntimeError) { @job.perform}
     end
   end
   context "Blast 2 identical dbs and create databases" do
@@ -64,8 +62,7 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
     end
 
     should "Create new databases" do
-
-      assert_not_nil @job.do_perform
+      @job.perform
       assert_equal @number_of_biodatabase_groups+1, BiodatabaseGroup.count, "We should have a new biodatabase group"
       assert_equal @number_of_blast_results+1, BlastResult.count, "We should have a new biodatabase group"
       assert_equal @number_of_fasta_files+1, FastaFile.count, "We should have a new fasta file"

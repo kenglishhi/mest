@@ -138,9 +138,16 @@ class FastaFile < ActiveRecord::Base
   def close_fasta_file
     @fasta_file_handle.close if @fasta_file_handle
   end
+  def alignment_file_path
+    self.fasta.path.sub(/fasta$/,'aln')
+  end
   def alignemnt_exists?
-    aln_file = self.fasta.path.sub(/fasta$/,'aln')
-    File.exists? aln_file
+    File.exists? alignment_file_path
+  end
+  def generate_alignment
+    command = " clustalw -infile=#{self.fasta.path}"
+    system(*command)
+    alignment_file_path
   end
 
 
@@ -179,6 +186,7 @@ class FastaFile < ActiveRecord::Base
     fasta_file_handle.close
 
   end
+
   def self.temp_path
     File.dirname(__FILE__) + '/../../tmp'
   end

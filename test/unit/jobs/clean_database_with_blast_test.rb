@@ -3,7 +3,7 @@ class Jobs::CleanDatabaseWithBlastTest < ActiveSupport::TestCase
   should "require params" do
     job =  Jobs::CleanDatabaseWithBlast.new("Extract Database FAIL", { })
     assert_raise RuntimeError  do
-      job.do_perform
+      job.perform
     end
   end
   context "Clean a Database File" do
@@ -29,7 +29,7 @@ class Jobs::CleanDatabaseWithBlastTest < ActiveSupport::TestCase
     end
 
     should "Clean Db job should run" do
-     assert_not_nil @job.do_perform
+     @job.perform
      assert_equal @number_of_blast_results + 1, BlastResult.count, "We should have a new biodatabase group"
      assert_not_nil Biodatabase.last.fasta_file, "Clean should generate new fasta file"
     end

@@ -9,7 +9,7 @@ class Jobs::RenameSequencesInDbTest < ActiveSupport::TestCase
     end
 
     should "Rename sequencess in db" do
-      assert_not_nil @job.do_perform
+      @job.do_perform
       @biodatabase.biosequences.each do | seq|
         assert_match /^#{@new_prefix}/, seq.name, "Sequence name should start with #{@new_prefix}"
       end
