@@ -11,6 +11,38 @@ class FastaFile < ActiveRecord::Base
   before_validation :set_label
   before_destroy :remove_fasta_dbs
 
+  def self.generate_fasta(biodatabase)
+    filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"
+
+    self.write_sequences_to_file(biodatabase, filename)
+
+    fasta_file_handle = File.new(filename,"r")
+    fasta_file = FastaFile.new
+    fasta_file.fasta = fasta_file_handle
+    fasta_file.project_id = biodatabase.biodatabase_group.project_id
+    fasta_file.user_id = biodatabase.biodatabase_group.user_id
+    fasta_file.is_generated = true
+    fasta_file.save!
+
+    biodatabase.fasta_file = fasta_file
+    biodatabase.save
+
+  end
+
+  def self.write_sequences_to_file(biodatabase, filename)
+    fasta_file_handle = File.new(filename,"w+")
+    biodatabase.biosequences.each do | seq |
+      fasta_file_handle.puts(seq.to_fasta)
+    end
+    fasta_file_handle.close
+
+  end
+
+  def self.temp_path
+    File.dirname(__FILE__) + '/../../tmp'
+  end
+
+
   def is_generated?
     # looks prettier
     is_generated
@@ -107,34 +139,6 @@ class FastaFile < ActiveRecord::Base
     @fasta_file_handle
   end
 
-  def match_sequence_def(query_def, rewind_flag=false)
-    count=0
-    if self.biodatabase_id
-      bioentries = Bioentry.sequence_in_database( query_def[0..39], biodatabase_id )
-      return bioentries.first unless  bioentries.empty?
-    end
-
-    open_fasta_file unless @fasta_file_handle
-    @fasta_file_handle.rewind if rewind_flag
-    begin
-      sequence = @fasta_file_handle.next_entry
-      return unless sequence
-      count =+ 1
-    end  until query_def ==  sequence.definition
-    sequence
-  end
-  def find_bioentry(query_def)
-    if self.is_generated
-      bioentry = BlastOutputEntry.find(:first,:include => :bioentry, :conditions => ['bioentry.name = ? ',query_def] ).bioentry
-    else
-      match_sequence_def(query_def)
-      # search the file
-    end
-  end
-  def find_biosequence(query_def)
-    Biosequence.find_by_name(query_def)
-  end
-
   def close_fasta_file
     @fasta_file_handle.close if @fasta_file_handle
   end
@@ -142,9 +146,11 @@ class FastaFile < ActiveRecord::Base
   def alignment_file_path
     self.fasta.path.sub(/fasta$/,'aln')
   end
+
   def alignemnt_exists?
     File.exists? alignment_file_path
   end
+
   def generate_alignment
     command = " clustalw -infile=#{self.fasta.path}"
     puts "CLUSTALLW : #{command}"
@@ -153,51 +159,18 @@ class FastaFile < ActiveRecord::Base
   end
 
   def alignment_file_url
-
     self.fasta.url.sub(/fasta$/,'aln') if alignemnt_exists?
   end
+
   def alignment_exists?
     File.exists? alignment_file_path
   end
 
-  def self.generate_fasta(biodatabase)
-    filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"
-
-
-    self.write_sequences_to_file(biodatabase, filename)
-
-    fasta_file_handle = File.new(filename,"r")
-    fasta_file = FastaFile.new
-    fasta_file.fasta = fasta_file_handle
-    fasta_file.project_id = biodatabase.biodatabase_group.project_id
-    fasta_file.user_id = biodatabase.biodatabase_group.user_id
-    fasta_file.is_generated = true
-    fasta_file.save!
-
-    biodatabase.fasta_file = fasta_file
-    biodatabase.save
-
-  end
-
   def overwrite_fasta
-
     if self.fasta
       FastaFile.write_sequences_to_file(biodatabase, self.fasta.path )
     end
-
   end
 
-  def self.write_sequences_to_file(biodatabase, filename)
-    fasta_file_handle = File.new(filename,"w+")
-    biodatabase.biosequences.each do | seq |
-      fasta_file_handle.puts(seq.to_fasta)
-    end
-    fasta_file_handle.close
-
-  end
-
-  def self.temp_path
-    File.dirname(__FILE__) + '/../../tmp'
-  end
-
+  
 end
