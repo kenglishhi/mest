@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :biodatabases, :active_scaffold => true
   map.resources :biosequences, :active_scaffold => true 
   map.resources :blast_results, :active_scaffold => true
-  map.resources :fasta_files, :active_scaffold => true, :new => { :extract_sequences =>  :any } 
+  map.resources :fasta_files, :active_scaffold => true
   map.resource :user_session
   map.resources :users
   map.resources :user_job_notifications
@@ -25,6 +25,8 @@ ActionController::Routing::Routes.draw do |map|
     tools.resources :biosequence_renamers
     tools.resources :clustalws
     tools.resources :generate_fastas
+    tools.resources :blast_nt_appends
+    tools.resources :extract_sequences
   end
 
   map.namespace(:jobs) do |jobs|

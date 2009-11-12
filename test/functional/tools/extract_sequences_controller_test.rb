@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Tools::GenerateFastasControllerTest < ActionController::TestCase
+class Tools::ExtractSequencesControllerTest < ActionController::TestCase
 
   context "test create generate fasta" do
     setup do
@@ -8,7 +8,7 @@ class Tools::GenerateFastasControllerTest < ActionController::TestCase
       UserSession.create(u)
       @delayed_job_count =  Job.count
     end
-    context "Empty Post" do
+    context "Empty Post for JSON" do
       setup do
         post :create, :format=> 'json'
       end
@@ -19,18 +19,18 @@ class Tools::GenerateFastasControllerTest < ActionController::TestCase
     end
     context "Valid Post to HTML" do
       setup do
-        post :create, :biodatabase_id =>  biodatabases(:biodatabases_001).id, :prefix => 'xxx'
+        post :create, :fasta_file_id =>  fasta_files(:fasta_files_006).id
       end
       should "Assert Should succeed on post to create with HTML" do
         assert_response :success
-        assert_match /Queued to Generate/, @response.body
+        assert_match /Queued to Extract/, @response.body
         assert_equal @delayed_job_count+1,Job.count
       end
     end
     context "Valid Post to JSON" do
       setup do
         post :create, :format=> 'json',
-          :biodatabase_id =>  biodatabases(:biodatabases_001).id, :prefix => 'xxx'
+          :fasta_file_id =>  fasta_files(:fasta_files_006).id
       end
       should "Assert Should succeed on post to create with JSON" do
         assert_response :success
@@ -39,4 +39,5 @@ class Tools::GenerateFastasControllerTest < ActionController::TestCase
       end
     end
   end
+
 end

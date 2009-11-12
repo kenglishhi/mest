@@ -1,4 +1,5 @@
 class Tools::BlastCleanersController < ApplicationController
+  include Jobs::ControllerUtils
   def new
     if Biodatabase.exists?(params[:biodatabase_id] )
       @biodatabase = Biodatabase.find(params[:biodatabase_id] )

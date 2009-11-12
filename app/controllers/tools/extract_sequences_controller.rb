@@ -1,7 +1,7 @@
-class Tools::GenerateFastasController < ApplicationController
+class Tools::ExtractSequencesController < ApplicationController
   include Jobs::ControllerUtils
   def create
-    if params[:biodatabase_id].blank?
+    if params[:fasta_file_id].blank?
       respond_to do |format|
         format.html {
           render :inline => 'Could not queue'
@@ -11,13 +11,13 @@ class Tools::GenerateFastasController < ApplicationController
         }
       end
     else
-      @biodatabase = Biodatabase.find(params[:biodatabase_id] )
 
-      job_name = "Generate Fasta #{@biodatabase.name}"
-      create_job(Jobs::GenerateFasta,job_name,current_user,params)
+      fasta_file = FastaFile.find(params[:fasta_file_id])
+      job_name = "Extract Sequences from #{fasta_file.fasta_file_name}"
+      create_job(Jobs::ExtractSequences, job_name, current_user, params)
       respond_to do |format|
         format.html {
-          render :inline => 'Queued to Generate'
+          render :inline => 'Queued to Extract'
         }
         format.json {
           render :json => {:success => true,:msg=> "Data Saved"}

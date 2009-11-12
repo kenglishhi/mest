@@ -1,4 +1,5 @@
 class Tools::BiosequenceRenamersController < ApplicationController
+  include Jobs::ControllerUtils
 
   def new
     if Biodatabase.exists?(params[:biodatabase_id] )
@@ -20,7 +21,7 @@ class Tools::BiosequenceRenamersController < ApplicationController
       end
     else
       job_name = "Rename sequences in database #{@biodatabase.name}"
-      create_job(job_name)
+      create_job(Jobs::RenameSequencesInDb, job_name, current_user, params)
 
       respond_to do |format|
         format.html {
@@ -32,13 +33,4 @@ class Tools::BiosequenceRenamersController < ApplicationController
       end
     end
   end
-  private
-  def create_job(job_name)
-    job_handler = Jobs::RenameSequencesInDb.new(job_name,params)
-    Job.create(:job_name => job_name,
-      :handler => job_handler,
-      :user => current_user,
-      :project => current_user.active_project)
-  end
-
 end

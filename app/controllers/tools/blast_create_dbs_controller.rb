@@ -1,6 +1,6 @@
 class Tools::BlastCreateDbsController < ApplicationController
+  include Jobs::ControllerUtils
   def new
-
     if Biodatabase.exists?(params[:test_biodatabase_id] )
       @test_biodatabase = Biodatabase.find(params[:test_biodatabase_id] )
     end
@@ -28,7 +28,7 @@ class Tools::BlastCreateDbsController < ApplicationController
       return
     else
       job_name = "Blasting #{@test_biodatabase.name} against #{@target_biodatabase.name} "
-      create_job(job_name)
+      create_job(Jobs::BlastAndCreateDbs, job_name, current_user, params)
       respond_to do |format|
         format.html {
           redirect_back_or_default biodatabases_path
@@ -41,12 +41,12 @@ class Tools::BlastCreateDbsController < ApplicationController
     end
   end
   private
-  def create_job(job_name)
-    job_handler = Jobs::BlastAndCreateDbs.new(job_name,params)
-    Job.create(:job_name => job_name,
-      :handler => job_handler,
-      :user => current_user,
-      :project => current_user.active_project )
-
-  end
+#  def create_job(job_name)
+#    job_handler = Jobs::BlastAndCreateDbs.new(job_name,params)
+#    Job.create(:job_name => job_name,
+#      :handler => job_handler,
+#      :user => current_user,
+#      :project => current_user.active_project )
+#
+#  end
 end

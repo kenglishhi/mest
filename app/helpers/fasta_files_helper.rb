@@ -5,7 +5,7 @@ module FastaFilesHelper
     elsif record.biodatabase
       "Extracted"
     else
-      render  :partial => "/fasta_files/biodatabase_extract_link", :locals => {:record => record}
+      render  :partial => "/fasta_files/extract_sequences", :locals => {:record => record}
     end
   end
   def fasta_file_name_column(record)

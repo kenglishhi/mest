@@ -1,6 +1,6 @@
-class Tools::GenerateFastasController < ApplicationController
+class Tools::BlastNtAppendsController < ApplicationController
   include Jobs::ControllerUtils
-  def create
+   def create
     if params[:biodatabase_id].blank?
       respond_to do |format|
         format.html {
@@ -11,13 +11,12 @@ class Tools::GenerateFastasController < ApplicationController
         }
       end
     else
-      @biodatabase = Biodatabase.find(params[:biodatabase_id] )
-
-      job_name = "Generate Fasta #{@biodatabase.name}"
-      create_job(Jobs::GenerateFasta,job_name,current_user,params)
+      biodatabase = Biodatabase.find(params[:biodatabase_id] )
+      job_name = "Append Blast NT matches for #{biodatabase.name}"
+      create_job(Jobs::BlastNtAppend,job_name,current_user,params)
       respond_to do |format|
         format.html {
-          render :inline => 'Queued to Generate'
+          redirect_back_or_default biodatabases_path
         }
         format.json {
           render :json => {:success => true,:msg=> "Data Saved"}

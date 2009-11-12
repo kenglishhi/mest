@@ -6,8 +6,9 @@
 <span id="<%= css_id %>">
 <%= link_to_remote "Extract Sequences", 
                    :update => css_id,
-                   :url => {:action => "extract_sequences", 
-                            :id => record.id}, 
+                   :url => {:controller => 'extract_sequences', 
+                            :action => 'new',
+                            :fasta_file_id => record.id}, 
                    :method => :post,
 				   :loading => "$('#{css_id}').update('Extracting Sequences'); $('extract-sequence-warning').show(); ",
 				   :loaded => "$('extract-sequence-warning').hide(); $('#{css_id}').update('Extracted'); "
