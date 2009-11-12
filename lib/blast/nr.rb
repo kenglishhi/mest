@@ -34,9 +34,11 @@ class Blast::Nr < Blast::Base
     logger.error( "Saved blast Results ")
     @blast_result
   end
+
   private
+
   def nr_path
-  end
+
   end
 
 end
