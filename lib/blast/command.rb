@@ -36,7 +36,7 @@ class Blast::Command
   end
 
   def self.execute_blastall(blast_result, params)
-    required_params = [:test_file_path,:target_file_path, :evalue, :output_file_prefix]
+    required_params = [:test_file_path, :evalue, :output_file_prefix]
     required_params.each do | required_option|
       raise "Blast Error: Option #{required_option} is blank" if params[required_option].blank?
     end
@@ -44,13 +44,15 @@ class Blast::Command
       params[:evalue] = "10e-#{params[:evalue]}"
     end
     cli ={}
-    cli['-d'] = params[:nt] ? nt_database_directory : params[:target_file_path]
+    puts "self.nt_database_directory #{self.nt_database_directory }"
+    cli['-d'] = params[:nt] ? self.nt_database_directory : params[:target_file_path]
     cli['-i'] = params[:test_file_path]
     cli['-e'] = params[:evalue]
     cli['-b'] = 20 
     cli['-v'] = 20 
     options =  cli.to_a.join(' ')
     command = " blastall -p blastn  #{options} "
+    puts command
     blast_result.command = command if blast_result
     Delayed::Worker.logger.error("[kenglish] blast command = #{command}")
     output_file_handle = Tempfile.new("#{params[:output_file_prefix].gsub(/ /,"_")}_Blast_Result.txt")

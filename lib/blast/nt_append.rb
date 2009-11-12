@@ -10,7 +10,7 @@ class Blast::NtAppend < Blast::Base
     else
       FastaFile.generate_fasta(@biodatabase)
     end
-    @fasta_file = @test_database.fasta_file
+    @fasta_file = @biodatabase.fasta_file
   end
 
   def do_run
@@ -23,8 +23,8 @@ class Blast::NtAppend < Blast::Base
     output_file_handle = Blast::Command.execute(:blastall, @blast_result,
       :test_file_path => @fasta_file.fasta.path,
       :evalue => evalue,
-      :nr => true,
-      :output_file_prefix => "#{@diodatabase.name}-NR}")
+      :nt => true,
+      :output_file_prefix => "#{@biodatabase.name}-NR}")
     output_file_handle.open
     @blast_result.stopped_at = Time.now
     @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)

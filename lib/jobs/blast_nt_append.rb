@@ -1,7 +1,6 @@
 class Jobs::BlastNtAppend < Jobs::AbstractJob
   def param_keys
-  [:biodatabase_id, :evalue, :identity,
-      :score]
+    [:biodatabase_id, :evalue, :identity, :score]
   end
 
   def do_perform
