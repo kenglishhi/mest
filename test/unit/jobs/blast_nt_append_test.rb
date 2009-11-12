@@ -4,7 +4,7 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
     setup do
       @fasta_file = fasta_files(:fasta_files_004)
       @biodatabase   = @fasta_file.extract_sequences
-      
+      @number_of_seqs = @biodatabase.biosequences.size
       assert File.exists?( @biodatabase.fasta_file.fasta.path ), "fasta_file should exist."
       @job =  Jobs::BlastNtAppend.new("Blasting #{@biodatabase.name} against NR",
         {:biodatabase_id => @biodatabase.id,
@@ -15,9 +15,9 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
 
     should "Create add NR Sequences to DB" do
       @job.perform
-      assert_equal @number_of_blast_results+1, BlastResult.count, "We should have a new biodatabase group"
-      puts BlastResult.last.inspect
-
+      @biodatabase.reload
+      assert_equal @number_of_blast_results + 1, BlastResult.count, "We should have a new biodatabase group"
+      assert_equal @number_of_seqs+2, @biodatabase.biosequences.size
     end
   end
 end

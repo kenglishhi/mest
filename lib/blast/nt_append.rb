@@ -28,9 +28,31 @@ class Blast::NtAppend < Blast::Base
     output_file_handle.open
     @blast_result.stopped_at = Time.now
     @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)
+    result_ff = Bio::FlatFile.open(output_file_handle)
+    result_ff.each do |report|
+      report.each do |hit|
+        begin
+          bioseq = Biosequence.new(:name => hit.target_def,
+            :seq => hit.target_seq.upcase,
+            :alphabet => 'dna',
+            :length => hit.target_len,
+            :original_name => hit.target_def)
+          bioseq.save!
+        rescue ActiveRecord::RecordInvalid =>  e
+          suffix = "_#{@biodatabase.id}_#{@biodatabase.biosequences.size}"
+          if ((bioseq.name.size + suffix.size) > 255)
+            bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
+          else
+            bioseq.name += suffix
+          end
+          bioseq.save!
+        end
+        @biodatabase.biosequences << bioseq
+      end
+    end
+
     @blast_result.output = output_file_handle
     @blast_result.save!
-    logger.error("Saved blast Results ")
     @blast_result
   end
 
