@@ -27,6 +27,6 @@ config.action_mailer.delivery_method = :test
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
 config.after_initialize do
-  Blast::Command.nr_database_directory = '/home/kenglish/Data/ncbi/nr'
-  Blast::Command.nt_database_directory = '/home/kenglish/Data/ncbi/nt'
+  Blast::Command.nr_database_directory = File.dirname(__FILE__) + '/../../test/fixtures/files/nr_fake'
+  Blast::Command.nt_database_directory = File.dirname(__FILE__) + '/../../test/fixtures/files/nt_fake'
 end
