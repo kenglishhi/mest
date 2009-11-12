@@ -22,10 +22,12 @@ class BiodatabaseTest < ActiveSupport::TestCase
 #      assert_equal( @biosequence_count - @my_sequence_count, Biosequence.count)
     end
   end
+
   def test_number_of_sequences
     biodatabase = biodatabases(:biodatabases_001)
     assert_equal  biodatabase.biosequences.size, biodatabase.number_of_sequences
   end
+
   def test_rename_sequences
     new_prefix = "KEV_"
     biodatabase = biodatabases(:biodatabases_001)
@@ -33,7 +35,6 @@ class BiodatabaseTest < ActiveSupport::TestCase
     biodatabase.biosequences.each do | seq|
       assert_match /^#{new_prefix}/, seq.name, "Sequence name should start with #{new_prefix}"
     end
-    assert_equal  biodatabase.biosequences.size, biodatabase.number_of_sequences
   end
   should "Destory a standalone database" do
    biodatabase = Biodatabase.create(
