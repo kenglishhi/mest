@@ -7,7 +7,7 @@ fasta_files_001:
   updated_at: 2009-05-21 05:55:07
   id: "1"
   is_generated: "0"
-  fasta_content_type: application/octet-stream
+  fasta_content_type: application/x-fasta
   project_id: 1
 fasta_files_002: 
   fasta_file_name: EST_Clade_A_6.fasta
@@ -17,7 +17,7 @@ fasta_files_002:
   updated_at: 2009-05-21 05:55:07
   id: "2"
   is_generated: "0"
-  fasta_content_type: application/octet-stream
+  fasta_content_type: application/x-fasta
   project_id: 1
 fasta_files_003: 
   fasta_file_name: EST_Clade_C_6.fasta
@@ -27,7 +27,7 @@ fasta_files_003:
   updated_at: 2009-05-21 05:55:07
   id: "3"
   is_generated: "0"
-  fasta_content_type: application/octet-stream
+  fasta_content_type: application/x-fasta
   project_id: 1
 fasta_files_004: 
   fasta_file_name: EST_Clade_A_1.fasta
@@ -37,7 +37,7 @@ fasta_files_004:
   updated_at: 2009-05-21 05:55:07
   id: "4"
   is_generated: "0"
-  fasta_content_type: application/octet-stream
+  fasta_content_type: application/x-fasta
   project_id: 1
 fasta_files_005:
   fasta_file_name: EST_Clade_A_5.fasta
@@ -46,6 +46,16 @@ fasta_files_005:
   fasta_file_size: "1785"
   updated_at: 2009-05-21 05:55:44
   id: "5"
+  is_generated: "0"
+  fasta_content_type: application/x-fasta
+  project_id: "1"
+fasta_files_006:
+  fasta_file_name: EST_Clade_A_50.fasta
+  label: EST_Clade_A_50
+  created_at: 2009-05-21 05:55:44
+  fasta_file_size: "1785"
+  updated_at: 2009-05-21 05:55:44
+  id: "6"
   is_generated: "0"
   fasta_content_type: application/x-fasta
   project_id: "1"

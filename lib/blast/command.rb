@@ -44,7 +44,6 @@ class Blast::Command
       params[:evalue] = "10e-#{params[:evalue]}"
     end
     cli ={}
-    puts "self.nt_database_directory #{self.nt_database_directory }"
     cli['-d'] = params[:nt] ? self.nt_database_directory : params[:target_file_path]
     cli['-i'] = params[:test_file_path]
     cli['-e'] = params[:evalue]
@@ -52,7 +51,6 @@ class Blast::Command
     cli['-v'] = 20 
     options =  cli.to_a.join(' ')
     command = " blastall -p blastn  #{options} "
-    puts command
     blast_result.command = command if blast_result
     Delayed::Worker.logger.error("[kenglish] blast command = #{command}")
     output_file_handle = Tempfile.new("#{params[:output_file_prefix].gsub(/ /,"_")}_Blast_Result.txt")

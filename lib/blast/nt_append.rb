@@ -1,5 +1,5 @@
 class Blast::NtAppend < Blast::Base
-
+  DEFAULT_NUMBER_OF_SEQUENCES_TO_SAVE = 10
   protected
 
   def init_files_and_databases
@@ -28,7 +28,9 @@ class Blast::NtAppend < Blast::Base
     output_file_handle.open
     @blast_result.stopped_at = Time.now
     @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)
+    threshold = params[:number_of_sequences_to_save] || DEFAULT_NUMBER_OF_SEQUENCES_TO_SAVE
     result_ff = Bio::FlatFile.open(output_file_handle)
+    match_count = 0
     result_ff.each do |report|
       report.each do |hit|
         begin
@@ -48,7 +50,10 @@ class Blast::NtAppend < Blast::Base
           bioseq.save!
         end
         @biodatabase.biosequences << bioseq
+        match_count += 1
+        break if match_count >= threshold
       end
+      break if match_count >= threshold
     end
 
     @blast_result.output = output_file_handle

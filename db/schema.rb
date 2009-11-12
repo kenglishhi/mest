@@ -11,17 +11,6 @@
 
 ActiveRecord::Schema.define(:version => 20091108074423) do
 
-  create_table "alignments", :force => true do |t|
-    t.string   "label"
-    t.integer  "biodatabase_id"
-    t.string   "aln_file_name"
-    t.string   "aln_content_type"
-    t.integer  "aln_file_size"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
     t.integer "biosequence_id"
