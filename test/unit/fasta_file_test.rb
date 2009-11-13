@@ -90,6 +90,12 @@ class FastaFileTest < ActiveSupport::TestCase
     @fasta_file.project = projects(:projects_001)
     assert @fasta_file.save, "Saving fasta file should succeed #{@fasta_file.errors.full_messages.to_sentence}"
   end
+  should "Generate a new file" do
+    fasta_file = FastaFile.generate_fasta [biodatabases(:biodatabases_001),biodatabases(:biodatabases_002)]
+    assert File.exists? fasta_file.fasta.path
+
+  end
+
 
 
 end

@@ -11,21 +11,23 @@ class FastaFile < ActiveRecord::Base
   before_validation :set_label
   before_destroy :remove_fasta_dbs
 
-  def self.generate_fasta(biodatabase)
-    filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"
+  def self.generate_fasta(biodatabase_args)
+    if biodatabase_args.is_a? Array
+    elsif biodatabase_args.is_a? Biodatabase
+      biodatabase = biodatabase_args
+      filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"
+      self.write_sequences_to_file(biodatabase, filename)
+      fasta_file_handle = File.new(filename,"r")
+      fasta_file = FastaFile.new
+      fasta_file.fasta = fasta_file_handle
+      fasta_file.project_id = biodatabase.biodatabase_group.project_id
+      fasta_file.user_id = biodatabase.biodatabase_group.user_id
+      fasta_file.is_generated = true
+      fasta_file.save!
 
-    self.write_sequences_to_file(biodatabase, filename)
-
-    fasta_file_handle = File.new(filename,"r")
-    fasta_file = FastaFile.new
-    fasta_file.fasta = fasta_file_handle
-    fasta_file.project_id = biodatabase.biodatabase_group.project_id
-    fasta_file.user_id = biodatabase.biodatabase_group.user_id
-    fasta_file.is_generated = true
-    fasta_file.save!
-
-    biodatabase.fasta_file = fasta_file
-    biodatabase.save
+      biodatabase.fasta_file = fasta_file
+      biodatabase.save
+    end
 
   end
 
@@ -41,7 +43,6 @@ class FastaFile < ActiveRecord::Base
   def self.temp_path
     File.dirname(__FILE__) + '/../../tmp'
   end
-
 
   def is_generated?
     # looks prettier
@@ -59,7 +60,7 @@ class FastaFile < ActiveRecord::Base
 
   def extract_sequences
     logger.error("[kenglish] Called Extract Sequence")
-    if fasta  
+    if fasta
       unless self.biodatabase
         transaction do
           if self.project.biodatabase_groups.empty?
@@ -171,6 +172,5 @@ class FastaFile < ActiveRecord::Base
       FastaFile.write_sequences_to_file(biodatabase, self.fasta.path )
     end
   end
-
   
 end
