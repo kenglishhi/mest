@@ -141,7 +141,7 @@ extjs_store( :controller => "workbench/biodatabase_groups",
   :writer => {"encode" => false},
   :config => {
     "totalProperty" => 'results',
-    "autoLoad" => false,
+    "autoLoad" => true,
     "autoSave" => true,
     "restful" => true
   }
@@ -388,13 +388,6 @@ extjs_store( :controller => "workbench/blast_results",
               iconCls: 'settings',
               border: false
             }
-            //            , {
-            //              xtype: 'biodatabase-property-grid',
-            //              id:'workbench-biodatabase-property-grid',
-            //              restfulStore: biodatabasePropertyStore,
-            //              iconCls: 'nav' ,
-            //              border: false
-            //            }
           ]
         }
       ]
@@ -408,8 +401,6 @@ extjs_store( :controller => "workbench/blast_results",
 
     var button3 = Ext.get('blast-biodatabase');
     button3.on('click', Ext.bioshowBlastCreateDbsWindow);
-
-
 
   });
     </script>
