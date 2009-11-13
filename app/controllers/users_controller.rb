@@ -8,7 +8,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.update(params[:id],params[:user]  )
-
     if @user.valid?
       redirect_back_or_default users_path
     else
