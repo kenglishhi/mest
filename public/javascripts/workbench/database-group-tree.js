@@ -173,7 +173,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         });
 
         var blastButton = new Ext.menu.Item({
-          iconCls:'new_view',
+          iconCls:'blast',
           text: "Blast",
           handler: function() {
             Ext.bio.showBlastCreateDbsWindow(node.id);
@@ -188,9 +188,17 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
               Ext.bio.showClustalwWindow(node.id);
             }
           });
+          var ntAppendButton = new Ext.menu.Item({
+            iconCls:'blast',
+            text: "Blast vs NR-NT",
+            handler: function() {
+              Ext.bio.showBlastNtAppendWindow(node.id);
+            }
+          });
+
 
           contextMenu  = new Ext.menu.Menu({
-            items: [ clustalwButton,'-',deleteButton]
+            items: [ clustalwButton,ntAppendButton,'-',deleteButton]
           });
         } else if (node.attributes.db_type == "Uploaded Cleaned Database") {
           contextMenu  = new Ext.menu.Menu({
