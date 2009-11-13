@@ -15,6 +15,11 @@ class JobTest < ActiveSupport::TestCase
       assert @job_log.valid?
       assert_equal @old_count+1,UserJobNotification.count, "UserJobNotification.count  shoud increase by one"
     end
+
+    should "display_duration" do
+      assert_not_nil @job_log.duration_display, "Duration display should never but nil"
+      assert_match /\d\d:\d\d/, @job_log.duration_display, "Duration should have a 00:00 type format"
+    end
   end
 
 end

@@ -1,6 +1,7 @@
 class Job < Delayed::Job
+  include DurationDisplay
   include ExtJS::Model
-  extjs_fields :id, :job_name, :run_at, :priority
+  extjs_fields :id, :job_name, :run_at, :priority, :duration_display
   cattr_reader :per_page
   @@per_page = 25
   set_table_name 'delayed_jobs'
@@ -14,6 +15,16 @@ class Job < Delayed::Job
   validates_presence_of :project_id
                          
   before_create :add_user_to_job
+  def duration_display
+    if locked_at &&  failed_at
+      duration_format(failed_at - locked_at)
+    elsif locked_at
+      duration_format(Time.now - locked_at)
+    else
+      duration_format(0)
+    end
+  end
+
   
   private
   

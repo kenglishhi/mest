@@ -1,5 +1,6 @@
 class JobLog < ActiveRecord::Base
   include ExtJS::Model
+  include DurationDisplay
   extjs_fields :id, :job_name , :job_class_name, :user_id , :duration_display,
     :success,:user_email, :stopped_at
   cattr_reader :per_page
@@ -16,8 +17,7 @@ class JobLog < ActiveRecord::Base
     end
   end
   def duration_display
-    duration = duration_in_seconds.to_i
-    [ duration / 3600,  (duration / 60) % 60, duration % 60 ].map{ |t| t.to_s.rjust(2, '0') }.join(':')
+    duration_format(duration_in_seconds)
   end
   def user_email
     user.email

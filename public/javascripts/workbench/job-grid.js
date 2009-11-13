@@ -24,6 +24,11 @@ Ext.bio.JobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     dataIndex: 'run_at',
     renderer: Ext.util.Format.dateRenderer('m/d/Y H:i:s')
   } , {
+    header: "Duration",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'duration_display'
+  }, {
     header: "Priority",
     autoWidth: true,
     sortable: true,
