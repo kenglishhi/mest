@@ -17,15 +17,15 @@ class Jobs::AbstractJob
     user_data = {:user_id => user_id, :project_id => project_id}
     params.merge!(user_data)
 
-    logger.error("------------") 
-    logger.error "Calling #{self.class}( params = #{params.inspect})  " 
-    logger.error "------------" 
+    logger.info "------------"  
+    logger.info "Calling #{self.class}( params = #{params.inspect})  " 
+    logger.info "------------" 
 
     do_perform
 
-    logger.error "------------" 
-    logger.error "FINISHED #{self.class}" 
-    logger.error "--------------------------" 
+    logger.info "------------" 
+    logger.info "FINISHED #{self.class}" 
+    logger.info "--------------------------" 
   end
   
   include Jobs::Chainable

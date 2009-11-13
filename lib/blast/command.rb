@@ -47,12 +47,12 @@ class Blast::Command
     cli['-d'] = params[:nt] ? self.nt_database_directory : params[:target_file_path]
     cli['-i'] = params[:test_file_path]
     cli['-e'] = params[:evalue]
-    cli['-b'] = 20 
-    cli['-v'] = 20 
+    cli['-b'] =  params[:number_of_hits_per_query].blank? ? 20 :  params[:number_of_hits_per_query]
     options =  cli.to_a.join(' ')
     command = " blastall -p blastn  #{options} "
+    puts command
     blast_result.command = command if blast_result
-    Delayed::Worker.logger.error("[kenglish] blast command = #{command}")
+    logger.info("[kenglish] blast command = #{command}")
     output_file_handle = Tempfile.new("#{params[:output_file_prefix].gsub(/ /,"_")}_Blast_Result.txt")
 
     output_file_handle.close(false)
