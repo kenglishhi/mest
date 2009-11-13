@@ -114,8 +114,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
           var strUrl = Ext.getCmp(cmpId).biodatabasePropertyStore.getAt(0).data.alignment_file_url;
           window.open(strUrl);
         }
-      },
-
+      }
       ]
     });
 

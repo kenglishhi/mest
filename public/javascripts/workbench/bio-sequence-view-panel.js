@@ -70,6 +70,7 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
           afterrender: function(){
             var sequenceCols = 100;
             var topNums = "";
+            var i;
             for (i = 0; i != sequenceCols / 10; i++) {
               topNums += '123456789<span>0</span>';
             }

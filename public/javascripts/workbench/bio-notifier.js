@@ -27,14 +27,14 @@ Ext.bio.notifier = function() {
       var html = createBox(title, format);
       Ext.get("msg-div").update(html);
       Ext.get("msg-div").slideIn('t', {
-        duration: .5,
+        duration: 0.5,
         remove: false,
         useDisplay: true
       });
     },
     hide: function() {
       Ext.get("msg-div").slideOut('t', {
-        duration: .5,
+        duration: 0.5,
         remove: false,
         useDisplay: true
       });
@@ -47,5 +47,5 @@ Ext.bio.notifier = function() {
         return false;
       }
     }
-  }
+  };
 }();

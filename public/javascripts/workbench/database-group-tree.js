@@ -43,7 +43,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         iconCls:'x-tree-delete',
         text: 'Delete',
         handler: function() {
-          Ext.getCmp(myId).deleteSelectedNode;
+          Ext.getCmp(myId).deleteSelectedNode();
         }
       },'->',
       {
@@ -75,7 +75,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   deleteSelectedNode : function(node) {
     var dbTree= this;
     if (!node) {
-      var node = this.getSelectionModel().getSelectedNode();
+      node = this.getSelectionModel().getSelectedNode();
     }
     node.getUI().addClass('x-tree-node-loading');
     var url;
@@ -104,7 +104,8 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     },
     movenode: function( tree, node, oldParent, newParent, index )  {
       if (newParent.id != oldParent.id) {
-        params ={};
+        var params ={};
+        var url ;
         if (node.attributes.resource == 'biodatabase') {
           url = '/workbench/biodatabases/' + node.id + '/move';
           params = {
@@ -224,8 +225,15 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         }
       }
       else if (node.attributes.resource == 'biodatabase_group') {
+        var ntGroupAppendButton = new Ext.menu.Item({
+          iconCls:'blast',
+          text: "Blast vs NR-NT",
+          handler: function() {
+            Ext.bio.showBlastGroupNtAppendWindow(node.id);
+          }
+        });
         contextMenu  = new Ext.menu.Menu({
-          items: [deleteButton]
+          items: [ntGroupAppendButton, '-', deleteButton]
         });
       }
       contextMenu.show(node.ui.getAnchor());
@@ -235,6 +243,8 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     Ext.Msg.prompt('New Database group', 'Enter new database group name:',
       function(btn, text){
         var dbTree = Ext.getCmp('bio-database-group-tree');
+        var url;
+        var params = {};
         if(btn == 'ok' && text) {
           url = '/workbench/biodatabase_groups';
           params = {
