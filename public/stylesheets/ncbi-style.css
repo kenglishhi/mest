@@ -3,6 +3,10 @@ $Id: style.css 10550 2009-09-08 20:29:29Z rallj $
 */
 
 
+.fasta-seq-name {font-family:courier,monospace;
+                background-color:#fff;
+                margin-left:25px;
+                padding:1px;}
 .fasta-table{font-family:courier,monospace;background-color:#fff;margin:0;}
 //.fasta-table td {line-height:1em;font-size:1em;}
 

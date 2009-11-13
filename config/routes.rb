@@ -26,6 +26,7 @@ ActionController::Routing::Routes.draw do |map|
     tools.resources :clustalws
     tools.resources :generate_fastas
     tools.resources :blast_nt_appends
+    tools.resources :blast_group_nt_appends
     tools.resources :extract_sequences
   end
 

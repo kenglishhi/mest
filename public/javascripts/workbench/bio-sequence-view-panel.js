@@ -59,7 +59,9 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
         autoScroll: true,
         id:'seq-panel',
         sequenceViewTmpl: new Ext.Template(
-          '<table width="{width}" class="fasta-table" style="border-style:solid;border-width:{border}px;" ><tbody><tr bordercolor="#ffffff"><td id="left_sequence" width=50 valign="top" align="right"><br><em>{left_nums}</em></td>',
+        '<div width="{width}" class="fasta-seq-name"  ><b>Name:</b> {seq_name} </div>',
+          '<table width="{width}" class="fasta-table" style="border-style:solid;border-width:{border}px;" >',
+          '<tbody><tr bordercolor="#ffffff"><td id="left_sequence" width=50 valign="top" align="right"><br><em>{left_nums}</em></td>',
           '<td valign="top"><span id="top_sequence"><em>{topNums}</em></span><br/><div id="text_sequence">{sequence}</div></td>',
           '</tr></tbody></table>'
           ),
@@ -78,7 +80,8 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
               width:'95%',
               left_nums:"0<br/>100<br/>200<br/>300<br/>400<br/>500<br/>",
               topNums:topNums,
-              sequence:""
+              sequence:"",
+              seq_name: ""
             });
             Ext.getCmp('seq-panel').getEl().update(html);
 
@@ -173,7 +176,8 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
       width:'95%',
       left_nums:starts,
       topNums:topNums,
-      sequence:sequence
+      sequence:sequence,
+      seq_name: record.name
     });
     Ext.getCmp('seq-panel').getEl().update(html);
     Ext.getCmp('tbar-ncbi-blast').enable();

@@ -20,7 +20,7 @@ class Blast::NtAppend < Blast::Base
 
     @blast_result = new_blast_result("#{@biodatabase.name}-NT Blast Result")
     number_of_sequences_to_save = params[:number_of_sequences_to_save].blank? ?
-       DEFAULT_NUMBER_OF_SEQUENCES_TO_SAVE : params[:number_of_sequences_to_save].to_i
+      DEFAULT_NUMBER_OF_SEQUENCES_TO_SAVE : params[:number_of_sequences_to_save].to_i
 
     output_file_handle = Blast::Command.execute(:blastall, @blast_result,
       :test_file_path => @fasta_file.fasta.path,
@@ -36,22 +36,27 @@ class Blast::NtAppend < Blast::Base
     logger.error("kenglish] number_of_sequences_to_save = #{number_of_sequences_to_save }" )
     result_ff.each do |report|
       report.each do |hit|
-        begin
-          bioseq = Biosequence.new(:name => hit.target_def,
-            :seq => hit.target_seq.upcase,
-            :alphabet => 'dna',
-            :length => hit.target_len,
-            :original_name => hit.target_def)
-          bioseq.save!
-        rescue ActiveRecord::RecordInvalid =>  e
-          suffix = "_#{@biodatabase.id}_#{@biodatabase.biosequences.size}"
-          if ((bioseq.name.size + suffix.size) > 255)
-            bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
-          else
-            bioseq.name += suffix
+        bioseq = Biosequence.find_by_name( hit.target_def)
+        unless bioseq
+          begin
+            bioseq = Biosequence.new(:name => hit.target_def,
+              :seq => hit.target_seq.upcase,
+              :alphabet => 'dna',
+              :nr_sequence_flag => true,
+              :length => hit.target_len,
+              :original_name => hit.target_def)
+            bioseq.save!
+          rescue ActiveRecord::RecordInvalid =>  e
+            suffix = "_#{@biodatabase.id}_#{@biodatabase.biosequences.size}"
+            if ((bioseq.name.size + suffix.size) > 255)
+              bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
+            else
+              bioseq.name += suffix
+            end
+            bioseq.save!
           end
-          bioseq.save!
         end
+        puts bioseq.name
         @biodatabase.biosequences << bioseq
         match_count += 1
         break if (match_count >=number_of_sequences_to_save )
