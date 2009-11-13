@@ -77,9 +77,7 @@ Ext.bio.TopMenuToolbar =  Ext.extend(Ext.Toolbar, {
         handler: function(){
           window.location = '/logout';
         }
-      },
-
-      ]
+      }]
     });
     Ext.bio.TopMenuToolbar.superclass.initComponent.call(this);
 

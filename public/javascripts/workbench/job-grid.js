@@ -75,9 +75,7 @@ Ext.bio.JobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
         handler: function() {
           Ext.getCmp(cmpId).refreshContent( );
         }
-      },
-
-      ]
+      }]
     });
 
     Ext.bio.JobGrid.superclass.initComponent.call(this);
