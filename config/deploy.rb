@@ -1,7 +1,3 @@
-
-
-
-
 set :application, "mest"
 set :repository,  "git@github.com:kenglishhi/mest.git"
 set :scm, "git"
