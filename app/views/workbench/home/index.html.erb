@@ -212,7 +212,6 @@ extjs_store( :controller => "workbench/blast_results",
       }
     };
     Ext.bio.workbench.clearContent = function(){
-      console.log("Called clearContent()");
       Ext.getCmp('workbench-biosequence-grid').clearContent();
     };
 
@@ -350,7 +349,6 @@ extjs_store( :controller => "workbench/blast_results",
                 id:'workbench-running-jobs-tab',
                 listeners: {
                   activate: function() {
-                    console.log(" Running Jobs tab has been activated");
                     if (Ext.getCmp('workbench-running-jobs-grid')) {
                       Ext.getCmp('workbench-running-jobs-grid').refreshContent();
 
