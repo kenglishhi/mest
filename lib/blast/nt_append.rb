@@ -57,13 +57,13 @@ class Blast::NtAppend < Blast::Base
           end
         end
         puts bioseq.name
-        @biodatabase.biosequences << bioseq
+        @biodatabase.biosequences << bioseq unless @biodatabase.biosequences.include?(bioseq)
         match_count += 1
         break if (match_count >=number_of_sequences_to_save )
       end
       break if (match_count >=number_of_sequences_to_save )
     end
-
+    @biodatabase.fasta_file.overwrite_fasta
     @blast_result.output = output_file_handle
     @blast_result.save!
     @blast_result
