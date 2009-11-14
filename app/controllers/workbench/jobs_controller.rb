@@ -22,9 +22,9 @@ class Workbench::JobsController < ApplicationController
     @job = Job.find(params[:id])
 
     if @job.destroy
-      render :json => { :success => true, :message => "Destroyed User #{@user.id}" }
+      render :json => { :success => true, :message => "Destroyed job #{@job.name}" }
     else
-      render :json => { :message => "Failed to destroy User" }
+      render :json => { :message => "Failed to destroy Job" }
     end
   end
 

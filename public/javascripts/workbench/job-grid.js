@@ -49,7 +49,7 @@ Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
     Ext.apply(this,{
       tbar:[
-      'Showing Running Jobs: ', ' ', 
+      'Showing Running Jobs: ', ' ',
       {
         iconCls:'x-tbar-loading',
         handler: function() {
@@ -147,7 +147,7 @@ Ext.bio.QueuedJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
         handler: function() {
           Ext.getCmp(cmpId).refreshContent( );
         }
-      }, {
+      }, '->', {
         text: 'Delete',
         iconCls:'x-tree-delete',
         handler: onDelete
@@ -157,5 +157,6 @@ Ext.bio.QueuedJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
     Ext.bio.QueuedJobGrid.superclass.initComponent.call(this);
   }
+
 });
 Ext.reg('queued-job-grid', Ext.bio.QueuedJobGrid);

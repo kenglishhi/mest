@@ -55,7 +55,6 @@ Ext.bio.SeqSearchField = Ext.extend(Ext.form.TwinTriggerField, {
     this.triggers[0].show();
   }
 });
-
 Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   pageSize: 50,
   biosequenceViewId: 'xxxx',
@@ -71,6 +70,15 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     autoWidth: true,
     sortable: true,
     dataIndex: 'length'
+  },{
+    header: "Action",
+    css: 'background-image:url(/images/delete.gif) !important; background-repeat:no-repeat; text-align:right;font-weight:bold; ',
+    width: 2,
+    resizable: false,
+    sortable: true,
+    renderer: function() {
+      return "Delete";
+    }
   }
   ],
   initComponent: function() {
@@ -132,7 +140,19 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
       };
       var biosequenceViewId;
       viewPanel.updateContent(params);
+    },
+    cellclick: function (grid, rowIndex,columnIndex, e) {
+      var fieldName = grid.getColumnModel().getColumnHeader(columnIndex);
+      if (fieldName == 'Action'){
+        var rec = grid.store.getAt(rowIndex); // getSelectionModel().getSelected();
+        if (!rec) {
+          return false;
+        }
+        grid.store.remove(rec);
+        grid.store.reload();
+      }
     }
+
   },
   updateContent: function(params) {
     if (params.biodatabase_id) {

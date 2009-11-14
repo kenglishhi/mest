@@ -1,5 +1,6 @@
 class Workbench::BiosequencesController < ApplicationController
   include ExtJS::Controller
+  protect_from_forgery :except => :destroy
   def index
     page = get_page(Biosequence)
     if params[:biodatabase_id]
@@ -27,5 +28,14 @@ class Workbench::BiosequencesController < ApplicationController
     end
 
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
+  end
+  def destroy
+    #    @seq = BiodatabaseBiosequBiosequenceBio.find(params[:id])
+    @seq = BiodatabaseBiosequence.find_by_biosequence_id_and_biodatabase_id(params[:id],params[:biodatabase_id])
+    if @seq  #@job.destroy
+      render :json => { :success => true, :message => "Destroyed job " }
+    else
+      render :json => { :message => "Failed to destroy Job" }
+    end
   end
 end

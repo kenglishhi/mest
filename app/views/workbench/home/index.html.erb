@@ -132,7 +132,8 @@ extjs_store( :controller => "workbench/jobs",
     "totalProperty" => 'results',
     "autoLoad" => false,
     "autoSave" => true,
-    "restful" => true
+    "restful" => true,
+    'baseParams' => 'option=Queued'
   }
 ).render(false)
 %>
@@ -270,7 +271,7 @@ extjs_store( :controller => "workbench/blast_results",
           region: 'center', // a center region is ALWAYS required for border layout
           collapsible: true,
           deferredRender: true,
-          activeTab: 2,     // first tab initially active
+          activeTab: 0,     // first tab initially active
           items: [ { iconCls:'new_fasta',
               title: 'Sequences',
               id: 'workbench-biosequence-tab',
@@ -340,12 +341,14 @@ extjs_store( :controller => "workbench/blast_results",
                 autoScroll: true,
                 id:'workbench-running-jobs-tab',
                 items: [ {
+                    title: 'Running Jobs',
                     height: 170,
                     id: 'workbench-running-jobs-grid',
                     pageSize: Ext.workbenchMenu.jobPageSize,
                     xtype:'running-job-grid' ,
                     store: runningJobStore
                   }, {
+                    title: 'Queued Jobs',
                     height: 200,
                     id: 'workbench-queued-jobs-grid',
                     pageSize: Ext.workbenchMenu.jobPageSize,
