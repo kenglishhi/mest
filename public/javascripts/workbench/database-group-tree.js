@@ -68,6 +68,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         method: 'DELETE',
         success: function() {
           dbTree.refresh();
+          dbTree.postDeleteAction();
         }
       });
     }
@@ -137,7 +138,6 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
             function(btn){
               if (btn == 'yes') {
                 Ext.getCmp(myId).deleteSelectedNode(node);
-                removeCurrentTabAndSession(true);
               }
             });
         }

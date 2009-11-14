@@ -19,7 +19,22 @@ class Biosequence < ActiveRecord::Base
   validates_presence_of :seq
 
   def to_fasta
-     ">#{name}\n#{seq}\n"
+    ">#{name}\n#{seq}\n"
+  end
+  def self.purge_unassigned_sequences
+    sql = ' SELECT bs.id id, bs.name FROM `biosequences` bs LEFT OUTER JOIN biodatabase_biosequences bdbs ON (bdbs.biosequence_id = bs.id) WHERE bdbs.biodatabase_id IS NULL LIMIT 50'
+    data =  self.connection.select_all(sql)
+    begin
+      ids = data.map{|rec| rec['id'] }
+      deleted = self.delete_all ['id in (?) ', ids]
+      data =  self.connection.select_all(sql)
+    end while (data.size > 0 )
+#    break if data.size == 0
+#    puts data.inspect
+#    puts ids.inspect
+
+
+
   end
   def to_s
     to_fasta

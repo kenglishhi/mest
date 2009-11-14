@@ -211,6 +211,12 @@ extjs_store( :controller => "workbench/blast_results",
         //        Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
       }
     };
+    Ext.bio.workbench.clearContent = function(){
+      console.log("Called clearContent()");
+      Ext.getCmp('workbench-biosequence-grid').clearContent();
+    };
+
+
     var seqGrid = new Ext.bio.BiosequenceGrid({
       region:'north',
       id: 'workbench-biosequence-grid',
@@ -264,6 +270,9 @@ extjs_store( :controller => "workbench/blast_results",
           projectOptions: Ext.workbenchdata.projectOptions,
           clickAction: function(node) {
             Ext.bio.workbench.updateContent(node);
+          },
+          postDeleteAction: function() {
+            Ext.bio.workbench.clearContent();
           }
         } , new Ext.TabPanel({
           id: 'workbench-grid-tabs',
@@ -339,6 +348,18 @@ extjs_store( :controller => "workbench/blast_results",
                 title: 'Running Jobs',
                 autoScroll: true,
                 id:'workbench-running-jobs-tab',
+                listeners: {
+                  activate: function() {
+                    console.log(" Running Jobs tab has been activated");
+                    if (Ext.getCmp('workbench-running-jobs-grid')) {
+                      Ext.getCmp('workbench-running-jobs-grid').refreshContent();
+
+                    }
+                    if (Ext.getCmp('workbench-running-jobs-grid')) {
+                      Ext.getCmp('workbench-queued-jobs-grid').refreshContent();
+                    }
+                  }
+                },
                 items: [ {
                     title: 'Running Jobs',
                     height: 170,
@@ -432,9 +453,9 @@ extjs_store( :controller => "workbench/blast_results",
   <body>
 
     <div id="my-header-div"  class="x-hide-display">
-    <div style='float:left;' class="north-header"> <%= link_to "MEST", '/' %>  - <%= link_to "Home", '/' %></div>
-    <div  style='float: right; width: 500px;' >
-      <div id='project-options-header' />
+      <div style='float:left;' class="north-header"> <%= link_to "MEST", '/' %>  - <%= link_to "Home", '/' %></div>
+      <div  style='float: right; width: 500px;' >
+        <div id='project-options-header' />
       </div>
     </div>
 

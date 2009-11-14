@@ -1,5 +1,6 @@
 class Workbench::BiodatabasesController < ApplicationController
   include ExtJS::Controller
+  include Jobs::ControllerUtils
 
   def index
     page = get_page(Biodatabase)
@@ -29,7 +30,10 @@ class Workbench::BiodatabasesController < ApplicationController
 
   def destroy
     record = Biodatabase.find(params[:id])
-    render(:text => '', :status => (record.destroy) ? 204 : 500)
+    status = record.destroy
+    job_name = "Purge unassignemd sequences"
+    create_job(Jobs::PurgeUnassignedSequences, job_name, current_user, params)
+    render(:text => '', :status => status ? 204 : 500)
   end
 
   def move

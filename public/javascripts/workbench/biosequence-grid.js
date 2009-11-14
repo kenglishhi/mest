@@ -90,7 +90,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
         var params = {
           rowIndex: 0
         };
-        viewPanel.updateContent(params);
+//        viewPanel.updateContent(params);
       }
 
     });
@@ -152,13 +152,11 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
           Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete "' + rec.data.name +'"?',
             function(btn){
               if (btn == 'yes') {
-
                 grid.store.remove(rec);
                 grid.selModel.selectRow(rowIndex);
                 grid.updateViewPanel({
                   rowIndex: rowIndex
                 });
-              //                grid.store.reload();
               }
             });
           return false;
@@ -192,14 +190,13 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
           } else {
             Ext.getCmp('seq-grid-alignment-toolbar-item').hide();
           }
-
-        //          var propGrid = Ext.getCmp(parentComponentId);
-        //          if (propGrid) {
-        //            propGrid.setSource(this.getAt(0).data);
-        //          }
         }
       });
     }
+  },
+  clearContent : function() {
+      this.store.reload();
   }
+
 });
 Ext.reg('biosequence-grid', Ext.bio.BiosequenceGrid);
