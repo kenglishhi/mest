@@ -19,32 +19,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       border: false,
       enableDD: true,
       rootVisible: false,
-      /*
-      tbar: [ 
-            {
-        text: 'Add Database Group',
-        handler: this.addDatabaseGroup
-      },'->',
-      {
-        iconCls:'x-tbar-loading',
-        handler: function() {
-          var dbTree= Ext.getCmp(parentComponentId);
-          if (dbTree) {
-            dbTree.refresh();
-          }
-        }
-      },
-      ],
-       */
-      bbar :[{
-        id:'tree-delete-icon',
-        disabled: true,
-        iconCls:'x-tree-delete',
-        text: 'Delete',
-        handler: function() {
-          Ext.getCmp(myId).deleteSelectedNode();
-        }
-      },'->',
+      tbar :['->',
       {
         iconCls:'x-tbar-loading',
         handler: function() {

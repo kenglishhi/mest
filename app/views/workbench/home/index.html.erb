@@ -264,7 +264,6 @@ extjs_store( :controller => "workbench/blast_results",
           projectOptions: Ext.workbenchdata.projectOptions,
           clickAction: function(node) {
             Ext.bio.workbench.updateContent(node);
-            Ext.getCmp('tree-delete-icon').enable();
           }
         } , new Ext.TabPanel({
           id: 'workbench-grid-tabs',

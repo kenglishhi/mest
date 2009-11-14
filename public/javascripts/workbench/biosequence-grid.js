@@ -128,28 +128,41 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 
     Ext.bio.BiosequenceGrid.superclass.initComponent.call(this);
   },
+  updateViewPanel: function(params) {
+    var viewPanel = Ext.getCmp(this.biosequenceViewId);
+    viewPanel.updateContent(params);
+
+  },
   listeners: {
     afterrender: function( p)  {
       var viewPanel = Ext.getCmp(this.biosequenceViewId);
       viewPanel.setSource(this.store);
     },
     rowclick: function (grid, rowIndex, e) {
-      var viewPanel = Ext.getCmp(this.biosequenceViewId);
       var params = {
         rowIndex: rowIndex
       };
-      var biosequenceViewId;
-      viewPanel.updateContent(params);
+      grid.updateViewPanel(params);
     },
     cellclick: function (grid, rowIndex,columnIndex, e) {
       var fieldName = grid.getColumnModel().getColumnHeader(columnIndex);
       if (fieldName == 'Action'){
         var rec = grid.store.getAt(rowIndex); // getSelectionModel().getSelected();
-        if (!rec) {
+        if (rec) {
+          Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete "' + rec.data.name +'"?',
+            function(btn){
+              if (btn == 'yes') {
+
+                grid.store.remove(rec);
+                grid.selModel.selectRow(rowIndex);
+                grid.updateViewPanel({
+                  rowIndex: rowIndex
+                });
+              //                grid.store.reload();
+              }
+            });
           return false;
         }
-        grid.store.remove(rec);
-        grid.store.reload();
       }
     }
 
