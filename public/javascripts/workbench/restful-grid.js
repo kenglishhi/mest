@@ -4,6 +4,7 @@
  */
 
 Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
+  height: 300,
   displayColumns: [ ],
   readerColumns:[ ],
   useEditorFlag:false,
@@ -37,7 +38,6 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
       iconCls: 'icon-grid',
       frame: true,
       autoScroll: true,
-      height: 300,
       //      autoHeight: true,
       plugins: plugins,
       columns : this.displayColumns,

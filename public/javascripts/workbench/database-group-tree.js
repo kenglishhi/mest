@@ -12,7 +12,6 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
 
     var parentComponentId = this.id;
     Ext.apply(this,{
-      //      animate: true,
       autowidth: true,
       autoheight: true,
       autoScroll:true,
@@ -36,7 +35,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         }
       },
       ],
-      */
+       */
       bbar :[{
         id:'tree-delete-icon',
         disabled: true,
@@ -150,7 +149,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     expandnode: function(node) {
       node.getUI().removeClass('x-tree-node-loading');
     },
-    contextmenu: function(node){
+    contextmenu: function(node) {
       //Set up some buttons
       var myId = this.id;
       var contextMenu;
@@ -159,7 +158,13 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         iconCls:'x-tree-delete',
         text: 'Delete',
         handler: function() {
-          Ext.getCmp(myId).deleteSelectedNode(node);
+          Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete "' + node.text +'"?',
+            function(btn){
+              if (btn == 'yes') {
+                Ext.getCmp(myId).deleteSelectedNode(node);
+                removeCurrentTabAndSession(true);
+              }
+            });
         }
       });
 

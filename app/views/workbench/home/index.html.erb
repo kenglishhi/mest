@@ -123,11 +123,25 @@ extjs_store( :controller => "workbench/biodatabases",
   }
 ).render(false)
 %>
-    var jobStore = <%=
+    var runningJobStore = <%=
 extjs_store( :controller => "workbench/jobs",
   :model => 'Job',
   :writer => {"encode" => false},
   :config => {
+    "storeId" => 'running-job-store',
+    "totalProperty" => 'results',
+    "autoLoad" => false,
+    "autoSave" => true,
+    "restful" => true
+  }
+).render(false)
+%>
+    var queuedJobStore = <%=
+extjs_store( :controller => "workbench/jobs",
+  :model => 'Job',
+  :writer => {"encode" => false},
+  :config => {
+    "storeId" => 'queued-job-store',
     "totalProperty" => 'results',
     "autoLoad" => false,
     "autoSave" => true,
@@ -159,13 +173,9 @@ extjs_store( :controller => "workbench/blast_results",
 ).render(false)
 %>
 
-    var currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
-    var currentProjectId = <%= current_user.active_project.id %>;
-    var seqPageSize = <%= biosequence_page_size %> ;
-    var databaseGroupPageSize = <%= biodatabase_group_page_size %> ;
-    var dbPageSize = <%= biodatabase_page_size %> ;
-    var blastResultPageSize = <%= blast_result_page_size %> ;
-    var jobPageSize=  <%= job_page_size %> ;
+    Ext.workbenchMenu.seqPageSize = <%= biosequence_page_size %> ;
+    Ext.workbenchMenu.blastResultPageSize = <%= blast_result_page_size %> ;
+    Ext.workbenchMenu.jobPageSize=  <%= job_page_size %> ;
 
     // BEGIN RAILS data DUMP
     Ext.workbenchdata.projectOptions = <%= @project_options.to_json %>;
@@ -203,7 +213,7 @@ extjs_store( :controller => "workbench/blast_results",
     var seqGrid = new Ext.bio.BiosequenceGrid({
       region:'north',
       id: 'workbench-biosequence-grid',
-      pageSize: seqPageSize,
+      pageSize: Ext.workbenchMenu.seqPageSize,
       store:biosequenceStore,
       biosequenceViewId: 'bio-sequence-view',
       split:true
@@ -260,7 +270,7 @@ extjs_store( :controller => "workbench/blast_results",
           region: 'center', // a center region is ALWAYS required for border layout
           collapsible: true,
           deferredRender: true,
-          activeTab: 0,     // first tab initially active
+          activeTab: 2,     // first tab initially active
           items: [ { iconCls:'new_fasta',
               title: 'Sequences',
               id: 'workbench-biosequence-tab',
@@ -276,7 +286,7 @@ extjs_store( :controller => "workbench/blast_results",
                   region:'north',
                   xtype:'biosequence-grid',
                   id: 'workbench-biosequence-grid',
-                  pageSize: seqPageSize,
+                  pageSize: Ext.workbenchMenu.seqPageSize,
                   store:biosequenceStore,
                   biodatabasePropertyStore: biodatabasePropertyStore,
                   biosequenceViewId: 'bio-sequence-view',
@@ -308,7 +318,7 @@ extjs_store( :controller => "workbench/blast_results",
                   id: 'workbench-biodatabase-groups-grid',
                   pageSize: databaseGroupPageSize,
                   xtype:'biodatabase-group-grid' ,
-                  store: biodatabaseGroupStore 
+                  store: biodatabaseGroupStore
                 } ]
 
             },*/  {
@@ -318,37 +328,47 @@ extjs_store( :controller => "workbench/blast_results",
               id:'workbench-blast-result-tab',
               items: [ {
                   id: 'workbench-blast-results-grid',
-                  pageSize: blastResultPageSize,
+                  pageSize: Ext.workbenchMenu.blastResultPageSize,
                   xtype:'blast-result-grid' ,
-                  store: blastResultStore 
+                  store: blastResultStore
                 } ]
 
-            }, {
-              iconCls:'grid_icon',
-              title: 'Running Jobs',
-              autoScroll: true,
-              id:'workbench-running-jobs-tab',
-              items: [ { id: 'workbench-jobs-grid',
-                  pageSize: jobPageSize,
-                  xtype:'job-grid' ,
-                  store: jobStore }
-              ]
+            }, [{
 
-            }, {
+                iconCls:'grid_icon',
+                title: 'Running Jobs',
+                autoScroll: true,
+                id:'workbench-running-jobs-tab',
+                items: [ {
+                    height: 170,
+                    id: 'workbench-running-jobs-grid',
+                    pageSize: Ext.workbenchMenu.jobPageSize,
+                    xtype:'running-job-grid' ,
+                    store: runningJobStore
+                  }, {
+                    height: 200,
+                    id: 'workbench-queued-jobs-grid',
+                    pageSize: Ext.workbenchMenu.jobPageSize,
+                    xtype:'queued-job-grid' ,
+                    store: queuedJobStore}
+                ]
+
+              }], {
               iconCls:'image_add',
               title: 'Job Log',
               autoScroll: true,
               id:'workbench-job-log-tab',
               items: [
                 {id: 'workbench-job-logs-grid',
-                  pageSize: jobPageSize,
+                  pageSize: Ext.workbenchMenu.jobPageSize,
                   xtype:'job-log-grid' ,
                   store: jobLogStore }
               ]
 
             }
           ]
-        }),
+        })
+        /*        ,
         {
           region: 'east',
           title: 'Tools',
@@ -382,14 +402,16 @@ extjs_store( :controller => "workbench/blast_results",
                   height: 80,
                   contentEl: 'blast-content'
                 }
-                /*, { height: 60, contentEl: 'ncbi-blast-search' } */
+         */
+        /*, { height: 60, contentEl: 'ncbi-blast-search' } */
+        /*
               ],
               title: 'Tools',
               iconCls: 'settings',
               border: false
             }
           ]
-        }
+        } */
       ]
     });
 
@@ -408,9 +430,9 @@ extjs_store( :controller => "workbench/blast_results",
   <body>
 
     <div id="my-header-div"  class="x-hide-display">
-      <div style='float:left;' class="north-header"> <%= link_to "MEST", '/' %>  - <%= link_to "Home", '/' %></div>
-      <div  style='float: right; width: 500px;' >
-        <div id='project-options-header' />
+    <div style='float:left;' class="north-header"> <%= link_to "MEST", '/' %>  - <%= link_to "Home", '/' %></div>
+    <div  style='float: right; width: 500px;' >
+      <div id='project-options-header' />
       </div>
     </div>
 
