@@ -73,7 +73,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   },{
     header: "Action",
     css: 'background-image:url(/images/delete.gif) !important; background-repeat:no-repeat; text-align:right;font-weight:bold; ',
-    width: 2,
+    width: 30,
     resizable: false,
     sortable: true,
     renderer: function() {
