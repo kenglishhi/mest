@@ -3,7 +3,7 @@
  * Kevin English, University of Hawaii
  */
 Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
-  useEditorFlag:false,
+  useEditorFlag:true,
   usePagingBarFlag: true,
   displayColumns:  [ {
     header: "Job Name",
@@ -123,8 +123,16 @@ Ext.bio.QueuedJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
       forceSelection:true,
       width:135
     });
-
     var cmpId = this.id;
+
+    function onDelete() {
+      var rec = Ext.getCmp(cmpId).getSelectionModel().getSelected();
+      if (!rec) {
+        return false;
+      }
+      Ext.getCmp(cmpId).store.remove(rec);
+      Ext.getCmp(cmpId).refreshContent( );
+    }
 
     combo.on('select', function(cmb, record) {
       Ext.getCmp(cmpId).updateContent( record.data);
@@ -139,7 +147,12 @@ Ext.bio.QueuedJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
         handler: function() {
           Ext.getCmp(cmpId).refreshContent( );
         }
-      }]
+      }, {
+        text: 'Delete',
+        iconCls:'x-tree-delete',
+        handler: onDelete
+      }
+      ]
     });
 
     Ext.bio.QueuedJobGrid.superclass.initComponent.call(this);

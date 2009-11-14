@@ -1,5 +1,6 @@
 class Workbench::JobsController < ApplicationController
   include ExtJS::Controller
+  protect_from_forgery :except => :destroy
 
   def index
     page = get_page(Job)
@@ -16,4 +17,15 @@ class Workbench::JobsController < ApplicationController
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
 
   end
+
+  def destroy
+    @job = Job.find(params[:id])
+
+    if @job.destroy
+      render :json => { :success => true, :message => "Destroyed User #{@user.id}" }
+    else
+      render :json => { :message => "Failed to destroy User" }
+    end
+  end
+
 end
