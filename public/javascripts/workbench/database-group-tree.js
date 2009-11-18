@@ -3,7 +3,6 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   treeData: null,
   projectOptions:null,
   initComponent: function() {
-    var myId = this.id;
     var rootNode = new Ext.tree.AsyncTreeNode({
       text: 'Ext JS',
       draggable:false, // disable root node dragging
@@ -127,31 +126,33 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     },
     contextmenu: function(node) {
       //Set up some buttons
-      var myId = this.id;
       var contextMenu;
 
       var deleteButton = new Ext.menu.Item({
         iconCls:'x-tree-delete',
         text: 'Delete',
-        handler: function() {
-          Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete "' + node.text +'"?',
+        treeId: this.id,
+        nodeText: node.text,
+        handler: function(b) {
+          Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete "' + b.nodeText +'"?',
             function(btn){
               if (btn == 'yes') {
-                Ext.getCmp(myId).deleteSelectedNode(node);
+                Ext.getCmp(b.treeId).deleteSelectedNode(node);
               }
             });
         }
       });
 
       if (node.attributes.resource == 'biodatabase') {
-
-        var renameButton = new Ext.menu.Item({
-          iconCls:'new_fasta',
-          text: "Rename Sequences",
-          handler: function() {
-            Ext.bio.showBiodatabaseRenamerWindow(node.id);
-          }
-        });
+        if (node.attributes.db_type == "Uploaded Raw Data" ) {
+          var renameButton = new Ext.menu.Item({
+            iconCls:'new_fasta',
+            text: "Rename Sequences",
+            handler: function() {
+              Ext.bio.showBiodatabaseRenamerWindow(node.id);
+            }
+          });
+        }
 
         var blastButton = new Ext.menu.Item({
           iconCls:'blast',
@@ -183,7 +184,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
           });
         } else if (node.attributes.db_type == "Uploaded Cleaned Database") {
           contextMenu  = new Ext.menu.Menu({
-            items: [renameButton, blastButton, '-', deleteButton]
+            items: [ blastButton, '-', deleteButton]
           });
         } else if (node.attributes.db_type == "Uploaded Raw Data") {
           var cleanButton = new Ext.menu.Item({

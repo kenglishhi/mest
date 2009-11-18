@@ -12,7 +12,21 @@ class FastaFile < ActiveRecord::Base
   before_destroy :remove_fasta_dbs
 
   def self.generate_fasta(biodatabase_args)
+
     if biodatabase_args.is_a? Array
+      biodatabases = biodatabase_args
+      label = biodatabases.map{|db|db.name}.join('-')
+      
+      filename =  "#{self.temp_path}/Combined-#{label}.fasta"
+      self.write_sequences_to_file(biodatabases, filename)
+      fasta_file_handle = File.new(filename,"r")
+      fasta_file = FastaFile.new
+      fasta_file.fasta = fasta_file_handle
+      fasta_file.project_id = biodatabases.first.biodatabase_group.project_id
+      fasta_file.user_id = biodatabases.first.biodatabase_group.user_id
+      fasta_file.is_generated = true
+      fasta_file.save!
+      fasta_file
     elsif biodatabase_args.is_a? Biodatabase
       biodatabase = biodatabase_args
       filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"
@@ -27,17 +41,27 @@ class FastaFile < ActiveRecord::Base
 
       biodatabase.fasta_file = fasta_file
       biodatabase.save
+      fasta_file
     end
-
   end
 
-  def self.write_sequences_to_file(biodatabase, filename)
+  def self.write_sequences_to_file(biodatabase_arg, filename)
     fasta_file_handle = File.new(filename,"w+")
-    biodatabase.biosequences.each do | seq |
-      fasta_file_handle.puts(seq.to_fasta)
+    if biodatabase_arg.is_a? Array
+      biodatabases = biodatabase_arg
+      biodatabases.each do | biodatabase | 
+        biodatabase.biosequences.each do | seq |
+          fasta_file_handle.puts(seq.to_fasta)
+        end
+      end
+    elsif biodatabase_arg.is_a? Biodatabase
+      biodatabase = biodatabase_arg
+      biodatabase.biosequences.each do | seq |
+        fasta_file_handle.puts(seq.to_fasta)
+      end
     end
-    fasta_file_handle.close
 
+    fasta_file_handle.close
   end
 
   def self.temp_path
@@ -154,7 +178,6 @@ class FastaFile < ActiveRecord::Base
 
   def generate_alignment
     command = " clustalw -infile=#{self.fasta.path}"
-    puts "CLUSTALLW : #{command}"
     system(*command)
     alignment_file_path
   end

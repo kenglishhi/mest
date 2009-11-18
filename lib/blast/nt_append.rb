@@ -56,7 +56,6 @@ class Blast::NtAppend < Blast::Base
             bioseq.save!
           end
         end
-        puts bioseq.name
         @biodatabase.biosequences << bioseq unless @biodatabase.biosequences.include?(bioseq)
         match_count += 1
         break if (match_count >=number_of_sequences_to_save )
