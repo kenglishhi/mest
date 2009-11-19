@@ -45,6 +45,8 @@ class Workbench::BiodatabaseGroupsController < ApplicationController
 
   def destroy
     record = BiodatabaseGroup.find(params[:id])
+    job_name = "Purge unassignemd sequences"
+    create_job(Jobs::PurgeUnassignedSequences, job_name, current_user, params)
     render(:text => '', :status => (record.destroy) ? 204 : 500)
   end
 
