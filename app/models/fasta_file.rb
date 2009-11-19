@@ -12,11 +12,10 @@ class FastaFile < ActiveRecord::Base
   before_destroy :remove_fasta_dbs
 
   def self.generate_fasta(biodatabase_args)
-
+    fasta_file = nil
     if biodatabase_args.is_a? Array
       biodatabases = biodatabase_args
       label = biodatabases.map{|db|db.name}.join('-')
-      
       filename =  "#{self.temp_path}/Combined-#{label}.fasta"
       self.write_sequences_to_file(biodatabases, filename)
       fasta_file_handle = File.new(filename,"r")
@@ -26,7 +25,6 @@ class FastaFile < ActiveRecord::Base
       fasta_file.user_id = biodatabases.first.biodatabase_group.user_id
       fasta_file.is_generated = true
       fasta_file.save!
-      fasta_file
     elsif biodatabase_args.is_a? Biodatabase
       biodatabase = biodatabase_args
       filename =  "#{self.temp_path}/#{biodatabase.name}.fasta"
@@ -41,8 +39,8 @@ class FastaFile < ActiveRecord::Base
 
       biodatabase.fasta_file = fasta_file
       biodatabase.save
-      fasta_file
     end
+   fasta_file
   end
 
   def self.write_sequences_to_file(biodatabase_arg, filename)
