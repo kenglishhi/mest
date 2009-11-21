@@ -12,8 +12,6 @@ class FastaFilesController < ApplicationController
     config.show.columns = [:label, :fasta_file_name, :fasta_file_size,:created_at,:fasta_data]
     config.action_links.add "Upload Files", :action => 'new', :type => :table, :page => true
     config.actions.exclude :create, :show
-#    config.action_links.add "Blast", :parameters => {:controller => 'blast'},
-#    :action => 'index', :type => :table, :page => true
   end
 
   def create
@@ -42,20 +40,7 @@ class FastaFilesController < ApplicationController
   
   def after_create_save(record)
     logger.error("kenglish] called after_update_save " )
-
     redirect_to users_path
-  end
-
-  def extract_sequences
-    fasta_file = FastaFile.find(params[:id])
-    job_name = "Extract Sequences from #{fasta_file.fasta_file_name}"
-    extract_sequences_job = Jobs::ExtractSequences.new(job_name, :fasta_file_id => fasta_file.id)
-    Job.create(:job_name => job_name,
-      :handler => extract_sequences_job,
-      :user => current_user,
-      :project => current_user.active_project)
-
-    render :inline => 'Queued to Extract'    
   end
 
   def conditions_for_collection
@@ -63,8 +48,7 @@ class FastaFilesController < ApplicationController
     unless params[:biodatabase_type_id].blank?
 		  logger.error("[kenglish] params[:biodatabase_type_id].blank? #{params[:biodatabase_type_id].blank?} ")
       @biodatabase_type_id = params[:biodatabase_type_id].to_i
-#      [' biodatabases.biodatabase_type_id  = ? ', @biodatabase_type_id]
     end
-     ['fasta_files.project_id = ?', current_user.active_project.id ]
+    ['fasta_files.project_id = ?', current_user.active_project.id ]
   end
 end

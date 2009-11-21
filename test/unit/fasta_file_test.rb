@@ -5,6 +5,7 @@ class FastaFileTest < ActiveSupport::TestCase
   should_have_attached_file :fasta
   should_belong_to :user
   should_have_one :biodatabase
+  should_validate_presence_of :project_id
 
   context "Format DB should fail if no fasta file exists" do
     setup do
@@ -41,6 +42,33 @@ class FastaFileTest < ActiveSupport::TestCase
       assert @biodatabase.destroy
     end
   end
+
+  context "Generate fasta file from multiple databases" do
+    setup do
+      @biodatabase = Biodatabase.create(
+        :name => "New BioDB 33",
+        :biodatabase_type => biodatabase_types(:biodatabase_types_001),
+        :biodatabase_group => biodatabase_groups(:biodatabase_groups_001),
+        :user => users(:users_001))
+
+      @biodatabase.biosequences << biosequences(:biosequences_007)
+      @biodatabase.biosequences << biosequences(:biosequences_006)
+      @biodatabase.biosequences << biosequences(:biosequences_002)
+      @biodatabase.save!
+      @biodatabases = [@biodatabase, biodatabases(:biodatabases_001),biodatabases(:biodatabases_002)  ]
+      FastaFile.generate_fasta @biodatabases
+    end
+
+    should "Generate a fasta file" do
+      new_fasta_file = FastaFile.last
+      assert_match /^Combined/, new_fasta_file.fasta_file_name, "Fasta file name should contain the text combined"
+#      assert_equal @biodatabase.biosequences.size,3, "Should have 3 sequences in the database"
+##      assert_not_nil @biodatabase.fasta_file, "Fasta File should not be nil."
+      assert @biodatabase.destroy
+    end
+  end
+
+
 
   context "Overwrite fasta file" do
     setup do
@@ -90,6 +118,7 @@ class FastaFileTest < ActiveSupport::TestCase
     @fasta_file.project = projects(:projects_001)
     assert @fasta_file.save, "Saving fasta file should succeed #{@fasta_file.errors.full_messages.to_sentence}"
   end
+
   should "Generate a new file" do
     fasta_file = FastaFile.generate_fasta [biodatabases(:biodatabases_001),biodatabases(:biodatabases_002)]
     assert File.exists? fasta_file.fasta.path

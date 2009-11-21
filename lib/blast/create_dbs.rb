@@ -60,7 +60,7 @@ class Blast::CreateDbs < Blast::Base
 
           if first_flag
             @number_of_fastas += 1
-            new_db_name = "#{output_biodatabase_group.name } #{@number_of_fastas}"
+            new_db_name = "#{output_biodatabase_group.name } #{"%03d" % @number_of_fastas}"
             child_biodatabase = Biodatabase.new(:name => new_db_name,
               :biodatabase_group => output_biodatabase_group,
               :biodatabase_type => match_biodatabase_type,

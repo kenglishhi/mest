@@ -41,12 +41,4 @@ class Tools::BlastCreateDbsController < ApplicationController
     end
   end
   private
-#  def create_job(job_name)
-#    job_handler = Jobs::BlastAndCreateDbs.new(job_name,params)
-#    Job.create(:job_name => job_name,
-#      :handler => job_handler,
-#      :user => current_user,
-#      :project => current_user.active_project )
-#
-#  end
 end

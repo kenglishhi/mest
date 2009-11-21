@@ -1,11 +1,13 @@
 class Tools::BlastCleanersController < ApplicationController
   include Jobs::ControllerUtils
+
   def new
     if Biodatabase.exists?(params[:biodatabase_id] )
       @biodatabase = Biodatabase.find(params[:biodatabase_id] )
     end
     params[:evalue] = 25 unless params[:evalue]
   end
+
   def create
     biodatabase = Biodatabase.find(params[:biodatabase_id])
 
@@ -27,7 +29,8 @@ class Tools::BlastCleanersController < ApplicationController
     else
       job_name = "Clean Database #{biodatabase.name}"
       job_name += " into #{params[:new_biodatabase_name]}" unless params[:new_biodatabase_name].blank?
-      create_job(job_name)
+
+      create_job(Jobs::CleanDatabaseWithBlast,job_name,current_user,params)
       respond_to do |format|
         format.html {
           redirect_back_or_default biodatabases_path
@@ -36,21 +39,6 @@ class Tools::BlastCleanersController < ApplicationController
           render :json => {:success => true,:msg=> "Data Saved"}
         }
       end
-
     end
-
   end
-
-  private
-
-  def create_job(job_name)
-    job_handler = Jobs::CleanDatabaseWithBlast.new(job_name,
-      {:biodatabase_id => params[:biodatabase_id],
-        :new_biodatabase_name=> params[:new_biodatabase_name]} )
-    Job.create(:job_name => job_name,
-      :handler => job_handler,
-      :user => current_user,
-      :project => current_user.active_project )
-  end
-
 end
