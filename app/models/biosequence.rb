@@ -22,7 +22,13 @@ class Biosequence < ActiveRecord::Base
     ">#{name}\n#{seq}\n"
   end
   def self.purge_unassigned_sequences
-    sql = ' SELECT bs.id id, bs.name FROM `biosequences` bs LEFT OUTER JOIN biodatabase_biosequences bdbs ON (bdbs.biosequence_id = bs.id) WHERE bdbs.biodatabase_id IS NULL LIMIT 50'
+    sql =<<-EOSQL
+        SELECT bs.id id, bs.name
+        FROM `biosequences` bs
+          LEFT OUTER JOIN biodatabase_biosequences bdbs ON (bdbs.biosequence_id = bs.id)
+        WHERE bdbs.biodatabase_id IS NULL
+        LIMIT 20
+EOSQL
     data =  self.connection.select_all(sql)
     begin
       ids = data.map{|rec| rec['id'] }
