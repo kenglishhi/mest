@@ -1,3 +1,10 @@
+//Ext.bio.StateMultiSelect = function(config) {
+//  Ext.bio.StateMultiSelect.superclass.constructor.call(this, config);
+//};
+//Ext.extend(Ext.bio.StateMultiSelect, Ext.form.MultiSelectField, {
+//});
+
+
 Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   title: 'Rename Sequences',
   layout:'fit',
@@ -195,23 +202,61 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       listWidth: 350,
       allowBlank:false
     });
-    var targetCombo = new Ext.form.ComboBox({
+
+    Ext.bio.StateMultiSelect = function(config) {
+      Ext.bio.StateMultiSelect.superclass.constructor.call(this, config);
+    };
+    Ext.extend(Ext.bio.StateMultiSelect, Ext.form.MultiSelectField, {
+      store: this.dbStore,
+      //      store: Ext.example.Store
+      valueField:'id' ,
+      displayField:'name',
       fieldLabel: 'Target Database',
-      name:'biodatabase',
       id:'target-biodatabase-id-blast-field',
       hiddenName : 'target_biodatabase_id',
-      valueField:'id',
-      displayField:'name',
-      store: this.dbStore,
-      typeAhead: true,
-      mode: 'local',
-      triggerAction: 'all',
-      emptyText:'Select a target database...',
-      selectOnFocus:true,
-      width: 350,
-      listWidth: 350,
-      allowBlank:false
+      name:'biodatabase'
+    //      ,
+    //      mode: 'local'
     });
+    var targetCombo = new Ext.bio.StateMultiSelect({
+      containerHeight: 200,
+      containerWidth: 200
+    });
+
+    //    var targetCombo = Ext.form.MultiSelectField({
+    //      store: Ext.example.Store ,
+    //      valueField:'id' ,
+    //      displayField:'name' ,
+    //      mode: 'local' ,
+    //      fieldLabel: 'Target Database',
+    //      name:'biodatabase',
+    //      id:'target-biodatabase-id-blast-field',
+    //      hiddenName : 'target_biodatabase_id',
+    //      valueField:'id',
+    //      displayField:'name',
+    //      store: this.dbStore,
+    //      containerHeight: 200,
+    //      containerWidth: 200,
+    //      store: Ext.example.Store
+    //    });
+    //
+    //    var targetCombo = new Ext.form.ComboBox({
+    //      fieldLabel: 'Target Database',
+    //      name:'biodatabase',
+    //      id:'target-biodatabase-id-blast-field',
+    //      hiddenName : 'target_biodatabase_id',
+    //      valueField:'id',
+    //      displayField:'name',
+    //      store: this.dbStore,
+    //      typeAhead: true,
+    //      mode: 'local',
+    //      triggerAction: 'all',
+    //      emptyText:'Select a target database...',
+    //      selectOnFocus:true,
+    //      width: 350,
+    //      listWidth: 350,
+    //      allowBlank:false
+    //    });
 
 
     var form = new Ext.FormPanel({
@@ -272,7 +317,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
 
   setBiodatabaseId: function(biodatabaseId) {
     Ext.getCmp('test-biodatabase-id-blast-field').setValue(biodatabaseId);
-    Ext.getCmp('target-biodatabase-id-blast-field').setValue(biodatabaseId);
+  //    Ext.getCmp('target-biodatabase-id-blast-field').setValue(biodatabaseId);
   }
 });
 
