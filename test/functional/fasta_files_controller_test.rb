@@ -1,8 +1,11 @@
 require 'test_helper'
+require File.dirname(__FILE__) + '/as_controller_test_helper.rb'
 
 class FastaFilesControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  should "Spread some love" do
-    assert true
+  include AsControllerTestHelper
+  def setup
+    activate_authlogic
+    @user = UserSession.create(users(:users_001))
   end
+
 end
