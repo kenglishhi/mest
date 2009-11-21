@@ -22,4 +22,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal Project.last.user_id,  user.id
 
   end
+
+  def test_active_project
+    user = users(:users_001)
+    user.active_project = projects(:projects_004)
+    assert_equal user.active_project , projects(:projects_004), "Should set Active Project"
+  end
+
 end
