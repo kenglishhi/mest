@@ -87,10 +87,5 @@ class Blast::CleanDb < Blast::Base
     end
     dest_db.save
   end
-  def purge_sequences(db,seq_ids)
-    BiodatabaseBiosequence.delete_all(['biodatabase_id =?  AND  biosequence_id in (?)',
-        db.id,
-        seq_ids])
-  end
 
 end
