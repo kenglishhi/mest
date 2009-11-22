@@ -1,5 +1,5 @@
 require 'test_helper'
-require File.dirname(__FILE__) + './as_controller_test_helper.rb'
+require File.dirname(__FILE__) + '/../as_controller_test_helper.rb'
 
 class Jobs::FailedJobsControllerTest < ActionController::TestCase
   include AsControllerTestHelper
