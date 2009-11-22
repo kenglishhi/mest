@@ -14,24 +14,32 @@ class Tools::BlastCreateDbsControllerTest < ActionController::TestCase
     end
 
     should "Assert Should succeed on post to create with HTML" do
-      assert true
       post :create, :test_biodatabase_id =>  biodatabases(:biodatabases_001).id,
-        :target_biodatabase_id =>  biodatabases(:biodatabases_001).id,
+        :target_biodatabase_ids =>  biodatabases(:biodatabases_001).id,
         :prefix => 'xxx'
       assert_response :redirect
       assert_equal @delayed_job_count+1,Job.count
     end
 
     should "Assert Should succeed on post to create with JSON" do
-      assert true
       post :create, :format=> 'json', :test_biodatabase_id =>  biodatabases(:biodatabases_001).id,
-        :target_biodatabase_id =>  biodatabases(:biodatabases_001).id,
+        :target_biodatabase_ids =>  biodatabases(:biodatabases_001).id,
         :prefix => 'xxx'
       #:biodatabase_id =>  biodatabases(:biodatabases_001).id, :prefix => 'xxx'
       assert_response :success
       assert_match /Data Saved/, @response.body
       assert_equal @delayed_job_count+1,Job.count
     end
+    should "Assert Should succeed on post to create with JSON with multiple database ids" do
+      post :create, :format=> 'json', :test_biodatabase_id =>  biodatabases(:biodatabases_001).id,
+        :target_biodatabase_ids =>  "#{biodatabases(:biodatabases_001).id},#{biodatabases(:biodatabases_002).id}",
+        :prefix => 'xxx'
+      #:biodatabase_id =>  biodatabases(:biodatabases_001).id, :prefix => 'xxx'
+      assert_response :success
+      assert_match /Data Saved/, @response.body
+      assert_equal @delayed_job_count+1,Job.count
+    end
+
   end
 
 end

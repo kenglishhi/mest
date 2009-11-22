@@ -149,7 +149,13 @@ Ext.form.MultiSelectField = Ext.extend(Ext.form.TriggerField,  {
     selPush : function(key) {   
     	// rip current value into array
     	var keys = this.value.split(this.valueSeparator);
-    	var i = keys.length++;
+    	var i;
+      if (keys.length ==1 && keys[0] =='') {
+        i = 0;
+      } else {
+        i = keys.length++;
+
+      }
     	keys[i] = key; 
     	this.setValues(keys);
     },

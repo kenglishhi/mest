@@ -213,7 +213,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       displayField:'name',
       fieldLabel: 'Target Database',
       id:'target-biodatabase-id-blast-field',
-      hiddenName : 'target_biodatabase_id',
+      hiddenName : 'target_biodatabase_ids',
       name:'biodatabase'
     //      ,
     //      mode: 'local'

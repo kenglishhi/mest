@@ -9,9 +9,11 @@ class Tools::BlastCreateDbsController < ApplicationController
 
   def create
     @test_biodatabase = Biodatabase.find(params[:test_biodatabase_id] )
-    @target_biodatabase = Biodatabase.find(params[:target_biodatabase_id] )
+    @target_biodatabases = Biodatabase.all(:conditions => ["id in (?)",params[:target_biodatabase_ids]] ) 
 
-    if !params[:output_biodatabase_group_name].blank? && BiodatabaseGroup.exists?(['name =? ', params[:output_biodatabase_group_name]])
+    if (!params[:output_biodatabase_group_name].blank? &&
+        BiodatabaseGroup.exists?(['name =? ', params[:output_biodatabase_group_name]]) ) ||
+      @target_biodatabases.empty?
       flash[:errors] = "Output Database Group Name already exists."
       respond_to do |format|
         format.html {
@@ -27,7 +29,8 @@ class Tools::BlastCreateDbsController < ApplicationController
       end
       return
     else
-      job_name = "Blasting #{@test_biodatabase.name} against #{@target_biodatabase.name} "
+      target_db_names = @target_biodatabases.map{|db| db.name}.join(',')
+      job_name = "Blasting #{@test_biodatabase.name} against #{target_db_names} "
       create_job(Jobs::BlastAndCreateDbs, job_name, current_user, params)
       respond_to do |format|
         format.html {
