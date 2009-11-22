@@ -1,8 +1,10 @@
 require 'test_helper'
+require File.dirname(__FILE__) + '/as_controller_test_helper.rb'
 
 class BiodatabaseLinksControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  include AsControllerTestHelper
+  def setup
+    activate_authlogic
+    @user = UserSession.create(users(:users_001))
   end
 end

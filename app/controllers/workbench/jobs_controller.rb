@@ -15,7 +15,6 @@ class Workbench::JobsController < ApplicationController
       results = Job.count 'locked_at is not null'
     end
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
-
   end
 
   def destroy

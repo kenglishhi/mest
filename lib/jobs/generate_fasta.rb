@@ -9,4 +9,3 @@ class Jobs::GenerateFasta < Jobs::AbstractJob
     true
   end
 end
-

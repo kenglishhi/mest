@@ -1,14 +1,5 @@
 module BiodatabasesHelper
 
-#  def biodatabase_type_column(record)
-#   if record.biodatabase_type.name == "UPLOADED-RAW"
-#    record.biodatabase_type.name + "  "  +
-#			link_to("Clean the File", new_tools_blast_cleaner_path(:biodatabase_id => record.id))
-#   else
-#    record.biodatabase_type.name
-#   end
-#  end
-
   def blast_actions_column(record)
    links =[] 
    links << link_to("Blast", new_tools_blast_create_db_path(:test_biodatabase_id => record.id))

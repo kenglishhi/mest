@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + '/../../test_helper'
 
 class Workbench::BiodatabasesControllerTest < ActionController::TestCase
   include Authlogic::TestCase
-  # Replace this with your real tests.
 
   context "log user in" do
     setup do

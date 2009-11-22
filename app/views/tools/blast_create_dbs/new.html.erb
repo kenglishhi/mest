@@ -24,7 +24,7 @@
                 <label>Target Fasta File</label>
               </dt>
               <dd>
-                <%= select_tag  :target_biodatabase_id, options_for_select(biodatabase_options,
+                <%= select_tag  :target_biodatabase_ids, options_for_select(biodatabase_options,
                   @target_biodatabase ?   @target_biodatabase.id : nil), :class=>'text-input' %>
               </dd>
             </dl>
