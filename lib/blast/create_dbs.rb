@@ -2,14 +2,30 @@ class Blast::CreateDbs < Blast::Base
 
   protected
   def init_files_and_databases
-    @test_database = Biodatabase.find(Biodatabase.find(@params[:test_biodatabase_id]) )
-    #TODO FIX THIS!!!
-
-    @target_database = Biodatabase.find(Biodatabase.find(@params[:target_biodatabase_ids]) )
-    @test_fasta_file = @test_database.fasta_file
-    @target_fasta_file = @target_database.fasta_file
+    @test_biodatabase = Biodatabase.find(Biodatabase.find(@params[:test_biodatabase_id]) )
+    @test_fasta_file = @test_biodatabase.fasta_file
     @test_fasta_file.overwrite_fasta
-    @target_fasta_file.overwrite_fasta
+
+    puts "Doing query for target_biodatabases = #{params[:target_biodatabase_ids]}"
+    ids = []
+    if params[:target_biodatabase_ids].is_a? Array
+      ids = params[:target_biodatabase_ids]
+    elsif params[:target_biodatabase_ids].is_a? String
+      ids = params[:target_biodatabase_ids].split(',')
+    else
+      raise "Invalid target database"
+    end
+    @target_biodatabases = Biodatabase.all(:conditions => ["id in (?)",ids] )
+    @target_fasta_file = FastaFile.new
+    puts "  @target_biodatabases.size #{@target_biodatabases.inspect}"
+    puts "  @target_biodatabases.size #{Biodatabase.all.map{|db| db.id}.join(',') }"
+    if @target_biodatabases.size == 1
+      @target_fasta_file = @target_biodatabases.first.fasta_file
+      @target_fasta_file.overwrite_fasta
+    else
+      # Generate a file with all the sequences
+      @target_fasta_file = FastaFile.generate_fasta(@target_biodatabases)
+    end
     if @test_fasta_file.nil? || @target_fasta_file.nil?
       raise "Target or Test Fasta File does not exist"
     end
@@ -22,7 +38,7 @@ class Blast::CreateDbs < Blast::Base
     evalue = get_evalue 
 
     output_biodatabase_group_name = params[:output_biodatabase_group_name] ||
-      "#{@test_fasta_file.biodatabase.name} vs #{@target_fasta_file.biodatabase.name}"
+      "#{@test_fasta_file.biodatabase.name} vs #{@target_fasta_file.label}"
 
     @blast_result = new_blast_result("#{output_biodatabase_group_name} Blast Result")
 
