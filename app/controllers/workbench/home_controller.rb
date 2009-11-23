@@ -5,28 +5,28 @@ class Workbench::HomeController < ApplicationController
     @biodatabase_group = BiodatabaseGroup.main_group_in_project(current_user.active_project).first
     render :layout => false
   end
-  def change_project
-    change_active_project(Project.find(params[:id]))
-    redirect_to '/workbench'
-  end
-  def storetest
-    render :layout => false
-  end
-
-  def rename_form
-    render :layout => false
-  end
-  def rename
-    render :layout => false
-  end
- def slide
-    render :layout => false
-  end
- def user_job_notifications
-    render :layout => false
-  end
-  def ncbi_blast
-    render :layout => false
-  end
+#  def change_project
+#    change_active_project(Project.find(params[:id]))
+#    redirect_to '/workbench'
+#  end
+#  def storetest
+#    render :layout => false
+#  end
+#
+#  def rename_form
+#    render :layout => false
+#  end
+#  def rename
+#    render :layout => false
+#  end
+# def slide
+#    render :layout => false
+#  end
+# def user_job_notifications
+#    render :layout => false
+#  end
+#  def ncbi_blast
+#    render :layout => false
+#  end
 
 end

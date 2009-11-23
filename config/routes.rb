@@ -7,10 +7,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :biosequences, :active_scaffold => true 
   map.resources :blast_results, :active_scaffold => true
   map.resources :fasta_files, :active_scaffold => true
-  map.resource :user_session
+  map.resource  :user_session
   map.resources :users
   map.resources :user_job_notifications
-  map.resource :home
+  map.resource  :home
 
   map.namespace(:admin) do |admin|
     admin.resources :users, :active_scaffold => true

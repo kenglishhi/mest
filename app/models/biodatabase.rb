@@ -33,44 +33,6 @@ class Biodatabase < ActiveRecord::Base
     fasta_file.destroy if fasta_file && fasta_file.is_generated?
   end
 
-  def select_unique_biosequence_ids
-    sql = <<-EOSQL
-    SELECT bsdb2.biosequence_id FROM biodatabase_biosequences bsdb1,
-    ( SELECT biosequence_id
-      FROM biodatabase_biosequences
-      WHERE biodatabase_id= #{id} LIMIT 200) bsdb2
-    WHERE bsdb1.biosequence_id = bsdb2.biosequence_id
-    GROUP BY bsdb2.biosequence_id
-    HAVING COUNT(*) = 1
-    LIMIT 200
-    EOSQL
-    self.connection.select_rows sql
-  end
-
-  def delete_unique_biosequence_ids
-    begin
-      sql = ""
-      sql = <<-EOSQL
-    SELECT bsdb2.biosequence_id FROM biodatabase_biosequences bsdb1,
-    ( SELECT biosequence_id
-      FROM biodatabase_biosequences
-      WHERE biodatabase_id= #{id} ORDER BY biosequence_id LIMIT 100 ) bsdb2
-    WHERE bsdb1.biosequence_id = bsdb2.biosequence_id
-    GROUP BY bsdb2.biosequence_id
-    HAVING COUNT(*) = 1
-    ORDER BY biosequence_id
-    LIMIT 100
-      EOSQL
-
-      rows = self.connection.select_rows( sql)
-      logger.error( "rows #{rows.inspect}")
-      biosequence_ids = rows.map { | row | row.first }
-      #      delete_sql = "DELETE FROM `biosequences` WHERE (id in ())  "
-      values = Biosequence.delete_all(["id in (?) " ,biosequence_ids])  unless biosequence_ids.empty?
-      logger.error( "RETURNED #{values}")
-    end # until biosequence_ids.empty?
-  end
-
 	def number_of_sequences
     self.biosequences.count
 	end

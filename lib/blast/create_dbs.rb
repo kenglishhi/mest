@@ -4,6 +4,7 @@ class Blast::CreateDbs < Blast::Base
   def init_files_and_databases
     @test_database = Biodatabase.find(Biodatabase.find(@params[:test_biodatabase_id]) )
     #TODO FIX THIS!!!
+
     @target_database = Biodatabase.find(Biodatabase.find(@params[:target_biodatabase_ids]) )
     @test_fasta_file = @test_database.fasta_file
     @target_fasta_file = @target_database.fasta_file
