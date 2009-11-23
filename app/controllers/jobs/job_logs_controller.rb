@@ -17,7 +17,5 @@ class Jobs::JobLogsController < Jobs::BaseController
     JobLog.delete_all
     redirect_to :action => :index
   end
-
-
 end
 
