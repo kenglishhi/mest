@@ -7,4 +7,14 @@ class BiosequencesControllerTest < ActionController::TestCase
     activate_authlogic
     @user = UserSession.create(users(:users_001))
   end
+
+  context "Test Show" do
+    setup do
+      activate_authlogic
+      @user = UserSession.create(users(:users_001))
+      get "show", :id => biosequences(:biosequences_001).id
+    end
+    should_respond_with    :success
+
+  end
 end

@@ -7,7 +7,6 @@ class FastaFile < ActiveRecord::Base
 
   validates_presence_of :project_id
 
-
   before_validation :set_label
   before_destroy :remove_fasta_dbs
 
@@ -175,7 +174,7 @@ class FastaFile < ActiveRecord::Base
   end
 
   def generate_alignment
-    command = " clustalw -infile=#{self.fasta.path}"
+    command = " clustalw -quiet -infile=#{self.fasta.path}"
     system(*command)
     alignment_file_path
   end

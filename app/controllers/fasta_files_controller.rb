@@ -23,7 +23,6 @@ class FastaFilesController < ApplicationController
             fasta_file = FastaFile.new
             fasta_file.user = current_user
             fasta_file.project_id = params[:project_id]
-            logger.error("[kenglish] uploaded data is #{image_param[:uploaded_data].inspect}")
             fasta_file.fasta = image_param[:uploaded_data]
             fasta_file.is_generated = false
             fasta_file.save!
@@ -39,14 +38,11 @@ class FastaFilesController < ApplicationController
   end
   
   def after_create_save(record)
-    logger.error("kenglish] called after_update_save " )
     redirect_to users_path
   end
 
   def conditions_for_collection
-		logger.error("[kenglish] params[:biodatabase_type_id].blank? #{params[:biodatabase_type_id].blank?} ")
     unless params[:biodatabase_type_id].blank?
-		  logger.error("[kenglish] params[:biodatabase_type_id].blank? #{params[:biodatabase_type_id].blank?} ")
       @biodatabase_type_id = params[:biodatabase_type_id].to_i
     end
     ['fasta_files.project_id = ?', current_user.active_project.id ]

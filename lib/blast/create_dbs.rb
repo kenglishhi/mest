@@ -7,15 +7,13 @@ class Blast::CreateDbs < Blast::Base
     @test_fasta_file.overwrite_fasta
 
     puts "Doing query for target_biodatabases = #{params[:target_biodatabase_ids]}"
-    ids = []
+    target_ids = []
     if params[:target_biodatabase_ids].is_a? Array
-      ids = params[:target_biodatabase_ids]
-    elsif params[:target_biodatabase_ids].is_a? String
-      ids = params[:target_biodatabase_ids].split(',')
+      target_ids = params[:target_biodatabase_ids]
     else
-      raise "Invalid target database"
+      target_ids = params[:target_biodatabase_ids].to_s.split(',')
     end
-    @target_biodatabases = Biodatabase.all(:conditions => ["id in (?)",ids] )
+    @target_biodatabases = Biodatabase.all(:conditions => ["id in (?)",target_ids] )
     @target_fasta_file = FastaFile.new
     puts "  @target_biodatabases.size #{@target_biodatabases.inspect}"
     puts "  @target_biodatabases.size #{Biodatabase.all.map{|db| db.id}.join(',') }"

@@ -5,7 +5,8 @@ class Workbench::JobsControllerTest <Workbench::AbstractControllerTest
   context "test index" do
     setup do
       activate_authlogic
-      @user = UserSession.create(users(:users_001))
+      @user = users(:users_001)
+      UserSession.create(@user)
     end
     should "succeed on get index with JSON" do
       get :index, :format=> 'json'
@@ -18,6 +19,17 @@ class Workbench::JobsControllerTest <Workbench::AbstractControllerTest
     should "succeed on get index with JSON with Failed" do
       get :index, :format=> 'json',:option =>'Failed'
       should_return_restful_json
+    end
+     context "Test destroy" do
+      setup do
+        @job = biodatabases(:biodatabases_001)
+        @old_count = Biodatabase.count
+        delete  'destroy', :format=> 'json', :id => @biodatabase.id
+      end
+      should "destroy record" do
+        assert_response :success
+        assert_equal  @old_count-1, Biodatabase.count
+      end
     end
   end
 end
