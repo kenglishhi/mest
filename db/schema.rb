@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091113025122) do
+ActiveRecord::Schema.define(:version => 20091124171848) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(:version => 20091113025122) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "alignment_flag",     :default => false
   end
 
   create_table "job_logs", :force => true do |t|

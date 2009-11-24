@@ -45,6 +45,6 @@ class FastaFilesController < ApplicationController
     unless params[:biodatabase_type_id].blank?
       @biodatabase_type_id = params[:biodatabase_type_id].to_i
     end
-    ['fasta_files.project_id = ?', current_user.active_project.id ]
+    ['fasta_files.project_id = ? AND is_generated = 0', current_user.active_project.id ]
   end
 end

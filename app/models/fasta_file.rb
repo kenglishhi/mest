@@ -10,6 +10,8 @@ class FastaFile < ActiveRecord::Base
   before_validation :set_label
   before_destroy :remove_fasta_dbs
 
+  named_scope :with_alignments, :conditions => 'alignment_flag = 1'
+
   def self.generate_fasta(biodatabase_args)
     fasta_file = nil
     if biodatabase_args.is_a? Array
@@ -175,7 +177,7 @@ class FastaFile < ActiveRecord::Base
   end
 
   def alignment_file_url
-    self.fasta.url.sub(/fasta$/,'aln') if alignemnt_exists?
+    self.fasta.url.sub(/fasta$/,'aln') if alignment_exists?
   end
 
   def alignment_file_path

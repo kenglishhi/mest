@@ -320,6 +320,82 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
   //    Ext.getCmp('target-biodatabase-id-blast-field').setValue(biodatabaseId);
   }
 });
+Ext.bio.GroupClustalwWindow = Ext.extend(Ext.Window,{
+  title: 'ClustalW all database in Group',
+  layout:'fit',
+  width:550,
+  height:180,
+  closeAction:'hide',
+  plain: true,
+  id: 'bio-group-clustalw-window',
+  initComponent: function() {
+    var parentComponentId = this.id;
+    var combo = new Ext.form.ComboBox({
+      fieldLabel: 'Database Group',
+      name:'biodatabase_group',
+      id: 'biodatabase-group-id-clustalw-field',
+      hiddenName : 'biodatabase_group_id',
+      valueField:'id',
+      displayField:'name',
+      store: this.dbStore,
+      typeAhead: true,
+      mode: 'local',
+      triggerAction: 'all',
+      emptyText:'Select a database...',
+      selectOnFocus:true,
+      width: 400,
+      listWidth: 400,
+      allowBlank:false
+    });
+    var form = new Ext.FormPanel({
+      id: 'my-group-clustalw-form-panel',
+      labelWidth: 70, // label settings here cascade unless overridden
+      url:'/tools/clustalws.json',
+      method: 'POST',
+      baseParams:{
+        authenticity_token: FORM_AUTH_TOKEN
+      },
+      frame:true,
+      bodyStyle:'padding:5px 5px 0',
+      defaults: {
+        width: 400
+      },
+      defaultType: 'textfield',
+      items: [ combo ],
+      buttons: [{
+        text: 'Submit',
+        handler: function(){
+          var form = Ext.getCmp('my-group-clustalw-form-panel').getForm();
+          if (form && form.isValid()) {
+            form.submit({
+              waitMsg:"Submitting...",
+              success: function(form, action) {
+                //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
+                Ext.getCmp(parentComponentId).hide();
+              }
+            });
+          }
+        }
+      },
+      {
+        text: 'Cancel',
+        handler: function(){
+          Ext.getCmp(parentComponentId).hide();
+        }
+      }
+      ]
+    });
+
+    Ext.apply(this,{
+      items:   form
+    });
+    Ext.bio.GroupClustalwWindow.superclass.initComponent.call(this);
+  } ,
+  setBiodatabaseId: function(biodatabaseGroupId) {
+    Ext.getCmp('biodatabase-group-id-clustalw-field').setValue(biodatabaseGroupId);
+  }
+});
+
 
 
 Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
@@ -619,6 +695,14 @@ Ext.bio.showClustalwWindow  = function(biodatabaseId) {
   var store =Ext.workbenchdata.generatedDbsComboStore ;
   Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
 } ;
+
+Ext.bio.showGroupClustalwWindow  = function(biodatabaseGroupId) {
+  var cmpId = 'bio-group-clustalw-window';
+  var obj = Ext.bio.GroupClustalwWindow;
+  var store = Ext.workbenchdata.biodatabaseGroupsComboStore ;
+  Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseGroupId);
+} ;
+
 Ext.bio.showBlastNtAppendWindow  = function(biodatabaseId) {
   var cmpId = 'bio-blast-nt-append-window' ;
   var obj = Ext.bio.BlastNtAppendWindow ;

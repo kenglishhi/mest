@@ -2,6 +2,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
   dataUrl: null,
   treeData: null,
   projectOptions:null,
+
   initComponent: function() {
     var rootNode = new Ext.tree.AsyncTreeNode({
       text: 'Ext JS',
@@ -20,6 +21,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       rootVisible: false,
       tbar :['->',
       {
+        dbTree: this,
         iconCls:'x-tbar-loading',
         handler: function() {
           var dbTree= Ext.getCmp(parentComponentId);
@@ -42,8 +44,12 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
     });
     Ext.bio.DatabaseGroupTree.superclass.initComponent.call(this);
   },
+  postRefresh: function(){
+  // STUB
+  },
   refresh: function(){
     this.getLoader().load(this.root);
+    this.postRefresh();
   },
   deleteSelectedNode : function(node) {
     var dbTree= this;
@@ -213,8 +219,17 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
             Ext.bio.showBlastGroupNtAppendWindow(node.id);
           }
         });
+        var groupClustalwButton = new Ext.menu.Item({
+          iconCls:'clustalw',
+          text: "ClustalW",
+          handler: function() {
+            Ext.bio.showGroupClustalwWindow(node.id);
+          }
+        });
+
+
         contextMenu  = new Ext.menu.Menu({
-          items: [ntGroupAppendButton, '-', deleteButton]
+          items: [ntGroupAppendButton,groupClustalwButton,  '-', deleteButton]
         });
       }
       contextMenu.show(node.ui.getAnchor());

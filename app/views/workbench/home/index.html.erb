@@ -273,6 +273,11 @@ extjs_store( :controller => "workbench/blast_results",
           },
           postDeleteAction: function() {
             Ext.bio.workbench.clearContent();
+          },
+          postRefresh: function(){
+            Ext.workbenchdata.generatedDbsComboStore.reload();
+            Ext.workbenchdata.rawDbsComboStore.reload();
+            biosequenceStore.reload();
           }
         } , new Ext.TabPanel({
           id: 'workbench-grid-tabs',
