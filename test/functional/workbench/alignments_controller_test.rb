@@ -1,8 +1,6 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require 'test_helper'
 
-class Workbench::BiosequencesControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-
+class Workbench::AlignmentsControllerTest < ActionController::TestCase
   context_with_user_logged do
     context  "succeed on get index with JSON and biodatabase_id" do
       setup do
@@ -19,5 +17,4 @@ class Workbench::BiosequencesControllerTest < ActionController::TestCase
       should_respond_with_extjs_json
     end
   end
-
 end
