@@ -3,12 +3,7 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Workbench::BiodatabasesControllerTest < ActionController::TestCase
   include Authlogic::TestCase
 
-  context "log user in" do
-    setup do
-      activate_authlogic
-      @user = UserSession.create(users(:users_001))
-    end
-
+  context_with_user_logged do
     context "Move Biodatabse to another database group" do
       setup do
         @biodatabase = biodatabases(:biodatabases_001)

@@ -3,11 +3,7 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Workbench::BiosequencesControllerTest < ActionController::TestCase
   # Replace this with your real tests.
 
-  context "test biosequence index" do
-    setup do
-      activate_authlogic
-      @user = UserSession.create(users(:users_001))
-    end
+  context_with_user_logged do
     should "succeed on get index with JSON and biodatabase_id" do
       get :index, :format=> 'json',
         :biodatabase_id =>  biodatabases(:biodatabases_001).id

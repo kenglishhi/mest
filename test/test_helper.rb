@@ -52,3 +52,16 @@ end
 class Alignment < ActiveRecord::Base
   has_attached_file :aln, :path => ":rails_root/test/fixtures/files/:class/:attachment/:id/:basename.:extension"
 end
+
+class ActionController::TestCase
+  def self.context_with_user_logged(&block)
+    context "With an object" do
+      setup do
+        activate_authlogic
+        @user  = users(:users_001) 
+        UserSession.create(@user)
+      end
+      merge_block(&block) if block_given?
+    end
+  end
+end

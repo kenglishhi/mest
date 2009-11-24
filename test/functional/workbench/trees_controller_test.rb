@@ -2,11 +2,7 @@ require 'test_helper'
 
 class Workbench::TreesControllerTest < ActionController::TestCase
   # Replace this with your real tests.
-  context "test show" do
-    setup do
-      activate_authlogic
-      @user = UserSession.create(users(:users_001))
-    end
+  context_with_user_logged do
     should "succeed on get index with JSON" do
       get :show, :format=> 'json'
       assert_response :success

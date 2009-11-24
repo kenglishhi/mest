@@ -3,12 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   # Replace this with your real tests.
 
-  context "test user controller" do
-    setup do
-      activate_authlogic
-      @user = UserSession.create(users(:users_001))
-    end
-
+  context_with_user_logged do
     context "Test the edit screen" do
       setup do
         user = users(:users_001)
