@@ -39,7 +39,7 @@ class FastaFile < ActiveRecord::Base
       biodatabase.fasta_file = fasta_file
       biodatabase.save
     end
-   fasta_file
+    fasta_file
   end
 
   def self.write_sequences_to_file(biodatabase_arg, filename)
@@ -165,17 +165,12 @@ class FastaFile < ActiveRecord::Base
     @fasta_file_handle.close if @fasta_file_handle
   end
 
-  def alignment_file_path
-    self.fasta.path.sub(/fasta$/,'aln')
-  end
-
-  def alignemnt_exists?
-    File.exists? alignment_file_path
-  end
 
   def generate_alignment
     command = " clustalw -quiet -infile=#{self.fasta.path}"
     system(*command)
+    self.alignment_flag = true
+    self.save!
     alignment_file_path
   end
 
@@ -183,8 +178,18 @@ class FastaFile < ActiveRecord::Base
     self.fasta.url.sub(/fasta$/,'aln') if alignemnt_exists?
   end
 
+  def alignment_file_path
+    self.fasta.path.sub(/fasta$/,'aln')
+  end
+
   def alignment_exists?
-    File.exists? alignment_file_path
+    does_exists = File.exists? alignment_file_path
+    if does_exists != self.alignment_flag
+      # sync the value in the database if it does not exist
+      self.alignment_flag = does_exists
+      self.save!
+    end
+    self.alignment_flag
   end
 
   def overwrite_fasta
@@ -192,5 +197,4 @@ class FastaFile < ActiveRecord::Base
       FastaFile.write_sequences_to_file(biodatabase, self.fasta.path )
     end
   end
-  
 end
