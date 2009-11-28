@@ -21,6 +21,7 @@
       "workbench/biodatabase-grid",
       "workbench/biodatabase-group-grid",
       "workbench/blast-result-grid",
+      "workbench/alignment-grid",
       "workbench/job-grid",
       "workbench/job-log-grid",
       "workbench/bio-property-grid",
@@ -175,30 +176,31 @@ extjs_store( :controller => "workbench/blast_results",
 ).render(false)
 %>
 
-Ext.workbenchdata.alignmentsStore = new Ext.data.JsonStore({
-          "restful":true,
-          "autoSave":false,
-          "url":"/workbench/alignments.json",
-          "fields":[{"type":"int",
-              "allowBlank":true,
-              "name":"id"},
-            {"type":"string",
-              "allowBlank":true,
-              "name":"name"},
-            {"type":"auto",
-              "allowBlank":true,
-              "name":"alignment_file_name_display"},
-            {"type":"auto",
-              "allowBlank":true,
-              "name":"alignment_file_url"} ],
-          "totalProperty":"results",
-          "messageProperty":"message",
-          "root":"data",
-          "successProperty":"success",
-          "idProperty":"id",
-          "storeId":"blastresult",
-          "autoLoad":true,
-          writer:new Ext.data.JsonWriter({"encode":false})});
+    Ext.workbenchdata.alignmentsStore = new Ext.data.JsonStore({
+      "restful":true,
+      "autoSave":false,
+      "url":"/workbench/alignments.json",
+      "fields":[{"type":"int",
+          "allowBlank":true,
+          "name":"id"},
+        {"type":"string",
+          "allowBlank":true,
+          "name":"name"},
+        {"type":"auto",
+          "allowBlank":true,
+          "name":"alignment_file_name_display"},
+        {"type":"auto",
+          "allowBlank":true,
+          "name":"alignment_file_url"} ],
+      "totalProperty":"results",
+      "messageProperty":"message",
+      "root":"data",
+      "successProperty":"success",
+      "idProperty":"id",
+      "storeId":"blastresult",
+      "autoLoad":true,
+      writer:new Ext.data.JsonWriter({"encode":false})
+    });
 
     Ext.workbenchMenu.seqPageSize = <%= biosequence_page_size %> ;
     Ext.workbenchMenu.blastResultPageSize = <%= blast_result_page_size %> ;
@@ -372,7 +374,8 @@ Ext.workbenchdata.alignmentsStore = new Ext.data.JsonStore({
                   store: blastResultStore
                 } ]
 
-            }, {
+            },
+            {
               iconCls:'new_view',
               title: 'Alignments',
               autoScroll: true,
@@ -382,8 +385,9 @@ Ext.workbenchdata.alignmentsStore = new Ext.data.JsonStore({
                   xtype:'alignments-grid' ,
                   store: Ext.workbenchdata.alignmentsStore
                 } ]
-
-            }, [{
+            
+            },
+            [{
 
                 iconCls:'grid_icon',
                 title: 'Running Jobs',
