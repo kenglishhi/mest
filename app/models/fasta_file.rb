@@ -1,4 +1,8 @@
 class FastaFile < ActiveRecord::Base
+  include ExtJS::Model
+
+  extjs_fields :id, :label, :alignment_file_name_display,:alignment_file_url
+
   has_attached_file :fasta
   has_one :biodatabase
 
@@ -11,6 +15,15 @@ class FastaFile < ActiveRecord::Base
   before_destroy :remove_fasta_dbs
 
   named_scope :with_alignments, :conditions => 'alignment_flag = 1'
+
+  named_scope :with_alignments_by_biodatabase_group, lambda {|biodatabase_group|
+    {
+      :include => {:biodatabase => :biodatabase_group },
+      :conditions => ['alignment_flag = 1 and biodatabase_groups.project_id = ?', biodatabase_group.id],
+      :order => 'fasta_files.label'
+
+    }
+  }
 
   def self.generate_fasta(biodatabase_args)
     fasta_file = nil
@@ -179,7 +192,9 @@ class FastaFile < ActiveRecord::Base
   def alignment_file_url
     self.fasta.url.sub(/fasta$/,'aln') if alignment_exists?
   end
-
+  def  alignment_file_name_display
+    File.basename(alignment_file_path)
+  end
   def alignment_file_path
     self.fasta.path.sub(/fasta$/,'aln')
   end

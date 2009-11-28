@@ -175,6 +175,31 @@ extjs_store( :controller => "workbench/blast_results",
 ).render(false)
 %>
 
+Ext.workbenchdata.alignmentsStore = new Ext.data.JsonStore({
+          "restful":true,
+          "autoSave":false,
+          "url":"/workbench/alignments.json",
+          "fields":[{"type":"int",
+              "allowBlank":true,
+              "name":"id"},
+            {"type":"string",
+              "allowBlank":true,
+              "name":"name"},
+            {"type":"auto",
+              "allowBlank":true,
+              "name":"alignment_file_name_display"},
+            {"type":"auto",
+              "allowBlank":true,
+              "name":"alignment_file_url"} ],
+          "totalProperty":"results",
+          "messageProperty":"message",
+          "root":"data",
+          "successProperty":"success",
+          "idProperty":"id",
+          "storeId":"blastresult",
+          "autoLoad":true,
+          writer:new Ext.data.JsonWriter({"encode":false})});
+
     Ext.workbenchMenu.seqPageSize = <%= biosequence_page_size %> ;
     Ext.workbenchMenu.blastResultPageSize = <%= blast_result_page_size %> ;
     Ext.workbenchMenu.jobPageSize=  <%= job_page_size %> ;
@@ -345,6 +370,17 @@ extjs_store( :controller => "workbench/blast_results",
                   pageSize: Ext.workbenchMenu.blastResultPageSize,
                   xtype:'blast-result-grid' ,
                   store: blastResultStore
+                } ]
+
+            }, {
+              iconCls:'new_view',
+              title: 'Alignments',
+              autoScroll: true,
+              id:'alignments-result-tab',
+              items: [ {
+                  id: 'alignments-results-grid',
+                  xtype:'alignments-grid' ,
+                  store: Ext.workbenchdata.alignmentsStore
                 } ]
 
             }, [{

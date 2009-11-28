@@ -38,6 +38,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.namespace(:workbench) do |workbench|
+    workbench.resources :alignments
     workbench.resources :biodatabases, :member => { :move => :post}
     workbench.resources :raw_biodatabases
     workbench.resources :generated_biodatabases
