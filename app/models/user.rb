@@ -23,9 +23,6 @@ class User < ActiveRecord::Base
       :description => "This is the default project for #{self.first_name} #{self.last_name}",
       :user => self)
     self.save
-    biodatabase_group = BiodatabaseGroup.create(:name => 'Main Group',:user => self,
-      :project => self.default_project)
-
   end
 
 
