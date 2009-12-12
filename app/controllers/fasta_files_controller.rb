@@ -18,12 +18,12 @@ class FastaFilesController < ApplicationController
     if request.post?
       logger.error("[kenglish] upload_many -- ")
       if params[:fasta_files]
-        params[:fasta_files].each do | image_param |
-          unless image_param[:uploaded_data].blank?
+        params[:fasta_files].each do | file_param |
+          unless file_param[:uploaded_data].blank?
             fasta_file = FastaFile.new
             fasta_file.user = current_user
             fasta_file.project_id = params[:project_id]
-            fasta_file.fasta = image_param[:uploaded_data]
+            fasta_file.fasta = file_param[:uploaded_data]
             fasta_file.is_generated = false
             fasta_file.save!
           end

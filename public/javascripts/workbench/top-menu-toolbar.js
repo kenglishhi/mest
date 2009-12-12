@@ -1,4 +1,3 @@
-
 Ext.bio.TopMenuToolbar =  Ext.extend(Ext.Toolbar, {
   menuData: {},
 
@@ -47,16 +46,6 @@ Ext.bio.TopMenuToolbar =  Ext.extend(Ext.Toolbar, {
         text: this.menuData.workbench_html ,
         cls:'north-header',
         id: 'workbench-menu-title'
-      } ,'-',{
-        xtype: 'tbtext',
-        text: this.menuData.databases_html ,
-        cls:'north-header',
-        id: 'database-menu-title'
-      } ,'-',{
-        xtype: 'tbtext',
-        text: this.menuData.jobs_html ,
-        cls:'north-header',
-        id: 'jobs-menu-title'
       } ,'-',{
         xtype: 'tbtext',
         text: this.menuData.admin_html ,
