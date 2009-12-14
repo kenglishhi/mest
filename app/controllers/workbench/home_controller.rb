@@ -5,6 +5,9 @@ class Workbench::HomeController < ApplicationController
     @biodatabase_group = BiodatabaseGroup.main_group_in_project(current_user.active_project).first
     render :layout => false
   end
+  def fasta_file_upload
+    render :layout => false
+  end
 #  def change_project
 #    change_active_project(Project.find(params[:id]))
 #    redirect_to '/workbench'

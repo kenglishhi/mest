@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title>BiococonutIsland :: Workbench </title>
+    <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
+      "ext-override",
+      "ncbi-style",
+      "FileUploadField"%>
+    <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+      "ext-3.0.0/ext-all" ,
+      "ext-3.0.0/FileUploadField" ,
+      "workbench/base",
+      "workbench/database-group-tree",
+      "workbench/App",
+      "workbench/bio-grids",
+      "workbench/bio-property-grid",
+      "workbench/RowEditor",
+      "workbench/biosequence-view-panel"
+  %>
+
+  <script type="text/javascript">
+    /*!
+     * Ext JS Library 3.0+
+     * Copyright(c) 2006-2009 Ext JS, LLC
+     * licensing@extjs.com
+     * http://www.extjs.com/license
+     */
+
+    Ext.onReady(function(){
+
+      var fp = new Ext.FormPanel({
+        renderTo: 'fi-form',
+        fileUpload: true,
+        width: 500,
+        frame: true,
+        title: 'File Upload Form',
+        autoHeight: true,
+        bodyStyle: 'padding: 10px 10px 0 10px;',
+        labelWidth: 50,
+        defaults: {
+          anchor: '95%',
+          allowBlank: false,
+          msgTarget: 'side'
+        },
+        items: [{
+            xtype: 'textfield',
+            fieldLabel: 'Name',
+            name: 'project_id'
+          },{
+            xtype: 'fileuploadfield',
+            id: 'fasta-file-1',
+            emptyText: 'Select an file',
+            fieldLabel: 'Fasta File',
+            name: 'fasta_files[][uploaded_data]',
+            buttonText: '',
+            buttonCfg: {
+              iconCls: 'upload-icon'
+            }
+          }
+        ],
+
+        buttons: [{
+            text: 'Upload Files',
+            handler: function(){
+              if(fp.getForm().isValid()){
+                fp.getForm().submit({
+                  url: '/fasta_files/create',
+                  waitMsg: 'Uploading your photo...',
+                  success: function(fp, o){
+                    msg('Success', 'Processed file "'+o.result.file+'" on the server');
+                  }
+                });
+              }
+            }
+          },{
+            text: 'Reset',
+            handler: function(){
+              fp.getForm().reset();
+            }
+          }]
+      });
+
+    });
+  </script>
+</head>
+<body>
+  <h1>File Upload Field</h1>
+
+<p>
+  <b>Form Example</b><br />
+  The FileUploadField can also be used in standard form layouts, with support for anchoring, validation (the
+  field is required in this example), empty text, etc.  This example also demonstrates using the
+  <tt>buttonCfg</tt> option to provide a customized icon upload button.
+<div id="fi-form"></div>
+</p>
+
+</body>
+
+</html>
