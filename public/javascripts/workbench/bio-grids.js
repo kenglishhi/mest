@@ -142,6 +142,9 @@ Ext.bio.BiodatabaseGrid =  Ext.extend(Ext.bio.RestfulGrid, {
 });
 Ext.reg('biodatabase-grid', Ext.bio.BiodatabaseGrid);
 
+
+
+
 Ext.bio.BiodatabaseGroupGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   useEditorFlag:true,
   usePagingBarFlag: true,

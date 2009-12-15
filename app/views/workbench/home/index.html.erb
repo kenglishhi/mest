@@ -19,6 +19,7 @@
       "workbench/restful-grid",
       "workbench/biosequence-grid",
       "workbench/biodatabase-grid",
+      "workbench/fasta-file-grid",
       "workbench/biodatabase-group-grid",
       "workbench/blast-result-grid",
       "workbench/alignment-grid",
@@ -62,7 +63,7 @@ extjs_store( :controller => "workbench/biosequences",
   }
 ).render(false)
 %>
-    var biodatabaseStore = <%=
+    Ext.workbenchdata.biodatabaseStore = <%=
 extjs_store( :controller => "workbench/biodatabases",
   :writer => {"encode" => false},
   :config => {
@@ -432,7 +433,19 @@ extjs_store( :controller => "workbench/blast_results",
                   store: jobLogStore }
               ]
 
-            }
+            },
+            {
+              iconCls:'new_view',
+              title: 'Uploaded Fasta Files',
+              autoScroll: true,
+              id:'workbench-fasta-file-tab',
+              items: [ {
+                  id: 'workbench-fasta-file-grid',
+                  xtype:'fasta-file-grid' ,
+                  store: Ext.workbenchdata.biodatabaseStore
+                } ]
+            
+            },
           ]
         })
         /*        ,
