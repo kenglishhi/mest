@@ -20,7 +20,7 @@ class FastaFilesController < ApplicationController
         unless file_param[:uploaded_data].blank?
           fasta_file = FastaFile.new
           fasta_file.user = current_user
-          fasta_file.project_id = params[:project_id]
+          fasta_file.project_id = params[:project_id] || current_user.active_project.id
           fasta_file.fasta = file_param[:uploaded_data]
           fasta_file.is_generated = false
           fasta_file.save!
@@ -35,6 +35,7 @@ class FastaFilesController < ApplicationController
         }
         format.json {
           render :json => {:success => true,:msg=> "Files Uploaded Saved"}
+          headers["Content-Type" ] = "text/html"
         }
       end
     end

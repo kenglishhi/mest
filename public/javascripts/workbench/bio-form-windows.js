@@ -652,7 +652,80 @@ Ext.bio.BlastGroupNtAppendWindow = Ext.extend(Ext.Window,{
   }
 });
 
+Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
+  title: 'Upload Fasta Files',
+  layout:'fit',
+  width:500,
+  height:220,
+  closeAction:'hide',
+  plain: true,
+  id:'fasta-file-upload-window',
+  initComponent: function() {
+    var parentComponentId = this.id;
+    var fastaFileItems = [];
+    for (var i=0; i< 5; i++) {
+      fastaFileItems[i] = {
+        xtype: 'fileuploadfield',
+        id: 'fasta-file-' + i,
+        emptyText: 'Select an file',
+        fieldLabel: 'Fasta File',
+        name: 'fasta_files[][uploaded_data]',
+        buttonText: '',
+        buttonCfg: {
+          iconCls: 'upload-icon'
+        }
+      }
+    }
 
+    var form = new Ext.FormPanel({
+      id: 'my-fasta-file-upload-form-panel',
+      labelWidth: 75, // label settings here cascade unless overridden
+      url:'/fasta_files.json',
+      method: 'POST',
+      fileUpload: true,
+      baseParams:{
+        authenticity_token: FORM_AUTH_TOKEN
+      },
+      frame:true,
+      bodyStyle:'padding:5px 5px 0',
+      defaults: {
+        width: 230
+      },
+      defaultType: 'textfield',
+      items: fastaFileItems,
+      buttons: [{
+        text: 'Save',
+        handler: function(){
+          var form = Ext.getCmp('my-fasta-file-upload-form-panel').getForm();
+          if (form && form.isValid()) {
+            form.submit({
+              success: function(form, action) {
+                Ext.getCmp(parentComponentId).hide();
+              }
+            });
+          }
+        }
+      },
+      {
+        text: 'Cancel',
+        handler: function(){
+          Ext.getCmp(parentComponentId).hide();
+        }
+      }
+      ]
+    });
+
+    Ext.apply(this,{
+      items:   form
+    });
+    Ext.bio.FastaFileUploadWindow.superclass.initComponent.call(this);
+  },
+  setBiodatabaseId: function(biodatabaseId) {
+    for (var i=0; i< 5; i++) {
+      Ext.getCmp('fasta-file-' + i).setValue('');
+    }
+  }
+});
 
 Ext.bio._showFormWindow = function (obj, cmpId, store, biodatabaseId){
   var win  = Ext.getCmp(cmpId);
@@ -714,5 +787,13 @@ Ext.bio.showBlastGroupNtAppendWindow  = function(biodatabaseId) {
   var cmpId = 'bio-blast-group-nt-append-window';
   var obj = Ext.bio.BlastGroupNtAppendWindow ;
   var store = Ext.workbenchdata.biodatabaseGroupsComboStore ;
+  Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
+};
+
+Ext.bio.showFastaFileUploadWindow = function(biodatabaseId) {
+  var cmpId = 'fasta-file-upload-create--window';
+  var obj = Ext.bio.FastaFileUploadWindow ;
+  //  var store = Ext.workbenchdata.biodatabaseGroupsComboStore ;
+  var store = null;
   Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
 };

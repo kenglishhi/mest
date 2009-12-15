@@ -15,7 +15,8 @@
       "workbench/bio-grids",
       "workbench/bio-property-grid",
       "workbench/RowEditor",
-      "workbench/biosequence-view-panel"
+      "workbench/biosequence-view-panel",
+      "workbench/bio-form-windows"
   %>
 
     <script type="text/javascript">
@@ -27,81 +28,19 @@
        */
 
       Ext.onReady(function(){
+        var button = Ext.get('show-btn');
 
-        var fp = new Ext.FormPanel({
-
-          renderTo: 'fi-form',
-          fileUpload: true,
-          width: 500,
-          frame: true,
-          title: 'File Upload Form',
-          autoHeight: true,
-          bodyStyle: 'padding: 10px 10px 0 10px;',
-          labelWidth: 75,
-          method: 'POST',
-          url: '/fasta_files.json',
-          baseParams:{
-            authenticity_token: FORM_AUTH_TOKEN,
-            project_id: 1
-          },
-
-          defaults: {
-            anchor: '95%',
-            allowBlank: true,
-            msgTarget: 'side'
-          },
-          items: [{
-              xtype: 'textfield',
-              fieldLabel: 'Name',
-              name: 'project_id'
-            },{
-              xtype: 'fileuploadfield',
-              id: 'fasta-file-1',
-              emptyText: 'Select an file',
-              fieldLabel: 'Fasta File',
-              name: 'fasta_files[][uploaded_data]',
-              buttonText: '',
-              buttonCfg: {
-                iconCls: 'upload-icon'
-              }
-            }
-          ],
-
-          buttons: [{
-              text: 'Upload Files',
-              handler: function(){
-                if(fp.getForm().isValid()){
-                  fp.getForm().submit({
-                    waitMsg: 'Uploading your file...',
-                    success: function(fp, o){
-                      // msg('Success', 'Processed file "'+o.result.file+'" on the server');
-//                      msg('Success', 'Processed file on the server');
-                    }
-                  });
-                }
-              }
-            },{
-              text: 'Reset',
-              handler: function(){
-                fp.getForm().reset();
-              }
-            }]
-        });
-
+        button.on('click', Ext.bio.showFastaFileUploadWindow);
       });
     </script>
   </head>
+
   <body>
     <h1>File Upload Field</h1>
+    <p>This example shows how to create a very simple modal Window with "autoTabs" from existing markup.</p>
+    <input type="button" id="show-btn" value="Hello World" /><br /><br />
 
-    <p>
-      <b>Form Example</b><br />
-      The FileUploadField can also be used in standard form layouts, with support for anchoring, validation (the
-      field is required in this example), empty text, etc.  This example also demonstrates using the
-      <tt>buttonCfg</tt> option to provide a customized icon upload button.
-    <div id="fi-form"></div>
-  </p>
 
-</body>
+  </body>
 
 </html>
