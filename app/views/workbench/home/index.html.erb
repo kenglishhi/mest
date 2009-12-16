@@ -75,7 +75,20 @@ extjs_store( :controller => "workbench/biodatabases",
 
 ).render(false)
 %>
-    var jobLogStore = <%=
+
+ Ext.workbenchdata.fastaFileStore = <%=
+extjs_store( :controller => "workbench/fasta_files",
+  :writer => {"encode" => false},
+  :config => {
+    "totalProperty" => 'results',
+    "autoLoad" => false,
+    "autoSave" => true,
+    "restful" => true
+  }
+
+).render(false)
+%>
+    Ext.workbenchdata.jobLogStore = <%=
 extjs_store( :controller => "workbench/job_logs",
   :writer => {"encode" => false},
   :config => {
@@ -312,7 +325,7 @@ extjs_store( :controller => "workbench/blast_results",
           region: 'center', // a center region is ALWAYS required for border layout
           collapsible: true,
           deferredRender: true,
-          activeTab: 0,     // first tab initially active
+          activeTab: 5,     // first tab initially active
           items: [ { iconCls:'new_fasta',
               title: 'Sequences',
               id: 'workbench-biosequence-tab',
@@ -430,7 +443,7 @@ extjs_store( :controller => "workbench/blast_results",
                 {id: 'workbench-job-logs-grid',
                   pageSize: Ext.workbenchMenu.jobPageSize,
                   xtype:'job-log-grid' ,
-                  store: jobLogStore }
+                  store: Ext.workbenchdata.jobLogStore }
               ]
 
             },
@@ -442,7 +455,7 @@ extjs_store( :controller => "workbench/blast_results",
               items: [ {
                   id: 'workbench-fasta-file-grid',
                   xtype:'fasta-file-grid' ,
-                  store: Ext.workbenchdata.biodatabaseStore
+                  store:Ext.workbenchdata.fastaFileStore 
                 } ]
             
             },

@@ -4,15 +4,26 @@
  */
 
 Ext.bio.FastaFileGrid =  Ext.extend(Ext.bio.RestfulGrid, {
-  useEditorFlag:true,
   usePagingBarFlag: true,
   displayColumns:  [ {
-    header: "Name",
+    header: "Label",
     authwidth: true,
     sortable: true,
-    dataIndex: 'name',
-    editor: new Ext.form.TextField({})
-  }  ],
+    dataIndex: 'label'
+  }, {
+    header: "File Size",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'fasta_file_size'
+  }, {
+    header: "Fasta File Name",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'fasta_file_name_display',
+    renderer: function(value, p, record, row, col, store) {
+      return '<a href="' + record.data.fasta_file_url + '" target="_blank"  >' + record.data.fasta_file_name_display + '</a>';
+    }
+  }],
   initComponent: function() {
     Ext.bio.FastaFileGrid.superclass.initComponent.call(this);
   } ,

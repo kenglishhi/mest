@@ -1,7 +1,8 @@
 class FastaFile < ActiveRecord::Base
   include ExtJS::Model
 
-  extjs_fields :id, :label, :alignment_file_name_display,:alignment_file_url
+  extjs_fields :id, :label, :alignment_file_name_display, :alignment_file_url,
+    :fasta_file_name_display, :fasta_file_url,:fasta_file_size_display
 
   has_attached_file :fasta
   has_one :biodatabase
@@ -74,6 +75,18 @@ class FastaFile < ActiveRecord::Base
     end
 
     fasta_file_handle.close
+  end
+
+  def fasta_file_size_display
+    return "#{self.fasta_file_size}" if self.fasta_file_size < 1024
+    file_size = self.fasta_file_size * 1.0
+    unit = "B"
+    units = ["GB","MB","KB"]
+    while file_size >= 1024.0
+      file_size = (file_size) / 1024
+      unit=units.pop
+    end
+    "#{sprintf("%.#{2}f", file_size)} #{unit}"
   end
 
   def self.temp_path
@@ -195,6 +208,13 @@ class FastaFile < ActiveRecord::Base
   def  alignment_file_name_display
     File.basename(alignment_file_path)
   end
+  def fasta_file_url
+    self.fasta.url
+  end
+  def fasta_file_name_display
+    fasta_file_name
+  end
+
   def alignment_file_path
     self.fasta.path.sub(/fasta$/,'aln')
   end
