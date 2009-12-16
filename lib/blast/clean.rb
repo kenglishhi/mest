@@ -70,7 +70,8 @@ class Blast::Clean < Blast::Base
         BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
       :name => new_name,
       :user_id => parent_db.user_id,
-      :biodatabase_group => parent_db.biodatabase_group)
+      :project_id => parent_db.project_id, 
+      :parent => parent_db )
   end
 
   def copy_database(source_db, dest_db)

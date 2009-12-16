@@ -17,15 +17,12 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
             :target_biodatabase_ids => @target_biodatabase.id,
             :user_id => users(:users_001).id,
             :project_id => users(:users_001).active_project.id})
-        @number_of_biodatabase_groups = BiodatabaseGroup.count
         @number_of_blast_results = BlastResult.count
         @job.perform
       end
 
       should "Create new databases" do
-        assert_equal @number_of_biodatabase_groups+1, BiodatabaseGroup.count, "We should have a new biodatabase group"
         assert_equal @number_of_blast_results+1, BlastResult.count, "We should have a new biodatabase group"
-        assert !BiodatabaseGroup.last.biodatabases.empty?, "There should not be any empty databases."
       end
     end
     context "Blast 2 identical dbs and create databases" do
@@ -36,7 +33,6 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
         assert File.exists?( @test_fasta_file.fasta.path ), "test_fasta_file should exist."
         assert File.exists?( @target_fasta_file.fasta.path ), "target_fasta_file should exist."
 
-        @number_of_biodatabase_groups = BiodatabaseGroup.count
         @number_of_biodatabases = Biodatabase.count
         @number_of_blast_results = BlastResult.count
         @number_of_fasta_files = FastaFile.count
@@ -50,11 +46,9 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
       end
 
       should "Create new databases" do
-        assert_equal @number_of_biodatabase_groups+1, BiodatabaseGroup.count, "We should have a new biodatabase group"
         assert_equal @number_of_blast_results+1, BlastResult.count, "We should have a new biodatabase group"
         assert_equal @number_of_fasta_files+1, FastaFile.count, "We should have a new fasta file"
         assert @number_of_biodatabases <  Biodatabase.count, "We should have new biodatabases "
-        assert !BiodatabaseGroup.last.biodatabases.empty?, "There should not be any empty databases."
       end
     end
     context "Blast with 3dbs at the target" do
@@ -63,7 +57,6 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
         assert File.exists?( @test_fasta_file.fasta.path ), "test_fasta_file should exist."
         assert File.exists?( @target_fasta_file.fasta.path ), "target_fasta_file should exist."
 
-        @number_of_biodatabase_groups = BiodatabaseGroup.count
         @number_of_biodatabases = Biodatabase.count
         @number_of_blast_results = BlastResult.count
         @number_of_fasta_files = FastaFile.count
@@ -77,11 +70,9 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
       end
 
       should "Create new databases" do
-        assert_equal @number_of_biodatabase_groups+1, BiodatabaseGroup.count, "We should have a new biodatabase group"
         assert_equal @number_of_blast_results+1, BlastResult.count, "We should have a new biodatabase group"
         assert_equal @number_of_fasta_files + 2, FastaFile.count, "We should have a 2 new fasta file"
         assert @number_of_biodatabases <  Biodatabase.count, "We should have new biodatabases "
-        assert !BiodatabaseGroup.last.biodatabases.empty?, "There should not be any empty databases."
       end
     end
 

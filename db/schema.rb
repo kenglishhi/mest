@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091124171848) do
+ActiveRecord::Schema.define(:version => 20091216084831) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
@@ -48,15 +48,16 @@ ActiveRecord::Schema.define(:version => 20091124171848) do
   end
 
   create_table "biodatabases", :force => true do |t|
-    t.string   "name",                 :limit => 128, :null => false
-    t.string   "authority",            :limit => 128
+    t.string   "name",                :limit => 128, :null => false
+    t.string   "authority",           :limit => 128
     t.text     "description"
-    t.integer  "biodatabase_type_id",                 :null => false
-    t.integer  "biodatabase_group_id",                :null => false
+    t.integer  "biodatabase_type_id",                :null => false
     t.integer  "fasta_file_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id",                         :null => false
+    t.integer  "parent_id"
   end
 
   create_table "biosequences", :force => true do |t|

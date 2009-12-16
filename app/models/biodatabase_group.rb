@@ -24,22 +24,25 @@ class BiodatabaseGroup < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 10
 
-  def ext_tree(params={})
-    tree_data = { :text =>  self.name,
-      :leaf => false,
-      :id => self.id,
-      :expandable => true,
-      :resource => 'biodatabase_group'
-    }
-    tree_data[:expanded] = true if params[:expand_node]
-    tree_data[:children] =  []
-    tree_data[:children] +=  children.map do  |db_group|
-      db_group.ext_tree
-    end
-    tree_data[:children] +=  biodatabases.map do  |db|
-      {:text => db.name, :leaf => true, :id => db.id, :resource => 'biodatabase', :db_type=> db.biodatabase_type.name  }
-    end
-    tree_data
+  def ext_tree
+    nil
   end
+#  def ext_tree(params={})
+#    tree_data = { :text =>  self.name,
+#      :leaf => false,
+#      :id => self.id,
+#      :expandable => true,
+#      :resource => 'biodatabase_group'
+#    }
+#    tree_data[:expanded] = true if params[:expand_node]
+#    tree_data[:children] =  []
+#    tree_data[:children] +=  children.map do  |db_group|
+#      db_group.ext_tree
+#    end
+#    tree_data[:children] +=  biodatabases.map do  |db|
+#      {:text => db.name, :leaf => true, :id => db.id, :resource => 'biodatabase', :db_type=> db.biodatabase_type.name  }
+#    end
+#    tree_data
+#  end
 
 end

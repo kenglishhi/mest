@@ -6,16 +6,11 @@ class Workbench::BiodatabasesController < ApplicationController
     page = get_page(Biodatabase)
     if params[:id]
       data =[ Biodatabase.find(params[:id])]
-    elsif params[:biodatabase_group_id]
-      conditions = ['biodatabase_group_id=?', params[:biodatabase_group_id]]
-      data = Biodatabase.paginate :page => page, :conditions => conditions
-      results = Biodatabase.count :conditions => conditions
     else 
-      data = Biodatabase.paginate :page => page, :include => :biodatabase_group,
-        :conditions => ['biodatabase_groups.project_id = ?', current_user.active_project.id],
+      data = Biodatabase.paginate :page => page, 
+        :conditions => ['project_id = ?', current_user.active_project.id],
         :order => 'biodatabases.name'
-      results = Biodatabase.count(:include => :biodatabase_group,
-        :conditions => ['biodatabase_groups.project_id = ?', current_user.active_project.id])
+      results = Biodatabase.count(:conditions => ['project_id = ?', current_user.active_project.id])
     end
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
  
@@ -38,14 +33,14 @@ class Workbench::BiodatabasesController < ApplicationController
 
   def move
     respond_to do | type |
-      type.html { redirect_to '/workbench/'}
-      type.js{
-        biodatabase = Biodatabase.find(params[:id])
-        new_biodatabase_group = BiodatabaseGroup.find(params[:new_biodatabase_group_id])
-        biodatabase.biodatabase_group = new_biodatabase_group
-        biodatabase.save
-        render :json => {:result => 'OK' }.to_json
-      }
+#      type.html { redirect_to '/workbench/'}
+#      type.js{
+#        biodatabase = Biodatabase.find(params[:id])
+#        new_biodatabase_group = BiodatabaseGroup.find(params[:new_biodatabase_group_id])
+#        biodatabase.biodatabase_group = new_biodatabase_group
+#        biodatabase.save
+#        render :json => {:result => 'OK' }.to_json
+#      }
     end
   end
 

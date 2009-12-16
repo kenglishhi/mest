@@ -34,6 +34,7 @@ Ext.bio.FastaFileGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     Ext.apply(this,{
       tbar:[
       {
+        iconCls: 'upload-icon',
         text:'Upload Fasta Files',
         handler: function() {
           Ext.bio.showFastaFileUploadWindow();

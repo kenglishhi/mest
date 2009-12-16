@@ -35,15 +35,15 @@ class Blast::CreateDbs < Blast::Base
     init_files_and_databases
     evalue = get_evalue 
 
-    output_biodatabase_group_name = params[:output_biodatabase_group_name] ||
+    output_parent_biodatabase_name = params[:output_parent_biodatabase_name] ||
       "#{@test_fasta_file.biodatabase.name} vs #{@target_fasta_file.label}"
 
-    @blast_result = new_blast_result("#{output_biodatabase_group_name} Blast Result")
+    @blast_result = new_blast_result("#{output_parent_biodatabase_name} Blast Result")
 
     output_file_handle = Blast::Command.execute(:blastall, @blast_result, :test_file_path => @test_fasta_file.fasta.path,
       :target_file_path => @target_fasta_file.fasta.path,
       :evalue => evalue,
-      :output_file_prefix => output_biodatabase_group_name.underscore)
+      :output_file_prefix => output_parent_biodatabase_name.underscore)
     output_file_handle.open
     @blast_result.stopped_at = Time.now
     @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)
@@ -53,16 +53,17 @@ class Blast::CreateDbs < Blast::Base
     @matches = 0
 
     match_biodatabase_type = BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH)
-    BiodatabaseGroup.transaction do
-      output_biodatabase_group  = ""
-      if BiodatabaseGroup.exists? :name => output_biodatabase_group_name
-        logger.error "output_biodatabase_group_name exists! #{output_biodatabase_group_name}"
-        output_biodatabase_group  = BiodatabaseGroup.find_by_name(output_biodatabase_group_name)
+    Biodatabase.transaction do
+      output_parent_biodatabase  = ""
+      if Biodatabase.exists? :name => output_parent_biodatabase_name
+        logger.error "output_parent_biodatabase_name exists! #{output_parent_biodatabase_name}"
+        output_parent_biodatabase  = Biodatabase.find_by_name(output_parent_biodatabase_name)
       else
-        logger.error "Creating output_biodatabase_group_name #{output_biodatabase_group_name}"
-        output_biodatabase_group = BiodatabaseGroup.create!(:name => output_biodatabase_group_name,
+        logger.error "Creating output_parent_biodatabase_name #{output_parent_biodatabase_name}"
+        output_parent_biodatabase = Biodatabase.create!(:name => output_parent_biodatabase_name,
           :project_id => @test_fasta_file.project_id,
-          :parent => @test_fasta_file.biodatabase.biodatabase_group,
+          :parent => @test_fasta_file.biodatabase,
+          :biodatabase_type => BiodatabaseType.database_group,
           :user_id => @params[:user_id])
       end
 
@@ -76,9 +77,10 @@ class Blast::CreateDbs < Blast::Base
 
           if first_flag
             @number_of_fastas += 1
-            new_db_name = "#{output_biodatabase_group.name } #{"%03d" % @number_of_fastas}"
+            new_db_name = "#{output_parent_biodatabase.name } #{"%03d" % @number_of_fastas}"
             child_biodatabase = Biodatabase.new(:name => new_db_name,
-              :biodatabase_group => output_biodatabase_group,
+              :parent => output_parent_biodatabase,
+              :project => output_parent_biodatabase.project,
               :biodatabase_type => match_biodatabase_type,
               :user_id => params[:user_id] )
 
@@ -90,6 +92,7 @@ class Blast::CreateDbs < Blast::Base
           child_biodatabase.biosequences << target_biosequence
         end
         unless child_biodatabase.nil? 
+          child_biodatabase.save!
           FastaFile.generate_fasta(child_biodatabase)
         end
       end

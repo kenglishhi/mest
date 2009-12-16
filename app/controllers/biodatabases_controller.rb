@@ -8,10 +8,9 @@ class BiodatabasesController < ApplicationController
 
     config.list.label = "Databases"
     config.columns = [:name, :biodatabase_type, :user]
-    config.list.columns = [:name, :biodatabase_type, :biodatabase_group, :fasta_file,:number_of_sequences,:user,:blast_actions ]
-    config.update.columns = [:name, :biodatabase_type, :biodatabase_group]
+    config.list.columns = [:name, :biodatabase_type,  :fasta_file,:number_of_sequences,:user,:blast_actions ]
+    config.update.columns = [:name, :biodatabase_type ]
     config.columns[:biodatabase_type].form_ui = :select
-    config.columns[:biodatabase_group].form_ui = :select
   end
 
   protected

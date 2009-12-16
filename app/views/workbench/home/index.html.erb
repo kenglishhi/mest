@@ -227,7 +227,6 @@ extjs_store( :controller => "workbench/blast_results",
     Ext.workbenchdata.projectOptions = <%= @project_options.to_json %>;
     Ext.workbenchdata.changeProjectUrl = '<%= url_for :controller => 'workbench/home', :action => 'change_project' %>';
     // END RAILS data dump  -- no erb code should go beyond this line
-    var dbGroupTree = <%= @biodatabase_group.ext_tree(:expand_node => true).to_json %> ;
     // var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
 
     // it is generally best to disable state management as dynamically-generated ids
@@ -310,7 +309,7 @@ extjs_store( :controller => "workbench/blast_results",
           split: true,
           id: 'bio-database-group-tree',
           xtype:'database-group-tree',
-          treeData: dbGroupTree,
+//          treeData: dbGroupTree,
           projectOptions: Ext.workbenchdata.projectOptions,
           clickAction: function(node) {
             Ext.bio.workbench.updateContent(node);

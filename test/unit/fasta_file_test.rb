@@ -25,7 +25,7 @@ class FastaFileTest < ActiveSupport::TestCase
       @biodatabase = Biodatabase.create(
         :name => "New BioDB 33",
         :biodatabase_type => biodatabase_types(:biodatabase_types_001),
-        :biodatabase_group => biodatabase_groups(:biodatabase_groups_001),
+        :project => projects(:projects_001),
         :user => users(:users_001))
 
       @biodatabase.biosequences << biosequences(:biosequences_007)
@@ -48,7 +48,7 @@ class FastaFileTest < ActiveSupport::TestCase
       @biodatabase = Biodatabase.create(
         :name => "New BioDB 33",
         :biodatabase_type => biodatabase_types(:biodatabase_types_001),
-        :biodatabase_group => biodatabase_groups(:biodatabase_groups_001),
+        :project => projects(:projects_001),
         :user => users(:users_001))
 
       @biodatabase.biosequences << biosequences(:biosequences_007)

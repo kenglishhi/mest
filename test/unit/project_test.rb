@@ -20,11 +20,12 @@ class ProjectTest < ActiveSupport::TestCase
         :description => "This is the new project for #{user.first_name} #{user.last_name}",
         :user => user)
     end
-    should "Create a default database group" do
-      assert_equal @project.biodatabase_groups.size, 1, "Should have one database group by default"
+    should "Create a default database" do
+      assert_equal @project.biodatabases.size, 1, "Should have one database by default"
+      assert_equal @project.biodatabases.first.biodatabase_type, BiodatabaseType.database_group, "Type should equal group"
     end
   end
-  should "create a default database group" do
+  should "have workbench project options" do
     workbench_project_options = Project.workbench_project_options
     assert_not_nil workbench_project_options, "Should return some options"
     assert !workbench_project_options.empty?, "Should not return empty options"

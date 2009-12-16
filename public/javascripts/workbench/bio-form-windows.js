@@ -701,7 +701,9 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
             form.submit({
               waitMsg: 'Uploading your Fasta Files...',
               success: function(form, action) {
-                Ext.getCmp(parentComponentId).hide();
+                var win = Ext.getCmp(parentComponentId);
+                win.hide();
+                Ext.getCmp(win.fastaGridCmpId).refreshContent();
               }
             });
           }
@@ -710,7 +712,9 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
       {
         text: 'Cancel',
         handler: function(){
-          Ext.getCmp(parentComponentId).hide();
+          var win = Ext.getCmp(parentComponentId);
+          win.hide();
+          Ext.getCmp(win.fastaGridCmpId).refreshContent();
         }
       }
       ]
@@ -721,13 +725,14 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
     });
     Ext.bio.FastaFileUploadWindow.superclass.initComponent.call(this);
   },
-  setBiodatabaseId: function(biodatabaseId) {
+  setBiodatabaseId: function(fastaGridCmpId) {
     for (var i=0; i< 5; i++) {
       var cmp = Ext.getCmp('fasta-file-' + i);
-//      if (cmp) {
-//        cmp.setValue('');
-//      }
+      if (cmp) {
+        cmp.setValue('');
+      }
     }
+    this.fastaGridCmpId = fastaGridCmpId ;
   }
 });
 
@@ -794,10 +799,10 @@ Ext.bio.showBlastGroupNtAppendWindow  = function(biodatabaseId) {
   Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
 };
 
-Ext.bio.showFastaFileUploadWindow = function(biodatabaseId) {
+Ext.bio.showFastaFileUploadWindow = function(fastaGridCmpId) {
   var cmpId = 'fasta-file-upload-create--window';
   var obj = Ext.bio.FastaFileUploadWindow ;
   //  var store = Ext.workbenchdata.biodatabaseGroupsComboStore ;
   var store = null;
-  Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
+  Ext.bio._showFormWindow(obj, cmpId, store, fastaGridCmpId);
 };
