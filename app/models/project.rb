@@ -34,14 +34,16 @@ class Project < ActiveRecord::Base
       :text =>  "Fasta Files",
       :leaf => fasta_files.empty?,
       :expandable =>  ! fasta_files.empty?,
-      :resource => 'fasta_files',
+      :expanded =>  ! fasta_files.empty?,
+      :resource => 'fasta_file',
     }
 
     unless fasta_files.empty?
       fasta_file_tree_data[:children] =  fasta_files.map {|fasta_file|
         { :text =>  fasta_file.label,
           :leaf => true,
-          :resource => 'fasta_files',
+          :resource => 'fasta_file',
+          :id =>  fasta_file.id
         }
       }
     end

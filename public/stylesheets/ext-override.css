@@ -52,16 +52,17 @@ p {
   z-index:20000;
 }
 
-.image_add {background-image:url('/images/image_add.png') !important;}
-.grid_icon {background-image:url('/images/grid.png') !important;}
-.cog_edit {background-image:url('/images/cog_edit.png') !important;}
-.book {background-image:url('/images/book.png') !important;}
-.settings { background-image:url(/images/folder_wrench.png); }
-.nav { background-image:url(/images/folder_go.png); }
-.x-delete { background-image:url(/images/delete.png ); }
-.clustalw { background-image:url(/images/siblogo16.png); }
-
-
+.image_add {background-image:url('/images/exticons/image_add.png') !important;}
+.grid_icon {background-image:url('/images/exticons/grid.png') !important;}
+.cog_edit {background-image:url('/images/exticons/cog_edit.png') !important;}
+.book {background-image:url('/images/exticons/book.png') !important;}
+.settings { background-image:url(/images/exticons/folder_wrench.png); }
+.nav { background-image:url(/images/exticons/folder_go.png); }
+.x-delete { background-image:url(/images/exticons/delete.png ); }
+.clustalw { background-image:url(/images/exticons/siblogo16.png); }
+.fasta-file-folder { background-image:url(/images/exticons/folder_add_sm.png); }
+.upload-icon { background: url('/images/exticons/image_add.png') no-repeat 0 0 !important; }
+.sequence-icon {background-image:url('/images/new_fasta.png') !important;}
 #top-menu {
   border: 5px;
 }

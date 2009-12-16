@@ -694,7 +694,7 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
       defaultType: 'textfield',
       items: fastaFileItems,
       buttons: [{
-        text: 'Save',
+        text: 'Upload',
         handler: function(){
           var form = Ext.getCmp('my-fasta-file-upload-form-panel').getForm();
           if (form && form.isValid()) {
@@ -703,7 +703,9 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
               success: function(form, action) {
                 var win = Ext.getCmp(parentComponentId);
                 win.hide();
-                Ext.getCmp(win.fastaGridCmpId).refreshContent();
+                if ( Ext.bio.workbench.afterUploadFasta) {
+                  Ext.bio.workbench.afterUploadFasta();
+                }
               }
             });
           }

@@ -15,7 +15,7 @@
       "ext-3.0.0/FileUploadField" ,
       "workbench/base",
       "workbench/bio-notifier",
-      "workbench/database-group-tree",
+      "workbench/workbench-tree",
       "workbench/App",
       "workbench/restful-grid",
       "workbench/biosequence-grid",
@@ -240,6 +240,11 @@ extjs_store( :controller => "workbench/blast_results",
       saveText: 'Update'
     });
 
+    Ext.bio.workbench.afterUploadFasta = function(){
+        Ext.getCmp('workbench-grid-tabs').activate('workbench-fasta-file-tab');
+        var dbTree= Ext.getCmp('bio-workbench-tree');
+        dbTree.refresh();
+    }
     Ext.bio.workbench.updateContent = function(node){
       var params ={};
       if (node.attributes.resource =='biodatabase' ) {
@@ -249,8 +254,7 @@ extjs_store( :controller => "workbench/blast_results",
         //        Ext.getCmp('workbench-biodatabase-property-grid').updateContent(params);
 
       } else if (node.attributes.resource =='fasta_file' ) {
-        Ext.getCmp('workbench-grid-tabs').activate('workbench-fasta_file-tab');
-        //        Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
+        Ext.getCmp('workbench-grid-tabs').activate('workbench-fasta-file-tab');
       }
     };
     Ext.bio.workbench.clearContent = function(){
@@ -305,8 +309,8 @@ extjs_store( :controller => "workbench/blast_results",
           margins: '0 0 0 5',
           collapsible: true,
           split: true,
-          id: 'bio-database-group-tree',
-          xtype:'database-group-tree',
+          id: 'bio-workbench-tree',
+          xtype:'workbench-tree',
           //          treeData: dbGroupTree,
           projectOptions: Ext.workbenchdata.projectOptions,
           clickAction: function(node) {
@@ -448,7 +452,7 @@ extjs_store( :controller => "workbench/blast_results",
 
             },
             {
-              iconCls:'new_view',
+              iconCls:'fasta-file-folder',
               title: 'Uploaded Fasta Files',
               autoScroll: true,
               id:'workbench-fasta-file-tab',

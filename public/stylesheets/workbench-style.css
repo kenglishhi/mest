@@ -254,7 +254,3 @@ td.icon {text-align:center;width:25px;}
   z-index: 3;
   color: #777;
 }
-
-.upload-icon {
-  background: url('/images/image_add.png') no-repeat 0 0 !important;
-}

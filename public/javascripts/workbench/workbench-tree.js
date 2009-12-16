@@ -1,4 +1,4 @@
-Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
+Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
   dataUrl: null,
   treeData: null,
   projectOptions:null,
@@ -42,7 +42,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       }) ,
       root: rootNode
     });
-    Ext.bio.DatabaseGroupTree.superclass.initComponent.call(this);
+    Ext.bio.WorkbenchTree.superclass.initComponent.call(this);
   },
   postRefresh: function(){
   // STUB
@@ -131,9 +131,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       node.getUI().removeClass('x-tree-node-loading');
     },
     contextmenu: function(node) {
-      //Set up some buttons
       var contextMenu;
-
       var deleteButton = new Ext.menu.Item({
         iconCls:'x-tree-delete',
         text: 'Delete',
@@ -149,7 +147,7 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
         }
       });
 
-      if (node.attributes.resource == 'biodatabase') {
+      if (node.attributes.resource == 'biodatabase' && node.text !="Databases" ) {
         if (node.attributes.db_type == "Uploaded Raw Data" ) {
           var renameButton = new Ext.menu.Item({
             iconCls:'new_fasta',
@@ -232,7 +230,35 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
           items: [ntGroupAppendButton,groupClustalwButton,  '-', deleteButton]
         });
       }
-      contextMenu.show(node.ui.getAnchor());
+      else if (node.attributes.resource == 'fasta_file') {
+        var menuItems =[];
+        var uploadFastaButton = new Ext.menu.Item({
+          iconCls:'upload-icon',
+          text: "Upload Fasta File",
+          handler: function() {
+            Ext.bio.showFastaFileUploadWindow();
+          }
+        });
+        menuItems[0] = uploadFastaButton;
+
+        if (node.childNodes.length==0) {
+          var extractSequencesButton = new Ext.menu.Item({
+            iconCls:'sequence-icon',
+            text: "Extract Sequences",
+            nodeId: node.id,
+            handler:function() {
+              Ext.bio.showExtractSequencesWindow(this.nodeId);
+            }
+          });
+          menuItems[1] = extractSequencesButton ;
+        }
+        contextMenu  = new Ext.menu.Menu({
+          items: menuItems
+        });
+      }
+      if (contextMenu) {
+        contextMenu.show(node.ui.getAnchor());
+      }
     }
   },
   addDatabaseGroup: function(){
@@ -276,5 +302,5 @@ Ext.bio.DatabaseGroupTree =  Ext.extend(Ext.tree.TreePanel, {
       });
   }
 });
-Ext.reg('database-group-tree', Ext.bio.DatabaseGroupTree);
+Ext.reg('workbench-tree', Ext.bio.WorkbenchTree);
 
