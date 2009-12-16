@@ -3,8 +3,7 @@
     <title>M E S T :: Workbench </title>
     <%= stylesheet_link_tag  "/javascripts/ext-3.0.0/resources/css/ext-all.css",
       "ext-override",
-      "ncbi-style",
-      "FileUploadField"
+      "workbench-style"
   %>
 
     <%= javascript_include_tag :defaults %>
@@ -79,7 +78,7 @@ extjs_store( :controller => "workbench/biodatabases",
 ).render(false)
 %>
 
- Ext.workbenchdata.fastaFileStore = <%=
+    Ext.workbenchdata.fastaFileStore = <%=
 extjs_store( :controller => "workbench/fasta_files",
   :writer => {"encode" => false},
   :config => {
@@ -249,9 +248,8 @@ extjs_store( :controller => "workbench/blast_results",
         Ext.getCmp('workbench-biosequence-grid').updateContent(params);
         //        Ext.getCmp('workbench-biodatabase-property-grid').updateContent(params);
 
-      } else if (node.attributes.resource =='biodatabase_group' ) {
-        Ext.getCmp('workbench-grid-tabs').activate('workbench-biodatabase-tab');
-        params.biodatabase_group_id = node.id;
+      } else if (node.attributes.resource =='fasta_file' ) {
+        Ext.getCmp('workbench-grid-tabs').activate('workbench-fasta_file-tab');
         //        Ext.getCmp('workbench-biodatabase-grid').updateContent(params);
       }
     };
@@ -309,7 +307,7 @@ extjs_store( :controller => "workbench/blast_results",
           split: true,
           id: 'bio-database-group-tree',
           xtype:'database-group-tree',
-//          treeData: dbGroupTree,
+          //          treeData: dbGroupTree,
           projectOptions: Ext.workbenchdata.projectOptions,
           clickAction: function(node) {
             Ext.bio.workbench.updateContent(node);
@@ -327,7 +325,7 @@ extjs_store( :controller => "workbench/blast_results",
           region: 'center', // a center region is ALWAYS required for border layout
           collapsible: true,
           deferredRender: true,
-          activeTab: 5,     // first tab initially active
+          activeTab: 0,     // first tab initially active
           items: [ { iconCls:'new_fasta',
               title: 'Sequences',
               id: 'workbench-biosequence-tab',

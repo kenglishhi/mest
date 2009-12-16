@@ -8,10 +8,7 @@ $Id: style.css 10550 2009-09-08 20:29:29Z rallj $
                 margin-left:25px;
                 padding:1px;}
 .fasta-table{font-family:courier,monospace;background-color:#fff;margin:0;}
-//.fasta-table td {line-height:1em;font-size:1em;}
-
 .fasta-table {font-size:12px;line-height:100%;}
-
 .fasta-table td em{color:#999;font-style:normal;}
 .fasta-table td em span{color:#f99;font-style:normal;display:inline;}
 
@@ -236,3 +233,33 @@ td.icon {text-align:center;width:25px;}
 .pagenav li.arrow-prev a { float: left; background: url(../help/img/arrow_left.gif) no-repeat 0 50%; padding-left: 20px; }
 .pagenav li.arrow-next a { float: right; background: url(../help/img/arrow_right.gif) no-repeat 100% 50%; padding-right: 20px; }
 
+
+/* File upload CSS */
+.x-form-file-wrap {
+  position: relative;
+  height: 22px;
+}
+.x-form-file-wrap .x-form-file {
+  position: absolute;
+  right: 0;
+  -moz-opacity: 0;
+  filter:alpha(opacity: 0);
+  opacity: 0;
+  z-index: 2;
+  height: 22px;
+}
+.x-form-file-wrap .x-form-file-btn {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+.x-form-file-wrap .x-form-file-text {
+  position: absolute;
+  left: 0;
+  z-index: 3;
+  color: #777;
+}
+
+.upload-icon {
+  background: url('/images/image_add.png') no-repeat 0 0 !important;
+}

@@ -9,6 +9,10 @@ class Project < ActiveRecord::Base
   validates_presence_of :user_id
   after_create :create_default_database
 
+  def self.workbench_project_options
+    Project.all.map{|p| [p.id,p.name] }
+  end
+
   def create_default_database
     Biodatabase.create!(:name => 'Databases' ,
       :user => self.user,
@@ -21,23 +25,21 @@ class Project < ActiveRecord::Base
     biodatabases.empty? && fasta_files.empty?
   end
 
-  def self.workbench_project_options
-    Project.all.map{|p| [p.id,p.name] }
-  end
+
   def ext_tree(params={})
     parent_db = biodatabases.detect{|db | db.parent_id.nil? }
     database_tree_data = parent_db.ext_tree
 
     fasta_file_tree_data = {
       :text =>  "Fasta Files",
-      :leaf => false,
-      :expandable => true,
+      :leaf => fasta_files.empty?,
+      :expandable =>  ! fasta_files.empty?,
       :resource => 'fasta_files',
     }
 
     unless fasta_files.empty?
       fasta_file_tree_data[:children] =  fasta_files.map {|fasta_file|
-        {:text =>  fasta_file.label,
+        { :text =>  fasta_file.label,
           :leaf => true,
           :resource => 'fasta_files',
         }
