@@ -699,6 +699,7 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
           var form = Ext.getCmp('my-fasta-file-upload-form-panel').getForm();
           if (form && form.isValid()) {
             form.submit({
+              waitMsg: 'Uploading your Fasta Files...',
               success: function(form, action) {
                 Ext.getCmp(parentComponentId).hide();
               }
