@@ -43,7 +43,9 @@ Ext.bio.FastaFileGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     Ext.bio.FastaFileGrid.superclass.initComponent.call(this);
   } ,
   updateContent: function(params) {
-    this.store.baseParams.biodatabase_group_id = params.biodatabase_group_id;
+    this.store.load();
+  },
+  refreshContent: function(params) {
     this.store.load();
   }
 });
