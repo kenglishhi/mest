@@ -5,6 +5,7 @@
 
 Ext.bio.FastaFileGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   usePagingBarFlag: true,
+  pageSize: 50,
   displayColumns:  [ {
     header: "Label",
     authwidth: true,
@@ -23,8 +24,22 @@ Ext.bio.FastaFileGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     autoWidth: true,
     sortable: true,
     dataIndex: 'fasta_file_size_display'
+  }, {
+    header: "Uploaded Size",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'created_at'
   } ],
   initComponent: function() {
+    Ext.apply(this,{
+      tbar:[
+      {
+        text:'Upload Fasta Files',
+        handler: function() {
+          Ext.bio.showFastaFileUploadWindow();
+        }
+      }]
+    });
     Ext.bio.FastaFileGrid.superclass.initComponent.call(this);
   } ,
   updateContent: function(params) {

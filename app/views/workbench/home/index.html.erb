@@ -3,7 +3,8 @@
     <title>M E S T :: Workbench </title>
     <%= stylesheet_link_tag  "/javascripts/ext-3.0.0/resources/css/ext-all.css",
       "ext-override",
-      "ncbi-style"
+      "ncbi-style",
+      "FileUploadField"
   %>
 
     <%= javascript_include_tag :defaults %>
@@ -12,6 +13,7 @@
     <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
       "ext-3.0.0/ext-all" ,
       "ext-3.0.0/MultiSelect" ,
+      "ext-3.0.0/FileUploadField" ,
       "workbench/base",
       "workbench/bio-notifier",
       "workbench/database-group-tree",
@@ -52,6 +54,7 @@
 
       Ext.onReady(function(){
 <%= render :partial => "layouts/user_job_notification" %>
+
     var biosequenceStore = <%=
 extjs_store( :controller => "workbench/biosequences",
   :writer => {"encode" => false},

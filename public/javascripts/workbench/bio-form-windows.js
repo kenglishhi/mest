@@ -723,7 +723,10 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
   },
   setBiodatabaseId: function(biodatabaseId) {
     for (var i=0; i< 5; i++) {
-      Ext.getCmp('fasta-file-' + i).setValue('');
+      var cmp = Ext.getCmp('fasta-file-' + i);
+//      if (cmp) {
+//        cmp.setValue('');
+//      }
     }
   }
 });

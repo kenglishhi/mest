@@ -2,7 +2,7 @@ class FastaFile < ActiveRecord::Base
   include ExtJS::Model
 
   extjs_fields :id, :label, :alignment_file_name_display, :alignment_file_url,
-    :fasta_file_name_display, :fasta_file_url,:fasta_file_size_display
+    :fasta_file_name_display, :fasta_file_url,:fasta_file_size_display, :created_at
 
   has_attached_file :fasta
   has_one :biodatabase
