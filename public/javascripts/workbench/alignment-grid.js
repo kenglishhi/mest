@@ -5,9 +5,10 @@
 Ext.bio.AlignmentsGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   useEditorFlag:false,
   usePagingBarFlag: true,
-  displayColumns:  [ {
+  displayColumns:  [ 
+  {
     header: "Label",
-    autoWidth: true,
+    authwidth: true,
     sortable: true,
     dataIndex: 'label'
   }, {

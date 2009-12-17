@@ -85,6 +85,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'workbench/home/fasta_file_upload',
     :controller => 'workbench/home',
     :action     => 'fasta_file_upload'
+  map.connect 'workbench/home/alignment_panel',
+    :controller => 'workbench/home',
+    :action     => 'alignment_panel'
 
   map.connect 'workbench/home/rename',
     :controller => 'workbench/home',

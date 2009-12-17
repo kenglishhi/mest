@@ -8,6 +8,9 @@ class Workbench::HomeController < ApplicationController
   def fasta_file_upload
     render :layout => false
   end
+  def alignment_panel
+    render :layout => false
+  end
 #  def change_project
 #    change_active_project(Project.find(params[:id]))
 #    redirect_to '/workbench'

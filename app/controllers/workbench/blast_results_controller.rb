@@ -3,9 +3,10 @@ class Workbench::BlastResultsController < ApplicationController
   protect_from_forgery :except => :destroy
   def index
     page = get_page(BlastResult)
-    if params[:biodatabase_id]
+    if params[:output_biodatabase_id]
       data = BlastResult.paginate :page => page, :order => 'stopped_at DESC',
-        :conditions =>['project_id = ? AND test_biodatabase_id = ? ', current_user.active_project.id,params[:biodatabase_id] ]
+        :conditions =>['project_id = ? AND output_biodatabase_id = ? ', current_user.active_project.id,params[:output_biodatabase_id] ],
+        :include => [:output_biodatabase,:test_biodatabase ]
     else
       data = BlastResult.paginate :page => page, :order => 'stopped_at DESC',
         :conditions => project_conditions

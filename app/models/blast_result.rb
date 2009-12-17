@@ -5,6 +5,7 @@ class BlastResult < ActiveRecord::Base
     :url => "/system/:attachment/:id/:style/:normalized_output_file_name"
 
   belongs_to :test_biodatabase, :class_name =>'Biodatabase'
+  belongs_to :output_biodatabase, :class_name =>'Biodatabase'
 
 
   include ExtJS::Model
@@ -12,7 +13,7 @@ class BlastResult < ActiveRecord::Base
   belongs_to :project
   validates_presence_of :project_id
   validates_presence_of :user_id
-  extjs_fields :id, :name, :test_biodatabase_name,
+  extjs_fields :id, :name, :test_biodatabase_name, :output_biodatabase_name,
     :command,:output_file_name_display,:output_file_url,
     :started_at, :stopped_at, :duration_display
   cattr_reader :per_page
@@ -26,6 +27,9 @@ class BlastResult < ActiveRecord::Base
   end
   def test_biodatabase_name
     self.test_biodatabase ? self.test_biodatabase.name : ""
+  end
+  def output_biodatabase_name
+    self.output_biodatabase ? self.output_biodatabase.name : ""
   end
   def output_file_name_display
     File.basename(self.output.to_s)

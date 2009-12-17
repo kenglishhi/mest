@@ -17,4 +17,3 @@ Ext.namespace('Ext.bio.workbench');
   })
 })();
 
-

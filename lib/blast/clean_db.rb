@@ -65,6 +65,7 @@ class Blast::CleanDb < Blast::Base
       :linked_biodatabase => @output_biodatabase,
       :biodatabase_link_type => BiodatabaseLinkType.cleaned)
     @blast_result.output= output_file_handle
+    @blast_result.output_biodatabase = @output_biodatabase
     @blast_result.save!
     @blast_result
   end

@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>BiococonutIsland :: Workbench </title>
+    <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
+      "ext-override",
+      "workbench-style" %>
+    <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+      "ext-3.0.0/ext-all" ,
+      "ext-3.0.0/FileUploadField" ,
+      "workbench/base",
+      "workbench/database-group-tree",
+      "workbench/App",
+      "workbench/bio-grids",
+      "workbench/bio-property-grid",
+      "workbench/RowEditor",
+      "workbench/alignment-view-panel",
+      "workbench/bio-form-windows"
+  %>
+    <script type="text/javascript">
+      /*!
+       * Ext JS Library 3.0+
+       * Copyright(c) 2006-2009 Ext JS, LLC
+       * licensing@extjs.com
+       * http://www.extjs.com/license
+       */
+
+      Ext.onReady(function(){
+        var panel =new Ext.bio.AlignmentViewPanel({
+          id:'alignment-view-panel',
+          renderTo:'my-alignment-view'
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>Test the Fasta File Upload Form </h1>
+    <p>Simple example:</p>
+    <div id='my-alignment-view'></div>
+
+
+  </body>
+
+</html>

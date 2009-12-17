@@ -15,7 +15,7 @@ class Biodatabase < ActiveRecord::Base
   has_many :biosequences, :through => :biodatabase_biosequences, :order => 'name'
   has_many :biodatabase_links, :dependent => :destroy
   has_many :linked_biodatabase_links, :class_name =>'BiodatabaseLink', :foreign_key =>'linked_biodatabase_id', :dependent => :destroy
-  has_many :blast_results, :foreign_key =>'test_biodatabase_id', :dependent => :destroy
+  has_many :blast_results, :foreign_key =>'output_biodatabase_id', :dependent => :destroy
 
   validates_presence_of :name
   validates_presence_of :biodatabase_type_id
@@ -45,8 +45,11 @@ class Biodatabase < ActiveRecord::Base
     tree_data
   end
   def clear_references
+
     BiodatabaseBiosequence.delete_all(["biodatabase_id = ? " ,self.id])
     fasta_file.destroy if fasta_file && fasta_file.is_generated?
+    children.each { |db| db.destroy }
+
   end
 
 	def number_of_sequences

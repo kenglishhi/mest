@@ -53,8 +53,9 @@ class Blast::CreateDbs < Blast::Base
     @matches = 0
 
     match_biodatabase_type = BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH)
+
+    output_parent_biodatabase  = Biodatabase.new
     Biodatabase.transaction do
-      output_parent_biodatabase  = ""
       if Biodatabase.exists? :name => output_parent_biodatabase_name
         logger.error "output_parent_biodatabase_name exists! #{output_parent_biodatabase_name}"
         output_parent_biodatabase  = Biodatabase.find_by_name(output_parent_biodatabase_name)
@@ -98,6 +99,7 @@ class Blast::CreateDbs < Blast::Base
       end
     end
     @blast_result.output = output_file_handle
+    @blast_result.output_biodatabase = output_parent_biodatabase
     @blast_result.save!
     logger.error( "Saved blast Results ")
     @blast_result

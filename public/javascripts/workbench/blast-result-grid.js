@@ -21,6 +21,11 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     sortable: true,
     dataIndex: 'name'
   }, {
+    header: "Output Database",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'output_biodatabase_name'
+  }, {
     header: "Test Database",
     autoWidth: true,
     sortable: true,
@@ -58,9 +63,9 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     Ext.bio.BlastResultGrid.superclass.initComponent.call(this);
   },
   updateContent: function(params) {
-    Ext.getCmp('blast-result-grid-title').setText("Filtered by Test Database: '" + params.biodatabase_name + "'");
+    Ext.getCmp('blast-result-grid-title').setText("Filtered by Output Database: '" + params.biodatabase_name + "'");
     if (params.biodatabase_id) {
-      this.store.baseParams.biodatabase_id = params.biodatabase_id;
+      this.store.baseParams.output_biodatabase_id = params.biodatabase_id;
       this.store.load({
         params: {
           start: 0,

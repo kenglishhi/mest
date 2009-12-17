@@ -189,6 +189,7 @@ end
 
 def generate_alignment
   command = " clustalw -quiet -infile=#{self.fasta.path}"
+  puts command
   system(*command)
   self.alignment_flag = true
   self.save!

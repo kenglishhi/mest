@@ -181,15 +181,21 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
           id:params.biodatabase_id
         },
         callback: function(store, records, options){
-          if (this.getAt(0).data.fasta_file_url){
-            Ext.getCmp('seq-grid-fasta-toolbar-item').show();
-          } else {
-            Ext.getCmp('seq-grid-fasta-toolbar-item').hide();
+          var tbFasta = Ext.getCmp('seq-grid-fasta-toolbar-item');
+          var tbAlign = Ext.getCmp('seq-grid-alignment-toolbar-item');
+          if (tbFasta) {
+            if (this.getAt(0).data.fasta_file_url){
+              tbFasta.show();
+            } else {
+              tbFasta.hide();
+            }
           }
-          if (this.getAt(0).data.alignment_file_url){
-            Ext.getCmp('seq-grid-alignment-toolbar-item').show();
-          } else {
-            Ext.getCmp('seq-grid-alignment-toolbar-item').hide();
+          if (tbAlign) {
+            if (this.getAt(0).data.alignment_file_url){
+              tbAlign.show();
+            } else {
+              tbAlign.hide();
+            }
           }
         }
       });

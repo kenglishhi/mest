@@ -95,13 +95,14 @@ ActiveRecord::Schema.define(:version => 20091217003508) do
     t.integer  "output_file_size"
     t.datetime "started_at"
     t.datetime "stopped_at"
-    t.decimal  "duration_in_seconds", :precision => 10, :scale => 4
+    t.decimal  "duration_in_seconds",   :precision => 10, :scale => 4
     t.integer  "user_id"
     t.integer  "project_id"
     t.text     "command"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "test_biodatabase_id"
+    t.integer  "output_biodatabase_id"
   end
 
   create_table "delayed_jobs", :force => true do |t|

@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
 
   has_many :biodatabases
   has_many :fasta_files
+  has_many :uploaded_fasta_files, :class_name =>'FastaFile', :conditions => 'is_generated = 0'
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -39,7 +40,7 @@ class Project < ActiveRecord::Base
     }
 
     unless fasta_files.empty?
-      fasta_file_tree_data[:children] =  fasta_files.map {|fasta_file|
+      fasta_file_tree_data[:children] =  uploaded_fasta_files.map {|fasta_file|
         { :text =>  fasta_file.label,
           :leaf => true,
           :resource => 'fasta_file',

@@ -29,6 +29,7 @@
       "workbench/bio-property-grid",
       "workbench/RowEditor",
       "workbench/bio-sequence-view-panel",
+      "workbench/alignment-view-panel",
       "workbench/bio-form-windows",
       "workbench/ncbi-blast-form",
       "workbench/top-menu-toolbar"
@@ -201,7 +202,7 @@ extjs_store( :controller => "workbench/blast_results",
           "name":"id"},
         {"type":"string",
           "allowBlank":true,
-          "name":"name"},
+          "name":"label"},
         {"type":"auto",
           "allowBlank":true,
           "name":"alignment_file_name_display"},
@@ -240,128 +241,126 @@ extjs_store( :controller => "workbench/blast_results",
       saveText: 'Update'
     });
 
-  Ext.bio.workbench.afterUploadFasta = function(){
-    Ext.getCmp('workbench-grid-tabs').activate('workbench-fasta-file-tab');
-    var dbTree= Ext.getCmp('bio-workbench-tree');
-    dbTree.refresh();
-  }
-  Ext.bio.workbench.updateContent = function(node){
-    var params ={};
-    if (node.attributes.resource =='biodatabase' ) {
-      var mainTabs = Ext.getCmp('workbench-grid-tabs');
-      if (mainTabs.activeTab.id !='workbench-biosequence-tab'
-        && mainTabs.activeTab.id !='workbench-blast-results-tab') {
-        Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
-      }
-      params.biodatabase_id = node.id;
-      Ext.getCmp('workbench-biosequence-grid').updateContent(params);
-      params.biodatabase_name = node.text;
-      Ext.getCmp('workbench-blast-results-grid').updateContent(params);
-    } else if (node.attributes.resource =='fasta_file' ) {
+    Ext.bio.workbench.afterUploadFasta = function(){
       Ext.getCmp('workbench-grid-tabs').activate('workbench-fasta-file-tab');
+      var dbTree= Ext.getCmp('bio-workbench-tree');
+      dbTree.refresh();
     }
-};
-Ext.bio.workbench.clearContent = function(){
-Ext.getCmp('workbench-biosequence-grid').clearContent();
-};
+    Ext.bio.workbench.updateContent = function(node){
+      var params ={};
+      if (node.attributes.resource =='biodatabase' ) {
+        var mainTabs = Ext.getCmp('workbench-grid-tabs');
+        if (mainTabs.activeTab.id !='workbench-biosequence-tab'
+          && mainTabs.activeTab.id !='workbench-blast-results-tab') {
+          Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
+        }
+        params.biodatabase_id = node.id;
+        Ext.getCmp('workbench-biosequence-grid').updateContent(params);
+        params.biodatabase_name = node.text;
+        Ext.getCmp('workbench-blast-results-grid').updateContent(params);
+      } else if (node.attributes.resource =='fasta_file' ) {
+        Ext.getCmp('workbench-grid-tabs').activate('workbench-fasta-file-tab');
+      }
+    };
+    Ext.bio.workbench.clearContent = function(){
+      Ext.getCmp('workbench-biosequence-grid').clearContent();
+    };
 
+    Ext.workbenchMenu.currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
+    Ext.workbenchMenu.currentProjectId = <%= current_user.active_project.id %>;
+    Ext.workbenchMenu.projectOptions = <%= @project_options.to_json %>;
+    Ext.workbenchMenu.changeProjectUrl = '<%= url_for :controller => 'workbench/home', :action => 'change_project' %>';
 
-var seqGrid = new Ext.bio.BiosequenceGrid({
-region:'north',
-id: 'workbench-biosequence-grid',
-pageSize: Ext.workbenchMenu.seqPageSize,
-store: Ext.workbenchdata.biosequenceStore,
-biosequenceViewId: 'bio-sequence-view',
-split:true
-});
+    Ext.workbenchMenu.mest_html = 'MEST';
+    Ext.workbenchMenu.home_html = '<%= link_to "Home", '/' %>  ';
+    Ext.workbenchMenu.workbench_html = '<%= link_to 'Workbench',  "/workbench"  %>' ;
+    Ext.workbenchMenu.databases_html = '<%= link_to 'Databases', fasta_files_path  %>' ;
+    Ext.workbenchMenu.jobs_html = '<%= link_to 'Jobs', jobs_running_jobs_path %>';
+    Ext.workbenchMenu.admin_html = '<%= link_to 'Admin', admin_users_path  %>';
 
-var seqView =   new  Ext.bio.BiosequenceViewPanel( {
-region: 'center',
-id: 'bio-sequence-view',
-split:true
-} );
+    var tb = new Ext.bio.TopMenuToolbar({
+      id:'top-menu-toolbar',
+      menuData:Ext.workbenchMenu
+    });
 
-Ext.workbenchMenu.currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
-Ext.workbenchMenu.currentProjectId = <%= current_user.active_project.id %>;
-Ext.workbenchMenu.projectOptions = <%= @project_options.to_json %>;
-Ext.workbenchMenu.changeProjectUrl = '<%= url_for :controller => 'workbench/home', :action => 'change_project' %>';
+    var viewport = new Ext.Viewport({
+      layout: 'border',
+      items: [
+        {  region: 'north',
+          items: [tb],
+          height: 32 // give north and south regions a height
+        }, {
+          region: 'west',
+          title: 'Database Browser',
+          width: 200,
+          minSize: 175,
+          margins: '0 0 0 5',
+          collapsible: true,
+          split: true,
+          id: 'bio-workbench-tree',
+          xtype:'workbench-tree',
+          //          treeData: dbGroupTree,
+          projectOptions: Ext.workbenchdata.projectOptions,
+          clickAction: function(node) {
+            Ext.bio.workbench.updateContent(node);
+          },
+          postDeleteAction: function() {
+            Ext.bio.workbench.clearContent();
+          },
+          postRefresh: function(){
+            Ext.workbenchdata.generatedDbsComboStore.reload();
+            Ext.workbenchdata.rawDbsComboStore.reload();
+            Ext.workbenchdata.biosequenceStore.reload();
+          }
+        } , new Ext.TabPanel({
+          id: 'workbench-grid-tabs',
+          region: 'center',
+          collapsible: true,
+          deferredRender: true,
+          activeTab: 0,     
+          items: [ { iconCls:'new_fasta',
+              title: 'Sequences',
+              id: 'workbench-biosequence-tab',
+              layout: 'border',
+              region:'west',
+              border: false,
+              split:true,
+              margins: '2 0 5 5',
+              width: 275,
+              minSize: 100,
+              maxSize: 500,
+              items: [ {
+                  region:'north',
+                  xtype:'biosequence-grid',
+                  id: 'workbench-biosequence-grid',
+                  pageSize: Ext.workbenchMenu.seqPageSize,
+                  store: Ext.workbenchdata.biosequenceStore,
+                  biodatabasePropertyStore: biodatabasePropertyStore,
+                  biosequenceViewId: 'bio-sequence-view',
+                  split:true
+                }, 
+                new Ext.TabPanel({
+                  split:true,
+                  id: 'workbench-detail-tabs',
+                  region: 'center',
+                  collapsible: true,
+                  deferredRender: true,
+                  activeTab: 1,
+                  items: [ {
+                      title: 'Sequence',
+                      xtype: 'bio-sequence-view-panel',
+                      iconCls:'new_fasta',
+                      id: 'bio-sequence-view'
+                    },{
 
-
-Ext.workbenchMenu.mest_html = 'MEST';
-Ext.workbenchMenu.home_html = '<%= link_to "Home", '/' %>  ';
-Ext.workbenchMenu.workbench_html = '<%= link_to 'Workbench',  "/workbench"  %>' ;
-Ext.workbenchMenu.databases_html = '<%= link_to 'Databases', fasta_files_path  %>' ;
-Ext.workbenchMenu.jobs_html = '<%= link_to 'Jobs', jobs_running_jobs_path %>';
-Ext.workbenchMenu.admin_html = '<%= link_to 'Admin', admin_users_path  %>';
-
-var tb = new Ext.bio.TopMenuToolbar({
-id:'top-menu-toolbar',
-menuData:Ext.workbenchMenu
-});
-
-var viewport = new Ext.Viewport({
-layout: 'border',
-items: [
-{  region: 'north',
-items: [tb],
-height: 32 // give north and south regions a height
-}, {
-region: 'west',
-title: 'Database Browser',
-width: 200,
-minSize: 175,
-margins: '0 0 0 5',
-collapsible: true,
-split: true,
-id: 'bio-workbench-tree',
-xtype:'workbench-tree',
-//          treeData: dbGroupTree,
-projectOptions: Ext.workbenchdata.projectOptions,
-clickAction: function(node) {
-  Ext.bio.workbench.updateContent(node);
-},
-postDeleteAction: function() {
-  Ext.bio.workbench.clearContent();
-},
-postRefresh: function(){
-  Ext.workbenchdata.generatedDbsComboStore.reload();
-  Ext.workbenchdata.rawDbsComboStore.reload();
-  Ext.workbenchdata.biosequenceStore.reload();
-}
-} , new Ext.TabPanel({
-id: 'workbench-grid-tabs',
-region: 'center', // a center region is ALWAYS required for border layout
-collapsible: true,
-deferredRender: true,
-activeTab: 1,     // first tab initially active
-items: [ { iconCls:'new_fasta',
-  title: 'Sequences',
-  id: 'workbench-biosequence-tab',
-  layout: 'border',
-  region:'west',
-  border: false,
-  split:true,
-  margins: '2 0 5 5',
-  width: 275,
-  minSize: 100,
-  maxSize: 500,
-  items: [ {
-      region:'north',
-      xtype:'biosequence-grid',
-      id: 'workbench-biosequence-grid',
-      pageSize: Ext.workbenchMenu.seqPageSize,
-      store: Ext.workbenchdata.biosequenceStore,
-      biodatabasePropertyStore: biodatabasePropertyStore,
-      biosequenceViewId: 'bio-sequence-view',
-      split:true
-    }, {
-      region: 'center',
-      xtype: 'bio-sequence-view-panel',
-      id: 'bio-sequence-view',
-      split:true
-
-    } ]
-}, /* {
+                      title: 'Alignment',
+                      xtype: 'alignment-view-panel',
+                      iconCls:'new_fasta',
+                      id: 'alignment-view'
+                    }]
+                })
+              ]
+            }, /* {
               iconCls:'new_view',
               title: 'Databases',
               autoScroll: true,
@@ -385,91 +384,91 @@ items: [ { iconCls:'new_fasta',
                 } ]
 
             },*/  {
-  iconCls:'new_view',
-  title: 'Blast Results',
-  autoScroll: true,
-  id:'workbench-blast-results-tab',
-  items: [ {
-      id: 'workbench-blast-results-grid',
-      pageSize: Ext.workbenchMenu.blastResultPageSize,
-      xtype:'blast-result-grid' ,
-      store: Ext.workbenchdata.blastResultStore
-    } ]
+              iconCls:'new_view',
+              title: 'Blast Results',
+              autoScroll: true,
+              id:'workbench-blast-results-tab',
+              items: [ {
+                  id: 'workbench-blast-results-grid',
+                  pageSize: Ext.workbenchMenu.blastResultPageSize,
+                  xtype:'blast-result-grid' ,
+                  store: Ext.workbenchdata.blastResultStore
+                } ]
 
-},
-{
-  iconCls:'new_view',
-  title: 'Alignments',
-  autoScroll: true,
-  id:'alignments-result-tab',
-  items: [ {
-      id: 'alignments-results-grid',
-      xtype:'alignments-grid' ,
-      store: Ext.workbenchdata.alignmentsStore
-    } ]
+            },
+            {
+              iconCls:'new_view',
+              title: 'Alignments',
+              autoScroll: true,
+              id:'alignments-result-tab',
+              items: [ {
+                  id: 'alignments-results-grid',
+                  xtype:'alignments-grid' ,
+                  store: Ext.workbenchdata.alignmentsStore
+                } ]
             
-},
-[{
+            },
+            [{
 
-    iconCls:'grid_icon',
-    title: 'Running Jobs',
-    autoScroll: true,
-    id:'workbench-running-jobs-tab',
-    listeners: {
-      activate: function() {
-        if (Ext.getCmp('workbench-running-jobs-grid')) {
-          Ext.getCmp('workbench-running-jobs-grid').refreshContent();
+                iconCls:'grid_icon',
+                title: 'Running Jobs',
+                autoScroll: true,
+                id:'workbench-running-jobs-tab',
+                listeners: {
+                  activate: function() {
+                    if (Ext.getCmp('workbench-running-jobs-grid')) {
+                      Ext.getCmp('workbench-running-jobs-grid').refreshContent();
 
-        }
-        if (Ext.getCmp('workbench-running-jobs-grid')) {
-          Ext.getCmp('workbench-queued-jobs-grid').refreshContent();
-        }
-      }
-    },
-    items: [ {
-        title: 'Running Jobs',
-        height: 170,
-        id: 'workbench-running-jobs-grid',
-        pageSize: Ext.workbenchMenu.jobPageSize,
-        xtype:'running-job-grid' ,
-        store: runningJobStore
-      }, {
-        title: 'Queued Jobs',
-        height: 200,
-        id: 'workbench-queued-jobs-grid',
-        pageSize: Ext.workbenchMenu.jobPageSize,
-        xtype:'queued-job-grid' ,
-        store: queuedJobStore}
-    ]
+                    }
+                    if (Ext.getCmp('workbench-running-jobs-grid')) {
+                      Ext.getCmp('workbench-queued-jobs-grid').refreshContent();
+                    }
+                  }
+                },
+                items: [ {
+                    title: 'Running Jobs',
+                    height: 170,
+                    id: 'workbench-running-jobs-grid',
+                    pageSize: Ext.workbenchMenu.jobPageSize,
+                    xtype:'running-job-grid' ,
+                    store: runningJobStore
+                  }, {
+                    title: 'Queued Jobs',
+                    height: 200,
+                    id: 'workbench-queued-jobs-grid',
+                    pageSize: Ext.workbenchMenu.jobPageSize,
+                    xtype:'queued-job-grid' ,
+                    store: queuedJobStore}
+                ]
 
-  }], {
-  iconCls:'image_add',
-  title: 'Job Log',
-  autoScroll: true,
-  id:'workbench-job-log-tab',
-  items: [
-    {id: 'workbench-job-logs-grid',
-      pageSize: Ext.workbenchMenu.jobPageSize,
-      xtype:'job-log-grid' ,
-      store: Ext.workbenchdata.jobLogStore }
-  ]
+              }], {
+              iconCls:'image_add',
+              title: 'Job Log',
+              autoScroll: true,
+              id:'workbench-job-log-tab',
+              items: [
+                {id: 'workbench-job-logs-grid',
+                  pageSize: Ext.workbenchMenu.jobPageSize,
+                  xtype:'job-log-grid' ,
+                  store: Ext.workbenchdata.jobLogStore }
+              ]
 
-},
-{
-  iconCls:'fasta-file-folder',
-  title: 'Uploaded Fasta Files',
-  autoScroll: true,
-  id:'workbench-fasta-file-tab',
-  items: [ {
-      id: 'workbench-fasta-file-grid',
-      xtype:'fasta-file-grid' ,
-      store:Ext.workbenchdata.fastaFileStore
-    } ]
+            },
+            {
+              iconCls:'fasta-file-folder',
+              title: 'Uploaded Fasta Files',
+              autoScroll: true,
+              id:'workbench-fasta-file-tab',
+              items: [ {
+                  id: 'workbench-fasta-file-grid',
+                  xtype:'fasta-file-grid' ,
+                  store:Ext.workbenchdata.fastaFileStore
+                } ]
             
-},
-]
-})
-/*        ,
+            }
+          ]
+        })
+        /*        ,
         {
           region: 'east',
           title: 'Tools',
@@ -503,9 +502,9 @@ items: [ { iconCls:'new_fasta',
                   height: 80,
                   contentEl: 'blast-content'
                 }
-*/
-/*, { height: 60, contentEl: 'ncbi-blast-search' } */
-/*
+         */
+        /*, { height: 60, contentEl: 'ncbi-blast-search' } */
+        /*
               ],
               title: 'Tools',
               iconCls: 'settings',
@@ -513,19 +512,19 @@ items: [ { iconCls:'new_fasta',
             }
           ]
         } */
-]
-});
+      ]
+    });
 
-var button1 = Ext.get('rename-biosequences');
-button1.on('click', Ext.bio.showBiodatabaseRenamerWindow);
+    var button1 = Ext.get('rename-biosequences');
+    button1.on('click', Ext.bio.showBiodatabaseRenamerWindow);
 
-var button2 = Ext.get('clean-biodatabase');
-button2.on('click', Ext.bio.showBlastCleanerWindow);
+    var button2 = Ext.get('clean-biodatabase');
+    button2.on('click', Ext.bio.showBlastCleanerWindow);
 
-var button3 = Ext.get('blast-biodatabase');
-button3.on('click', Ext.bioshowBlastCreateDbsWindow);
+    var button3 = Ext.get('blast-biodatabase');
+    button3.on('click', Ext.bioshowBlastCreateDbsWindow);
 
-});
+  });
     </script>
   </head>
   <body>

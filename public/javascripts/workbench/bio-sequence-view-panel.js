@@ -91,7 +91,6 @@ Ext.bio.BiosequenceViewPanel =  Ext.extend(Ext.Panel, {
       }],
       tbar:[
       {
-        iconCls:'new_fasta',
         text:'Seq',
         id: 'tbar-item-sequence-title'
       },
