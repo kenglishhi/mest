@@ -43,9 +43,8 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
       tbar:[
       {
         xtype: 'tbtext',
-        labelStyle: 'font-weight:bold;',
         cls:  'x-toolbar-item-bold' ,
-        text: 'Title',
+        text: '',
         id:   'blast-result-grid-title'
       },
       '->',
@@ -59,6 +58,7 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     Ext.bio.BlastResultGrid.superclass.initComponent.call(this);
   },
   updateContent: function(params) {
+    Ext.getCmp('blast-result-grid-title').setText("Filtered by Test Database: '" + params.biodatabase_name + "'");
     if (params.biodatabase_id) {
       this.store.baseParams.biodatabase_id = params.biodatabase_id;
       this.store.load({

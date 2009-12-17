@@ -255,5 +255,5 @@ td.icon {text-align:center;width:25px;}
   color: #777;
 }
 .x-toolbar-item-bold {
-  font-weight:bold;
+  font-weight:bold !important;
 }
