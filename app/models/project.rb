@@ -28,7 +28,7 @@ class Project < ActiveRecord::Base
 
   def ext_tree(params={})
     parent_db = biodatabases.detect{|db | db.parent_id.nil? }
-    database_tree_data = parent_db.ext_tree
+    database_tree_data = parent_db.ext_tree(:expanded => true)
 
     fasta_file_tree_data = {
       :text =>  "Fasta Files",

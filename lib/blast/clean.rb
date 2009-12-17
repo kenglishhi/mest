@@ -63,15 +63,15 @@ class Blast::Clean < Blast::Base
 
   private
 
-  def create_clean_output_database(parent_db)
-    default_new_biodatabase_name =  "#{parent_db.name}-Cleaned"
+  def create_clean_output_database(source_db)
+    default_new_biodatabase_name =  "#{source_db.name}-Cleaned"
     new_name = @params[:new_biodatabase_name] ||  default_new_biodatabase_name
     Biodatabase.new(:biodatabase_type =>
         BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
       :name => new_name,
-      :user_id => parent_db.user_id,
-      :project_id => parent_db.project_id, 
-      :parent => parent_db )
+      :user_id => source_db.user_id,
+      :project_id => source_db.project_id,
+      :parent => source_db.parent )
   end
 
   def copy_database(source_db, dest_db)

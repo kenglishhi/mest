@@ -11,7 +11,6 @@ class Tools::ExtractSequencesController < ApplicationController
         }
       end
     else
-
       fasta_file = FastaFile.find(params[:fasta_file_id])
       job_name = "Extract Sequences from #{fasta_file.fasta_file_name}"
       create_job(Jobs::ExtractSequences, job_name, current_user, params)

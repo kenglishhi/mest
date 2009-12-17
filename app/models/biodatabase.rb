@@ -27,12 +27,13 @@ class Biodatabase < ActiveRecord::Base
       :order => 'biodatabases.name'
     } }
 
-  def ext_tree
+  def ext_tree(params ={} )
     self.children
     tree_data = {
       :text =>  self.name,
       :leaf => self.children.empty?,
       :id => self.id,
+      :expanded => params[:expanded],
       :expandable => !self.children.empty?,
       :db_type=> self.biodatabase_type.name,
       :resource => 'biodatabase'

@@ -153,7 +153,7 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
             iconCls:'new_fasta',
             text: "Rename Sequences",
             handler: function() {
-              Ext.bio.showBiodatabaseRenamerWindow(node.id);
+              Ext.bio.showBiodatabaseRenamerWindow(node);
             }
           });
         }
@@ -162,7 +162,7 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
           iconCls:'blast',
           text: "Blast",
           handler: function() {
-            Ext.bio.showBlastCreateDbsWindow(node.id);
+            Ext.bio.showBlastCreateDbsWindow(node);
           }
         });
 
@@ -171,21 +171,21 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
             iconCls:'clustalw',
             text: "ClustalW",
             handler: function() {
-              Ext.bio.showClustalwWindow(node.id);
+              Ext.bio.showClustalwWindow(node);
             }
           });
           var ntAppendButton = new Ext.menu.Item({
             iconCls:'blast',
             text: "Blast vs NR-NT",
             handler: function() {
-              Ext.bio.showBlastNtAppendWindow(node.id);
+              Ext.bio.showBlastNtAppendWindow(node);
             }
           });
-
 
           contextMenu  = new Ext.menu.Menu({
             items: [ clustalwButton,ntAppendButton,'-',deleteButton]
           });
+
         } else if (node.attributes.db_type == "Uploaded Cleaned Database") {
           contextMenu  = new Ext.menu.Menu({
             items: [ blastButton, '-', deleteButton]
@@ -195,7 +195,7 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
             iconCls:'book',
             text: "Clean DB",
             handler: function() {
-              Ext.bio.showBlastCleanerWindow(node.id);
+              Ext.bio.showBlastCleanerWindow(node);
             }
           });
 
@@ -214,14 +214,14 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
           iconCls:'blast',
           text: "Blast vs NR-NT",
           handler: function() {
-            Ext.bio.showBlastGroupNtAppendWindow(node.id);
+            Ext.bio.showBlastGroupNtAppendWindow(node);
           }
         });
         var groupClustalwButton = new Ext.menu.Item({
           iconCls:'clustalw',
           text: "ClustalW",
           handler: function() {
-            Ext.bio.showGroupClustalwWindow(node.id);
+            Ext.bio.showGroupClustalwWindow(node);
           }
         });
 
@@ -245,9 +245,8 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
           var extractSequencesButton = new Ext.menu.Item({
             iconCls:'sequence-icon',
             text: "Extract Sequences",
-            nodeId: node.id,
             handler:function() {
-              Ext.bio.showExtractSequencesWindow(this.nodeId);
+              Ext.bio.showExtractSequencesWindow(node);
             }
           });
           menuItems[1] = extractSequencesButton ;
