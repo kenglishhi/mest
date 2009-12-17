@@ -2,6 +2,8 @@
  * job-grid.js
  * Kevin English, University of Hawaii
  */
+
+
 Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   useEditorFlag:true,
   usePagingBarFlag: true,
@@ -61,6 +63,7 @@ Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     Ext.bio.RunningJobGrid.superclass.initComponent.call(this);
   }
 });
+
 Ext.reg('running-job-grid', Ext.bio.RunningJobGrid);
 
 

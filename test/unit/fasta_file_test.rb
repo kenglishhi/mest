@@ -98,13 +98,15 @@ class FastaFileTest < ActiveSupport::TestCase
       @fasta_file.project = projects(:projects_001)
       assert @fasta_file.save, "Saving fasta file should succeed #{@fasta_file.errors.full_messages.to_sentence}"
       @old_db_count = Biodatabase.count
-      @fasta_file.extract_sequences
+      @fasta_file.extract_sequences(:new_biodatabase_name => 'My Cambodia')
       assert_equal @old_db_count + 1,  Biodatabase.count
       @fasta_file.biodatabase
+
     end
     db1 = create_cambodia
     db2 =  create_cambodia
     assert_equal db1.biosequences.size, db2.biosequences.size
+    assert_equal @fasta_file.biodatabase.name, 'My Cambodia'
 
   end
 

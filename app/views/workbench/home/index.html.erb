@@ -142,7 +142,7 @@ extjs_store( :controller => "workbench/biodatabases",
   }
 ).render(false)
 %>
-    var runningJobStore = <%=
+    Ext.workbenchdata.runningJobStore = <%=
 extjs_store( :controller => "workbench/jobs",
   :model => 'Job',
   :writer => {"encode" => false},
@@ -151,8 +151,9 @@ extjs_store( :controller => "workbench/jobs",
     "totalProperty" => 'results',
     "autoLoad" => false,
     "autoSave" => true,
-    "restful" => true,
-    'baseParams' => 'option=Queued'
+    "restful" => true
+    #   // ,
+    #    'baseParams' => 'option=Queued'
   }
 ).render(false)
 %>
@@ -248,12 +249,17 @@ extjs_store( :controller => "workbench/blast_results",
     }
     Ext.bio.workbench.updateContent = function(node){
       var params ={};
+
       if (node.attributes.resource =='biodatabase' ) {
+
         var mainTabs = Ext.getCmp('workbench-grid-tabs');
-        if (mainTabs.activeTab.id !='workbench-biosequence-tab'
-          && mainTabs.activeTab.id !='workbench-blast-results-tab') {
-          Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
-        }
+
+        //        if (!(mainTabs.activeTab.id =='workbench-biosequence-tab'
+        //          || mainTabs.activeTab.id =='workbench-blast-results-tab')) {
+
+        Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
+
+        //       }
         params.biodatabase_id = node.id;
         Ext.getCmp('workbench-biosequence-grid').updateContent(params);
         params.biodatabase_name = node.text;
@@ -314,7 +320,6 @@ extjs_store( :controller => "workbench/blast_results",
           }
         } ,
         {
-          title: 'Main Region',
           region: 'center',
           layout: 'border',
           items: [{
@@ -323,64 +328,22 @@ extjs_store( :controller => "workbench/blast_results",
               height: 330,
               xtype: 'tabpanel',
               deferredRender: true,
-              activeTab: 0,
+              activeTab: 3,
               items: [
                 {
                   iconCls:'new_fasta',
                   title: 'Sequences',
-                  xtype:'biosequence-grid',
-                  id: 'workbench-biosequence-grid',
-                  pageSize: Ext.workbenchMenu.seqPageSize,
-                  store: Ext.workbenchdata.biosequenceStore,
-                  biodatabasePropertyStore: biodatabasePropertyStore,
-                  biosequenceViewId: 'bio-sequence-view'
-                },
-                /*                {
-                  iconCls:'new_fasta',
-                  title: 'Sequences',
                   id: 'workbench-biosequence-tab',
-                  layout: 'border',
-                  region:'west',
-                  border: false,
-                  split:true,
-                  margins: '2 0 5 5',
-                  width: 275,
-                  minSize: 100,
-                  maxSize: 500,
-                  items: [ {
-                      region:'north',
-                      xtype:'biosequence-grid',
+                  autoScroll: true,
+                  items: [{
                       id: 'workbench-biosequence-grid',
+                      xtype:'biosequence-grid',
                       pageSize: Ext.workbenchMenu.seqPageSize,
                       store: Ext.workbenchdata.biosequenceStore,
                       biodatabasePropertyStore: biodatabasePropertyStore,
-                      biosequenceViewId: 'bio-sequence-view',
-                      split:true
-                    },
-
-                    new Ext.TabPanel({
-                      split:true,
-                      id: 'workbench-detail-tabs',
-                      region: 'center',
-                      collapsible: true,
-                      deferredRender: true,
-                      activeTab: 1,
-                      items: [ {
-                          title: 'Sequence',
-                          xtype: 'bio-sequence-view-panel',
-                          iconCls:'new_fasta',
-                          id: 'bio-sequence-view'
-                        },{
-
-                          title: 'Alignment',
-                          xtype: 'alignment-view-panel',
-                          iconCls:'new_fasta',
-                          id: 'alignment-view'
-                        }]
-                    })
-                  ]
+                      biosequenceViewId: 'bio-sequence-view'
+                    }]
                 },
-                 */
                 {
                   iconCls:'new_view',
                   title: 'Blast Results',
@@ -414,26 +377,26 @@ extjs_store( :controller => "workbench/blast_results",
                     id:'workbench-running-jobs-tab',
                     listeners: {
                       activate: function() {
-                        if (Ext.getCmp('workbench-running-jobs-grid')) {
-                          Ext.getCmp('workbench-running-jobs-grid').refreshContent();
-
+                        if (Ext.getCmp('wb-running-jobs-grid')) {
+                          Ext.getCmp('wb-running-jobs-grid').refreshContent();
                         }
-                        if (Ext.getCmp('workbench-running-jobs-grid')) {
-                          Ext.getCmp('workbench-queued-jobs-grid').refreshContent();
+                        if (Ext.getCmp('wb-queued-jobs-grid')) {
+                          Ext.getCmp('wb-queued-jobs-grid').refreshContent();
                         }
                       }
                     },
                     items: [ {
                         title: 'Running Jobs',
                         height: 170,
-                        id: 'workbench-running-jobs-grid',
+                        id: 'wb-running-jobs-grid',
                         pageSize: Ext.workbenchMenu.jobPageSize,
                         xtype:'running-job-grid' ,
-                        store: runningJobStore
-                      }, {
+                        store: Ext.workbenchdata.runningJobStore
+                      }
+                      , {
                         title: 'Queued Jobs',
                         height: 200,
-                        id: 'workbench-queued-jobs-grid',
+                        id: 'wb-queued-jobs-grid',
                         pageSize: Ext.workbenchMenu.jobPageSize,
                         xtype:'queued-job-grid' ,
                         store: queuedJobStore}

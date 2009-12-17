@@ -98,7 +98,7 @@ class FastaFile < ActiveRecord::Base
     end
   end
 
-  def extract_sequences
+  def extract_sequences(params={})
     logger.error("[kenglish] Called Extract Sequence")
     if fasta
       unless self.biodatabase
@@ -114,8 +114,8 @@ class FastaFile < ActiveRecord::Base
         else
           parent_db = self.project.biodatabases.first
         end
-
-        self.biodatabase = Biodatabase.new(:name => File.basename(label),
+        new_biodatabase_name = params[:new_biodatabase_name] ? params[:new_biodatabase_name] : File.basename(label)
+        self.biodatabase = Biodatabase.new(:name => new_biodatabase_name ,
             :fasta_file => self,
             :user => self.user,
             :parent => parent_db,

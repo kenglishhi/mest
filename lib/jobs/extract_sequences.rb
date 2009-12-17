@@ -5,7 +5,7 @@ class Jobs::ExtractSequences < Jobs::AbstractJob
       return
     end
     fasta_file = FastaFile.find( params[:fasta_file_id] )
-    fasta_file.extract_sequences
+    fasta_file.extract_sequences(params)
   end
 end
 

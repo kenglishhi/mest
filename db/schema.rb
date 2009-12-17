@@ -9,12 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091217003508) do
+ActiveRecord::Schema.define(:version => 20091217212512) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
     t.integer "biosequence_id"
   end
+
+  add_index "biodatabase_biosequences", ["biosequence_id"], :name => "index_biodatabase_biosequences_on_biosequence_id"
 
   create_table "biodatabase_groups", :force => true do |t|
     t.string   "name"
