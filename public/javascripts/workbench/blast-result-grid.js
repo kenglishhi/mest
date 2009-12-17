@@ -5,12 +5,8 @@
 Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   useEditorFlag:false,
   usePagingBarFlag: true,
-  displayColumns:  [ {
-    header: "Name",
-    autoWidth: true,
-    sortable: true,
-    dataIndex: 'name'
-  }, {
+  displayColumns:  [
+  {
     header: "Output File Name",
     autoWidth: true,
     sortable: true,
@@ -18,24 +14,42 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     renderer: function(value, p, record, row, col, store) {
       return '<a href="' + record.data.output_file_url +'" target="_blank"  >' + record.data.output_file_name_display + '</a>';
     }
+  },
+  {
+    header: "Job Name",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'name'
   }, {
-    header: "Command",
+    header: "Test Database",
     autoWidth: true,
     sortable: true,
-    dataIndex: 'command'
-  },{
-    header: "Started",
+    dataIndex: 'test_biodatabase_name'
+  }, {
+    header: "Duration (hh:mm:ss)",
     autoWidth: true,
     sortable: true,
-    dataIndex: 'started_at'
-  },{
-    header: "Stopped",
-    autoWidth: true,
-    sortable: true,
-    dataIndex: 'stopped_at'
+    dataIndex: 'duration_display'
   }
   ],
   initComponent: function() {
+    cmpId = this.id;
+    function onDelete() {
+      var grid = Ext.getCmp(cmpId);
+      grid.deleteSelectedRow(true,'name') ;
+    }
+
+    Ext.apply(this,{
+      tbar:[ '->',
+      {
+        text: 'Delete',
+        iconCls:'x-tree-delete',
+        handler: onDelete
+      }
+      ]
+    });
+
+
     Ext.bio.BlastResultGrid.superclass.initComponent.call(this);
   }
 });

@@ -70,15 +70,6 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     autoWidth: true,
     sortable: true,
     dataIndex: 'length'
-  },{
-    header: "Action",
-    css: 'background-image:url(/images/delete.gif) !important; background-repeat:no-repeat; text-align:right;font-weight:bold; ',
-    width: 30,
-    resizable: false,
-    sortable: true,
-    renderer: function() {
-      return "Delete";
-    }
   }
   ],
   initComponent: function() {
@@ -90,19 +81,27 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
         var params = {
           rowIndex: 0
         };
-//        viewPanel.updateContent(params);
+      //        viewPanel.updateContent(params);
       }
 
     });
     var cmpId = this.id;
 
+    function onDelete() {
+      var grid = Ext.getCmp(cmpId);
+      grid.deleteSelectedRow(true,'name',function(params) {
+        grid.updateViewPanel({
+          rowIndex: params.rowIndex
+        });
+      });
+    }
     Ext.apply(this,{
       tbar:[       'Search: ', ' ',
       new Ext.bio.SeqSearchField({
         store: this.store,
         width:200
       }),
-      '->', {
+      {
         iconCls:'new_fasta',
         text: 'Fasta File',
         id:'seq-grid-fasta-toolbar-item',
@@ -122,6 +121,11 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
           var strUrl = Ext.getCmp(cmpId).biodatabasePropertyStore.getAt(0).data.alignment_file_url;
           window.open(strUrl);
         }
+      }
+      , '->', {
+        text: 'Delete',
+        iconCls:'x-tree-delete',
+        handler: onDelete
       }
       ]
     });
@@ -195,7 +199,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     }
   },
   clearContent : function() {
-      this.store.reload();
+    this.store.reload();
   }
 
 });

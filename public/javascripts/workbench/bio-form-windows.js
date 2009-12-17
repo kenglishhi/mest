@@ -129,7 +129,7 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
       defaultType: 'textfield',
       items: [combo,
       {
-        fieldLabel: 'Extracted Database Name',
+        fieldLabel: 'Clean Database Name',
         name: 'new_biodatabase_name',
         allowBlank:true,
         msgTarget:'side'

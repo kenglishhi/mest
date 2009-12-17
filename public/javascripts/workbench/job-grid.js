@@ -126,12 +126,11 @@ Ext.bio.QueuedJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     var cmpId = this.id;
 
     function onDelete() {
-      var rec = Ext.getCmp(cmpId).getSelectionModel().getSelected();
-      if (!rec) {
-        return false;
+      var grid =Ext.getCmp(cmpId);
+      grid.deleteSelectedRow(false,'name', function(params) {
+        grid.refreshContent( );
       }
-      Ext.getCmp(cmpId).store.remove(rec);
-      Ext.getCmp(cmpId).refreshContent( );
+      );
     }
 
     combo.on('select', function(cmb, record) {
