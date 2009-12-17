@@ -3,6 +3,8 @@ class BlastResult < ActiveRecord::Base
     :path => ":rails_root/public/system/:attachment/:id/:style/:normalized_output_file_name",
     :url => "/system/:attachment/:id/:style/:normalized_output_file_name"
 
+  belongs_to :test_biodatabase, :class_name =>'Biodatabase'
+
 
   include ExtJS::Model
   belongs_to :user

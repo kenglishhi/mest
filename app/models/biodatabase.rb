@@ -15,6 +15,7 @@ class Biodatabase < ActiveRecord::Base
   has_many :biosequences, :through => :biodatabase_biosequences, :order => 'name'
   has_many :biodatabase_links, :dependent => :destroy
   has_many :linked_biodatabase_links, :class_name =>'BiodatabaseLink', :foreign_key =>'linked_biodatabase_id', :dependent => :destroy
+  has_many :blast_results, :foreign_key =>'test_biodatabase_id', :dependent => :destroy
 
   validates_presence_of :name
   validates_presence_of :biodatabase_type_id
