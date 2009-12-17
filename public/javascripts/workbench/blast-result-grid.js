@@ -63,7 +63,10 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     Ext.bio.BlastResultGrid.superclass.initComponent.call(this);
   },
   updateContent: function(params) {
-    Ext.getCmp('blast-result-grid-title').setText("Filtered by Output Database: '" + params.biodatabase_name + "'");
+    var titleCmp = Ext.getCmp('blast-result-grid-title');
+    if (titleCmp) {
+      titleCmp.setText("Filtered by Output Database: '" + params.biodatabase_name + "'");
+    }
     if (params.biodatabase_id) {
       this.store.baseParams.output_biodatabase_id = params.biodatabase_id;
       this.store.load({

@@ -66,7 +66,6 @@ Ext.bio.RestfulGrid =  Ext.extend(Ext.grid.GridPanel, {
     Ext.apply(this,{
       bbar: pagingBar,
       loadMask: true,
-      iconCls: 'icon-grid',
       frame: true,
       autoScroll: true,
       //      autoHeight: true,

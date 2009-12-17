@@ -312,206 +312,181 @@ extjs_store( :controller => "workbench/blast_results",
             Ext.workbenchdata.rawDbsComboStore.reload();
             Ext.workbenchdata.biosequenceStore.reload();
           }
-        } , new Ext.TabPanel({
-          id: 'workbench-grid-tabs',
+        } ,
+        {
+          title: 'Main Region',
           region: 'center',
-          collapsible: true,
-          deferredRender: true,
-          activeTab: 0,     
-          items: [ { iconCls:'new_fasta',
-              title: 'Sequences',
-              id: 'workbench-biosequence-tab',
-              layout: 'border',
-              region:'west',
-              border: false,
-              split:true,
-              margins: '2 0 5 5',
-              width: 275,
-              minSize: 100,
-              maxSize: 500,
-              items: [ {
-                  region:'north',
+          layout: 'border',
+          items: [{
+              id: 'workbench-grid-tabs',
+              region: 'north',
+              height: 330,
+              xtype: 'tabpanel',
+              deferredRender: true,
+              activeTab: 0,
+              items: [
+                {
+                  iconCls:'new_fasta',
+                  title: 'Sequences',
                   xtype:'biosequence-grid',
                   id: 'workbench-biosequence-grid',
                   pageSize: Ext.workbenchMenu.seqPageSize,
                   store: Ext.workbenchdata.biosequenceStore,
                   biodatabasePropertyStore: biodatabasePropertyStore,
-                  biosequenceViewId: 'bio-sequence-view',
-                  split:true
-                }, 
-                new Ext.TabPanel({
-                  split:true,
-                  id: 'workbench-detail-tabs',
-                  region: 'center',
-                  collapsible: true,
-                  deferredRender: true,
-                  activeTab: 1,
-                  items: [ {
-                      title: 'Sequence',
-                      xtype: 'bio-sequence-view-panel',
-                      iconCls:'new_fasta',
-                      id: 'bio-sequence-view'
-                    },{
-
-                      title: 'Alignment',
-                      xtype: 'alignment-view-panel',
-                      iconCls:'new_fasta',
-                      id: 'alignment-view'
-                    }]
-                })
-              ]
-            }, /* {
-              iconCls:'new_view',
-              title: 'Databases',
-              autoScroll: true,
-              id:'workbench-biodatabase-tab',
-              items: [ {
-                  id: 'workbench-biodatabase-grid',
-                  xtype:'biodatabase-grid',
-                  pageSize: dbPageSize,
-                  store: biodatabaseStore
-                } ]
-            }, {
-              iconCls:'book',
-              title: 'Database Groups',
-              autoScroll: true,
-              id:'workbench-biodatabase-group-tab',
-              items: [ {
-                  id: 'workbench-biodatabase-groups-grid',
-                  pageSize: databaseGroupPageSize,
-                  xtype:'biodatabase-group-grid' ,
-                  store: biodatabaseGroupStore
-                } ]
-
-            },*/  {
-              iconCls:'new_view',
-              title: 'Blast Results',
-              autoScroll: true,
-              id:'workbench-blast-results-tab',
-              items: [ {
-                  id: 'workbench-blast-results-grid',
-                  pageSize: Ext.workbenchMenu.blastResultPageSize,
-                  xtype:'blast-result-grid' ,
-                  store: Ext.workbenchdata.blastResultStore
-                } ]
-
-            },
-            {
-              iconCls:'new_view',
-              title: 'Alignments',
-              autoScroll: true,
-              id:'alignments-result-tab',
-              items: [ {
-                  id: 'alignments-results-grid',
-                  xtype:'alignments-grid' ,
-                  store: Ext.workbenchdata.alignmentsStore
-                } ]
-            
-            },
-            [{
-
-                iconCls:'grid_icon',
-                title: 'Running Jobs',
-                autoScroll: true,
-                id:'workbench-running-jobs-tab',
-                listeners: {
-                  activate: function() {
-                    if (Ext.getCmp('workbench-running-jobs-grid')) {
-                      Ext.getCmp('workbench-running-jobs-grid').refreshContent();
-
-                    }
-                    if (Ext.getCmp('workbench-running-jobs-grid')) {
-                      Ext.getCmp('workbench-queued-jobs-grid').refreshContent();
-                    }
-                  }
+                  biosequenceViewId: 'bio-sequence-view'
                 },
-                items: [ {
-                    title: 'Running Jobs',
-                    height: 170,
-                    id: 'workbench-running-jobs-grid',
-                    pageSize: Ext.workbenchMenu.jobPageSize,
-                    xtype:'running-job-grid' ,
-                    store: runningJobStore
-                  }, {
-                    title: 'Queued Jobs',
-                    height: 200,
-                    id: 'workbench-queued-jobs-grid',
-                    pageSize: Ext.workbenchMenu.jobPageSize,
-                    xtype:'queued-job-grid' ,
-                    store: queuedJobStore}
-                ]
+                /*                {
+                  iconCls:'new_fasta',
+                  title: 'Sequences',
+                  id: 'workbench-biosequence-tab',
+                  layout: 'border',
+                  region:'west',
+                  border: false,
+                  split:true,
+                  margins: '2 0 5 5',
+                  width: 275,
+                  minSize: 100,
+                  maxSize: 500,
+                  items: [ {
+                      region:'north',
+                      xtype:'biosequence-grid',
+                      id: 'workbench-biosequence-grid',
+                      pageSize: Ext.workbenchMenu.seqPageSize,
+                      store: Ext.workbenchdata.biosequenceStore,
+                      biodatabasePropertyStore: biodatabasePropertyStore,
+                      biosequenceViewId: 'bio-sequence-view',
+                      split:true
+                    },
 
-              }], {
-              iconCls:'image_add',
-              title: 'Job Log',
-              autoScroll: true,
-              id:'workbench-job-log-tab',
-              items: [
-                {id: 'workbench-job-logs-grid',
-                  pageSize: Ext.workbenchMenu.jobPageSize,
-                  xtype:'job-log-grid' ,
-                  store: Ext.workbenchdata.jobLogStore }
-              ]
+                    new Ext.TabPanel({
+                      split:true,
+                      id: 'workbench-detail-tabs',
+                      region: 'center',
+                      collapsible: true,
+                      deferredRender: true,
+                      activeTab: 1,
+                      items: [ {
+                          title: 'Sequence',
+                          xtype: 'bio-sequence-view-panel',
+                          iconCls:'new_fasta',
+                          id: 'bio-sequence-view'
+                        },{
 
-            },
-            {
-              iconCls:'fasta-file-folder',
-              title: 'Uploaded Fasta Files',
-              autoScroll: true,
-              id:'workbench-fasta-file-tab',
-              items: [ {
-                  id: 'workbench-fasta-file-grid',
-                  xtype:'fasta-file-grid' ,
-                  store:Ext.workbenchdata.fastaFileStore
-                } ]
+                          title: 'Alignment',
+                          xtype: 'alignment-view-panel',
+                          iconCls:'new_fasta',
+                          id: 'alignment-view'
+                        }]
+                    })
+                  ]
+                },
+                 */
+                {
+                  iconCls:'new_view',
+                  title: 'Blast Results',
+                  autoScroll: true,
+                  id:'workbench-blast-results-tab',
+                  items: [ {
+                      id: 'workbench-blast-results-grid',
+                      pageSize: Ext.workbenchMenu.blastResultPageSize,
+                      xtype:'blast-result-grid' ,
+                      store: Ext.workbenchdata.blastResultStore
+                    } ]
+
+                },
+                {
+                  iconCls:'new_view',
+                  title: 'Alignments',
+                  autoScroll: true,
+                  id:'alignments-result-tab',
+                  items: [ {
+                      id: 'alignments-results-grid',
+                      xtype:'alignments-grid' ,
+                      store: Ext.workbenchdata.alignmentsStore
+                    } ]
             
-            }
-          ]
-        })
-        /*        ,
-        {
-          region: 'east',
-          title: 'Tools',
-          collapsible: true,
-          split: true,
-          width: 225,
-          minSize: 175,
-          maxSize: 400,
-          margins: '0 5 0 0',
-          layout: {
-            type: 'accordion',
-            animate: true
-          },
-          items: [ {
-              id: 'vbox-panel',
-              layout: {
-                type: 'vbox',
-                pack: 'start',
-                align: 'stretch'
-              },
-              defaults: {
-                frame: true
-              },
-              items:  [
-                { contentEl: 'rename-content',
-                  height: 100
-                }, {
-                  height: 80,
-                  contentEl: 'clean-content'
-                } , {
-                  height: 80,
-                  contentEl: 'blast-content'
+                },
+                [{
+
+                    iconCls:'grid_icon',
+                    title: 'Running Jobs',
+                    autoScroll: true,
+                    id:'workbench-running-jobs-tab',
+                    listeners: {
+                      activate: function() {
+                        if (Ext.getCmp('workbench-running-jobs-grid')) {
+                          Ext.getCmp('workbench-running-jobs-grid').refreshContent();
+
+                        }
+                        if (Ext.getCmp('workbench-running-jobs-grid')) {
+                          Ext.getCmp('workbench-queued-jobs-grid').refreshContent();
+                        }
+                      }
+                    },
+                    items: [ {
+                        title: 'Running Jobs',
+                        height: 170,
+                        id: 'workbench-running-jobs-grid',
+                        pageSize: Ext.workbenchMenu.jobPageSize,
+                        xtype:'running-job-grid' ,
+                        store: runningJobStore
+                      }, {
+                        title: 'Queued Jobs',
+                        height: 200,
+                        id: 'workbench-queued-jobs-grid',
+                        pageSize: Ext.workbenchMenu.jobPageSize,
+                        xtype:'queued-job-grid' ,
+                        store: queuedJobStore}
+                    ]
+
+                  }], {
+                  iconCls:'image_add',
+                  title: 'Job Log',
+                  autoScroll: true,
+                  id:'workbench-job-log-tab',
+                  items: [
+                    {id: 'workbench-job-logs-grid',
+                      pageSize: Ext.workbenchMenu.jobPageSize,
+                      xtype:'job-log-grid' ,
+                      store: Ext.workbenchdata.jobLogStore }
+                  ]
+
+                },
+                {
+                  iconCls:'fasta-file-folder',
+                  title: 'Uploaded Fasta Files',
+                  autoScroll: true,
+                  id:'workbench-fasta-file-tab',
+                  items: [ {
+                      id: 'workbench-fasta-file-grid',
+                      xtype:'fasta-file-grid' ,
+                      store:Ext.workbenchdata.fastaFileStore
+                    } ]
+            
                 }
-         */
-        /*, { height: 60, contentEl: 'ncbi-blast-search' } */
-        /*
-              ],
-              title: 'Tools',
-              iconCls: 'settings',
-              border: false
-            }
-          ]
-        } */
+              ]
+            },{
+              xtype: 'tabpanel',
+              id: 'workbench-detail-tabs',
+              plain: true,
+              deferredRender: true,
+              region: 'center',
+              margins: '0 5 5 5',
+              activeTab: 0,
+              items: [{
+                  title: 'Sequence',
+                  xtype: 'bio-sequence-view-panel',
+                  iconCls:'new_fasta',
+                  id: 'bio-sequence-view'
+                },{
+
+                  title: 'Alignment',
+                  xtype: 'alignment-view-panel',
+                  iconCls:'new_fasta',
+                  id: 'alignment-view'
+                }]
+            }]
+        }
       ]
     });
 
