@@ -18,7 +18,7 @@ class Blast::NtAppend < Blast::Base
     #### blastall -p blastn -i fun.fasta -d /opt/local/var/data/nt
     evalue = get_evalue
 
-    @blast_result = new_blast_result("#{@biodatabase.name}-NT Blast Result")
+    @blast_result = new_blast_result("#{@biodatabase.name}-NT Blast Result",@biodatabase)
     number_of_sequences_to_save = params[:number_of_sequences_to_save].blank? ?
       DEFAULT_NUMBER_OF_SEQUENCES_TO_SAVE : params[:number_of_sequences_to_save].to_i
 

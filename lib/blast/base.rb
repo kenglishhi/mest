@@ -30,14 +30,16 @@ class Blast::Base
   def get_evalue
     params[:evalue].blank? ?  25 :  params[:evalue]
   end
+
   def do_run
     raise "subclasses must implement"
   end
-  def new_blast_result(blast_result_name)
+
+  def new_blast_result(blast_result_name,test_biodatabase)
     @blast_result = BlastResult.create!(:name => blast_result_name,
       :started_at => Time.now,
       :user_id => params[:user_id],
-      :project_id => params[:project_id])
+      :project_id => params[:project_id],
+      :test_biodatabase => test_biodatabase)
   end
-
 end

@@ -38,7 +38,7 @@ class Blast::CreateDbs < Blast::Base
     output_parent_biodatabase_name = params[:output_parent_biodatabase_name] ||
       "#{@test_fasta_file.biodatabase.name} vs #{@target_fasta_file.label}"
 
-    @blast_result = new_blast_result("#{output_parent_biodatabase_name} Blast Result")
+    @blast_result = new_blast_result("#{output_parent_biodatabase_name} Blast Result",@test_database)
 
     output_file_handle = Blast::Command.execute(:blastall, @blast_result, :test_file_path => @test_fasta_file.fasta.path,
       :target_file_path => @target_fasta_file.fasta.path,

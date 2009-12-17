@@ -23,7 +23,7 @@ class Blast::CleanDb < Blast::Base
 
     blast_result_name = params[:blast_result_name].blank? ?
       params[:blast_result_name] : "#{@output_biodatabase.name} Blast Result"
-    @blast_result = new_blast_result(blast_result_name)
+    @blast_result = new_blast_result(blast_result_name,@test_database)
     evalue = @params[:evalue] || "25"
     output_file_handle = Blast::Command.execute(:blastall, @blast_result, :test_file_path => @test_fasta_file.fasta.path,
       :target_file_path => @target_fasta_file.fasta.path,
