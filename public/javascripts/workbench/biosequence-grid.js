@@ -11,7 +11,6 @@ Ext.bio.SeqSearchField = Ext.extend(Ext.form.TwinTriggerField, {
       }
     }, this);
   },
-
   validationEvent:false,
   validateOnBlur:false,
   trigger1Class:'x-form-clear-trigger',
@@ -73,7 +72,6 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   }
   ],
   initComponent: function() {
-
     var biosequenceViewId = this.biosequenceViewId;
     this.store.on('load',function() {
       var viewPanel = Ext.getCmp(biosequenceViewId);
@@ -135,7 +133,6 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   updateViewPanel: function(params) {
     var viewPanel = Ext.getCmp(this.biosequenceViewId);
     viewPanel.updateContent(params);
-
   },
   listeners: {
     afterrender: function( p)  {

@@ -40,7 +40,15 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     }
 
     Ext.apply(this,{
-      tbar:[ '->',
+      tbar:[
+      {
+        xtype: 'tbtext',
+        labelStyle: 'font-weight:bold;',
+        cls:  'x-toolbar-item-bold' ,
+        text: 'Title',
+        id:   'blast-result-grid-title'
+      },
+      '->',
       {
         text: 'Delete',
         iconCls:'x-tree-delete',
@@ -48,9 +56,18 @@ Ext.bio.BlastResultGrid =  Ext.extend(Ext.bio.RestfulGrid, {
       }
       ]
     });
-
-
     Ext.bio.BlastResultGrid.superclass.initComponent.call(this);
+  },
+  updateContent: function(params) {
+    if (params.biodatabase_id) {
+      this.store.baseParams.biodatabase_id = params.biodatabase_id;
+      this.store.load({
+        params: {
+          start: 0,
+          limit: this.pageSize
+        }
+      } );
+    }
   }
 });
 Ext.reg('blast-result-grid', Ext.bio.BlastResultGrid);

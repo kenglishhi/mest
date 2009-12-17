@@ -1,7 +1,7 @@
 .fasta-seq-name {font-family:courier,monospace;
-                background-color:#fff;
-                margin-left:25px;
-                padding:1px;}
+                 background-color:#fff;
+                 margin-left:25px;
+                 padding:1px;}
 .fasta-table{font-family:courier,monospace;background-color:#fff;margin:0;}
 .fasta-table {font-size:12px;line-height:100%;}
 .fasta-table td em{color:#999;font-style:normal;}
@@ -94,10 +94,10 @@
 .color_rect_FFFFFF{background-color:#FFFFFF;}
 
 .view_color_rect{
-background-color:red;
-border:1px solid #000;
-width:14px;
-height:14px;
+  background-color:red;
+  border:1px solid #000;
+  width:14px;
+  height:14px;
 }
 
 #string_ruler_unit{ visibility: hidden; white-space: nowrap; }
@@ -253,4 +253,7 @@ td.icon {text-align:center;width:25px;}
   left: 0;
   z-index: 3;
   color: #777;
+}
+.x-toolbar-item-bold {
+  font-weight:bold;
 }
