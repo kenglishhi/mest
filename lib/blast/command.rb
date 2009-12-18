@@ -24,6 +24,7 @@ class Blast::Command
   ########################################3
 
 
+  PROGRAMS = ['blastp', 'blastn', 'blastx', 'psitblastn', 'tblastn', 'tblastx'] 
 
   def self.execute(program, blast_result, params)
     if program.to_sym == :blastall
@@ -49,7 +50,9 @@ class Blast::Command
     cli['-e'] = params[:evalue]
     cli['-b'] =  params[:number_of_hits_per_query].blank? ? 20 :  params[:number_of_hits_per_query]
     options =  cli.to_a.join(' ')
-    command = " blastall -p blastn  #{options} "
+
+    program  = PROGRAMS.include?(params[:program]) ? params[:program] : 'blastn'
+    command = " blastall -p #{program}  #{options} "
     puts command
     blast_result.command = command if blast_result
     logger.info("[kenglish] blast command = #{command}")
