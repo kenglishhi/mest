@@ -43,6 +43,7 @@ class Blast::CreateDbs < Blast::Base
     output_file_handle = Blast::Command.execute(:blastall, @blast_result, :test_file_path => @test_fasta_file.fasta.path,
       :target_file_path => @target_fasta_file.fasta.path,
       :evalue => evalue,
+      :program => @params[:program],
       :output_file_prefix => output_parent_biodatabase_name.underscore)
     output_file_handle.open
     @blast_result.stopped_at = Time.now
