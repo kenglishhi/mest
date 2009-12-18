@@ -196,6 +196,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
               tbFasta.hide();
             }
           }
+          // Update the alignment page..
           var alignmentViewPanel = Ext.getCmp(alignmentViewPanelId );
           if (this.getAt(0).data.alignment_file_url){
             var url = this.getAt(0).data.alignment_file_url;
