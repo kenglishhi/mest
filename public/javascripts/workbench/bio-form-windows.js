@@ -284,7 +284,18 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
         name: 'evalue',
         value:'25',
         allowBlank:true
-      }],
+      },{
+        fieldLabel: 'Coverage',
+        name: 'coverage',
+        value:'',
+        allowBlank:true
+      },{
+        fieldLabel: 'Score',
+        name: 'score',
+        value:'',
+        allowBlank:true
+      }
+      ],
       buttons: [{
         text: 'Submit',
         handler: function(){

@@ -2,8 +2,14 @@
                  background-color:#fff;
                  margin-left:25px;
                  padding:1px;}
-.fasta-table{font-family:courier,monospace;background-color:#fff;margin:0;}
-.fasta-table {font-size:12px;line-height:100%;}
+.fasta-table {
+  font-family:courier,monospace;
+  background-color:#fff;
+  margin:0;
+  font-size:12px;
+  line-height:100%;
+}
+
 .fasta-table td em{color:#999;font-style:normal;}
 .fasta-table td em span{color:#f99;font-style:normal;display:inline;}
 
@@ -14,13 +20,21 @@
 .fasta-table td span.dna-c {color: blue }
 .fasta-table td span.dna-t {color: red }
 
-span.dna-a {color: green }
-span.dna-c {color: blue }
-span.dna-t {color: red }
+.clustalw-table {
+  font-family:courier,monospace;
+  background-color:#fff;
+  margin:0;
+  font-size:12px;
+  line-height:100%;
+}
+.clustalw-table td span.dna-a {color: green }
+.clustalw-table td span.dna-c {color: blue }
+.clustalw-table td span.dna-t {color: red }
+.clustalw-table td.seq-name-cell { padding-right:10px;}
+
 .fasta-table td span.feat-exon-a{background-color:#eee;}
 .fasta-table td span.feat-exon-b{background-color:#cfcfcf;}
 .fasta-table td span.feat-mrna,.fasta-table td span.feat-trna,.fasta-table td span.feat-rrna,.fasta-table td span.feat-snorna {background-color:#ccf;}
-
 .fasta-table td div.translation{color:red;margin:0px;padding-top:1px;}
 .ttu1 {border-top:2px red solid;}
 .ttu2 {}

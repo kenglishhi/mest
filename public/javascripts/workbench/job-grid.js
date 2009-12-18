@@ -5,7 +5,7 @@
 
 
 Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
-  useEditorFlag:true,
+  useEditorFlag:false,
   usePagingBarFlag: true,
   displayColumns:  [ {
     header: "Job Name",

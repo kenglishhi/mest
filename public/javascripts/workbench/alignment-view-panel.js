@@ -1,8 +1,26 @@
+var tempUrl = 'http://mest/system/fastas/91/original/EST_Clade_A_vs_C_Clean_001.aln'
+tempUrl = 'http://mest/system/fastas/40/original/EST_Clade_A_vs_C_Clean_007.aln'
+Ext.namespace('Ext.bio.clustalW');
+
+Ext.bio.clustalW.formatStarsLine = function(str,maxSeqNameLength) {
+  var paddingLength = 6;
+  var rg = new RegExp('^[\\s]{'+ (maxSeqNameLength + paddingLength ) +  '}') ;
+  str = str.replace(rg,'');
+  str = str.replace(/\s/g,'&nbsp;');
+  return str;
+}
+Ext.bio.clustalW.formatSequence = function(seq) {
+  seq = seq.replace(/(A+)/g, "<span class='dna-a'>$1</span>");
+  seq = seq.replace(/(T+)/g, "<span class='dna-t'>$1</span>");
+  seq = seq.replace(/(C+)/g, "<span class='dna-c'>$1</span>");
+  return seq;
+}
+
+
 Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
-  title: 'My Alignment',
+  title: 'ClustalW Alignment',
   initComponent: function() {
     Ext.apply(this,{
-      title: 'Alignment',
       items: [{
         id:'inner-alignment-panel',
         html: "No Alignment to preview "
@@ -17,44 +35,48 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
     })
     Ext.bio.AlignmentViewPanel.superclass.initComponent.call(this);
   },
+  listeners: {
+    afterrender: function() {
+      this.updateContent();
+    }
+  },
   updateContent: function() {
-    var viewPanelId= this.id;
-    console.log("updateContent");
     Ext.Ajax.request({
-      url: 'http://mest/system/fastas/24/original/EST_Clade_A_5_vs_Combined-EST_Clade_A_1-EST_Clade_A_3-EST_Clade_A_5-A_1_Clean-A_3_Clean_002.aln',
+      url:  tempUrl,
       success: function(response) {
-        var clustalwOutputLines = response.responseText.split("\n");
-        var clustalwOutput="";
         var i;
-        var seqProcessedFlag = false ;
-        var clustalwOutput = '<table>';
+        var clustalwOutputLines = response.responseText.split("\n");
+        // remove the first 3 lines
+        for (var i=0;i<3;i++) {
+          clustalwOutputLines.remove( clustalwOutputLines[0]);
+        }
+
+        var clustalwOutput = '<table class="clustalw-table">';
+        var maxSeqNameLength = 0;
         for (i =0; i < clustalwOutputLines.length; i++) {
           var line = clustalwOutputLines[i];
           if (line.match(/^CLUSTAL/)) {
-          //clustalwOutput += line +  '<br />';
-          } else if (line.length == 0 && seqProcessedFlag  )  {
-            clustalwOutput +=  '<br />';
           } else if (line.length ==0)  {
-          } else if (line.match(/\*\*\*\*\*$/)) {
-          //clustalwOutput +=  line +  '<br />';
-            clustalwOutput  += '<tr>&nbsp;</td><td>' + line  + '</td></tr>';
+            clustalwOutput  += '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+          } else if (line.match(/\*/)) {
+            clustalwOutput  += '<tr><td>&nbsp;</td><td>' + Ext.bio.clustalW.formatStarsLine(line,maxSeqNameLength) + '</td></tr>';
           }  else {
             var seqs = line.split(/\s+/);
-            seqs[1] = seqs[1].replace(/(A+)/g, "<span class='dna-a'>$1</span>");
-            seqs[1] = seqs[1].replace(/(T+)/g, "<span class='dna-t'>$1</span>");
-            seqs[1] = seqs[1].replace(/(C+)/g, "<span class='dna-c'>$1</span>");
-//            clustalwOutput += seqs[0] + "--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--" + seqs[1] +  '<br />';
-            clustalwOutput  += '<tr>' +  seqs[0] + '</td><td>' + seqs[1]  + '</td></tr>';
-            seqProcessedFlag  = true;
+            var seqName = seqs[0];
+            var seq = seqs[1];
+            if (seq.length==0 &&  seqName.length==0) {
+              clustalwOutput  += '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+              continue;
+            }
+
+            if (seqName.length > maxSeqNameLength) {
+              maxSeqNameLength = seqName.length
+            }
+            clustalwOutput  += '<tr><td class="seq-name-cell">' +  seqName + '</td><td>' + Ext.bio.clustalW.formatSequence(seq)  + '</td></tr>';
           }
         }
         clustalwOutput += '</table>';
-
-        //.        clustalwOutput = clustalwOutput.replace(/(A+)/g, "<span class='dna-a'>$1</span>");
-        //        clustalwOutput = clustalwOutput.replace(/(T+)/g, "<span class='dna-t'>$1</span>");
-        //        clustalwOutput = clustalwOutput.replace(/(C+)/g, "<span class='dna-c'>$1</span>");
         Ext.getCmp('inner-alignment-panel').getEl().update(clustalwOutput);
-      //        cmp.update(response.responseText);
       },
       headers: {
       },
