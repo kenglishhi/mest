@@ -45,14 +45,15 @@ class Blast::Command
       params[:evalue] = "10e-#{params[:evalue]}"
     end
     cli ={}
-    cli['-d'] = params[:nt] ? self.nt_database_directory : params[:target_file_path]
-    cli['-i'] = params[:test_file_path]
+    program  = PROGRAMS.include?(params[:program]) ? params[:program] : 'blastn'
+    cli['-p'] = program
     cli['-e'] = params[:evalue]
     cli['-b'] =  params[:number_of_hits_per_query].blank? ? 20 :  params[:number_of_hits_per_query]
+    cli['-d'] = params[:nt] ? self.nt_database_directory : params[:target_file_path]
+    cli['-i'] = params[:test_file_path]
     options =  cli.to_a.join(' ')
 
-    program  = PROGRAMS.include?(params[:program]) ? params[:program] : 'blastn'
-    command = " blastall -p #{program}  #{options} "
+    command = " blastall #{options} "
     puts command
     blast_result.command = command if blast_result
     logger.info("[kenglish] blast command = #{command}")
