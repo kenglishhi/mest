@@ -11,10 +11,10 @@ class Workbench::HomeController < ApplicationController
   def alignment_panel
     render :layout => false
   end
-#  def change_project
-#    change_active_project(Project.find(params[:id]))
-#    redirect_to '/workbench'
-#  end
+  def change_project
+    change_active_project(Project.find(params[:id]))
+    redirect_to '/workbench'
+  end
 #  def storetest
 #    render :layout => false
 #  end
