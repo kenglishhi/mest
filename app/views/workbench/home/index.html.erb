@@ -14,9 +14,11 @@
       "ext-3.0.0/MultiSelect" ,
       "ext-3.0.0/FileUploadField" ,
       "workbench/base",
+      "workbench/App",
+      "workbench/RowEditor",
       "workbench/bio-notifier",
       "workbench/workbench-tree",
-      "workbench/App",
+      "workbench/top-menu-toolbar",
       "workbench/restful-grid",
       "workbench/biosequence-grid",
       "workbench/biodatabase-grid",
@@ -27,12 +29,10 @@
       "workbench/job-grid",
       "workbench/job-log-grid",
       "workbench/bio-property-grid",
-      "workbench/RowEditor",
-      "workbench/bio-sequence-view-panel",
+      "workbench/biosequence-view-panel",
       "workbench/alignment-view-panel",
       "workbench/bio-form-windows",
-      "workbench/ncbi-blast-form",
-      "workbench/top-menu-toolbar"
+      "workbench/ncbi-blast-form"
   %>
     <style type="text/css">
       .x-window-dlg .ext-mb-download {
@@ -249,20 +249,17 @@ extjs_store( :controller => "workbench/blast_results",
     }
     Ext.bio.workbench.updateContent = function(node){
       var params ={};
-
-      if (node.attributes.resource =='biodatabase' ) {
-
+      if (node.attributes.resource =='biodatabase') {
         var mainTabs = Ext.getCmp('workbench-grid-tabs');
+        if (!(mainTabs.activeTab.id =='workbench-biosequence-tab'
+          || mainTabs.activeTab.id =='workbench-blast-results-tab')) {
 
-        //        if (!(mainTabs.activeTab.id =='workbench-biosequence-tab'
-        //          || mainTabs.activeTab.id =='workbench-blast-results-tab')) {
+          Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
 
-        Ext.getCmp('workbench-grid-tabs').activate('workbench-biosequence-tab');
-
-        //       }
+        }
         params.biodatabase_id = node.id;
-        Ext.getCmp('workbench-biosequence-grid').updateContent(params);
         params.biodatabase_name = node.text;
+        Ext.getCmp('workbench-biosequence-grid').updateContent(params);
         Ext.getCmp('workbench-blast-results-grid').updateContent(params);
       } else if (node.attributes.resource =='fasta_file' ) {
         Ext.getCmp('workbench-grid-tabs').activate('workbench-fasta-file-tab');
@@ -328,7 +325,7 @@ extjs_store( :controller => "workbench/blast_results",
               height: 330,
               xtype: 'tabpanel',
               deferredRender: true,
-              activeTab: 3,
+              activeTab: 0,
               items: [
                 {
                   iconCls:'new_fasta',
@@ -341,7 +338,8 @@ extjs_store( :controller => "workbench/blast_results",
                       pageSize: Ext.workbenchMenu.seqPageSize,
                       store: Ext.workbenchdata.biosequenceStore,
                       biodatabasePropertyStore: biodatabasePropertyStore,
-                      biosequenceViewId: 'bio-sequence-view'
+                      biosequenceViewPanelId: 'biosequence-view',
+                      alignmentViewPanelId: 'alignment-view'
                     }]
                 },
                 {
@@ -438,11 +436,10 @@ extjs_store( :controller => "workbench/blast_results",
               activeTab: 0,
               items: [{
                   title: 'Sequence',
-                  xtype: 'bio-sequence-view-panel',
+                  xtype: 'biosequence-view-panel',
                   iconCls:'new_fasta',
-                  id: 'bio-sequence-view'
+                  id: 'biosequence-view'
                 },{
-
                   title: 'Alignment',
                   xtype: 'alignment-view-panel',
                   iconCls:'new_fasta',

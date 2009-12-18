@@ -56,7 +56,7 @@ Ext.bio.SeqSearchField = Ext.extend(Ext.form.TwinTriggerField, {
 });
 Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   pageSize: 50,
-  biosequenceViewId: 'xxxx',
+  biosequenceViewPanelId: 'xxxx',
   usePagingBarFlag: true,
   displayColumns: [
   {
@@ -72,16 +72,14 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   }
   ],
   initComponent: function() {
-    var biosequenceViewId = this.biosequenceViewId;
+    var biosequenceViewPanelId = this.biosequenceViewPanelId;
     this.store.on('load',function() {
-      var viewPanel = Ext.getCmp(biosequenceViewId);
+      var viewPanel = Ext.getCmp(biosequenceViewPanelId);
       if (viewPanel) {
         var params = {
           rowIndex: 0
         };
-      //        viewPanel.updateContent(params);
       }
-
     });
     var cmpId = this.id;
 
@@ -111,13 +109,21 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
       },'-',
       {
         iconCls:'clustalw',
-        text: 'Alignment File',
+        text: 'View Alignment',
         id:'seq-grid-alignment-toolbar-item',
         hidden: true,
         labelStyle: 'font-weight:bold;',
+        alignmentViewPanelId: this.alignmentViewPanelId,
         handler: function() {
           var strUrl = Ext.getCmp(cmpId).biodatabasePropertyStore.getAt(0).data.alignment_file_url;
-          window.open(strUrl);
+          var alignmentViewPanel = Ext.getCmp(this.alignmentViewPanelId);
+          if (alignmentViewPanel) { 
+            alignmentViewPanel.updateContent({
+              url: strUrl
+            });
+          }
+        //          alignemExt.getCmp(this.alignmentViewPanelId).updateContent(strUrl);
+        //          window.open(strUrl);
         }
       }
       , '->', {
@@ -131,12 +137,12 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     Ext.bio.BiosequenceGrid.superclass.initComponent.call(this);
   },
   updateViewPanel: function(params) {
-    var viewPanel = Ext.getCmp(this.biosequenceViewId);
+    var viewPanel = Ext.getCmp(this.biosequenceViewPanelId);
     viewPanel.updateContent(params);
   },
   listeners: {
     afterrender: function( p)  {
-      var viewPanel = Ext.getCmp(this.biosequenceViewId);
+      var viewPanel = Ext.getCmp(this.biosequenceViewPanelId);
       viewPanel.setSource(this.store);
     },
     rowclick: function (grid, rowIndex, e) {
@@ -169,20 +175,20 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   updateContent: function(params) {
     if (params.biodatabase_id) {
       this.store.baseParams.biodatabase_id = params.biodatabase_id;
-      var viewPanel = Ext.getCmp(this.biosequenceViewId);
       this.store.load({
         params: {
           start: 0,
           limit: this.pageSize
         }
       } );
+      var alignmentViewPanelId = this.alignmentViewPanelId;
       this.biodatabasePropertyStore.load({
         params:{
           id:params.biodatabase_id
         },
         callback: function(store, records, options){
           var tbFasta = Ext.getCmp('seq-grid-fasta-toolbar-item');
-          var tbAlign = Ext.getCmp('seq-grid-alignment-toolbar-item');
+          //          var tbAlign = Ext.getCmp('seq-grid-alignment-toolbar-item');
           if (tbFasta) {
             if (this.getAt(0).data.fasta_file_url){
               tbFasta.show();
@@ -190,12 +196,16 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
               tbFasta.hide();
             }
           }
-          if (tbAlign) {
-            if (this.getAt(0).data.alignment_file_url){
-              tbAlign.show();
-            } else {
-              tbAlign.hide();
+          var alignmentViewPanel = Ext.getCmp(alignmentViewPanelId );
+          if (this.getAt(0).data.alignment_file_url){
+            var url = this.getAt(0).data.alignment_file_url;
+            if (alignmentViewPanel) {
+              alignmentViewPanel.updateContent({
+                url: url
+              });
             }
+          } else {
+            alignmentViewPanel.clearContent();
           }
         }
       });
