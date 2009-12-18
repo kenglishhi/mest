@@ -184,6 +184,25 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
   id:'bio-blast-window',
   initComponent: function() {
     var parentComponentId = this.id;
+    var programStore = new Ext.data.SimpleStore({
+      fields: ['program'],
+      data : [ ['blastn'], ['blastp'], ['blastx'], ['psitblastn'], ['tblastn'], ['tblastx'] ]
+    });
+
+    var programCombo = new Ext.form.ComboBox({
+      store: programStore,
+      forceSelection: true,
+      displayField:'program',
+      fieldLabel: 'Program',
+      name:'program',
+      id:'program-blast-field',
+      value:'blastn', //programStore.getAt(0).get('blastn'),
+      mode: 'local',
+      triggerAction: 'all',
+      allowBlank: false,
+      selectOnFocus:true
+
+    });
 
     var testCombo = new Ext.form.ComboBox({
       fieldLabel: 'Test Database',
@@ -223,42 +242,6 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       containerWidth: 200
     });
 
-    //    var targetCombo = Ext.form.MultiSelectField({
-    //      store: Ext.example.Store ,
-    //      valueField:'id' ,
-    //      displayField:'name' ,
-    //      mode: 'local' ,
-    //      fieldLabel: 'Target Database',
-    //      name:'biodatabase',
-    //      id:'target-biodatabase-id-blast-field',
-    //      hiddenName : 'target_biodatabase_id',
-    //      valueField:'id',
-    //      displayField:'name',
-    //      store: this.dbStore,
-    //      containerHeight: 200,
-    //      containerWidth: 200,
-    //      store: Ext.example.Store
-    //    });
-    //
-    //    var targetCombo = new Ext.form.ComboBox({
-    //      fieldLabel: 'Target Database',
-    //      name:'biodatabase',
-    //      id:'target-biodatabase-id-blast-field',
-    //      hiddenName : 'target_biodatabase_id',
-    //      valueField:'id',
-    //      displayField:'name',
-    //      store: this.dbStore,
-    //      typeAhead: true,
-    //      mode: 'local',
-    //      triggerAction: 'all',
-    //      emptyText:'Select a target database...',
-    //      selectOnFocus:true,
-    //      width: 350,
-    //      listWidth: 350,
-    //      allowBlank:false
-    //    });
-
-
     var form = new Ext.FormPanel({
       id: 'my-blast-form-panel',
       labelWidth: 120, // label settings here cascade unless overridden
@@ -273,7 +256,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
         width: 230
       },
       defaultType: 'textfield',
-      items: [testCombo, targetCombo,
+      items: [programCombo, testCombo, targetCombo,
       {
         fieldLabel: 'Output DB Group',
         name: 'output_biodatabase_group_name',
@@ -324,6 +307,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       items:   form
     });
     Ext.bio.BlastCreateDbsWindow.superclass.initComponent.call(this);
+
   },
 
   setParams: function(biodatabaseId) {

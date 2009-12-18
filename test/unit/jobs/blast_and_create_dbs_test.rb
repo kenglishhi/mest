@@ -16,6 +16,7 @@ class Jobs::BlastAndCreateDbsTest < ActiveSupport::TestCase
           {:test_biodatabase_id => @test_biodatabase.id,
             :target_biodatabase_ids => @target_biodatabase.id,
             :user_id => users(:users_001).id,
+            :program => 'tblastx',
             :project_id => users(:users_001).active_project.id})
         @number_of_blast_results = BlastResult.count
         @job.perform
