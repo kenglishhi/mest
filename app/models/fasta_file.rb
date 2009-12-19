@@ -110,122 +110,134 @@ class FastaFile < ActiveRecord::Base
               d.user = user
               d.project = project
               d.biodatabase_type = BiodatabaseType.database_group
+            end
+          else
+            parent_db = self.project.biodatabases.first
           end
-        else
-          parent_db = self.project.biodatabases.first
-        end
-        new_biodatabase_name = params[:new_biodatabase_name] ? params[:new_biodatabase_name] : File.basename(label)
-        self.biodatabase = Biodatabase.new(:name => new_biodatabase_name ,
+          new_biodatabase_name = params[:new_biodatabase_name] ? params[:new_biodatabase_name] : File.basename(label)
+          self.biodatabase = Biodatabase.new(:name => new_biodatabase_name ,
             :fasta_file => self,
             :user => self.user,
             :parent => parent_db,
             :project => project,
             :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_RAW) )
-        self.biodatabase.save!
-        save!
-      end
+          self.biodatabase.save!
+          save!
+        end
 
-      #        transaction do
-      ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
-      ff.each do |entry|
-        begin
-          bioseq = Biosequence.new(:name => entry.definition,
+        #        transaction do
+        ff = Bio::FlatFile.open(Bio::FastaFormat, self.fasta.path )
+        ff.each do |entry|
+          begin
+            bioseq = Biosequence.new(:name => entry.definition,
               :seq => entry.seq,
               :alphabet => 'dna',
               :length => entry.seq.length,
               :original_name => entry.definition)
-          bioseq.save!
-        rescue ActiveRecord::RecordInvalid =>  e
-          suffix = "_#{self.biodatabase.id}_#{self.biodatabase.biosequences.size}"
-          if ((bioseq.name.size + suffix.size) > 255)
-            bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
-          else
-            bioseq.name += suffix
+            bioseq.save!
+          rescue ActiveRecord::RecordInvalid =>  e
+            suffix = "_#{self.biodatabase.id}_#{self.biodatabase.biosequences.size}"
+            if ((bioseq.name.size + suffix.size) > 255)
+              bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
+            else
+              bioseq.name += suffix
+            end
+            bioseq.save!
           end
-          bioseq.save!
+          self.biodatabase.biosequences << bioseq
         end
-        self.biodatabase.biosequences << bioseq
+        self.biodatabase.save!
+        logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")
       end
-      self.biodatabase.save!
-      logger.error("[kenglish] fasta_file.biodatabase_id = #{biodatabase.id}")
+      #      end
     end
-    #      end
-  end
-  self.biodatabase
-end
-
-def formatdb
-  if fasta && fasta.path && File.exists?(fasta.path)
-    args = " -i #{fasta.path} -p F -o F -n #{fasta.path} "
-    Paperclip.run "formatdb",  args
-  else
-    raise "FORMAT DB Error: No fasta file to format"
+    self.biodatabase
   end
 
-  unless File.exists?(fasta.path+".nsq") &&
-      File.exists?(fasta.path+".nin") &&
-      File.exists?(fasta.path+".nhr")
-    raise "FORMAT DB Error: result files do not exist"
+  def formatdb
+    if fasta && fasta.path && File.exists?(fasta.path)
+      args = " -i #{fasta.path} -p F -o F -n #{fasta.path} "
+      Paperclip.run "formatdb",  args
+    else
+      raise "FORMAT DB Error: No fasta file to format"
+    end
+
+    unless File.exists?(fasta.path+".nsq") &&
+        File.exists?(fasta.path+".nin") &&
+        File.exists?(fasta.path+".nhr")
+      raise "FORMAT DB Error: result files do not exist"
+    end
   end
-end
 
-def remove_fasta_dbs
-  extensions = ["nhr", "nsq", "nil"]
-  extensions.each do | extension |
-    dbfile = "#{fasta.path}.#{extension}"
-    File.delete dbfile  if File.exist? dbfile
+  def remove_fasta_dbs
+    extensions = ["nhr", "nsq", "nil"]
+    extensions.each do | extension |
+      dbfile = "#{fasta.path}.#{extension}"
+      File.delete dbfile  if File.exist? dbfile
+    end
   end
-end
 
-def open_fasta_file
-  @fasta_file_handle = Bio::FlatFile.auto(self.fasta.path)
-  @fasta_file_handle
-end
+  def open_fasta_file
+    @fasta_file_handle = Bio::FlatFile.auto(self.fasta.path)
+    @fasta_file_handle
+  end
 
-def close_fasta_file
-  @fasta_file_handle.close if @fasta_file_handle
-end
+  def close_fasta_file
+    @fasta_file_handle.close if @fasta_file_handle
+  end
 
 
-def generate_alignment
-  command = " clustalw -quiet -infile=#{self.fasta.path}"
-  puts command
-  system(*command)
-  self.alignment_flag = true
-  self.save!
-  alignment_file_path
-end
-
-def alignment_file_url
-  self.fasta.url.sub(/fasta$/,'aln') if alignment_exists?
-end
-def  alignment_file_name_display
-  File.basename(alignment_file_path)
-end
-def fasta_file_url
-  self.fasta.url
-end
-def fasta_file_name_display
-  fasta_file_name
-end
-
-def alignment_file_path
-  self.fasta.path.sub(/fasta$/,'aln')
-end
-
-def alignment_exists?
-  does_exists = File.exists? alignment_file_path
-  if does_exists != self.alignment_flag
-    # sync the value in the database if it does not exist
-    self.alignment_flag = does_exists
+  def generate_alignment
+    command = " clustalw -quiet -infile=#{self.fasta.path}"
+    puts command
+    system(*command)
+    self.alignment_flag = true
     self.save!
+    alignment_file_path
   end
-  self.alignment_flag
-end
 
-def overwrite_fasta
-  if self.fasta
-    FastaFile.write_sequences_to_file(biodatabase, self.fasta.path )
+  def alignment_file_url
+    self.fasta.url.sub(/fasta$/,'aln') if alignment_exists?
   end
-end
+  def alignment_to_hash
+    if alignment_exists?
+      aln_str = File.read(alignment_file_path)
+      r = Bio::ClustalW::Report.new(aln_str)
+      r.alignment.to_hash.merge(  {:MATCH_LINE => {:seq => r.match_line } } )
+    else
+      {}
+    end
+  end
+  def  alignment_file_name_display
+    File.basename(alignment_file_path)
+  end
+
+  def fasta_file_url
+    self.fasta.url
+  end
+
+  def fasta_file_name_display
+    fasta_file_name
+  end
+
+  def alignment_file_path
+    self.fasta.path.sub(/fasta$/,'aln')
+  end
+
+  def alignment_exists?
+    does_exists = File.exists? alignment_file_path
+    if does_exists != self.alignment_flag
+      # sync the value in the database if it does not exist
+      self.alignment_flag = does_exists
+      self.save!
+    end
+    self.alignment_flag
+  end
+
+  def overwrite_fasta
+    if self.fasta
+      FastaFile.write_sequences_to_file(biodatabase, self.fasta.path )
+    end
+  end
+
 end

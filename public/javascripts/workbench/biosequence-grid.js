@@ -199,10 +199,9 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
           // Update the alignment page..
           var alignmentViewPanel = Ext.getCmp(alignmentViewPanelId );
           if (this.getAt(0).data.alignment_file_url){
-            var url = this.getAt(0).data.alignment_file_url;
             if (alignmentViewPanel) {
               alignmentViewPanel.updateContent({
-                url: url
+                biodatabase_id: params.biodatabase_id
               });
             }
           } else {

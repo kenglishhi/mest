@@ -47,9 +47,9 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
   },
   listeners: {
     afterrender: function() {
-      if (this.alnFileUrl) {
+      if (this.biodatabase_id) {
         this.updateContent({ 
-          url:this.alnFileUrl
+          biodatabase_id: this.biodatabase_id
         });
       }
     }
@@ -60,50 +60,33 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
     }
   },
   updateContent: function(params) {
-    if (params && params.url) {
-      this.alnFileUrl  = params.url ;
+    console.log("biodatabase_id = " + this.biodatabase_id );
+
+    if (params && params.biodatabase_id) {
+      this.biodatabase_id  = params.biodatabase_id ;
+      var url = 'http://mest/workbench/alignments/1.json';
       if (this.rendered) {
         Ext.Ajax.request({
-          url:  this.alnFileUrl,
+          url:  url,
+          params: { 
+            biodatabase_id: this.biodatabase_id
+          },
+          method:'GET',
           success: function(response) {
-            var i;
-            var clustalwOutputLines = response.responseText.split("\n");
-            // remove the first 3 lines
-            for (var i=0;i<3;i++) {
-              clustalwOutputLines.remove( clustalwOutputLines[0]);
-            }
-
+            var alnObj = Ext.util.JSON.decode(response.responseText);
             var clustalwOutput = '<table class="clustalw-table">';
-            var maxSeqNameLength = 0;
-            for (i =0; i < clustalwOutputLines.length; i++) {
-              var line = clustalwOutputLines[i];
-              if (line.match(/^CLUSTAL/)) {
-              } else if (line.length ==0)  {
-                clustalwOutput  += '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
-              } else if (line.match(/\*/)) {
-                clustalwOutput  += '<tr><td>&nbsp;</td><td>' + Ext.bio.clustalW.formatStarsLine(line,maxSeqNameLength) + '</td></tr>';
-              }  else {
-                var seqs = line.split(/\s+/);
-                var seqName = seqs[0];
-                var seq = seqs[1];
-                if (seq.length==0 &&  seqName.length==0) {
-                  clustalwOutput  += '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
-                  continue;
-                }
-
-                if (seqName.length > maxSeqNameLength) {
-                  maxSeqNameLength = seqName.length
-                }
-                clustalwOutput  += '<tr><td class="seq-name-cell">' +  seqName + '</td><td>' + Ext.bio.clustalW.formatSequence(seq)  + '</td></tr>';
+            for (var seqId in alnObj) {
+              if (seqId != "MATCH_LINE") {
+                clustalwOutput += '<tr><td class="seq-name-cell">' + seqId + '</td>';
+                clustalwOutput += '<td>' + Ext.bio.clustalW.formatSequence(alnObj[seqId].seq) + '</td></tr>';
               }
+            }
+            if (alnObj['MATCH_LINE']){
+              clustalwOutput  += '<tr><td class="seq-name-cell">&nbsp;</td><td>' +  alnObj['MATCH_LINE'].seq+ '</td></tr>';
             }
             clustalwOutput += '</table>';
             Ext.getCmp('inner-alignment-panel').getEl().update(clustalwOutput);
-          },
-          headers: {
-          },
-          params: {
-        }
+          }
         });
 
       }

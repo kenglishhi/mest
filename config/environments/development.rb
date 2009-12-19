@@ -17,6 +17,6 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 config.after_initialize do
-  Blast::Command.nr_database_directory = File.dirname(__FILE__) + '/../../test/fixtures/files/nr_fake'
-  Blast::Command.nt_database_directory = File.dirname(__FILE__) + '/../../test/fixtures/files/nt_fake'
+  Blast::Command.nr_database_directory = '/opt/local/var/data/nr'
+  Blast::Command.nt_database_directory = '/opt/local/var/data/nt'
 end
