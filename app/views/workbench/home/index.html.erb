@@ -130,6 +130,19 @@ extjs_store( :controller => "workbench/generated_biodatabases",
   }
 ).render(false)
 %>
+    Ext.workbenchdata.groupDbsComboStore = <%=
+extjs_store( :controller => "workbench/group_biodatabases",
+  :model => "biodatabase",
+  :writer => {"encode" => false},
+  :config => {
+    "storeId" => 'group-dbs-combo-store',
+    "autoLoad" => true,
+    "autoSave" => false,
+    "restful" => true
+  }
+).render(false)
+%>
+
 
     var biodatabasePropertyStore = <%=
 extjs_store( :controller => "workbench/biodatabases",
@@ -355,18 +368,6 @@ extjs_store( :controller => "workbench/blast_results",
                     } ]
 
                 },
-                {
-                  iconCls:'new_view',
-                  title: 'Alignments',
-                  autoScroll: true,
-                  id:'alignments-result-tab',
-                  items: [ {
-                      id: 'alignments-results-grid',
-                      xtype:'alignments-grid' ,
-                      store: Ext.workbenchdata.alignmentsStore
-                    } ]
-            
-                },
                 [{
 
                     iconCls:'grid_icon',
@@ -425,7 +426,22 @@ extjs_store( :controller => "workbench/blast_results",
                     } ]
             
                 }
-              ]
+/*                ,
+                {
+                  iconCls:'clustalw',
+                  title: 'Alignment Output Files',
+                  autoScroll: true,
+                  id:'alignments-result-tab',
+                  items: [ {
+                      id: 'alignments-results-grid',
+                      xtype:'alignments-grid' ,
+                      store: Ext.workbenchdata.alignmentsStore
+                    } ]
+
+                }
+*/
+
+                ]
             },{
               xtype: 'tabpanel',
               id: 'workbench-detail-tabs',
@@ -442,7 +458,7 @@ extjs_store( :controller => "workbench/blast_results",
                 },{
                   title: 'Alignment',
                   xtype: 'alignment-view-panel',
-                  iconCls:'new_fasta',
+                  iconCls:'clustalw',
                   id: 'alignment-view'
                 }]
             }]

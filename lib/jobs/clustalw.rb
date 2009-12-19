@@ -6,11 +6,12 @@ class Jobs::Clustalw < Jobs::AbstractJob
   def do_perform
     if !params[:biodatabase_id].blank?
       biodatabase = Biodatabase.find(params[:biodatabase_id])
-      FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
-      biodatabase.fasta_file.generate_alignment
-    elsif !params[:biodatabase_group_id].blank?
-      biodatabase_group = BiodatabaseGroup.find(params[:biodatabase_group_id] )
-      biodatabase_group.biodatabases.each do | biodatabase |
+      if biodatabase.biodatabase_type == BiodatabaseType.database_group
+        biodatabase.children.each do | biodatabase |
+          FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
+          biodatabase.fasta_file.generate_alignment
+        end
+      else
         FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
         biodatabase.fasta_file.generate_alignment
       end

@@ -1,10 +1,3 @@
-//Ext.bio.StateMultiSelect = function(config) {
-//  Ext.bio.StateMultiSelect.superclass.constructor.call(this, config);
-//};
-//Ext.extend(Ext.bio.StateMultiSelect, Ext.form.MultiSelectField, {
-//});
-
-
 Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   title: 'Rename Sequences',
   layout:'fit',
@@ -28,6 +21,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
       triggerAction: 'all',
       emptyText:'Select a database...',
       selectOnFocus:true,
+      forceSelection:true,
       width: 350,
       listWidth: 350,
       allowBlank:false
@@ -81,8 +75,8 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
     });
     Ext.bio.BiodatabaseRenamerWindow.superclass.initComponent.call(this);
   },
-  setParams: function(biodatabaseId) {
-    Ext.getCmp('biodatabase-id-rename-field').setValue(biodatabaseId);
+  setParams: function(params) {
+    Ext.getCmp('biodatabase-id-rename-field').setValue(params.id);
   }
 });
 
@@ -169,8 +163,8 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
     });
     Ext.bio.BlastCleanerWindow.superclass.initComponent.call(this);
   } ,
-  setParams: function(biodatabaseId) {
-    Ext.getCmp('biodatabase-id-clean-field').setValue(biodatabaseId);
+  setParams: function(params) {
+    Ext.getCmp('biodatabase-id-clean-field').setValue(params.id);
   }
 });
 
@@ -310,8 +304,8 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
 
   },
 
-  setParams: function(biodatabaseId) {
-    Ext.getCmp('test-biodatabase-id-blast-field').setValue(biodatabaseId);
+  setParams: function(params) {
+    Ext.getCmp('test-biodatabase-id-blast-field').setValue(params.id);
   //    Ext.getCmp('target-biodatabase-id-blast-field').setValue(biodatabaseId);
   }
 });
@@ -386,8 +380,8 @@ Ext.bio.GroupClustalwWindow = Ext.extend(Ext.Window,{
     });
     Ext.bio.GroupClustalwWindow.superclass.initComponent.call(this);
   } ,
-  setParams: function(biodatabaseGroupId) {
-    Ext.getCmp('biodatabase-group-id-clustalw-field').setValue(biodatabaseGroupId);
+  setParams: function(params) {
+    Ext.getCmp('biodatabase-group-id-clustalw-field').setValue(params.id);
   }
 });
 
@@ -415,6 +409,7 @@ Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
       mode: 'local',
       triggerAction: 'all',
       emptyText:'Select a database...',
+      forceSelection:true,
       selectOnFocus:true,
       width: 400,
       listWidth: 400,
@@ -464,8 +459,8 @@ Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
     });
     Ext.bio.ClustalwWindow.superclass.initComponent.call(this);
   } ,
-  setParams: function(biodatabaseId) {
-    Ext.getCmp('biodatabase-id-clustalw-field').setValue(biodatabaseId);
+  setParams: function(params) {
+    Ext.getCmp('biodatabase-id-clustalw-field').setValue(params.id);
   }
 });
 
@@ -553,8 +548,8 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
     });
     Ext.bio.BlastNtAppendWindow.superclass.initComponent.call(this);
   } ,
-  setParams: function(biodatabaseId) {
-    Ext.getCmp('biodatabase-id-nt-append-field').setValue(biodatabaseId);
+  setParams: function(params) {
+    Ext.getCmp('biodatabase-id-nt-append-field').setValue(params.id);
   }
 });
 
@@ -642,8 +637,8 @@ Ext.bio.BlastGroupNtAppendWindow = Ext.extend(Ext.Window,{
     });
     Ext.bio.BlastNtAppendWindow.superclass.initComponent.call(this);
   } ,
-  setParams: function(biodatabaseId) {
-    Ext.getCmp('biodatabase-group-id-nt-append-field').setValue(biodatabaseId);
+  setParams: function(params) {
+    Ext.getCmp('biodatabase-group-id-nt-append-field').setValue(params.id);
   }
 });
 
@@ -732,6 +727,7 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
     this.fastaGridCmpId = fastaGridCmpId ;
   }
 });
+
 Ext.bio.ExtractSequencesWindow = Ext.extend(Ext.Window,{
   title: 'Extract Sequences',
   layout:'fit',
@@ -821,46 +817,45 @@ Ext.bio._showFormWindow = function (obj, cmpId, store, params){
   if (params) {
     win.setParams(params);
   }
-
 };
 Ext.bio.showBiodatabaseRenamerWindow = function(params) {
-  var biodatabaseId  = params.id;
   var cmpId = 'bio-db-renamer-window';
   var obj = Ext.bio.BiodatabaseRenamerWindow ;
   var store = Ext.workbenchdata.rawDbsComboStore;
-  Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
+  Ext.bio._showFormWindow(obj, cmpId, store, params);
 };
 
 Ext.bio.showBlastCleanerWindow = function(params) {
-  var biodatabaseId  = params.id;
   var cmpId = 'bio-blast-cleaners-window';
   var obj = Ext.bio.BlastCleanerWindow;
   var store = Ext.workbenchdata.rawDbsComboStore;
-  Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
+  Ext.bio._showFormWindow(obj, cmpId, store, params);
 } ;
 
 Ext.bio.showBlastCreateDbsWindow  = function(params) {
-  var biodatabaseId  = params.id;
   var cmpId = 'bio-blast-window';
   var obj = Ext.bio.BlastCreateDbsWindow;
   var store = Ext.workbenchdata.rawDbsComboStore;
-  Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
+  Ext.bio._showFormWindow(obj, cmpId, store, params);
 } ;
 
 Ext.bio.showClustalwWindow  = function(params) {
-  var biodatabaseId  = params.id;
   var cmpId = 'bio-clustalw-window';
   var obj = Ext.bio.ClustalwWindow;
-  var store =Ext.workbenchdata.generatedDbsComboStore ;
-  Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
+  var store;// = Ext.workbenchdata.generatedDbsComboStore ;
+  if (params.attributes.db_type == "Database Group") { 
+    store = Ext.workbenchdata.groupDbsComboStore ;
+  } else  {
+    store = Ext.workbenchdata.generatedDbsComboStore ;
+  }
+  Ext.bio._showFormWindow(obj, cmpId, store, params);
 } ;
 
 Ext.bio.showBlastNtAppendWindow  = function(params) {
-  var biodatabaseId  = params.id;
   var cmpId = 'bio-blast-nt-append-window' ;
   var obj = Ext.bio.BlastNtAppendWindow ;
   var store = Ext.workbenchdata.generatedDbsComboStore ;
-  Ext.bio._showFormWindow(obj, cmpId, store, biodatabaseId);
+  Ext.bio._showFormWindow(obj, cmpId, store, params);
 };
 
 

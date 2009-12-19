@@ -202,33 +202,33 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
           contextMenu  = new Ext.menu.Menu({
             items: [renameButton, cleanButton, blastButton, '-', deleteButton]
           });
-        } else {
+        } else if (node.attributes.db_type == "Database Group") {
+          var ntGroupAppendButton = new Ext.menu.Item({
+            iconCls:'blast',
+            text: "Blast vs NR-NT",
+            handler: function() {
+              Ext.bio.showBlastGroupNtAppendWindow(node);
+            }
+          });
+          var groupClustalwButton = new Ext.menu.Item({
+            iconCls:'clustalw',
+            text: "ClustalW",
+            handler: function() {
+              Ext.bio.showClustalwWindow(node);
+            }
+          });
 
+          contextMenu  = new Ext.menu.Menu({
+            items: [ntGroupAppendButton,groupClustalwButton,  '-', deleteButton]
+          });
+
+        } else {
           contextMenu  = new Ext.menu.Menu({
             items: [deleteButton]
           });
         }
       }
       else if (node.attributes.resource == 'biodatabase_group') {
-        var ntGroupAppendButton = new Ext.menu.Item({
-          iconCls:'blast',
-          text: "Blast vs NR-NT",
-          handler: function() {
-            Ext.bio.showBlastGroupNtAppendWindow(node);
-          }
-        });
-        var groupClustalwButton = new Ext.menu.Item({
-          iconCls:'clustalw',
-          text: "ClustalW",
-          handler: function() {
-            Ext.bio.showGroupClustalwWindow(node);
-          }
-        });
-
-
-        contextMenu  = new Ext.menu.Menu({
-          items: [ntGroupAppendButton,groupClustalwButton,  '-', deleteButton]
-        });
       }
       else if (node.attributes.resource == 'fasta_file') {
         var menuItems =[];
