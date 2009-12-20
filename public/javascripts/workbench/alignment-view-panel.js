@@ -60,8 +60,6 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
     }
   },
   updateContent: function(params) {
-    console.log("biodatabase_id = " + this.biodatabase_id );
-
     if (params && params.biodatabase_id) {
       this.biodatabase_id  = params.biodatabase_id ;
       var url = 'http://mest/workbench/alignments/1.json';
