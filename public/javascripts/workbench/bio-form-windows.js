@@ -244,13 +244,21 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       baseParams:{
         authenticity_token: FORM_AUTH_TOKEN
       },
+      tbar: [ '->', {
+        text: "Blast Program Help ",
+        handler: function() {
+          Ext.workbenchMenu.blastHelpWindow.show();
+        }
+      }
+      ],
       frame:true,
       bodyStyle:'padding:5px 5px 0',
       defaults: {
         width: 230
       },
       defaultType: 'textfield',
-      items: [programCombo, testCombo, targetCombo,
+      items: [
+      programCombo, testCombo, targetCombo,
       {
         fieldLabel: 'Output DB Group',
         name: 'output_biodatabase_group_name',
@@ -298,7 +306,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
     });
 
     Ext.apply(this,{
-      items:   form
+      items: [  form ]
     });
     Ext.bio.BlastCreateDbsWindow.superclass.initComponent.call(this);
 
@@ -761,7 +769,7 @@ Ext.bio.ExtractSequencesWindow = Ext.extend(Ext.Window,{
         name: 'new_biodatabase_name',
         allowBlank:true,
         msgTarget:'side'
-      } 
+      }
       ],
       buttons: [{
         text: 'Submit',

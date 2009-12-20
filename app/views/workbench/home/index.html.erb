@@ -299,6 +299,29 @@ extjs_store( :controller => "workbench/blast_results",
       menuData:Ext.workbenchMenu
     });
 
+    Ext.workbenchMenu.blastHelpWindow = new Ext.Window({
+      title: 'Blast Program Options',
+      layout:'fit',
+      width:500,
+      height:300,
+      closeAction:'hide',
+      plain: true,
+      items: new Ext.Panel({
+        contentEl: 'blast-programs',
+        autoScroll: true,
+        deferredRender:false,
+        border:false
+      }),
+
+      buttons: [{
+          text: 'Close',
+          handler: function(){
+            Ext.workbenchMenu.blastHelpWindow.hide();
+          }
+        }]
+    });
+
+
     var viewport = new Ext.Viewport({
       layout: 'border',
       items: [
@@ -327,7 +350,13 @@ extjs_store( :controller => "workbench/blast_results",
             Ext.workbenchdata.generatedDbsComboStore.reload();
             Ext.workbenchdata.rawDbsComboStore.reload();
             Ext.workbenchdata.biosequenceStore.reload();
-          }
+          },
+          bbar: ['->', {
+              text: "Blast Help Window",
+              handler: function() {
+                Ext.workbenchMenu.blastHelpWindow.show();
+              }
+            } ]
         } ,
         {
           region: 'center',
@@ -426,7 +455,7 @@ extjs_store( :controller => "workbench/blast_results",
                     } ]
             
                 }
-/*                ,
+                /*                ,
                 {
                   iconCls:'clustalw',
                   title: 'Alignment Output Files',
@@ -439,9 +468,9 @@ extjs_store( :controller => "workbench/blast_results",
                     } ]
 
                 }
-*/
+                 */
 
-                ]
+              ]
             },{
               xtype: 'tabpanel',
               id: 'workbench-detail-tabs',
@@ -522,5 +551,8 @@ extjs_store( :controller => "workbench/blast_results",
     </div>
 
     -->
+
+    <%= render :partial => 'blast_help_window' %>
+
   </body>
 </html>

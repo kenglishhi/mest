@@ -275,3 +275,24 @@ td.icon {text-align:center;width:25px;}
 .x-toolbar-item-bold {
   font-weight:bold !important;
 }
+
+#blast-programs{
+  border-bottom: thin solid black;
+  padding: 0em 0em 1em 1.5em;
+  margin: 0em 0em 1em 0em;
+}
+
+#blast-programs h3 {
+  position: relative;
+  left: -1em;
+}
+
+#blast-programs dl {
+  margin-bottom: 1em;
+}
+
+#blast-programs dt { font-weight: bold; }
+#blast-programs dd {
+  padding-left: 2em;
+  padding-bottom: 1em;
+}

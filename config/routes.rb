@@ -90,6 +90,10 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'workbench/home',
     :action     => 'alignment_panel'
 
+  map.connect 'workbench/home/blast_help_window',
+    :controller => 'workbench/home',
+    :action     => 'blast_help_window'
+
   map.connect 'workbench/home/rename',
     :controller => 'workbench/home',
     :action     => 'rename'

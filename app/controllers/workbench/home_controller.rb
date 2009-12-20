@@ -11,6 +11,9 @@ class Workbench::HomeController < ApplicationController
   def alignment_panel
     render :layout => false
   end
+  def blast_help_window
+    render :layout => false
+  end
   def change_project
     change_active_project(Project.find(params[:id]))
     redirect_to '/workbench'

@@ -1,6 +1,29 @@
 <html>
   <head>
     <title>BiococonutIsland :: Workbench </title>
+    <style type="text/css">
+      #blast-programs{
+        border-bottom: thin solid black;
+        padding: 0em 0em 1em 1.5em;
+        margin: 0em 0em 1em 0em;
+      }
+
+      #blast-programs h3 {
+        position: relative;
+        left: -1em;
+      }
+
+      #blast-programs dl {
+        margin-top: 1em;
+      }
+
+      #blast-programs dt { font-weight: bold; }
+      #blast-programs dd {
+        padding-left: 2em;
+        padding-bottom: 1em;
+      }
+    </style>
+
     <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
       "ext-override",
       "workbench-style" %>
@@ -38,9 +61,36 @@
   <body>
     <h1>Test the Fasta File Upload Form </h1>
     <p>Simple example:</p>
+    <div id="blast-programs"  class="x-hide-display">
+      <h3>Blast Program Options</h3>
+      <dl>
+        <dt>blastn</dt>
+        <dd>Compares a nucleotide query sequence against a nucleotide sequence database. <br />
+          <b>Test Database</b>: Nuclueotides <br />
+          <b>Target Database</b>: Nuclueotides
+        </dd>
+        <dt>blastp</dt>
+        <dd>Compares an amino acid query sequence against a protein sequence database. <br />
+          <b>Test Database</b>: Proteins <br />
+          <b>Target Database</b>: Proteins
+        </dd>
+        <dt>blastx</dt>
+        <dd>Compares a nucleotide query sequence translated in all reading frames against a protein sequence database. <br />
+          <b>Test Database</b>: Nucleotides <br />
+          <b>Target Database</b>: Proteins
+        </dd>
+        <dt>tblastn</dt>
+        <dd>Compares a protein query sequence against a nucleotide sequence database dynamically translated in all reading frames. <br />
+          <b>Test Database</b>: Proteints <br />
+          <b>Target Database</b>: Nucleotides
+        </dd>
+        <dt>tblastx</dt>
+        <dd>Compares the six-frame translations of a nucleotide query sequence against the six-frame translations of a nucleotide sequence database.<br />
+          <b>Test Database</b>: Nuclueotides <br />
+          <b>Target Database</b>: Nuclueotides
+        </dd>
+      </dl>
+    </div>
     <div id='my-alignment-view'></div>
-
-
   </body>
-
 </html>
