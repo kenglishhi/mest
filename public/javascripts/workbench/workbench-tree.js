@@ -174,6 +174,7 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
               Ext.bio.showClustalwWindow(node);
             }
           });
+
           var ntAppendButton = new Ext.menu.Item({
             iconCls:'blast',
             text: "Blast vs NR-NT",
@@ -203,11 +204,12 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
             items: [renameButton, cleanButton, blastButton, '-', deleteButton]
           });
         } else if (node.attributes.db_type == "Database Group") {
-          var ntGroupAppendButton = new Ext.menu.Item({
+
+          var ntAppendButton = new Ext.menu.Item({
             iconCls:'blast',
             text: "Blast vs NR-NT",
             handler: function() {
-              Ext.bio.showBlastGroupNtAppendWindow(node);
+              Ext.bio.showBlastNtAppendWindow(node);
             }
           });
           var groupClustalwButton = new Ext.menu.Item({
@@ -219,7 +221,7 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
           });
 
           contextMenu  = new Ext.menu.Menu({
-            items: [ntGroupAppendButton,groupClustalwButton,  '-', deleteButton]
+            items: [ntAppendButton,groupClustalwButton,  '-', deleteButton]
           });
 
         } else {

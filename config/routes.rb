@@ -101,6 +101,9 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'workbench/home',
     :action     => 'ncbi_blast'
 
+  map.connect 'workbench/home/nt_append_form',
+    :controller => 'workbench/home',
+    :action     => 'nt_append_form'
 
   map.connect 'workbench/home/user_job_notifications',
     :controller => 'workbench/home',

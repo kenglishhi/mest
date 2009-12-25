@@ -1,9 +1,6 @@
 Ext.namespace('Ext.bio.clustalW');
 
 Ext.bio.clustalW.formatStarsLine = function(str,maxSeqNameLength) {
-  var paddingLength = 6;
-  var rg = new RegExp('^[\\s]{'+ (maxSeqNameLength + paddingLength ) +  '}') ;
-  str = str.replace(rg,'');
   str = str.replace(/\s/g,'&nbsp;');
   return str;
 }
@@ -80,7 +77,7 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
               }
             }
             if (alnObj['MATCH_LINE']){
-              clustalwOutput  += '<tr><td class="seq-name-cell">&nbsp;</td><td>' +  alnObj['MATCH_LINE'].seq+ '</td></tr>';
+              clustalwOutput  += '<tr><td class="seq-name-cell">&nbsp;</td><td>' + Ext.bio.clustalW.formatStarsLine(alnObj['MATCH_LINE'].seq) + '</td></tr>';
             }
             clustalwOutput += '</table>';
             Ext.getCmp('inner-alignment-panel').getEl().update(clustalwOutput);
