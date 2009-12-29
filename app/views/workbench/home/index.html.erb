@@ -49,9 +49,6 @@
     </style>
     <script type="text/javascript">
 
-      Ext.namespace('Ext.workbenchMenu');
-      Ext.namespace('Ext.workbenchdata');
-
       Ext.onReady(function(){
 <%= render :partial => "layouts/user_job_notification" %>
 
@@ -297,28 +294,6 @@ extjs_store( :controller => "workbench/blast_results",
     var tb = new Ext.bio.TopMenuToolbar({
       id:'top-menu-toolbar',
       menuData:Ext.workbenchMenu
-    });
-
-    Ext.workbenchMenu.blastHelpWindow = new Ext.Window({
-      title: 'Blast Program Options',
-      layout:'fit',
-      width:500,
-      height:300,
-      closeAction:'hide',
-      plain: true,
-      items: new Ext.Panel({
-        contentEl: 'blast-programs',
-        autoScroll: true,
-        deferredRender:false,
-        border:false
-      }),
-
-      buttons: [{
-          text: 'Close',
-          handler: function(){
-            Ext.workbenchMenu.blastHelpWindow.hide();
-          }
-        }]
     });
 
 

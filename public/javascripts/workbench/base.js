@@ -1,6 +1,9 @@
 Ext.namespace('Ext.bio');
 Ext.namespace('Ext.bio.workbench');
 
+Ext.namespace('Ext.workbenchMenu');
+Ext.namespace('Ext.workbenchdata');
+
 
 
 (function() {
@@ -17,3 +20,25 @@ Ext.namespace('Ext.bio.workbench');
   })
 })();
 
+
+Ext.workbenchMenu.blastHelpWindow = new Ext.Window({
+  title: 'Blast Program Options',
+  layout:'fit',
+  width:500,
+  height:300,
+  closeAction:'hide',
+  plain: true,
+  items: new Ext.Panel({
+    contentEl: 'blast-programs',
+    autoScroll: true,
+    deferredRender:false,
+    border:false
+  }),
+
+  buttons: [{
+    text: 'Close',
+    handler: function(){
+      Ext.workbenchMenu.blastHelpWindow.hide();
+    }
+  }]
+});

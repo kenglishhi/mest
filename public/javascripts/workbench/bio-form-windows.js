@@ -251,13 +251,6 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       baseParams:{
         authenticity_token: FORM_AUTH_TOKEN
       },
-      tbar: [ '->', {
-        text: "Blast Program Help ",
-        handler: function() {
-          Ext.workbenchMenu.blastHelpWindow.show();
-        }
-      }
-      ],
       frame:true,
       bodyStyle:'padding:5px 5px 0',
       defaults: {
@@ -313,7 +306,14 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
     });
 
     Ext.apply(this,{
-      items: [  form ]
+      items: [  form ],
+      tbar: [ '->', {
+        text: "Blast Program Help ",
+        handler: function() {
+          Ext.workbenchMenu.blastHelpWindow.show();
+        }
+      }
+      ]
     });
     Ext.bio.BlastCreateDbsWindow.superclass.initComponent.call(this);
 
@@ -582,7 +582,15 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
     });
 
     Ext.apply(this,{
-      items:   form
+      items:   form,
+      tbar: [ '->', {
+        text: "Blast Program Help ",
+        handler: function() {
+          Ext.workbenchMenu.blastHelpWindow.show();
+        }
+      }
+      ]
+
     });
     Ext.bio.BlastNtAppendWindow.superclass.initComponent.call(this);
   } ,
