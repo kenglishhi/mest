@@ -7,6 +7,7 @@ Ext.bio.ncbiDatabaseStore = new Ext.data.SimpleStore({
   fields: ['ncbi_database','ncbi_database_name'],
   data : [ ['nr', "NR (Proteins)"], ['nt', "NT (Nucleotides)"] ]
 });
+
 Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   title: 'Rename Sequences',
   layout:'fit',
@@ -199,7 +200,6 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       triggerAction: 'all',
       allowBlank: false,
       selectOnFocus:true
-
     });
 
 
@@ -486,6 +486,19 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
   plain: true,
   id: 'bio-blast-nt-append-window',
   initComponent: function() {
+    var ncbiDatabaseCombo = new Ext.form.ComboBox({
+      typeAhead: true,
+      forceSelection: true,
+      triggerAction: 'all',
+      mode: 'local',
+      store: Ext.bio.ncbiDatabaseStore,
+      valueField: 'ncbi_database_id',
+      displayField: 'ncbi_database_name',
+      name:'ncbi_database',
+      hiddenName:'ncbi_database',
+      value:'nt'
+    });
+
     var programCombo = new Ext.form.ComboBox({
       store: Ext.bio.blastProgramStore,
       forceSelection: true,
@@ -498,23 +511,6 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
       triggerAction: 'all',
       allowBlank: false,
       selectOnFocus:true
-
-    });
-
-    var ncbiCombo = new Ext.form.ComboBox({
-      store: Ext.bio.ncbiDatabaseStore,
-      forceSelection: true,
-      displayField:'ncbi_database_name',
-      valueField:'ncbi_database',
-      fieldLabel: 'NCBI Database',
-      name:'ncbi_database',
-      id:'ncbi-database-blast-field',
-      mode: 'local',
-      value: 'nt',
-      triggerAction: 'all',
-      allowBlank: false,
-      selectOnFocus:true
-
     });
 
 
@@ -537,7 +533,6 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
        {
         fieldLabel: 'Database',
         name: 'database_name',
-        disabled: true,
         width: 300,
         id: 'biodatabase-name-nt-append-field',
         value:'',
@@ -548,8 +543,18 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
         name: 'biodatabase_id',
         id: 'biodatabase-id-nt-append-field',
         value: '20002'
+        id: 'biodatabase-id-nt-append-field'
       }) ,
-            {
+      {
+        fieldLabel: 'Database Name',
+        name: 'biodatabase_name',
+        value:'',
+        allowBlank:true,
+        id: 'biodatabase-name-nt-append-field'
+      },
+      ncbiDatabaseCombo,
+      programCombo,
+      {
         fieldLabel: 'E-Value',
         name: 'evalue',
         value:'25',
@@ -594,6 +599,7 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
   setParams: function(params) {
     Ext.getCmp('biodatabase-id-nt-append-field').setValue(params.id);
     Ext.getCmp('biodatabase-name-nt-append-field').setValue(params.text) ;
+    Ext.getCmp('biodatabase-name-nt-append-field').disable();
   }
 });
 

@@ -12,6 +12,8 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
         @job =  Jobs::BlastNtAppend.new("Blasting #{@biodatabase.name} against NR",
           {:biodatabase_id => @biodatabase.id,
             :user_id => users(:users_001).id,
+            :ncbi_database => 'nt',
+            :program => 'blastn',
             :project_id => users(:users_001).active_project.id})
         @number_of_blast_results = BlastResult.count
         @job.perform
@@ -29,6 +31,8 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
         @job =  Jobs::BlastNtAppend.new("Blasting #{@biodatabase.name} against NR",
           {:biodatabase_id => @biodatabase.id,
             :user_id => users(:users_001).id,
+            :ncbi_database => 'nt',
+            :program => 'blastn',
             :project_id => users(:users_001).active_project.id,
             :number_of_sequences_to_save => @number_of_sequences_to_save })
         @number_of_blast_results = BlastResult.count

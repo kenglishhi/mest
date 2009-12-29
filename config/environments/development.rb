@@ -17,6 +17,5 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 config.after_initialize do
-  Blast::Command.nr_database_directory = '/opt/local/var/data/nr'
-  Blast::Command.nt_database_directory = '/opt/local/var/data/nt'
+  Blast::Command.ncbi_database_directory = '/home/kenglish/Documents/Data/ncbi/blast/db'
 end
