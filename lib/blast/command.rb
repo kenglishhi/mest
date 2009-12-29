@@ -10,8 +10,6 @@ class Blast::Command
   #
   #############################
 
-  cattr_accessor :nr_database_directory
-  cattr_accessor :nt_database_directory
   cattr_accessor :ncbi_database_directory
   ########################################3
   #  nr.*tar.gz:	Non-redundant protein sequence database with entries from
@@ -50,7 +48,8 @@ class Blast::Command
     cli['-p'] = program
     cli['-e'] = params[:evalue]
     cli['-b'] =  params[:number_of_hits_per_query].blank? ? 20 :  params[:number_of_hits_per_query]
-
+    puts "nr_nt_flag = #{params[:nr_nt_flag] }"
+    puts "ncbi_database = #{params[:ncbi_database] }"
     cli['-d'] = params[:nr_nt_flag] ? "#{self.nt_database_directory}/#{params[:ncbi_database]}" : params[:target_file_path]
     cli['-i'] = params[:test_file_path]
     options =  cli.to_a.join(' ')
