@@ -4,6 +4,7 @@ class Blast::NtAppend < Blast::Base
 
   def init_files_and_databases
     @biodatabase = Biodatabase.find(Biodatabase.find(@params[:biodatabase_id]) )
+    @ncbi_database = @params[:ncbi_biodatabase]
 
     if @biodatabase.fasta_file
       @biodatabase.fasta_file.overwrite_fasta
@@ -22,12 +23,14 @@ class Blast::NtAppend < Blast::Base
     number_of_sequences_to_save = params[:number_of_sequences_to_save].blank? ?
       DEFAULT_NUMBER_OF_SEQUENCES_TO_SAVE : params[:number_of_sequences_to_save].to_i
 
+    puts "ncbi_database = #{ncbi_database}"
     output_file_handle = Blast::Command.execute(:blastall, @blast_result,
       :test_file_path => @fasta_file.fasta.path,
       :evalue => evalue,
       :number_of_hits_per_query => number_of_sequences_to_save,
-      :nt => true,
-      :output_file_prefix => "#{@biodatabase.name}-NR}")
+      :nt_nr_flag => true,
+      :ncbi_database => @ncbi_database,
+      :output_file_prefix => "#{@biodatabase.name}-#{@ncbi_database}")
     output_file_handle.open
     @blast_result.stopped_at = Time.now
     @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)

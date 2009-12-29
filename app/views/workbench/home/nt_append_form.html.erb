@@ -54,7 +54,14 @@
 
         button.on('click', function(){
           // create the window on the first click and reuse on subsequent clicks
-          Ext.bio.showBlastNtAppendWindow();
+          var params = {"leaf":true,
+            "db_type":"Generated Match DB",
+            "expandable":false,
+            "text":"EST_Clade_A vs C_Clean 008",
+            "resource":"biodatabase",
+            "expanded":null,
+            "id":990049};
+          Ext.bio.showBlastNtAppendWindow(params);
         });
       });
 
@@ -63,8 +70,10 @@
   </head>
 
   <body>
-    <h1>Test the Blast Help Window</h1>
-    <input type="button" id="show-btn" value="Show Blast Help" /><br /><br />
+    <h1>Test the Blast vs NCBI Window</h1>
+
+    <input type="button" id="show-btn" value="Show Blast vs NCBI Window" /><br /><br />
+
     <%= render :partial => 'blast_help_window' %>
     <div id='my-alignment-view'></div>
     <div id="hello-win" class="x-hidden">

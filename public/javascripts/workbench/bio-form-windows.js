@@ -1,3 +1,16 @@
+Ext.bio.ncbiDatabaseStore = new Ext.data.ArrayStore({
+  fields: [ 'ncbi_database_name',  'ncbi_database_id'],
+  data : [ ['NT (Nucleotide)','nt'],['NR (Proteins)', 'nr'] ]
+});
+Ext.bio.programStore = new Ext.data.ArrayStore({
+  fields: ['program'],
+  data : [ ['blastn'], ['blastp'], ['blastx'], ['psitblastn'], ['tblastn'], ['tblastx'] ]
+});
+
+
+
+
+
 Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   title: 'Rename Sequences',
   layout:'fit',
@@ -178,13 +191,8 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
   id:'bio-blast-window',
   initComponent: function() {
     var parentComponentId = this.id;
-    var programStore = new Ext.data.SimpleStore({
-      fields: ['program'],
-      data : [ ['blastn'], ['blastp'], ['blastx'], ['psitblastn'], ['tblastn'], ['tblastx'] ]
-    });
-
     var programCombo = new Ext.form.ComboBox({
-      store: programStore,
+      store: Ext.bio.programStore,
       forceSelection: true,
       displayField:'program',
       fieldLabel: 'Program',
@@ -195,7 +203,6 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       triggerAction: 'all',
       allowBlank: false,
       selectOnFocus:true
-
     });
 
     var testCombo = new Ext.form.ComboBox({
@@ -480,6 +487,33 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
   plain: true,
   id: 'bio-blast-nt-append-window',
   initComponent: function() {
+    var ncbiDatabaseCombo = new Ext.form.ComboBox({
+      typeAhead: true,
+      forceSelection: true,
+      triggerAction: 'all',
+      mode: 'local',
+      store: Ext.bio.ncbiDatabaseStore,
+      valueField: 'ncbi_database_id',
+      displayField: 'ncbi_database_name',
+      name:'ncbi_database',
+      hiddenName:'ncbi_database',
+      value:'nt'
+    });
+    var programCombo = new Ext.form.ComboBox({
+      store: Ext.bio.programStore,
+      forceSelection: true,
+      displayField:'program',
+      fieldLabel: 'Program',
+      name:'program',
+      id:'program-blast-field',
+      value:'blastn', //programStore.getAt(0).get('blastn'),
+      mode: 'local',
+      triggerAction: 'all',
+      allowBlank: false,
+      selectOnFocus:true
+    });
+
+
     var parentComponentId = this.id;
     var form = new Ext.FormPanel({
       id: 'my-blast-nt-append-form-panel',
@@ -497,9 +531,19 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
       defaultType: 'textfield',
       items: [
       new Ext.form.Hidden({
-        name: 'ParentId',
-        value: this.parentId
-        }) ,
+        name: 'biodatabase_id',
+        value: 1,
+        id: 'biodatabase-id-nt-append-field'
+      }) ,
+      {
+        fieldLabel: 'Database Name',
+        name: 'biodatabase_name',
+        value:'',
+        allowBlank:true,
+        id: 'biodatabase-name-nt-append-field'
+      },
+      ncbiDatabaseCombo,
+      programCombo,
       {
         fieldLabel: 'E-Value',
         name: 'evalue',
@@ -544,6 +588,8 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
   } ,
   setParams: function(params) {
     Ext.getCmp('biodatabase-id-nt-append-field').setValue(params.id);
+    Ext.getCmp('biodatabase-name-nt-append-field').setValue(params.text);
+    Ext.getCmp('biodatabase-name-nt-append-field').disable();
   }
 });
 
