@@ -30,10 +30,10 @@ Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     sortable: true,
     dataIndex: 'duration_display'
   }, {
-    header: "Priority",
+    header: "User",
     autoWidth: true,
     sortable: true,
-    dataIndex: 'priority'
+    dataIndex: 'user_email'
   }
   ],
   updateContent: function(params) {
@@ -93,10 +93,10 @@ Ext.bio.QueuedJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     sortable: true,
     dataIndex: 'duration_display'
   }, {
-    header: "Priority",
+    header: "User",
     autoWidth: true,
     sortable: true,
-    dataIndex: 'priority'
+    dataIndex: 'user_email'
   }
   ],
   updateContent: function(params) {

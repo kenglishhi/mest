@@ -1,7 +1,7 @@
 class Job < Delayed::Job
   include DurationDisplay
   include ExtJS::Model
-  extjs_fields :id, :job_name, :run_at, :priority, :duration_display
+  extjs_fields :id, :job_name, :run_at, :priority, :duration_display,:user_email
   cattr_reader :per_page
   @@per_page = 25
   set_table_name 'delayed_jobs'
@@ -25,6 +25,9 @@ class Job < Delayed::Job
     end
   end
 
+  def user_email
+    user.email
+  end
   
   private
   
