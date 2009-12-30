@@ -30,12 +30,12 @@ class Workbench::BiosequencesController < ApplicationController
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
   end
   def destroy
-    #    @seq = BiodatabaseBiosequBiosequenceBio.find(params[:id])
+
     @seq = BiodatabaseBiosequence.find_by_biosequence_id_and_biodatabase_id(params[:id],params[:biodatabase_id])
-    if @seq  #@job.destroy
-      render :json => { :success => true, :message => "Destroyed job " }
+    if @seq.destroy
+      render :json => { :success => true, :message => "Destroy Sequence" }
     else
-      render :json => { :message => "Failed to destroy Job" }
+      render :json => { :message => "Failed to destroy Seq" }
     end
   end
 end

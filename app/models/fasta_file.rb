@@ -156,7 +156,7 @@ class FastaFile < ActiveRecord::Base
 
   def formatdb
     if fasta && fasta.path && File.exists?(fasta.path)
-      args = " -i #{fasta.path} -p F -o F -n #{fasta.path} "
+#      args = " -i #{fasta.path} -p F -o F -n #{fasta.path} "
       Paperclip.run "formatdb",  args
     else
       raise "FORMAT DB Error: No fasta file to format"
@@ -237,6 +237,9 @@ class FastaFile < ActiveRecord::Base
   def overwrite_fasta
     if self.fasta
       FastaFile.write_sequences_to_file(biodatabase, self.fasta.path )
+      true
+    else
+      false
     end
   end
 

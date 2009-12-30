@@ -17,5 +17,5 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 config.after_initialize do
-  Blast::Command.ncbi_database_directory = '/home/kenglish/Documents/Data/ncbi/blast/db'
+  Blast::Command.ncbi_database_directory = File.dirname(__FILE__) + '/../../test/fixtures/files'
 end

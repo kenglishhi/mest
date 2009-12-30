@@ -5,10 +5,20 @@ class Jobs::BlastNtAppend < Jobs::AbstractJob
 
   def do_perform
     [ :biodatabase_id,:program,:ncbi_database].each do | required_param_key |
-       raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
+      raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
     end
-    blast_command = Blast::NtAppend.new( params )
-    blast_command.run
+
+    biodatabase = Biodatabase.find(params[:biodatabase_id])
+    if biodatabase.biodatabase_type == BiodatabaseType.database_group
+      biodatabase.children.each do | biodatabase |
+        blast_command = Blast::NtAppend.new( params.merge({:biodatabase_id => biodatabase.id})  )
+        blast_command.run
+      end
+    else
+      blast_command = Blast::NtAppend.new( params )
+      blast_command.run
+    end
   end
+
 end
 

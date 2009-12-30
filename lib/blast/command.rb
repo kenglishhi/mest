@@ -36,7 +36,7 @@ class Blast::Command
   end
 
   def self.execute_blastall(blast_result, params)
-    pp params
+#    pp params
     required_params = [:test_file_path, :evalue, :output_file_prefix]
     required_params.each do | required_option|
       raise "Blast Error: Option #{required_option} is blank" if params[required_option].blank?

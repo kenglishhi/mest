@@ -4,9 +4,7 @@ class Blast::NtAppend < Blast::Base
 
   def init_files_and_databases
     @biodatabase = Biodatabase.find(Biodatabase.find(@params[:biodatabase_id]) )
-    @ncbi_database = 
-
-      if @biodatabase.fasta_file
+    if @biodatabase.fasta_file
       @biodatabase.fasta_file.overwrite_fasta
     else
       FastaFile.generate_fasta(@biodatabase)
@@ -39,8 +37,10 @@ class Blast::NtAppend < Blast::Base
     result_ff = Bio::FlatFile.open(output_file_handle)
     match_count = 0
     logger.error("kenglish] number_of_sequences_to_save = #{number_of_sequences_to_save }" )
+
     result_ff.each do |report|
       report.each do |hit|
+
         bioseq = Biosequence.find_by_name( hit.target_def)
         unless bioseq
           begin
@@ -61,7 +61,8 @@ class Blast::NtAppend < Blast::Base
             bioseq.save!
           end
         end
-        @biodatabase.biosequences << bioseq unless @biodatabase.biosequences.include?(bioseq)
+        @child_biodatabase ||= create_child_biodatabase(@biodatabase)
+        @child_biodatabase.biosequences << bioseq unless @child_biodatabase.biosequences.include?(bioseq)
         match_count += 1
         break if (match_count >=number_of_sequences_to_save )
       end
@@ -74,5 +75,12 @@ class Blast::NtAppend < Blast::Base
   end
 
   private
+  def create_child_biodatabase(parent)
+    Biodatabase.create!(:name => "#{params[:ncbi_database].upcase}  Output",
+      :project_id => parent.project_id,
+      :parent => parent,
+      :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH) ,
+      :user_id => params[:user_id])
+  end
 
 end
