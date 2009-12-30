@@ -389,6 +389,9 @@ extjs_store( :controller => "workbench/blast_results",
                       }
                     },
                     items: [ {
+                        collapsible: true,
+                        split: true,
+                        autoScroll: true,
                         title: 'Running Jobs',
                         height: 170,
                         id: 'wb-running-jobs-grid',
@@ -397,6 +400,9 @@ extjs_store( :controller => "workbench/blast_results",
                         store: Ext.workbenchdata.runningJobStore
                       }
                       , {
+                        collapsible: true,
+                        split: true,
+                        autoScroll: true,
                         title: 'Queued Jobs',
                         height: 200,
                         id: 'wb-queued-jobs-grid',

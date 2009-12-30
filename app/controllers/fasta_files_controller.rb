@@ -15,20 +15,20 @@ class FastaFilesController < ApplicationController
   end
 
   def create
-    if params[:fasta_files]
-      params[:fasta_files].each do | file_param |
-        unless file_param[:uploaded_data].blank?
-          fasta_file = FastaFile.new
-          fasta_file.user = current_user
-          fasta_file.project_id = params[:project_id] || current_user.active_project.id
-          fasta_file.fasta = file_param[:uploaded_data]
-          fasta_file.is_generated = false
-          fasta_file.save!
+    if request.post?
+      if params[:fasta_files]
+        params[:fasta_files].each do | file_param |
+          unless file_param[:uploaded_data].blank?
+            fasta_file = FastaFile.new
+            fasta_file.user = current_user
+            fasta_file.project_id = params[:project_id] || current_user.active_project.id
+            fasta_file.fasta = file_param[:uploaded_data]
+            fasta_file.is_generated = false
+            fasta_file.save!
+          end
         end
       end
-    end
 
-    if request.post?
       respond_to do |format|
         format.html {
           redirect_back_or_default(:action => :index )
@@ -39,6 +39,17 @@ class FastaFilesController < ApplicationController
         }
       end
     end
+  rescue => e
+    respond_to do |format|
+      format.html {
+        redirect_back_or_default(:action => :index )
+      }
+      format.json {
+        render :json => {:success => false,:msg=> "Files Uploaded Failed"}
+        headers["Content-Type" ] = "text/html"
+      }
+    end
+
   end
 
   def new
