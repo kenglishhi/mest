@@ -11,7 +11,7 @@ class Workbench::JobsController < ApplicationController
       data = Job.paginate :page => page, :conditions => 'failed_at is not null'
       results = Job.count 'failed_at is not null'
     else # else is always RUNNING!
-      data = Job.paginate :page => page, :conditions => 'locked_at is not null'
+      data = Job.paginate :page => page, :conditions => 'locked_at is not null AND last_error is null'
       results = Job.count 'locked_at is not null'
     end
     render :json => {:results => results, :data => data.map{|row|row.to_record}}
