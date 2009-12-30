@@ -27,14 +27,22 @@ class Jobs::AbstractJob
     logger.info "FINISHED #{self.class}" 
     logger.info "--------------------------" 
   end
-  
+  # THESE Are used to trick out the exception notifier
+  def controller_name
+     self.class.to_s
+  end
+  def action_name
+     self.class.to_s
+  end
+
+ 
   include Jobs::Chainable
   include Jobs::Loggable
-  
+
   protected
   
   def do_perform
     raise "subclasses must implement"
   end
-  
+ 
 end
