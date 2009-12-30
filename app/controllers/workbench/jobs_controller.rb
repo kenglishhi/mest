@@ -5,7 +5,7 @@ class Workbench::JobsController < ApplicationController
   def index
     page = get_page(Job)
     if params[:option] == 'Queued'
-      data = Job.paginate :page => page, :conditions => 'locked_at is null'
+      data = Job.paginate :page => page, :conditions => 'last_error is not null'
       results = Job.count 'locked_at is null'
     elsif params[:option] == 'Failed'
       data = Job.paginate :page => page, :conditions => 'failed_at is not null'
