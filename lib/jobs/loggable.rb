@@ -20,6 +20,7 @@ module Jobs::Loggable
         logger.info "ERROR: "
         logger.info message
         logger.info "---------------  "
+        ExceptionNotifier.deliver_exception_notification(e, self, ActionController::Request.new({}) )
 
       end
       JobLog.create!(:job_name => self.job_name,
