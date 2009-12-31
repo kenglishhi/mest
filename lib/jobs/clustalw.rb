@@ -5,6 +5,7 @@ class Jobs::Clustalw < Jobs::AbstractJob
 
   def do_perform
     if !params[:biodatabase_id].blank?
+      raise "I failed, dude"
       biodatabase = Biodatabase.find(params[:biodatabase_id])
       if biodatabase.biodatabase_type == BiodatabaseType.database_group
         biodatabase.children.each do | biodatabase |
