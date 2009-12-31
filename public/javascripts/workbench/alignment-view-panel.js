@@ -59,7 +59,7 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
   updateContent: function(params) {
     if (params && params.biodatabase_id) {
       this.biodatabase_id  = params.biodatabase_id ;
-      var url = 'http://mest/workbench/alignments/' + this.biodatabase_id + '.json';
+      var url = '/workbench/alignments/' + this.biodatabase_id + '.json';
       if (this.rendered) {
         Ext.Ajax.request({
           url:  url,
@@ -81,6 +81,10 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
             }
             clustalwOutput += '</table>';
             Ext.getCmp('inner-alignment-panel').getEl().update(clustalwOutput);
+          },
+          failure: function(reponse){
+            var alnObj = Ext.util.JSON.decode(response.responseText);
+
           }
         });
 
