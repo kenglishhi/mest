@@ -9,8 +9,6 @@ Ext.bio.programStore = new Ext.data.ArrayStore({
 
 
 
-
-
 Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   title: 'Rename Sequences',
   layout:'fit',
@@ -325,82 +323,6 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
   }
 });
 
-Ext.bio.GroupClustalwWindow = Ext.extend(Ext.Window,{
-  title: 'ClustalW all database in Group',
-  layout:'fit',
-  width:550,
-  height:180,
-  closeAction:'hide',
-  plain: true,
-  id: 'bio-group-clustalw-window',
-  initComponent: function() {
-    var parentComponentId = this.id;
-    var combo = new Ext.form.ComboBox({
-      fieldLabel: 'Database Group',
-      name:'biodatabase_group',
-      id: 'biodatabase-group-id-clustalw-field',
-      hiddenName : 'biodatabase_group_id',
-      valueField:'id',
-      displayField:'name',
-      store: this.dbStore,
-      typeAhead: true,
-      mode: 'local',
-      triggerAction: 'all',
-      emptyText:'Select a database...',
-      selectOnFocus:true,
-      width: 400,
-      listWidth: 400,
-      allowBlank:false
-    });
-    var form = new Ext.FormPanel({
-      id: 'my-group-clustalw-form-panel',
-      labelWidth: 70, // label settings here cascade unless overridden
-      url:'/tools/clustalws.json',
-      method: 'POST',
-      baseParams:{
-        authenticity_token: FORM_AUTH_TOKEN
-      },
-      frame:true,
-      bodyStyle:'padding:5px 5px 0',
-      defaults: {
-        width: 400
-      },
-      defaultType: 'textfield',
-      items: [ combo ],
-      buttons: [{
-        text: 'Submit',
-        handler: function(){
-          var form = Ext.getCmp('my-group-clustalw-form-panel').getForm();
-          if (form && form.isValid()) {
-            form.submit({
-              waitMsg:"Submitting...",
-              success: function(form, action) {
-                //Ext.bio.notifier.show('Sequences Renamed', 'Finished renaming seqeuneces');
-                Ext.getCmp(parentComponentId).hide();
-              }
-            });
-          }
-        }
-      },
-      {
-        text: 'Cancel',
-        handler: function(){
-          Ext.getCmp(parentComponentId).hide();
-        }
-      }
-      ]
-    });
-
-    Ext.apply(this,{
-      items:   form
-    });
-    Ext.bio.GroupClustalwWindow.superclass.initComponent.call(this);
-  } ,
-  setParams: function(params) {
-    Ext.getCmp('biodatabase-group-id-clustalw-field').setValue(params.id);
-  }
-});
-
 Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
   title: 'ClustalW',
   layout:'fit',
@@ -443,7 +365,18 @@ Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
         width: 400
       },
       defaultType: 'textfield',
-      items: [ combo ],
+      items: [
+      new Ext.form.Hidden({
+        name: 'biodatabase_id',
+        value: 1,
+        id: 'biodatabase-id-clustalw-field'
+      }) , {
+        fieldLabel: 'Database Name',
+        name: 'biodatabase_name',
+        value:'',
+        allowBlank:true,
+        id: 'biodatabase-name-clustalw-field'
+      }],
       buttons: [{
         text: 'Submit',
         handler: function(){
@@ -475,6 +408,8 @@ Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
   } ,
   setParams: function(params) {
     Ext.getCmp('biodatabase-id-clustalw-field').setValue(params.id);
+    Ext.getCmp('biodatabase-name-clustalw-field').setValue(params.text);
+    Ext.getCmp('biodatabase-name-clustalw-field').disable();
   }
 });
 
