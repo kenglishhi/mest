@@ -21,7 +21,9 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
       end
       should "Create add NR Sequences to DB" do
         assert_equal @number_of_blast_results + 1, BlastResult.count, "We should have a new biodatabase group"
-        #        assert_equal @number_of_seqs + Blast::NtAppend::DEFAULT_NUMBER_OF_SEQUENCES_TO_SAVE  , @biodatabase.biosequences.size, "Should increase by 10"
+        assert_not_nil @biodatabase.parent.children.detect{ |db| db.name == 'NT Output'}, "Should generate a child db NT Output"
+        nt_output = @biodatabase.parent.children.detect{ |db| db.name == 'NT Output'}
+        assert nt_output.children.size > 0,"NT Output db should have more than one child"
       end
     end
     context "Blast NT with number_of_sequences_to_save of 20" do

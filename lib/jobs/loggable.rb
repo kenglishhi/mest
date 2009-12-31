@@ -15,7 +15,7 @@ module Jobs::Loggable
     ensure
       stopped_at = Time.now
       if e
-        JobFailureNotifier.deliver_failure_notification(e,self)
+        JobFailureNotifier.deliver_failure_notification(e,self) unless RAILS_ENV =='test'
         message = "#{e.message}\n#{e.backtrace.join("\n")}"
         logger.info "---------------  "
         logger.info "ERROR: "
