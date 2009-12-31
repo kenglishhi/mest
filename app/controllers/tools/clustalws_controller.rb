@@ -2,7 +2,7 @@ class Tools::ClustalwsController < ApplicationController
   include Jobs::ControllerUtils
 
   def create
-    if params[:biodatabase_id].blank? && params[:biodatabase_group_id].blank?
+    if params[:biodatabase_id].blank? 
       respond_to do |format|
         format.html {
           render :inline => 'Could not queue'
@@ -12,13 +12,8 @@ class Tools::ClustalwsController < ApplicationController
         }
       end
     else
-      if !params[:biodatabase_id].blank?
-        obj = Biodatabase.find(params[:biodatabase_id] )
-      elsif !params[:biodatabase_group_id].blank?
-        obj = BiodatabaseGroup.find(params[:biodatabase_group_id] )
-      end
+      obj = Biodatabase.find(params[:biodatabase_id] )
       job_name = "ClustalW Alignment for #{obj.name}"
-
       create_job(Jobs::Clustalw, job_name, current_user, params)
       respond_to do |format|
         format.html {
