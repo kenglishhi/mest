@@ -17,8 +17,6 @@ class Blast::NrNt < Blast::Base
     #### blastall -p blastn -i fun.fasta -d /opt/local/var/data/nt
     evalue = get_evalue
     @blast_result = new_blast_result("#{@test_biodatabase.name}-NT Blast Result",@test_biodatabase)
-
-    puts "[Blast::NtAppend] ncbi_database = #{@params[:ncbi_database]}"
     output_file_handle = Blast::Command.execute_blastall(@blast_result,
       @params.merge({
           :test_file_path => @fasta_file.fasta.path,
@@ -76,7 +74,6 @@ class Blast::NrNt < Blast::Base
       end
       break if (match_count >=number_of_sequences_to_save )
     end
-    pp child_biodatabase.biosequences
   end
   def create_child_biodatabase(test_biodatabase,params)
     biodatabase_group = find_or_create_ncbi_biodatebase_group(test_biodatabase.parent,params)
@@ -86,8 +83,10 @@ class Blast::NrNt < Blast::Base
       :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH) ,
       :user_id => params[:user_id])
 
-    test_biodatabase.biosequences.each do | bioseq|
-      child_biodatabase.biosequences << bioseq 
+    if params[:ncbi_database] =='nt'
+      test_biodatabase.biosequences.each do | bioseq|
+        child_biodatabase.biosequences << bioseq
+      end
     end
     child_biodatabase
   end

@@ -55,6 +55,7 @@ ActionController::Routing::Routes.draw do |map|
       tools.resources :blast_cleaners
       tools.resources :blast_create_dbs
       tools.resources :biosequence_renamers
+      tools.resources :blast_nr_nt
     end
   end
 

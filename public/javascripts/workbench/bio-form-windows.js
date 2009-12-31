@@ -464,7 +464,7 @@ Ext.bio.BlastNrNtWindow = Ext.extend(Ext.Window,{
     var form = new Ext.FormPanel({
       id: 'my-blast-nr-nt-form-panel',
       labelWidth: 120, // label settings here cascade unless overridden
-      url:'/tools/blast_nr_nt.json',
+      url:'/tools/blast_nr_nts.json',
       method: 'POST',
       baseParams:{
         authenticity_token: FORM_AUTH_TOKEN
