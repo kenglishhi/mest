@@ -5,6 +5,7 @@ class Jobs::CleanDatabaseWithBlast < Jobs::AbstractJob
 
   def do_perform
 
+    raise "I failed, dude"
     [ :biodatabase_id ].each do | required_param_key |
       raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
     end
