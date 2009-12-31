@@ -213,23 +213,6 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       selectOnFocus:true
     });
 
-    var testCombo = new Ext.form.ComboBox({
-      fieldLabel: 'Test Database',
-      name:'biodatabase',
-      id:'test-biodatabase-id-blast-field',
-      hiddenName : 'test_biodatabase_id',
-      valueField:'id',
-      displayField:'name',
-      store: this.dbStore,
-      typeAhead: true,
-      mode: 'local',
-      triggerAction: 'all',
-      emptyText:'Select a test database...',
-      selectOnFocus:true,
-      width: 350,
-      listWidth: 350,
-      allowBlank:false
-    });
 
     Ext.bio.StateMultiSelect = function(config) {
       Ext.bio.StateMultiSelect.superclass.constructor.call(this, config);
@@ -268,7 +251,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       items: [
       programCombo, 
       new Ext.form.Hidden({
-        name: 'biodatabase_id',
+        name: 'test_biodatabase_id',
         value: 1,
         id: 'test-biodatabase-id-blast-field'
       }) , {
@@ -346,6 +329,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
     Ext.getCmp('test-biodatabase-id-blast-field').setValue(params.id);
     Ext.getCmp('test-biodatabase-name-blast-field').setValue(params.text);
     Ext.getCmp('test-biodatabase-name-blast-field').disable();
+    Ext.getCmp('target-biodatabase-id-blast-field').store.reload();
   //    Ext.getCmp('target-biodatabase-id-blast-field').setValue(biodatabaseId);
   }
 });

@@ -339,6 +339,7 @@ extjs_store( :controller => "workbench/blast_results",
           items: [{
               id: 'workbench-grid-tabs',
               region: 'north',
+              split: true,
               height: 330,
               xtype: 'tabpanel',
               deferredRender: true,
@@ -372,12 +373,15 @@ extjs_store( :controller => "workbench/blast_results",
                     } ]
 
                 },
-                [{
+                [
+
+                  {
 
                     iconCls:'grid_icon',
                     title: 'Running Jobs',
                     autoScroll: true,
                     id:'workbench-running-jobs-tab',
+                    layout: 'border',
                     listeners: {
                       activate: function() {
                         if (Ext.getCmp('wb-running-jobs-grid')) {
@@ -389,6 +393,7 @@ extjs_store( :controller => "workbench/blast_results",
                       }
                     },
                     items: [ {
+                        region:'north',
                         collapsible: true,
                         split: true,
                         autoScroll: true,
@@ -400,6 +405,7 @@ extjs_store( :controller => "workbench/blast_results",
                         store: Ext.workbenchdata.runningJobStore
                       }
                       , {
+                        region:'center',
                         collapsible: true,
                         split: true,
                         autoScroll: true,
@@ -456,6 +462,7 @@ extjs_store( :controller => "workbench/blast_results",
               xtype: 'tabpanel',
               id: 'workbench-detail-tabs',
               plain: true,
+              split: true,
               deferredRender: true,
               region: 'center',
               margins: '0 5 5 5',

@@ -15,8 +15,6 @@ class Blast::CreateDbs < Blast::Base
     end
     @target_biodatabases = Biodatabase.all(:conditions => ["id in (?)",target_ids] )
     @target_fasta_file = FastaFile.new
-    puts "  @target_biodatabases.size #{@target_biodatabases.inspect}"
-    puts "  @target_biodatabases.size #{Biodatabase.all.map{|db| db.id}.join(',') }"
     if @target_biodatabases.size == 1
       @target_fasta_file = @target_biodatabases.first.fasta_file
       @target_fasta_file.overwrite_fasta

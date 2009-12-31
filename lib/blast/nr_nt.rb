@@ -76,11 +76,15 @@ class Blast::NrNt < Blast::Base
 
   private
   def create_child_biodatabase(parent)
-    Biodatabase.create!(:name => "#{params[:ncbi_database].upcase}  Output",
-      :project_id => parent.project_id,
-      :parent => parent,
-      :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH) ,
-      :user_id => params[:user_id])
+#    if parent.parent.biodatabase_type == DatabaseType.biodatabase_group
+
+#    else
+      Biodatabase.create!(:name => "#{params[:ncbi_database].upcase}  Output",
+        :project_id => parent.project_id,
+        :parent => parent,
+        :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH) ,
+        :user_id => params[:user_id])
+#    end
   end
 
 end
