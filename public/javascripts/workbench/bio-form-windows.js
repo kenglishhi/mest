@@ -52,7 +52,19 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
         width: 230
       },
       defaultType: 'textfield',
-      items: [combo, {
+      items: [
+      new Ext.form.Hidden({
+        name: 'biodatabase_id',
+        value: 1,
+        id: 'biodatabase-id-rename-field'
+      }) , {
+        fieldLabel: 'Database Name',
+        name: 'biodatabase_name',
+        value:'',
+        allowBlank:true,
+        id: 'biodatabase-name-rename-field'
+      },
+       {
         fieldLabel: 'New Prefix',
         name: 'prefix',
         allowBlank:false
@@ -88,6 +100,8 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   },
   setParams: function(params) {
     Ext.getCmp('biodatabase-id-rename-field').setValue(params.id);
+    Ext.getCmp('biodatabase-name-rename-field').setValue(params.id);
+    Ext.getCmp('biodatabase-name-rename-field').disable();
   }
 });
 
@@ -101,23 +115,6 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
   id: 'bio-blast-cleaners-window',
   initComponent: function() {
     var parentComponentId = this.id;
-    var combo = new Ext.form.ComboBox({
-      fieldLabel: 'Database',
-      name:'biodatabase',
-      id: 'biodatabase-id-clean-field',
-      hiddenName : 'biodatabase_id',
-      valueField:'id',
-      displayField:'name',
-      store: this.dbStore,
-      typeAhead: true,
-      mode: 'local',
-      triggerAction: 'all',
-      emptyText:'Select a database...',
-      selectOnFocus:true,
-      width: 350,
-      listWidth: 350,
-      allowBlank:false
-    });
     var form = new Ext.FormPanel({
       id: 'my-blast-cleaners-form-panel',
       labelWidth: 120, // label settings here cascade unless overridden
@@ -132,7 +129,18 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
         width: 230
       },
       defaultType: 'textfield',
-      items: [combo,
+      items: [
+      new Ext.form.Hidden({
+        name: 'biodatabase_id',
+        value: 1,
+        id: 'biodatabase-id-clean-field'
+      }) , {
+        fieldLabel: 'Database Name',
+        name: 'biodatabase_name',
+        value:'',
+        allowBlank:true,
+        id: 'biodatabase-name-clean-field'
+      },
       {
         fieldLabel: 'Clean Database Name',
         name: 'new_biodatabase_name',
@@ -176,6 +184,8 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
   } ,
   setParams: function(params) {
     Ext.getCmp('biodatabase-id-clean-field').setValue(params.id);
+    Ext.getCmp('biodatabase-name-clean-field').setValue(params.text);
+    Ext.getCmp('biodatabase-name-clean-field').disable();
   }
 });
 
@@ -256,7 +266,22 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       },
       defaultType: 'textfield',
       items: [
-      programCombo, testCombo, targetCombo,
+      programCombo, 
+      new Ext.form.Hidden({
+        name: 'biodatabase_id',
+        value: 1,
+        id: 'test-biodatabase-id-blast-field'
+      }) , {
+        fieldLabel: 'Database Name',
+        name: 'biodatabase_name',
+        value:'',
+        allowBlank:true,
+        id: 'test-biodatabase-name-blast-field'
+      },
+      
+//      testCombo,
+
+      targetCombo,
       {
         fieldLabel: 'Output DB Group',
         name: 'output_biodatabase_group_name',
@@ -319,6 +344,8 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
 
   setParams: function(params) {
     Ext.getCmp('test-biodatabase-id-blast-field').setValue(params.id);
+    Ext.getCmp('test-biodatabase-name-blast-field').setValue(params.text);
+    Ext.getCmp('test-biodatabase-name-blast-field').disable();
   //    Ext.getCmp('target-biodatabase-id-blast-field').setValue(biodatabaseId);
   }
 });

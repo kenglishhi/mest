@@ -73,3 +73,8 @@ p {
   background-image:url('/images/xxxxx.png') !important ;
   background-color:#FFF !important ;
 }
+
+.x-item-disabled {
+  color: #000 !important;
+  font-weight:bold !important;
+}
