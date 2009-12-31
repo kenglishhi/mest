@@ -559,7 +559,7 @@ Ext.bio.FastaFileUploadWindow = Ext.extend(Ext.Window,{
   initComponent: function() {
     var parentComponentId = this.id;
     var fastaFileItems = [];
-    for (var i=0; i< 5; i++) {
+    for (var i=0; i< 1; i++) {
       fastaFileItems[i] = {
         xtype: 'fileuploadfield',
         id: 'fasta-file-' + i,
