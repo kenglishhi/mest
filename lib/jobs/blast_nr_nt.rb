@@ -1,4 +1,4 @@
-class Jobs::BlastNtAppend < Jobs::AbstractJob
+class Jobs::BlastNrNt < Jobs::AbstractJob
   def param_keys
     [:biodatabase_id, :evalue, :identity, :score]
   end
@@ -11,11 +11,11 @@ class Jobs::BlastNtAppend < Jobs::AbstractJob
     biodatabase = Biodatabase.find(params[:biodatabase_id])
     if biodatabase.biodatabase_type == BiodatabaseType.database_group
       biodatabase.children.each do | biodatabase |
-        blast_command = Blast::NtAppend.new( params.merge({:biodatabase_id => biodatabase.id})  )
+        blast_command = Blast::NrNt.new( params.merge({:biodatabase_id => biodatabase.id})  )
         blast_command.run
       end
     else
-      blast_command = Blast::NtAppend.new( params )
+      blast_command = Blast::NrNt.new( params )
       blast_command.run
     end
   end

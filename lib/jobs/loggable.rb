@@ -15,13 +15,12 @@ module Jobs::Loggable
     ensure
       stopped_at = Time.now
       if e
+        JobFailureNotifier.deliver_failure_notification(e,self)
         message = "#{e.message}\n#{e.backtrace.join("\n")}"
         logger.info "---------------  "
         logger.info "ERROR: "
         logger.info message
         logger.info "---------------  "
-        ExceptionNotifier.deliver_exception_notification(e, self, ActionController::Request.new({}) )
-
       end
       JobLog.create!(:job_name => self.job_name,
                      :job_class_name => self.class.to_s,

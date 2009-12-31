@@ -14,7 +14,7 @@ class Workbench::HomeController < ApplicationController
   def blast_help_window
     render :layout => false
   end
-  def nt_append_form
+  def nr_nt_form
     render :layout => false
   end
   def change_project

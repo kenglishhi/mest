@@ -9,7 +9,7 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
     end
     context "Blast NT with default number_of_sequences_to_save" do
       setup do
-        @job =  Jobs::BlastNtAppend.new("Blasting #{@biodatabase.name} against NR",
+        @job =  Jobs::BlastNrNt.new("Blasting #{@biodatabase.name} against NR",
           {:biodatabase_id => @biodatabase.id,
             :user_id => users(:users_001).id,
             :ncbi_database => 'nt',
@@ -27,7 +27,7 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
     context "Blast NT with number_of_sequences_to_save of 20" do
       setup do
         @number_of_sequences_to_save = 25
-        @job =  Jobs::BlastNtAppend.new("Blasting #{@biodatabase.name} against NR",
+        @job =  Jobs::BlastNrNt.new("Blasting #{@biodatabase.name} against NR",
           {:biodatabase_id => @biodatabase.id,
             :user_id => users(:users_001).id,
             :ncbi_database => 'nt',
@@ -49,7 +49,7 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
     context "Blast NR with number_of_sequences_to_save of 20" do
       setup do
         @number_of_sequences_to_save = 25
-        @job =  Jobs::BlastNtAppend.new("Blasting #{@biodatabase.name} against NR",
+        @job =  Jobs::BlastNrNt.new("Blasting #{@biodatabase.name} against NR",
           {:biodatabase_id => @biodatabase.id,
             :user_id => users(:users_001).id,
             :ncbi_database => 'nr',
@@ -64,8 +64,6 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
         assert_equal @number_of_blast_results + 1, BlastResult.count, "We should have a new biodatabase group"
         assert @biodatabase.children.size > 0
         assert @biodatabase.children.first.biosequences.size  > 0
-
-        #        assert  @number_of_seqs < @biodatabase.biosequences.size, "Should increase by 10"
       end
     end
   end

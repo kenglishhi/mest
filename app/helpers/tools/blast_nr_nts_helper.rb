@@ -1,0 +1,2 @@
+module Tools::BlastNrNtsHelper
+end

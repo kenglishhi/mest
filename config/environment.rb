@@ -60,4 +60,5 @@ ActionMailer::Base.sendmail_settings = {
 
 
 ExceptionNotifier.exception_recipients = %w(kenglish@gmail.com)
+JobFailureNotifier.exception_recipients = ExceptionNotifier.exception_recipients 
 

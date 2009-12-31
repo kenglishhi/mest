@@ -25,8 +25,7 @@ ActionController::Routing::Routes.draw do |map|
     tools.resources :biosequence_renamers
     tools.resources :clustalws
     tools.resources :generate_fastas
-    tools.resources :blast_nt_appends
-    tools.resources :blast_group_nt_appends
+    tools.resources :blast_nr_nts
     tools.resources :extract_sequences
   end
 
@@ -101,9 +100,9 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'workbench/home',
     :action     => 'ncbi_blast'
 
-  map.connect 'workbench/home/nt_append_form',
+  map.connect 'workbench/home/nr_nt_form',
     :controller => 'workbench/home',
-    :action     => 'nt_append_form'
+    :action     => 'nr_nt_form'
 
   map.connect 'workbench/home/user_job_notifications',
     :controller => 'workbench/home',

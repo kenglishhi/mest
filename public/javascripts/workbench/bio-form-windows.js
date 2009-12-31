@@ -440,14 +440,14 @@ Ext.bio.ClustalwWindow = Ext.extend(Ext.Window,{
   }
 });
 
-Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
-  title: 'Blast DB against NT and append results',
+Ext.bio.BlastNrNtWindow = Ext.extend(Ext.Window,{
+  title: 'Blast DB against Nr/NT',
   layout:'fit',
   width:500,
   height:220,
   closeAction:'hide',
   plain: true,
-  id: 'bio-blast-nt-append-window',
+  id: 'bio-blast-nr-nt-window',
   initComponent: function() {
     var ncbiDatabaseCombo = new Ext.form.ComboBox({
       typeAhead: true,
@@ -478,9 +478,9 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
 
     var parentComponentId = this.id;
     var form = new Ext.FormPanel({
-      id: 'my-blast-nt-append-form-panel',
+      id: 'my-blast-nr-nt-form-panel',
       labelWidth: 120, // label settings here cascade unless overridden
-      url:'/tools/blast_nt_appends.json',
+      url:'/tools/blast_nr_nt.json',
       method: 'POST',
       baseParams:{
         authenticity_token: FORM_AUTH_TOKEN
@@ -495,14 +495,14 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
       new Ext.form.Hidden({
         name: 'biodatabase_id',
         value: 1,
-        id: 'biodatabase-id-nt-append-field'
+        id: 'biodatabase-id-nr-nt-field'
       }) ,
       {
         fieldLabel: 'Database Name',
         name: 'biodatabase_name',
         value:'',
         allowBlank:true,
-        id: 'biodatabase-name-nt-append-field'
+        id: 'biodatabase-name-nr-nt-field'
       },
       ncbiDatabaseCombo,
       programCombo,
@@ -522,7 +522,7 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
       buttons: [{
         text: 'Submit',
         handler: function(){
-          var form = Ext.getCmp('my-blast-nt-append-form-panel').getForm();
+          var form = Ext.getCmp('my-blast-nr-nt-form-panel').getForm();
           if (form && form.isValid()) {
             form.submit({
               waitMsg:"Submitting...",
@@ -554,12 +554,12 @@ Ext.bio.BlastNtAppendWindow = Ext.extend(Ext.Window,{
       ]
 
     });
-    Ext.bio.BlastNtAppendWindow.superclass.initComponent.call(this);
+    Ext.bio.BlastNrNtWindow.superclass.initComponent.call(this);
   } ,
   setParams: function(params) {
-    Ext.getCmp('biodatabase-id-nt-append-field').setValue(params.id);
-    Ext.getCmp('biodatabase-name-nt-append-field').setValue(params.text);
-    Ext.getCmp('biodatabase-name-nt-append-field').disable();
+    Ext.getCmp('biodatabase-id-nr-nt-field').setValue(params.id);
+    Ext.getCmp('biodatabase-name-nr-nt-field').setValue(params.text);
+    Ext.getCmp('biodatabase-name-nr-nt-field').disable();
   }
 });
 
@@ -772,9 +772,9 @@ Ext.bio.showClustalwWindow  = function(params) {
   Ext.bio._showFormWindow(obj, cmpId, store, params);
 } ;
 
-Ext.bio.showBlastNtAppendWindow  = function(params) {
-  var cmpId = 'bio-blast-nt-append-window' ;
-  var obj = Ext.bio.BlastNtAppendWindow ;
+Ext.bio.showBlastNrNtWindow  = function(params) {
+  var cmpId = 'bio-blast-nr-nt-window' ;
+  var obj = Ext.bio.BlastNrNtWindow ;
   var store = null;
   Ext.bio._showFormWindow(obj, cmpId, store, params);
 };

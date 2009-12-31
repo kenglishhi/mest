@@ -1,4 +1,4 @@
-class Blast::NtAppend < Blast::Base
+class Blast::NrNt < Blast::Base
   DEFAULT_NUMBER_OF_SEQUENCES_TO_SAVE = 10
   protected
 

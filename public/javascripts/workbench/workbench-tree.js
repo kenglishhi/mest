@@ -175,16 +175,16 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
             }
           });
 
-          var ntAppendButton = new Ext.menu.Item({
+          var nrNtButton = new Ext.menu.Item({
             iconCls:'blast',
             text: "Blast vs NR-NT",
             handler: function() {
-              Ext.bio.showBlastNtAppendWindow(node);
+              Ext.bio.showBlastNrNtWindow(node);
             }
           });
 
           contextMenu  = new Ext.menu.Menu({
-            items: [ clustalwButton,ntAppendButton,'-',deleteButton]
+            items: [ clustalwButton,nrNtButton,'-',deleteButton]
           });
 
         } else if (node.attributes.db_type == "Uploaded Cleaned Database") {
@@ -205,11 +205,11 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
           });
         } else if (node.attributes.db_type == "Database Group") {
 
-          var ntAppendButton = new Ext.menu.Item({
+          var nrNtButton = new Ext.menu.Item({
             iconCls:'blast',
             text: "Blast vs NR-NT",
             handler: function() {
-              Ext.bio.showBlastNtAppendWindow(node);
+              Ext.bio.showBlastNrNtWindow(node);
             }
           });
           var groupClustalwButton = new Ext.menu.Item({
@@ -221,7 +221,7 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
           });
 
           contextMenu  = new Ext.menu.Menu({
-            items: [ntAppendButton,groupClustalwButton,  '-', deleteButton]
+            items: [nrNtButton,groupClustalwButton,  '-', deleteButton]
           });
 
         } else {
