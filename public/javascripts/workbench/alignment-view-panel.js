@@ -25,23 +25,8 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
       {
         text:'Database',
         id: 'tbar-item-alignment-database-title'
-      },
-      {
-        iconCls:'zoom_minus',
-        text:'Blast @ NCBI',
-        id: 'tbar-ncbi-blast',
-        viewPanelId: this.id,
-        disabled: true ,
-        handler: function() {
-          var record = Ext.getCmp(this.viewPanelId).record;
-          if (record) {
-            var params = {};
-            params.JOB_TITLE = 'MEST-'+record.name;
-            params.QUERY     = record.seq;
-            Ext.bio.ncbiBlastSearch(params);
-          }
-        }
-      }]
+      }
+      ]
     /*      ,
       tbar: [{
         text:'Update content',
@@ -67,7 +52,8 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
     afterrender: function() {
       if (this.biodatabase_id) {
         this.updateContent({ 
-          biodatabase_id: this.biodatabase_id
+          biodatabase_id: this.biodatabase_id,
+          biodatabase_name: this.biodatabase_name
         });
       }
     }
@@ -75,15 +61,17 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
   clearContent: function() {
     if (this.rendered) {
       Ext.getCmp('inner-alignment-panel').getEl().update('&nbsp;');
+      Ext.getCmp('tbar-item-alignment-database-title').setText("Database ");
     }
   },
   updateContent: function(params) {
-    console.log("name = " + params.biodatabase_name ) ;
+
     if (params && params.biodatabase_id) {
       this.biodatabase_id  = params.biodatabase_id ;
+      this.biodatabase_name  = params.biodatabase_name ;
       var url = '/workbench/alignments/' + this.biodatabase_id + '.json';
-      Ext.getCmp('tbar-item-alignment-database-title').setText("Sequence <b>" + params.biodatabase_name + "</b>");
       if (this.rendered) {
+
         Ext.Ajax.request({
           url:  url,
           params: { 
@@ -112,6 +100,7 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
           }
         });
 
+        Ext.getCmp('tbar-item-alignment-database-title').setText("Database <b>" + this.biodatabase_name + "</b>");
       }
     }
 

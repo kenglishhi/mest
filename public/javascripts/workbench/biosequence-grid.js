@@ -202,7 +202,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
             if (alignmentViewPanel) {
               alignmentViewPanel.updateContent({
                 biodatabase_id: params.biodatabase_id,
-                biodatabase_name: params.text
+                biodatabase_name: params.biodatabase_name
               });
             }
           } else {
