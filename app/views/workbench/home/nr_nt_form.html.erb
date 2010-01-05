@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>BiococonutIsland :: Workbench </title>
+    <style type="text/css">
+      #blast-programs{
+        border-bottom: thin solid black;
+        padding: 0em 0em 1em 1.5em;
+        margin: 0em 0em 1em 0em;
+      }
+
+      #blast-programs h3 {
+        position: relative;
+        left: -1em;
+      }
+
+      #blast-programs dl {
+        margin-bottom: 1em;
+      }
+
+      #blast-programs dt { font-weight: bold; }
+      #blast-programs dd {
+        padding-left: 2em;
+        padding-bottom: 1em;
+      }
+    </style>
+
+    <%= stylesheet_link_tag "/javascripts/ext-3.0.0/resources/css/ext-all.css",
+      "ext-override",
+      "workbench-style" %>
+    <%= javascript_tag "var FORM_AUTH_TOKEN = '#{form_auth_token}';" %>
+    <%= javascript_include_tag "ext-3.0.0/adapter/ext/ext-base",
+      "ext-3.0.0/ext-all" ,
+      "ext-3.0.0/FileUploadField" ,
+      "workbench/base",
+      "workbench/database-group-tree",
+      "workbench/App",
+      "workbench/bio-grids",
+      "workbench/bio-property-grid",
+      "workbench/RowEditor",
+      "workbench/alignment-view-panel",
+      "workbench/bio-form-windows"
+  %>
+    <script type="text/javascript">
+      /*!
+       * Ext JS Library 3.0+
+       * Copyright(c) 2006-2009 Ext JS, LLC
+       * licensing@extjs.com
+       * http://www.extjs.com/license
+       */
+
+      Ext.onReady(function(){
+        var blastHelpWindow;
+        var button = Ext.get('show-btn');
+
+        button.on('click', function(){
+          // create the window on the first click and reuse on subsequent clicks
+          var params = {"leaf":true,
+            "db_type":"Generated Match DB",
+            "expandable":false,
+            "text":"EST_Clade_A vs C_Clean 001",
+            "resource":"biodatabase",
+            "expanded":null,
+            "id":990042};
+          Ext.bio.showBlastNrNtWindow(params);
+        });
+      });
+
+
+    </script>
+  </head>
+
+  <body>
+
+    <%= render :partial => 'blast_help_window' %>
+    <h1>Test the Blast vs NCBI Window</h1>
+
+    <input type="button" id="show-btn" value="Show Blast vs NCBI Window" /><br /><br />
+
+    <%= render :partial => 'blast_help_window' %>
+    <div id='my-alignment-view'></div>
+    <div id="hello-win" class="x-hidden">
+      <div class="x-window-header">Hello Dialog</div>
+      <div id="hello-tabs">
+        <!-- Auto create tab 1 -->
+        <div class="x-tab" title="Hello World 1">
+          <p>Hello...</p>
+        </div>
+        <!-- Auto create tab 2 -->
+        <div class="x-tab" title="Hello World 2">
+          <p>... World!</p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
