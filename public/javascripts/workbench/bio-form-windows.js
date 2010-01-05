@@ -193,7 +193,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
   title: 'Blast & Create DBs',
   layout:'fit',
   width:500,
-  height:220,
+  height:350,
   closeAction:'hide',
   plain: true,
   id:'bio-blast-window',
@@ -267,7 +267,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       targetCombo,
       {
         fieldLabel: 'Output DB Group',
-        name: 'output_biodatabase_group_name',
+        name: 'output_parent_biodatabase_name',
         allowBlank:true,
         msgTarget:'side'
       } , {

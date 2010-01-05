@@ -20,6 +20,27 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
       items: [{
         id:'inner-alignment-panel',
         html: "No Alignment to preview "
+      }],
+      tbar:[
+      {
+        text:'Database',
+        id: 'tbar-item-alignment-database-title'
+      },
+      {
+        iconCls:'zoom_minus',
+        text:'Blast @ NCBI',
+        id: 'tbar-ncbi-blast',
+        viewPanelId: this.id,
+        disabled: true ,
+        handler: function() {
+          var record = Ext.getCmp(this.viewPanelId).record;
+          if (record) {
+            var params = {};
+            params.JOB_TITLE = 'MEST-'+record.name;
+            params.QUERY     = record.seq;
+            Ext.bio.ncbiBlastSearch(params);
+          }
+        }
       }]
     /*      ,
       tbar: [{
@@ -57,9 +78,11 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
     }
   },
   updateContent: function(params) {
+    console.log("name = " + params.biodatabase_name ) ;
     if (params && params.biodatabase_id) {
       this.biodatabase_id  = params.biodatabase_id ;
       var url = '/workbench/alignments/' + this.biodatabase_id + '.json';
+      Ext.getCmp('tbar-item-alignment-database-title').setText("Sequence <b>" + params.biodatabase_name + "</b>");
       if (this.rendered) {
         Ext.Ajax.request({
           url:  url,
@@ -68,6 +91,7 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
           },
           method:'GET',
           success: function(response) {
+
             var alnObj = Ext.util.JSON.decode(response.responseText);
             var clustalwOutput = '<table class="clustalw-table">';
             for (var seqId in alnObj) {

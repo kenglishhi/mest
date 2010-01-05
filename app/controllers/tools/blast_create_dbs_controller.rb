@@ -11,8 +11,8 @@ class Tools::BlastCreateDbsController < ApplicationController
     @test_biodatabase = Biodatabase.find(params[:test_biodatabase_id] )
     @target_biodatabases = Biodatabase.all(:conditions => ["id in (?)",params[:target_biodatabase_ids]] ) 
 
-    if (!params[:output_biodatabase_group_name].blank? &&
-        BiodatabaseGroup.exists?(['name =? ', params[:output_biodatabase_group_name]]) ) ||
+    if (!params[:output_parent_biodatabase_name].blank? &&
+        BiodatabaseGroup.exists?(['name =? ', params[:output_parent_biodatabase_name]]) ) ||
       @target_biodatabases.empty?
       flash[:errors] = "Output Database Group Name already exists."
       respond_to do |format|
@@ -22,7 +22,7 @@ class Tools::BlastCreateDbsController < ApplicationController
         format.json {
           render :json => {:success => false,
             :errors => [{
-                :id => 'output_biodatabase_group_name',
+                :id => 'output_parent_biodatabase_name',
                 :msg => "Sorry man, Output Database Group Name already exists." }]
           }
         }

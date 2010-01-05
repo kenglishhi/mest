@@ -388,6 +388,7 @@ extjs_store( :controller => "workbench/blast_results",
                         title: 'Running Jobs',
                         height: 170,
                         id: 'wb-running-jobs-grid',
+                        queuedJobGridCmpId: 'wb-queued-jobs-grid',
                         pageSize: Ext.workbenchMenu.jobPageSize,
                         xtype:'running-job-grid' ,
                         store: Ext.workbenchdata.runningJobStore
@@ -420,7 +421,7 @@ extjs_store( :controller => "workbench/blast_results",
                 },
                 {
                   iconCls:'fasta-file-folder',
-                  title: 'Uploaded Fasta Files',
+                  title: 'Upload Fasta Files',
                   autoScroll: true,
                   id:'workbench-fasta-file-tab',
                   items: [ {
