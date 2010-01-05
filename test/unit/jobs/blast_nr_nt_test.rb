@@ -7,6 +7,26 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
       @number_of_seqs = @biodatabase.biosequences.size
       assert File.exists?( @biodatabase.fasta_file.fasta.path ), "fasta_file should exist."
     end
+
+    context "Blast NT with no program" do
+      setup do
+        @job =  Jobs::BlastNrNt.new("Blasting #{@biodatabase.name} against NR",
+          {:biodatabase_id => @biodatabase.id,
+            :user_id => users(:users_001).id,
+            :ncbi_database => 'nt',
+            :program => '',
+            :project_id => users(:users_001).active_project.id})
+        @number_of_blast_results = BlastResult.count
+
+      end
+      should "Create add NR Sequences to DB" do
+        assert_raise RuntimeError do
+          @job.perform
+        end
+        assert_equal @number_of_blast_results , BlastResult.count, "We should have a no new blast result"
+      end
+    end
+
     context "Blast NT with default number_of_sequences_to_save" do
       setup do
         @job =  Jobs::BlastNrNt.new("Blasting #{@biodatabase.name} against NR",
@@ -16,6 +36,7 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
             :program => 'blastn',
             :project_id => users(:users_001).active_project.id})
         @number_of_blast_results = BlastResult.count
+
         @job.perform
         @biodatabase.reload
       end
@@ -42,10 +63,6 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
       end
       should "Create add NR Sequences to DB" do
         assert_equal @number_of_blast_results + 1, BlastResult.count, "We should have a new biodatabase group"
-        assert @biodatabase.children.size > 0
-        assert @biodatabase.children.first.biosequences.size  > 0
-
-        #        assert  @number_of_seqs < @biodatabase.biosequences.size, "Should increase by 10"
       end
     end
     context "Blast NR with number_of_sequences_to_save of 20" do
@@ -64,8 +81,6 @@ class Jobs::BlastNtAppendTest < ActiveSupport::TestCase
       end
       should "Create add NR Sequences to DB" do
         assert_equal @number_of_blast_results + 1, BlastResult.count, "We should have a new biodatabase group"
-        assert @biodatabase.children.size > 0
-        assert @biodatabase.children.first.biosequences.size  > 0
       end
     end
   end

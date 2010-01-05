@@ -18,6 +18,7 @@ class JobFailureNotifier < ActionMailer::Base
 
     body       data.merge({ 
         :exception => exception,
+        :params => job.params,
         :job => job,
         :backtrace => sanitize_backtrace(exception.backtrace),
         :data => data,
