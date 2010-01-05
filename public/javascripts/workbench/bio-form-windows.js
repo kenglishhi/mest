@@ -428,11 +428,12 @@ Ext.bio.BlastNrNtWindow = Ext.extend(Ext.Window,{
   title: 'Blast DB against Nr/NT',
   layout:'fit',
   width:500,
-  height:220,
+  height:320,
   closeAction:'hide',
   plain: true,
   id: 'bio-blast-nr-nt-window',
   initComponent: function() {
+
     var ncbiDatabaseCombo = new Ext.form.ComboBox({
       typeAhead: true,
       forceSelection: true,
@@ -441,10 +442,12 @@ Ext.bio.BlastNrNtWindow = Ext.extend(Ext.Window,{
       store: Ext.bio.ncbiDatabaseStore,
       valueField: 'ncbi_database_id',
       displayField: 'ncbi_database_name',
+      fieldLabel: 'NCBI Database',
       name:'ncbi_database',
       hiddenName:'ncbi_database',
       value:'nt'
     });
+
     var programCombo = new Ext.form.ComboBox({
       store: Ext.bio.programStore,
       forceSelection: true,

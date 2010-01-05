@@ -180,18 +180,6 @@ extjs_store( :controller => "workbench/jobs",
   }
 ).render(false)
 %>
-
-    Ext.workbenchdata.biodatabaseGroupsComboStore  = <%=
-extjs_store( :controller => "workbench/biodatabase_groups",
-  :writer => {"encode" => false},
-  :config => {
-    "totalProperty" => 'results',
-    "autoLoad" => true,
-    "autoSave" => true,
-    "restful" => true
-  }
-).render(false)
-%>
     Ext.workbenchdata.blastResultStore = <%=
 extjs_store( :controller => "workbench/blast_results",
   :writer => {"encode" => false},
