@@ -6,4 +6,4 @@ A <%= @exception.class %> occurred in <%= @job.class.to_s %>:
   <%= @params.inspect %>
 
   User : <%= User.find(@job.user_id).inspect %>
-  Project : <%= Project.find(@job.project).inspect %>
+  Project : <%= Project.find(@job.project_id).inspect %>
