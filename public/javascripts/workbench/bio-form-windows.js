@@ -186,7 +186,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       displayField:'program',
       fieldLabel: 'Program',
       name:'program',
-      id:'program-blast-field',
+      id:'blast-create-db-program-combo',
       value:'blastn', //programStore.getAt(0).get('blastn'),
       mode: 'local',
       triggerAction: 'all',
@@ -194,22 +194,19 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       selectOnFocus:true
     });
 
-
     Ext.bio.StateMultiSelect = function(config) {
       Ext.bio.StateMultiSelect.superclass.constructor.call(this, config);
     };
     Ext.extend(Ext.bio.StateMultiSelect, Ext.form.MultiSelectField, {
       store: this.dbStore,
-      //      store: Ext.example.Store
       valueField:'id' ,
       displayField:'name',
       fieldLabel: 'Target Database',
       id:'target-biodatabase-id-blast-field',
       hiddenName : 'target_biodatabase_ids',
       name:'biodatabase'
-    //      ,
-    //      mode: 'local'
     });
+
     var targetCombo = new Ext.bio.StateMultiSelect({
       containerHeight: 200,
       containerWidth: 200
@@ -242,9 +239,6 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
         allowBlank:true,
         id: 'test-biodatabase-name-blast-field'
       },
-      
-//      testCombo,
-
       targetCombo,
       {
         fieldLabel: 'Output DB Group',
@@ -310,7 +304,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
     Ext.getCmp('test-biodatabase-id-blast-field').setValue(params.id);
     Ext.getCmp('test-biodatabase-name-blast-field').setValue(params.text);
     Ext.getCmp('test-biodatabase-name-blast-field').disable();
-    Ext.getCmp('target-biodatabase-id-blast-field').store.reload();
+    this.dbStore.reload();
   //    Ext.getCmp('target-biodatabase-id-blast-field').setValue(biodatabaseId);
   }
 });
@@ -409,7 +403,7 @@ Ext.bio.BlastNrNtWindow = Ext.extend(Ext.Window,{
   title: 'Blast DB against Nr/NT',
   layout:'fit',
   width:500,
-  height:320,
+  height:350,
   closeAction:'hide',
   plain: true,
   id: 'bio-blast-nr-nt-window',
@@ -435,7 +429,7 @@ Ext.bio.BlastNrNtWindow = Ext.extend(Ext.Window,{
       displayField:'program',
       fieldLabel: 'Program',
       name:'program',
-      id:'program-blast-field',
+      id:'ncbi-blast-program-combo',
       value:'blastn', //programStore.getAt(0).get('blastn'),
       mode: 'local',
       triggerAction: 'all',
