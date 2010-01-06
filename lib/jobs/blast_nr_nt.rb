@@ -10,9 +10,11 @@ class Jobs::BlastNrNt < Jobs::AbstractJob
 
     biodatabase = Biodatabase.find(params[:biodatabase_id])
     if biodatabase.biodatabase_type == BiodatabaseType.database_group
-      biodatabase.children.each do | biodatabase |
-        blast_command = Blast::NrNt.new( params.merge({:biodatabase_id => biodatabase.id})  )
-        blast_command.run
+      biodatabase.children.each do | child_db |
+        unless child_db.biodatabase_type == BiodatabaseType.database_group
+          blast_command = Blast::NrNt.new( params.merge({:biodatabase_id => child_db.id})  )
+          blast_command.run
+        end
       end
     else
       blast_command = Blast::NrNt.new( params )
