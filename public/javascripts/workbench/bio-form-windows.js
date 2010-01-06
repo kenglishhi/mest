@@ -19,25 +19,6 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   id:'bio-db-renamer-window',
   initComponent: function() {
     var parentComponentId = this.id;
-    var combo = new Ext.form.ComboBox({
-      fieldLabel: 'Database',
-      name:'biodatabase',
-      id:'biodatabase-id-rename-field',
-      hiddenName : 'biodatabase_id',
-      valueField:'id',
-      displayField:'name',
-      store: this.dbStore,
-      typeAhead: true,
-      mode: 'local',
-      triggerAction: 'all',
-      emptyText:'Select a database...',
-      selectOnFocus:true,
-      forceSelection:true,
-      width: 350,
-      listWidth: 350,
-      allowBlank:false
-    });
-
     var form = new Ext.FormPanel({
       id: 'my-renamer-form-panel',
       labelWidth: 75, // label settings here cascade unless overridden
