@@ -77,12 +77,16 @@ class Blast::NrNt < Blast::Base
   end
   def create_child_biodatabase(test_biodatabase,params)
     biodatabase_group = find_or_create_ncbi_biodatebase_group(test_biodatabase.parent,params)
-    child_biodatabase = Biodatabase.create!(:name => "#{test_biodatabase.name}-#{params[:ncbi_database].upcase}",
-      :project_id => test_biodatabase.project_id,
-      :parent => biodatabase_group ,
-      :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH) ,
-      :user_id => params[:user_id])
-
+    new_db_name = "#{test_biodatabase.name}-#{params[:ncbi_database].upcase}"
+    if (child_biodatabase = Biodatabase.find_by_name(new_db_name))
+      BiodatabaseBiosequence.delete_all(['biodatabase_id = ? ' , child_biodatabase.id])
+    else
+      child_biodatabase = Biodatabase.create!(:name => new_db_name,
+        :project_id => test_biodatabase.project_id,
+        :parent => biodatabase_group ,
+        :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH) ,
+        :user_id => params[:user_id])
+    end
     if params[:ncbi_database] =='nt'
       test_biodatabase.biosequences.each do | bioseq|
         child_biodatabase.biosequences << bioseq
