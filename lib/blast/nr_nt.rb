@@ -77,7 +77,7 @@ class Blast::NrNt < Blast::Base
   end
   def create_child_biodatabase(test_biodatabase,params)
     biodatabase_group = find_or_create_ncbi_biodatebase_group(test_biodatabase.parent,params)
-    child_biodatabase = Biodatabase.create!(:name => "#{test_biodatabase.name}-NR",
+    child_biodatabase = Biodatabase.create!(:name => "#{test_biodatabase.name}-#{params[:ncbi_database].upcase}",
       :project_id => test_biodatabase.project_id,
       :parent => biodatabase_group ,
       :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::GENERATED_MATCH) ,
