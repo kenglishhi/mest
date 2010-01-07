@@ -52,10 +52,7 @@ class Blast::CleanDb < Blast::Base
           unless hit.target_def == report.query_def
             target_biosequence = Biosequence.find_by_name(hit.target_def)
             @matches = @matches - 1
-            @output_biodatabase.biosequences.delete( target_biosequence )
-            # BiodatabaseBiosequence.delete_all(['biodatabase_id =?  AND  biosequence_id =?',
-            #    @output_biodatabase.id,
-            #    target_biosequence.id])
+            @output_biodatabase.biosequences.delete( target_biosequence ) if target_biosequence
           end
         end
       end
