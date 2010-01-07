@@ -40,7 +40,7 @@ class Biodatabase < ActiveRecord::Base
       :resource => 'biodatabase'
     }
     unless self.children.empty?
-      tree_data[:children] = self.children.map{|child| child.ext_tree}
+      tree_data[:children] = self.children.all(:conditions => 'visible = 1').map{|child| child.ext_tree}
     end
     tree_data
   end

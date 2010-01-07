@@ -120,6 +120,7 @@ class FastaFile < ActiveRecord::Base
             :user => self.user,
             :parent => parent_db,
             :project => project,
+            :visible => false,
             :biodatabase_type => BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_RAW) )
           self.biodatabase.save!
           save!
@@ -151,6 +152,8 @@ class FastaFile < ActiveRecord::Base
       end
       #      end
     end
+    self.biodatabase.visible = true
+    self.biodatabase.save
     self.biodatabase
   end
 
