@@ -59,10 +59,11 @@ class Blast::CreateDbs < Blast::Base
         logger.error "output_parent_biodatabase_name exists! #{output_parent_biodatabase_name}"
         output_parent_biodatabase  = Biodatabase.find_by_name(output_parent_biodatabase_name)
       else
-        logger.error "Creating output_parent_biodatabase_name #{output_parent_biodatabase_name}"
+        logger.error "Creatoutput_parent_biodatabase_name #{output_parent_biodatabase_name}"
         output_parent_biodatabase = Biodatabase.create!(:name => output_parent_biodatabase_name,
           :project_id => @test_fasta_file.project_id,
           :parent => @test_fasta_file.biodatabase,
+          :visible => false,
           :biodatabase_type => BiodatabaseType.database_group,
           :user_id => @params[:user_id])
       end
@@ -99,6 +100,8 @@ class Blast::CreateDbs < Blast::Base
     end
     @blast_result.output = output_file_handle
     @blast_result.output_biodatabase = output_parent_biodatabase
+    output_parent_biodatabase.visible = true
+    output_parent_biodatabase.save!
     @blast_result.save!
     logger.error( "Saved blast Results ")
     @blast_result
