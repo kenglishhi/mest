@@ -96,7 +96,11 @@ class Blast::NrNt < Blast::Base
   end
   def find_or_create_ncbi_biodatebase_group(parent_biodatabase_group,params)
     child_db_group_name = "#{params[:ncbi_database].upcase} Output"
-    db = Biodatabase.find_by_name(child_db_group_name) 
+
+    db = Biodatabase.find(:first,
+      :conditions => ['name = ? AND parent_id = ?', child_db_group_name,parent_biodatabase_group.id])
+
+    Biodatabase.find_by_name(child_db_group_name)
     unless db
       db = Biodatabase.create!(:name => child_db_group_name,
         :project_id => parent_biodatabase_group.project_id,
