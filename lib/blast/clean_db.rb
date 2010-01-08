@@ -57,6 +57,7 @@ class Blast::CleanDb < Blast::Base
         end
       end
     end
+    @output_biodatabase.visible = true
     @output_biodatabase.save
     FastaFile.generate_fasta(@output_biodatabase)
     BiodatabaseLink.create(:biodatabase =>@test_fasta_file.biodatabase,
@@ -76,6 +77,7 @@ class Blast::CleanDb < Blast::Base
     Biodatabase.new(:biodatabase_type =>
         BiodatabaseType.find_by_name(BiodatabaseType::UPLOADED_CLEANED),
       :name => new_name,
+      :visible => false,
       :project_id => source_db.project_id,
       :parent => source_db.parent)
   end
