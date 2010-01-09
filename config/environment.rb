@@ -36,6 +36,7 @@ Rails::Initializer.run do |config|
   config.gem "authlogic"
   config.gem 'daemons'
   config.gem 'rcov'
+  config.gem 'bio', :version => '1.4.0'
   config.gem 'extjs-mvc'
   config.gem "thoughtbot-shoulda", :lib => "shoulda", :source => "http://gems.github.com"
   config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"

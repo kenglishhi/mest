@@ -27,8 +27,10 @@ class Blast::NrNt < Blast::Base
         })
     )
     output_file_handle.open
+
     result_ff = Bio::FlatFile.open(output_file_handle)
-    process_results(result_ff,@test_biodatabase,@params)
+
+    process_results(result_ff,@test_biodatabase,@params) if result_ff
 
     @blast_result.stopped_at = Time.now
     @blast_result.duration_in_seconds = (@blast_result.stopped_at - @blast_result.started_at)
