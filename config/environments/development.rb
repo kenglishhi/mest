@@ -18,4 +18,5 @@ config.action_mailer.raise_delivery_errors = false
 
 config.after_initialize do
   Blast::Command.ncbi_database_directory = File.dirname(__FILE__) + '/../../test/fixtures/files'
+#  Blast::Command.ncbi_database_directory = '/opt/local/var/data'
 end

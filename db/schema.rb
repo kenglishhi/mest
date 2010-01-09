@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100109012501) do
+ActiveRecord::Schema.define(:version => 20100109225705) do
 
   create_table "biodatabase_biosequences", :force => true do |t|
     t.integer "biodatabase_id"
@@ -144,11 +144,13 @@ ActiveRecord::Schema.define(:version => 20100109012501) do
     t.string   "job_class_name"
     t.datetime "started_at"
     t.datetime "stopped_at"
-    t.decimal  "duration_in_seconds", :precision => 10, :scale => 4
+    t.decimal  "duration_in_seconds",       :precision => 10, :scale => 4
     t.boolean  "success"
     t.text     "message"
     t.integer  "user_id"
     t.integer  "project_id"
+    t.datetime "estimated_completion_date"
+    t.integer  "estimation_error_seconds"
   end
 
   create_table "projects", :force => true do |t|

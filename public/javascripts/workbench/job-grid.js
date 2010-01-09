@@ -3,7 +3,6 @@
  * Kevin English, University of Hawaii
  */
 
-
 Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   useEditorFlag:false,
   usePagingBarFlag: true,
@@ -12,7 +11,26 @@ Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     autoWidth: true,
     sortable: true,
     dataIndex: 'job_name'
-  }, {
+  },
+  {
+    header: "Duration",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'duration_display'
+  },
+  {
+    header: "Approx. Remaining",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'duration_remaining_display'
+  },
+  {
+    header: "User",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'user_email'
+  },
+  {
     header: "Run At",
     autoWidth: true,
     sortable: true,
@@ -24,17 +42,8 @@ Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     sortable: true,
     dataIndex: 'run_at',
     renderer: Ext.util.Format.dateRenderer('m/d/Y H:i:s')
-  } , {
-    header: "Duration",
-    autoWidth: true,
-    sortable: true,
-    dataIndex: 'duration_display'
-  }, {
-    header: "User",
-    autoWidth: true,
-    sortable: true,
-    dataIndex: 'user_email'
-  }
+  } 
+
   ],
   updateContent: function(params) {
     if(this.store.baseParams.option != params.option) {
@@ -78,6 +87,11 @@ Ext.bio.QueuedJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     sortable: true,
     dataIndex: 'job_name'
   }, {
+    header: "User",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'user_email'
+  }, {
     header: "Run At",
     autoWidth: true,
     sortable: true,
@@ -89,17 +103,7 @@ Ext.bio.QueuedJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     sortable: true,
     dataIndex: 'run_at',
     renderer: Ext.util.Format.dateRenderer('m/d/Y H:i:s')
-  } , {
-    header: "Duration",
-    autoWidth: true,
-    sortable: true,
-    dataIndex: 'duration_display'
-  }, {
-    header: "User",
-    autoWidth: true,
-    sortable: true,
-    dataIndex: 'user_email'
-  }
+  } 
   ],
   updateContent: function(params) {
     if(this.store.baseParams.option != params.option) {

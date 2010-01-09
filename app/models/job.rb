@@ -1,7 +1,8 @@
 class Job < Delayed::Job
   include DurationDisplay
   include ExtJS::Model
-  extjs_fields :id, :job_name, :run_at, :priority, :duration_display,:user_email
+  extjs_fields :id, :job_name, :run_at, :priority, :duration_display,
+    :duration_remaining_display,:user_email
   cattr_reader :per_page
   @@per_page = 25
   set_table_name 'delayed_jobs'
@@ -23,6 +24,18 @@ class Job < Delayed::Job
       duration_format(0)
     end
   end
+
+  def duration_remaining_display
+    return duration_format(0) unless self.estimated_completion_date
+
+    seconds_remaining = self.estimated_completion_date  - Time.now
+    if (locked_at && !failed_at) && seconds_remaining > 0
+       duration_format(seconds_remaining )
+     else
+      duration_format(0)
+    end
+  end
+
 
   def user_email
     user.email

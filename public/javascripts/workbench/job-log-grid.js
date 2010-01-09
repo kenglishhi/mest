@@ -32,7 +32,12 @@ Ext.bio.JobLogGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     autoWidth: true,
     sortable: true,
     dataIndex: 'success'
-  } ],
+  },{
+    header: "Estimation Error",
+    autoWidth: true,
+    sortable: true,
+    dataIndex: 'estimation_error_seconds'
+  }  ],
   updateContent: function(params) {
   },
   initComponent: function() {

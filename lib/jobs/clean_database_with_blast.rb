@@ -8,15 +8,17 @@ class Jobs::CleanDatabaseWithBlast < Jobs::AbstractJob
       raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
     end
 
-    if Job.exists?(self.job_id)
-      job = Job.find(self.job_id)
-      job.estimated_completion_date = DateTime.now + 600
-      job.save
-    end
-
     params.merge!(:blast_result_name => "#{job_name} Blast Results" ) 
     blast_command = Blast::CleanDb.new(params)
     blast_command.run
   end
+  protected
+  def update_job_estimated_completion_time
+    seconds_per_operation = 0.06
+    biodatabase = Biodatabase.find(params[:biodatabase_id])
+    seconds_to_complete = seconds_per_operation * biodatabase.biosequences.size
+    job = Job.find(job_id)
+    job.estimated_completion_date = DateTime.now.advance(:seconds => seconds_to_complete)
+    job.save
+  end
 end
-

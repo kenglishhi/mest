@@ -8,12 +8,7 @@ class Jobs::BlastNrNt < Jobs::AbstractJob
       raise "Error #{required_param_key} can not be blank!" if params[required_param_key].blank?
     end
 
-    if Job.exist?(job_id) 
-      job = Job.find(job_id)
-      job.estimated_completion_date = DateTime.now + 600
-      job.save
 
-    end
     biodatabase = Biodatabase.find(params[:biodatabase_id])
     if biodatabase.biodatabase_type == BiodatabaseType.database_group
       biodatabase.children.each do | child_db |
@@ -27,6 +22,23 @@ class Jobs::BlastNrNt < Jobs::AbstractJob
       blast_command.run
     end
   end
+
+  protected
+
+  def update_job_estimated_completion_time
+    seconds_per_operation = 63
+    biodatabase = Biodatabase.find(params[:biodatabase_id])
+    if biodatabase.biodatabase_type == BiodatabaseType.database_group
+      seconds_to_complete = seconds_per_operation * biodatabase.children.size
+    else
+      seconds_to_complete = seconds_per_operation
+    end
+    job = Job.find(job_id)
+    job.estimated_completion_date = DateTime.now.advance(:seconds => seconds_to_complete)
+    puts job.estimated_completion_date
+    job.save
+  end
+
 
 end
 

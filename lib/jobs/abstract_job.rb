@@ -22,6 +22,8 @@ class Jobs::AbstractJob
     logger.info "Calling #{self.class}( params = #{params.inspect})  " 
     logger.info "------------" 
 
+    update_estimated_completion_time if Job.exists?(job_id)
+
     do_perform
 
     logger.info "------------" 
@@ -30,10 +32,10 @@ class Jobs::AbstractJob
   end
   # THESE Are used to trick out the exception notifier
   def controller_name
-     self.class.to_s
+    self.class.to_s
   end
   def action_name
-     self.class.to_s
+    self.class.to_s
   end
  
   include Jobs::Chainable
@@ -43,6 +45,9 @@ class Jobs::AbstractJob
   
   def do_perform
     raise "subclasses must implement"
+  end
+
+  def update_job_estimated_completion_time
   end
  
 end

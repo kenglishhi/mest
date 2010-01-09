@@ -2,7 +2,7 @@ class JobLog < ActiveRecord::Base
   include ExtJS::Model
   include DurationDisplay
   extjs_fields :id, :job_name , :job_class_name, :user_id , :duration_display,
-    :success,:user_email, :stopped_at
+    :success,:user_email, :stopped_at, :estimation_error_seconds
   cattr_reader :per_page
   @@per_page = 25
 
