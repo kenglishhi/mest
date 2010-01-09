@@ -6,6 +6,7 @@ class Jobs::AbstractJob
   attr_accessor :user_id
   attr_accessor :project_id
   attr_accessor :job_name
+  attr_accessor :job_id
   attr_accessor :params
   def initialize(n, p  = {} )
     @job_name = n
@@ -34,7 +35,6 @@ class Jobs::AbstractJob
   def action_name
      self.class.to_s
   end
-
  
   include Jobs::Chainable
   include Jobs::Loggable

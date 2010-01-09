@@ -8,13 +8,12 @@ class Job < Delayed::Job
   belongs_to :user
   belongs_to :project
   
-
-
   validates_presence_of :job_name
   validates_presence_of :user_id
   validates_presence_of :project_id
                          
   before_create :add_user_to_job
+  after_create :add_job_id_to_job
   def duration_display
     if locked_at &&  failed_at
       duration_format(failed_at - locked_at)
@@ -35,4 +34,10 @@ class Job < Delayed::Job
     self.handler.user_id = self.user.id || self.user_id
     self.handler.project_id = self.project.id || self.project_id
   end
+
+  def add_job_id_to_job
+    self.handler.job_id = self.id 
+    self.save
+  end
+
 end
