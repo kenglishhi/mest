@@ -14,11 +14,13 @@ class Jobs::CleanDatabaseWithBlast < Jobs::AbstractJob
   end
   protected
   def update_job_estimated_completion_time
+
     seconds_per_operation = 0.06
     biodatabase = Biodatabase.find(params[:biodatabase_id])
     seconds_to_complete = seconds_per_operation * biodatabase.biosequences.size
     job = Job.find(job_id)
     job.estimated_completion_date = DateTime.now.advance(:seconds => seconds_to_complete)
+    self.estimated_completion_date = estimated_completion_date
     job.save
   end
 end

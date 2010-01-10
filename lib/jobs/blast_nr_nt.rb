@@ -35,6 +35,7 @@ class Jobs::BlastNrNt < Jobs::AbstractJob
     end
     job = Job.find(job_id)
     job.estimated_completion_date = DateTime.now.advance(:seconds => seconds_to_complete)
+    self.estimated_completion_date =   job.estimated_completion_date
     puts job.estimated_completion_date
     job.save
   end

@@ -8,6 +8,7 @@ class Jobs::AbstractJob
   attr_accessor :job_name
   attr_accessor :job_id
   attr_accessor :params
+  attr_accessor :estimated_completion_date
   def initialize(n, p  = {} )
     @job_name = n
     @params = p
@@ -22,7 +23,7 @@ class Jobs::AbstractJob
     logger.info "Calling #{self.class}( params = #{params.inspect})  " 
     logger.info "------------" 
 
-    update_estimated_completion_time if Job.exists?(job_id)
+    update_job_estimated_completion_time if Job.exists?(job_id)
 
     do_perform
 
@@ -48,6 +49,7 @@ class Jobs::AbstractJob
   end
 
   def update_job_estimated_completion_time
+
   end
  
 end
