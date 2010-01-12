@@ -61,13 +61,13 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
   displayColumns: [
   {
     header: "Name",
-    sortable: true,
+//    sortable: true,
     autoWidth: true,
     dataIndex: 'name'
   }, {
     header: "Length",
     autoWidth: true,
-    sortable: true,
+//    sortable: true,
     dataIndex: 'length'
   }
   ],

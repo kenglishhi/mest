@@ -8,11 +8,11 @@ class Jobs::Clustalw < Jobs::AbstractJob
       biodatabase = Biodatabase.find(params[:biodatabase_id])
       if biodatabase.biodatabase_type == BiodatabaseType.database_group
         biodatabase.children.each do | biodatabase |
-          FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
+          FastaFile.generate_fasta(biodatabase) #unless biodatabase.fasta_file
           biodatabase.fasta_file.generate_alignment
         end
       else
-        FastaFile.generate_fasta(biodatabase) unless biodatabase.fasta_file
+        FastaFile.generate_fasta(biodatabase) #unless biodatabase.fasta_file
         biodatabase.fasta_file.generate_alignment
       end
     end

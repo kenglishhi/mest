@@ -15,8 +15,8 @@ class Workbench::AlignmentsController < ApplicationController
     end
     sequence_names = Biodatabase.find(params[:biodatabase_id]).biosequences.map do |bioseq|
       name = bioseq.name.gsub(/:/,'_')
-      if name.match(/.*\|(.*)$/)
-        name.sub!($1,'')
+      if name.match(/(.*\|)(.*)?$/)
+        name = $1
       end
       name
     end

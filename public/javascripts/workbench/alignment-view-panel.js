@@ -98,7 +98,18 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
             var clustalwOutput = '<table class="clustalw-table">';
             for(var i=0; i < sequenceNames.length; i++) {
               var seqId = sequenceNames[i];
-              if (seqId != "MATCH_LINE") {
+              if (seqId != "MATCH_LINE" ) {
+                if (alnObj[seqId]) {
+                  clustalwOutput += '<tr><td class="seq-name-cell">' + seqId + '</td>';
+                  clustalwOutput += '<td>' + Ext.bio.clustalW.formatSequence(alnObj[seqId].seq) + '</td></tr>';
+                } else {
+                  console.log("could not find sequences " + seqId);
+                }
+                delete alnObj[seqId]
+              }
+            }
+            for (var seqId in alnObj) {
+              if (seqId != "MATCH_LINE" ) {
                 clustalwOutput += '<tr><td class="seq-name-cell">' + seqId + '</td>';
                 clustalwOutput += '<td>' + Ext.bio.clustalW.formatSequence(alnObj[seqId].seq) + '</td></tr>';
               }

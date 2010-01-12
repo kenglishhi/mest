@@ -40,7 +40,7 @@ module Jobs::Loggable
         :estimation_error_seconds =>estimation_error_seconds ,
         :user_id => user_id,
         :project_id => project_id)
-      true
+      return true
     end
   end
 
