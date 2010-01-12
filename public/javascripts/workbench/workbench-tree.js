@@ -214,7 +214,7 @@ Ext.bio.WorkbenchTree =  Ext.extend(Ext.tree.TreePanel, {
           });
           var groupClustalwButton = new Ext.menu.Item({
             iconCls:'clustalw',
-            text: "ClustalW",
+            text: "ClustalW Group",
             handler: function() {
               Ext.bio.showClustalwWindow(node);
             }

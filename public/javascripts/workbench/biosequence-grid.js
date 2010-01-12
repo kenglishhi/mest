@@ -111,7 +111,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
         iconCls:'clustalw',
         text: 'View Alignment',
         id:'seq-grid-alignment-toolbar-item',
-        hidden: true,
+        hidden: false,
         labelStyle: 'font-weight:bold;',
         alignmentViewPanelId: this.alignmentViewPanelId,
         handler: function() {
@@ -188,7 +188,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
         },
         callback: function(store, records, options){
           var tbFasta = Ext.getCmp('seq-grid-fasta-toolbar-item');
-          //          var tbAlign = Ext.getCmp('seq-grid-alignment-toolbar-item');
+          var tbAlign = Ext.getCmp('seq-grid-alignment-toolbar-item');
           if (tbFasta) {
             if (this.getAt(0).data.fasta_file_url){
               tbFasta.show();
@@ -199,6 +199,8 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
           // Update the alignment page..
           var alignmentViewPanel = Ext.getCmp(alignmentViewPanelId );
           if (this.getAt(0).data.alignment_file_url){
+
+            tbAlign.show();
             if (alignmentViewPanel) {
               alignmentViewPanel.updateContent({
                 biodatabase_id: params.biodatabase_id,
@@ -206,6 +208,7 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
               });
             }
           } else {
+            tbAlign.hide();
             alignmentViewPanel.clearContent();
           }
         }
