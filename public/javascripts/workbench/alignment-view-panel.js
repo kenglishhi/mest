@@ -102,8 +102,6 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
                 if (alnObj[seqId]) {
                   clustalwOutput += '<tr><td class="seq-name-cell">' + seqId + '</td>';
                   clustalwOutput += '<td>' + Ext.bio.clustalW.formatSequence(alnObj[seqId].seq) + '</td></tr>';
-                } else {
-                  console.log("could not find sequences " + seqId);
                 }
                 delete alnObj[seqId]
               }
