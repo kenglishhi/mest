@@ -15,6 +15,7 @@ Ext.bio.clustalW.formatSequence = function(seq) {
 Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
   title: 'ClustalW Alignment',
   initComponent: function() {
+    var cmpId = this.id;
     Ext.apply(this,{
       autoScroll: true,
       items: [{
@@ -25,6 +26,17 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
       {
         text:'Database',
         id: 'tbar-item-alignment-database-title'
+      },'->', {
+        iconCls:'clustalw',
+        text: 'Download Alignment',
+        id:'alignment-grid-alignment-toolbar-item',
+        alignmentViewPanelId: this.alignmentViewPanelId,
+        handler: function(tb) {
+          var strUrl = Ext.getCmp(cmpId).alignment_file_url;
+          if (strUrl) {
+            window.open(strUrl);
+          }
+        }
       }
       ]
     /*      ,
@@ -69,6 +81,7 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
     if (params && params.biodatabase_id) {
       this.biodatabase_id  = params.biodatabase_id ;
       this.biodatabase_name  = params.biodatabase_name ;
+      this.alignment_file_url  = params.alignment_file_url ;
       var url = '/workbench/alignments/' + this.biodatabase_id + '.json';
       if (this.rendered) {
 
@@ -80,9 +93,11 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
           method:'GET',
           success: function(response) {
 
-            var alnObj = Ext.util.JSON.decode(response.responseText);
+            var alnObj = Ext.util.JSON.decode(response.responseText).alignment;
+            var sequenceNames = Ext.util.JSON.decode(response.responseText).sequence_names;
             var clustalwOutput = '<table class="clustalw-table">';
-            for (var seqId in alnObj) {
+            for(var i=0; i < sequenceNames.length; i++) {
+              var seqId = sequenceNames[i];
               if (seqId != "MATCH_LINE") {
                 clustalwOutput += '<tr><td class="seq-name-cell">' + seqId + '</td>';
                 clustalwOutput += '<td>' + Ext.bio.clustalW.formatSequence(alnObj[seqId].seq) + '</td></tr>';
@@ -95,8 +110,6 @@ Ext.bio.AlignmentViewPanel =  Ext.extend(Ext.Panel, {
             Ext.getCmp('inner-alignment-panel').getEl().update(clustalwOutput);
           },
           failure: function(reponse){
-            var alnObj = Ext.util.JSON.decode(response.responseText);
-
           }
         });
 

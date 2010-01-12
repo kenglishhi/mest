@@ -13,8 +13,8 @@ class Workbench::BiosequencesController < ApplicationController
       end
       data = Biosequence.paginate :page => page,
         :include => :biodatabase_biosequences,
-        :conditions => conditions,
-        :order => 'name'
+        :conditions => conditions ,
+        :order => 'biodatabase_biosequences.id'
       results =  Biosequence.count :include => :biodatabase_biosequences,
         :conditions => conditions
     else

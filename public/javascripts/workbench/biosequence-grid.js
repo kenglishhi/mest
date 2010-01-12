@@ -109,21 +109,20 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
       },'-',
       {
         iconCls:'clustalw',
-        text: 'View Alignment',
+        text: 'Download Alignment',
         id:'seq-grid-alignment-toolbar-item',
         hidden: false,
         labelStyle: 'font-weight:bold;',
         alignmentViewPanelId: this.alignmentViewPanelId,
         handler: function() {
           var strUrl = Ext.getCmp(cmpId).biodatabasePropertyStore.getAt(0).data.alignment_file_url;
-          var alignmentViewPanel = Ext.getCmp(this.alignmentViewPanelId);
-          if (alignmentViewPanel) { 
-            alignmentViewPanel.updateContent({
-              url: strUrl
-            });
-          }
-        //          alignemExt.getCmp(this.alignmentViewPanelId).updateContent(strUrl);
-        //          window.open(strUrl);
+          //          var alignmentViewPanel = Ext.getCmp(this.alignmentViewPanelId);
+          //          if (alignmentViewPanel) {
+          //            alignmentViewPanel.updateContent({
+          //              url: strUrl
+          //            });
+          //          }
+          window.open(strUrl);
         }
       }
       , '->', {
@@ -204,7 +203,8 @@ Ext.bio.BiosequenceGrid =  Ext.extend(Ext.bio.RestfulGrid, {
             if (alignmentViewPanel) {
               alignmentViewPanel.updateContent({
                 biodatabase_id: params.biodatabase_id,
-                biodatabase_name: params.biodatabase_name
+                biodatabase_name: params.biodatabase_name,
+                alignment_file_url:this.getAt(0).data.alignment_file_url
               });
             }
           } else {

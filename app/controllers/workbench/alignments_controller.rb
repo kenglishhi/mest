@@ -13,7 +13,10 @@ class Workbench::AlignmentsController < ApplicationController
     elsif params[:id]
       fasta_file = FastaFile.find(params[:id])
     end
-    render :json => fasta_file.alignment_to_hash.to_json
+    sequence_names = Biodatabase.find(params[:biodatabase_id]).biosequences.map{|bioseq| bioseq.name.gsub(/:/,'_') }
+    render :json => {:alignment => fasta_file.alignment_to_hash,
+      :sequence_names => sequence_names
+    }.to_json
   end
 
 end
