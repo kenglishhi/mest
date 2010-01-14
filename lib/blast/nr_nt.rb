@@ -17,6 +17,7 @@ class Blast::NrNt < Blast::Base
     #### blastall -p blastn -i fun.fasta -d /opt/local/var/data/nt
     evalue = get_evalue
     @blast_result = new_blast_result("#{@test_biodatabase.name}-NT Blast Result",@test_biodatabase)
+    @blast_result.save
     output_file_handle = Blast::Command.execute_blastall(@blast_result,
       @params.merge({
           :test_file_path => @fasta_file.fasta.path,
@@ -47,34 +48,36 @@ class Blast::NrNt < Blast::Base
     child_biodatabase = nil
 
     bio_result_ff.each do |report|
-      report.each do |hit|
+      if report.num_hits && report.num_hits > 0
+        report.each do |hit|
 
-        bioseq = Biosequence.find_by_name( hit.target_def)
-        unless bioseq
-          begin
-            bioseq = Biosequence.new(:name => hit.target_def,
-              :seq => hit.target_seq.upcase,
-              :alphabet => 'dna',
-              :nr_sequence_flag => true,
-              :length => hit.target_len,
-              :original_name => hit.target_def)
-            bioseq.save!
-          rescue ActiveRecord::RecordInvalid =>  e
-            suffix = "_#{test_biodatabase.id}_#{test_biodatabase.biosequences.size}"
-            if ((bioseq.name.size + suffix.size) > 255)
-              bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
-            else
-              bioseq.name += suffix
+          bioseq = Biosequence.find_by_name( hit.target_def)
+          unless bioseq
+            begin
+              bioseq = Biosequence.new(:name => hit.target_def,
+                :seq => hit.target_seq.upcase,
+                :alphabet => 'dna',
+                :nr_sequence_flag => true,
+                :length => hit.target_len,
+                :original_name => hit.target_def)
+              bioseq.save!
+            rescue ActiveRecord::RecordInvalid =>  e
+              suffix = "_#{test_biodatabase.id}_#{test_biodatabase.biosequences.size}"
+              if ((bioseq.name.size + suffix.size) > 255)
+                bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
+              else
+                bioseq.name += suffix
+              end
+              bioseq.save!
             end
-            bioseq.save!
           end
+          child_biodatabase ||= create_child_biodatabase(test_biodatabase,params)
+          child_biodatabase.biosequences << bioseq unless child_biodatabase.biosequences.include?(bioseq)
+          match_count += 1
+          break if (match_count >= number_of_sequences_to_save )
         end
-        child_biodatabase ||= create_child_biodatabase(test_biodatabase,params)
-        child_biodatabase.biosequences << bioseq unless child_biodatabase.biosequences.include?(bioseq)
-        match_count += 1
-        break if (match_count >= number_of_sequences_to_save )
+        break if (match_count >=number_of_sequences_to_save )
       end
-      break if (match_count >=number_of_sequences_to_save )
     end
   end
   def create_child_biodatabase(test_biodatabase,params)
