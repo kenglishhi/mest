@@ -16,7 +16,7 @@ class Blast::NrNt < Blast::Base
     init_files_and_databases
     #### blastall -p blastn -i fun.fasta -d /opt/local/var/data/nt
     evalue = get_evalue
-    @blast_result = new_blast_result("#{@test_biodatabase.name}-NT Blast Result",@test_biodatabase)
+    @blast_result = new_blast_result("#{@test_biodatabase.name}-#{params[:ncbi_database].upcase} Blast Result",@test_biodatabase)
     @blast_result.save
     output_file_handle = Blast::Command.execute_blastall(@blast_result,
       @params.merge({
