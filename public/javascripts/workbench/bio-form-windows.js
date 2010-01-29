@@ -45,7 +45,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
         allowBlank:true,
         id: 'biodatabase-name-rename-field'
       },
-       {
+      {
         fieldLabel: 'New Prefix',
         name: 'prefix',
         allowBlank:false
@@ -95,6 +95,27 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
   plain: true,
   id: 'bio-blast-cleaners-window',
   initComponent: function() {
+    var cleanProgramStore = new Ext.data.ArrayStore({
+      fields: ['program'],
+      data : [ ['blastn'],['blastp'] ]
+    });
+
+
+    var programCombo = new Ext.form.ComboBox({
+      store: cleanProgramStore,
+      forceSelection: true,
+      displayField:'program',
+      fieldLabel: 'Program',
+      name:'program',
+      id:  'blast-clean-db-program-combo',
+      value:'blastn', //programStore.getAt(0).get('blastn'),
+      mode: 'local',
+      triggerAction: 'all',
+      allowBlank: false,
+      selectOnFocus:true
+    });
+
+
     var parentComponentId = this.id;
     var form = new Ext.FormPanel({
       id: 'my-blast-cleaners-form-panel',
@@ -127,7 +148,10 @@ Ext.bio.BlastCleanerWindow = Ext.extend(Ext.Window,{
         name: 'new_biodatabase_name',
         allowBlank:true,
         msgTarget:'side'
-      } , {
+      } ,
+      programCombo,
+
+      {
         fieldLabel: 'E-Value',
         name: 'evalue',
         value:'25',
@@ -615,12 +639,32 @@ Ext.bio.ExtractSequencesWindow = Ext.extend(Ext.Window,{
   title: 'Extract Sequences',
   layout:'fit',
   width:500,
-  height:120,
+  height:190,
   closeAction:'hide',
   plain: true,
   id: 'bio-extract-sequences-window',
   fastaFileId:null,
   initComponent: function() {
+    var alphabetStore = new Ext.data.ArrayStore({
+      fields: ['alphabet'],
+      data : [ ['dna'],['protein'] ]
+    });
+
+
+    var alphabetCombo = new Ext.form.ComboBox({
+      store: alphabetStore ,
+      forceSelection: true,
+      displayField:'alphabet',
+      fieldLabel: 'Alphabet',
+      name:'alphabet',
+      id:  'extract-sequences-alphabet-combo',
+      value:'dna',
+      mode: 'local',
+      triggerAction: 'all',
+      allowBlank: false,
+      selectOnFocus:true
+    });
+
 
     var form = new Ext.FormPanel({
       parentComponentId: this.id,
@@ -637,14 +681,15 @@ Ext.bio.ExtractSequencesWindow = Ext.extend(Ext.Window,{
         width: 230
       },
       defaultType: 'textfield',
-      items: [
+      items: [ 
       {
         id: 'extract-sequences-biodatabase-name-field',
         fieldLabel: 'New Database Name',
         name: 'new_biodatabase_name',
         allowBlank:true,
         msgTarget:'side'
-      }
+      },
+      alphabetCombo
       ],
       buttons: [{
         text: 'Submit',
