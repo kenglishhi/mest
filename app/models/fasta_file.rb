@@ -132,7 +132,7 @@ class FastaFile < ActiveRecord::Base
           begin
             bioseq = Biosequence.new(:name => entry.definition,
               :seq => entry.seq,
-              :alphabet => 'dna',
+              :alphabet => params[:alphabet] || 'dna',
               :length => entry.seq.length,
               :original_name => entry.definition)
             bioseq.save!

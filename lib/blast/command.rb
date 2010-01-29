@@ -48,7 +48,7 @@ class Blast::Command
     program  = PROGRAMS.include?(params[:program]) ? params[:program] : 'blastn'
     cli['-p'] = program
     cli['-e'] = params[:evalue]
-    cli['-b'] =  params[:number_of_hits_per_query].blank? ? 20 :  params[:number_of_hits_per_query]
+    cli['-b'] =  params[:number_of_hits_per_query].blank? ? 50 :  params[:number_of_hits_per_query]
     puts "nr_nt_flag = #{params[:nr_nt_flag] }"
     puts "ncbi_database = #{params[:ncbi_database] }"
     cli['-d'] = params[:nr_nt_flag] ? "#{self.ncbi_database_directory}/#{params[:ncbi_database]}" : params[:target_file_path]
@@ -66,9 +66,6 @@ class Blast::Command
     system(*command)
     output_file_handle.close
     output_file_handle
-
-  end
-  def self.execute_blastcl3(blast_result, params)
 
   end
 end

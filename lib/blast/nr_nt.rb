@@ -22,7 +22,7 @@ class Blast::NrNt < Blast::Base
       @params.merge({
           :test_file_path => @fasta_file.fasta.path,
           :evalue => evalue,
-          :number_of_hits_per_query => number_of_sequences_to_save,
+          :number_of_hits_per_query => '', #number_of_sequences_to_save,
           :nr_nt_flag => true,
           :output_file_prefix => "#{@test_biodatabase.name}-#{@params[:ncbi_database]}"
         })
