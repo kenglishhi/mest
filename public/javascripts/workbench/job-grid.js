@@ -55,8 +55,19 @@ Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
     this.store.load();
   },
   initComponent: function() {
+
     var cmpId = this.id;
     var queuedJobGridCmpId = this.queuedJobGridCmpId;
+
+    function onDelete() {
+      var grid =Ext.getCmp(cmpId);
+      grid.deleteSelectedRow(false,'name', function(params) {
+        grid.refreshContent( );
+      }
+      );
+    }
+
+
     Ext.apply(this,{
       tbar:[
       'Showing Running Jobs: ', ' ',
@@ -68,7 +79,12 @@ Ext.bio.RunningJobGrid =  Ext.extend(Ext.bio.RestfulGrid, {
             Ext.getCmp(queuedJobGridCmpId ).refreshContent( );
           }
         }
-      }]
+      }, '->', {
+        text: 'Delete',
+        iconCls:'x-tree-delete',
+        handler: onDelete
+      }
+      ]
     });
 
     Ext.bio.RunningJobGrid.superclass.initComponent.call(this);
