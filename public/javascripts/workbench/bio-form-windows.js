@@ -81,7 +81,7 @@ Ext.bio.BiodatabaseRenamerWindow = Ext.extend(Ext.Window,{
   },
   setParams: function(params) {
     Ext.getCmp('biodatabase-id-rename-field').setValue(params.id);
-    Ext.getCmp('biodatabase-name-rename-field').setValue(params.id);
+    Ext.getCmp('biodatabase-name-rename-field').setValue(params.text);
     Ext.getCmp('biodatabase-name-rename-field').disable();
   }
 });
