@@ -218,10 +218,10 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       selectOnFocus:true
     });
 
-    Ext.bio.StateMultiSelect = function(config) {
-      Ext.bio.StateMultiSelect.superclass.constructor.call(this, config);
+    Ext.bio.DbMultiSelect = function(config) {
+      Ext.bio.DbMultiSelect.superclass.constructor.call(this, config);
     };
-    Ext.extend(Ext.bio.StateMultiSelect, Ext.form.MultiSelectField, {
+    Ext.extend(Ext.bio.DbMultiSelect, Ext.form.MultiSelectField, {
       store: this.dbStore,
       valueField:'id' ,
       displayField:'name',
@@ -231,7 +231,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       name:'biodatabase'
     });
 
-    var targetCombo = new Ext.bio.StateMultiSelect({
+    var targetCombo = new Ext.bio.DbMultiSelect({
       containerHeight: 200,
       containerWidth: 200
     });
@@ -251,7 +251,7 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
       },
       defaultType: 'textfield',
       items: [
-      programCombo, 
+      programCombo,
       new Ext.form.Hidden({
         name: 'test_biodatabase_id',
         value: 1,
@@ -325,10 +325,15 @@ Ext.bio.BlastCreateDbsWindow = Ext.extend(Ext.Window,{
   },
 
   setParams: function(params) {
+    //    this.dbStore.reload();
+    Ext.getCmp('target-biodatabase-id-blast-field').store.load({
+      callback: function(store, records, options){
+        Ext.getCmp('target-biodatabase-id-blast-field').buildMenu();
+      }
+    });
     Ext.getCmp('test-biodatabase-id-blast-field').setValue(params.id);
     Ext.getCmp('test-biodatabase-name-blast-field').setValue(params.text);
     Ext.getCmp('test-biodatabase-name-blast-field').disable();
-    this.dbStore.reload();
   //    Ext.getCmp('target-biodatabase-id-blast-field').setValue(biodatabaseId);
   }
 });
@@ -681,7 +686,7 @@ Ext.bio.ExtractSequencesWindow = Ext.extend(Ext.Window,{
         width: 230
       },
       defaultType: 'textfield',
-      items: [ 
+      items: [
       {
         id: 'extract-sequences-biodatabase-name-field',
         fieldLabel: 'New Database Name',
@@ -771,7 +776,7 @@ Ext.bio.showClustalwWindow  = function(params) {
   var cmpId = 'bio-clustalw-window';
   var obj = Ext.bio.ClustalwWindow;
   var store;// = Ext.workbenchdata.generatedDbsComboStore ;
-  if (params.attributes.db_type == "Database Group") { 
+  if (params.attributes.db_type == "Database Group") {
     store = Ext.workbenchdata.groupDbsComboStore ;
   } else  {
     store = Ext.workbenchdata.generatedDbsComboStore ;
