@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :projects, :active_scaffold => true
     admin.resources :biodatabase_types, :active_scaffold => true
     admin.resources :biodatabase_link_types, :active_scaffold => true
+    admin.resources :biodatabases, :active_scaffold => true
   end
 
   map.namespace(:tools) do |tools|

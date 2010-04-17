@@ -6,8 +6,6 @@ class UserJobNotificationsControllerTest < ActionController::TestCase
     setup do
       activate_authlogic
       @user = UserSession.create(users(:users_001))
-    end
-    should "succeed on get index with JSON" do
       get :index, :format=> 'json'
     end
     should_respond_with_extjs_json
