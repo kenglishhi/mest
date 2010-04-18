@@ -1,13 +1,14 @@
 == Welcome to the MEST: Multiple EST Tool
 
-This is a Rails program customized for University of Hawaii, HIMB research facility doing genetic research on coral reef and dinoflagulates.
+MEST contains a work-flow that has been designed specifically for this phylogenetic 
+research by supporting  the discovery of genes and the design of primers. 
+The goals of the MEST project is to provide a small application that can be 
+extended or used as a starting point for other bioinformatics software developers. 
+MEST is not built from the ground up. It incorporates existing technology including Ruby on Rails,
+ BioRuby and a Ruby on Rails plugin for background job execution (delayed_job).
 == REQUIRED GEMS
 
-  authlogic
-  daemons
   rcov
-  extjs-mvc
-  thoughtbot-shoulda
 
 
 == INSTALLATION

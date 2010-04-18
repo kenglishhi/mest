@@ -54,6 +54,7 @@
 
     Ext.workbenchdata.biosequenceStore = <%=
 extjs_store( :controller => "workbench/biosequences",
+  :model => "biosequence",
   :writer => {"encode" => false},
   :config => {
     "totalProperty" => 'results',
@@ -65,6 +66,7 @@ extjs_store( :controller => "workbench/biosequences",
 %>
     Ext.workbenchdata.biodatabaseStore = <%=
 extjs_store( :controller => "workbench/biodatabases",
+  :model => "biodatabase",
   :writer => {"encode" => false},
   :config => {
     "totalProperty" => 'results',
@@ -78,6 +80,7 @@ extjs_store( :controller => "workbench/biodatabases",
 
     Ext.workbenchdata.fastaFileStore = <%=
 extjs_store( :controller => "workbench/fasta_files",
+  :model => "fasta_file",
   :writer => {"encode" => false},
   :config => {
     "totalProperty" => 'results',
@@ -90,6 +93,7 @@ extjs_store( :controller => "workbench/fasta_files",
 %>
     Ext.workbenchdata.jobLogStore = <%=
 extjs_store( :controller => "workbench/job_logs",
+  :model => "job_log",
   :writer => {"encode" => false},
   :config => {
     "totalProperty" => 'results',
@@ -143,6 +147,7 @@ extjs_store( :controller => "workbench/group_biodatabases",
 
     var biodatabasePropertyStore = <%=
 extjs_store( :controller => "workbench/biodatabases",
+  :model => "biodatabase",
   :writer => {"encode" => false},
   :config => {
     "storeId" => 'biodatabase-property-store',
@@ -182,6 +187,7 @@ extjs_store( :controller => "workbench/jobs",
 %>
     Ext.workbenchdata.blastResultStore = <%=
 extjs_store( :controller => "workbench/blast_results",
+  :model => "blast_result",
   :writer => {"encode" => false},
   :config => {
     "totalProperty" => 'results',

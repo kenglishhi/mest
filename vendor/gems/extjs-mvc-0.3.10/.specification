@@ -1,0 +1,135 @@
+--- !ruby/object:Gem::Specification 
+name: extjs-mvc
+version: !ruby/object:Gem::Version 
+  prerelease: false
+  segments: 
+  - 0
+  - 3
+  - 10
+  version: 0.3.10
+platform: ruby
+authors: 
+- Chris Scott
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-03-02 00:00:00 -10:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: shoulda
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: mocha
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id002
+- !ruby/object:Gem::Dependency 
+  name: extlib
+  prerelease: false
+  requirement: &id003 !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id003
+description: MVC tools to assist with ExtJS development in Rails and Merb
+email: christocracy@gmail.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- LICENSE
+- README
+- README.rdoc
+files: 
+- LICENSE
+- README
+- README.rdoc
+- Rakefile
+- VERSION
+- lib/controller/controller.rb
+- lib/core_ext/array/extract_options.rb
+- lib/extjs-mvc.rb
+- lib/extjs/component.rb
+- lib/extjs/data/store.rb
+- lib/helpers/component.rb
+- lib/helpers/store.rb
+- lib/model/active_record.rb
+- lib/model/base.rb
+- lib/model/data_mapper.rb
+- lib/model/mongo_mapper.rb
+- lib/test/macros.rb
+- test/active_record_test.rb
+- test/app/config/application.rb
+- test/app/config/database.yml
+- test/app/db/schema.rb
+- test/app/models/active_record/address.rb
+- test/app/models/active_record/data_type.rb
+- test/app/models/active_record/group.rb
+- test/app/models/active_record/house.rb
+- test/app/models/active_record/location.rb
+- test/app/models/active_record/person.rb
+- test/app/models/active_record/user.rb
+- test/app/models/active_record/user_group.rb
+- test/component_test.rb
+- test/controller_test.rb
+- test/data_mapper_test.rb
+- test/debug.log
+- test/model_test.rb
+- test/mongo_mapper_test.rb
+- test/store_test.rb
+- test/test_helper.rb
+has_rdoc: true
+homepage: http://github.com/extjs/mvc
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --charset=UTF-8
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.6
+signing_key: 
+specification_version: 3
+summary: Ruby ORM tools to assist with rendering Ext.data.Store
+test_files: []
+

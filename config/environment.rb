@@ -33,18 +33,16 @@ Rails::Initializer.run do |config|
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.
-  config.gem "authlogic"
-  config.gem 'daemons'
-  config.gem 'rcov'
+  config.gem "authlogic", :version => '2.1.1'
   config.gem 'bio', :version => '1.4.0'
-  config.gem 'extjs-mvc'
-  config.gem "thoughtbot-shoulda", :lib => "shoulda", :source => "http://gems.github.com"
-  config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
+  config.gem 'extjs-mvc',:version => '0.3.10'
+  config.gem "shoulda", :version => '2.10.3'
+  config.gem "factory_girl" ,:version => '1.2.4'
+
   config.time_zone = 'Hawaii'
 
-  config.gem 'relevance-log_buddy',
-           :source => "http://gems.github.com/", 
-           :lib => "log_buddy"
+  config.gem 'log_buddy', :version => '0.4.12'
+
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
