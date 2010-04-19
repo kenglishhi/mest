@@ -161,13 +161,8 @@ Lockdown::System.configure do
     and_controller( :workbench__generated_biodatabases ).
     and_controller( :workbench__biodatabases )
   set_permission(:tools_access).
-    with_controller(:biodatabase_links).
-    and_controller(:blast_results).
     and_controller(:user_job_notifications).
-    and_controller(:biodatabases).
-    and_controller(:fasta_files).
-    and_controller(:biodatabase_groups).
-    and_controller(:biosequences).
+    and_controller(:fasta_files).only_methods(:create).
     and_controller(:homes).
     and_controller(:tools__blast_cleaners).
     and_controller(:tools__extract_sequences ).
