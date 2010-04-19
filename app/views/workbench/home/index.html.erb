@@ -65,7 +65,7 @@ extjs_store( :controller => "workbench/biosequences",
 ).render(false)
 %>
     Ext.workbenchdata.biodatabaseStore = <%=
-extjs_store( :controller => "workbench/biodatabases",
+extjs_store( :controller => "/workbench/biodatabases",
   :model => "biodatabase",
   :writer => {"encode" => false},
   :config => {
@@ -79,7 +79,7 @@ extjs_store( :controller => "workbench/biodatabases",
 %>
 
     Ext.workbenchdata.fastaFileStore = <%=
-extjs_store( :controller => "workbench/fasta_files",
+extjs_store( :controller => "/workbench/fasta_files",
   :model => "fasta_file",
   :writer => {"encode" => false},
   :config => {
@@ -92,7 +92,7 @@ extjs_store( :controller => "workbench/fasta_files",
 ).render(false)
 %>
     Ext.workbenchdata.jobLogStore = <%=
-extjs_store( :controller => "workbench/job_logs",
+extjs_store( :controller => "/workbench/job_logs",
   :model => "job_log",
   :writer => {"encode" => false},
   :config => {
@@ -106,7 +106,7 @@ extjs_store( :controller => "workbench/job_logs",
 %>
 
     Ext.workbenchdata.rawDbsComboStore = <%=
-extjs_store( :controller => "workbench/raw_biodatabases",
+extjs_store( :controller => "/workbench/raw_biodatabases",
   :model => "biodatabase",
   :writer => {"encode" => false},
   :config => {
@@ -120,7 +120,7 @@ extjs_store( :controller => "workbench/raw_biodatabases",
 %>
 
     Ext.workbenchdata.generatedDbsComboStore = <%=
-extjs_store( :controller => "workbench/generated_biodatabases",
+extjs_store( :controller => "/workbench/generated_biodatabases",
   :model => "biodatabase",
   :writer => {"encode" => false},
   :config => {
@@ -132,7 +132,7 @@ extjs_store( :controller => "workbench/generated_biodatabases",
 ).render(false)
 %>
     Ext.workbenchdata.groupDbsComboStore = <%=
-extjs_store( :controller => "workbench/group_biodatabases",
+extjs_store( :controller => "/workbench/group_biodatabases",
   :model => "biodatabase",
   :writer => {"encode" => false},
   :config => {
@@ -146,7 +146,7 @@ extjs_store( :controller => "workbench/group_biodatabases",
 
 
     var biodatabasePropertyStore = <%=
-extjs_store( :controller => "workbench/biodatabases",
+extjs_store( :controller => "/workbench/biodatabases",
   :model => "biodatabase",
   :writer => {"encode" => false},
   :config => {
@@ -158,7 +158,7 @@ extjs_store( :controller => "workbench/biodatabases",
 ).render(false)
 %>
     Ext.workbenchdata.runningJobStore = <%=
-extjs_store( :controller => "workbench/jobs",
+extjs_store( :controller => "/workbench/jobs",
   :model => 'Job',
   :writer => {"encode" => false},
   :config => {
@@ -173,7 +173,7 @@ extjs_store( :controller => "workbench/jobs",
 ).render(false)
 %>
     var queuedJobStore = <%=
-extjs_store( :controller => "workbench/jobs",
+extjs_store( :controller => "/workbench/jobs",
   :model => 'Job',
   :writer => {"encode" => false},
   :config => {
@@ -186,7 +186,7 @@ extjs_store( :controller => "workbench/jobs",
 ).render(false)
 %>
     Ext.workbenchdata.blastResultStore = <%=
-extjs_store( :controller => "workbench/blast_results",
+extjs_store( :controller => "/workbench/blast_results",
   :model => "blast_result",
   :writer => {"encode" => false},
   :config => {
@@ -230,7 +230,7 @@ extjs_store( :controller => "workbench/blast_results",
 
     // BEGIN RAILS data DUMP
     Ext.workbenchdata.projectOptions = <%= @project_options.to_json %>;
-    Ext.workbenchdata.changeProjectUrl = '<%= url_for :controller => 'workbench/home', :action => 'change_project' %>';
+    Ext.workbenchdata.changeProjectUrl = '<%= url_for :controller => '/workbench/home', :action => 'change_project' %>';
     // END RAILS data dump  -- no erb code should go beyond this line
     // var dbGroupTree = {"expandable":true,"leaf":false,"text":"Default Database Group 1","children":[{"leaf":true,"text":"EST_Clade_A_3"},{"leaf":true,"text":"EST_Clade_A_6"},{"leaf":true,"text":"EST_Clade_C_6"},{"leaf":true,"text":"EST_Clade_A_1"},{"leaf":true,"text":"EST_Clade_A_5"},{"leaf":true,"text":"EST_Clade_A_3-Cleaned"},{"leaf":true,"text":"EST_Clade_A_6-Cleaned"},{"leaf":true,"text":"EST_Clade_C_6-Cleaned"},{"leaf":true,"text":"EST_Clade_A_1-Cleaned"},{"leaf":true,"text":"EST_Clade_A_5-Cleaned"},{"expandable":true,"leaf":false,"text":"Cleaned Data","children":[],"id":2,"expanded":true}],"id":1,"expanded":true} ;,
 
@@ -273,6 +273,7 @@ extjs_store( :controller => "workbench/blast_results",
       Ext.getCmp('workbench-biosequence-grid').clearContent();
     };
 
+    Ext.workbenchMenu.currentUserIsAdmin = <%= current_user_is_admin?   %>;
     Ext.workbenchMenu.currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
     Ext.workbenchMenu.currentProjectId = <%= current_user.active_project.id %>;
     Ext.workbenchMenu.projectOptions = <%= @project_options.to_json %>;

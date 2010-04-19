@@ -42,11 +42,16 @@ Rails::Initializer.run do |config|
   config.time_zone = 'Hawaii'
 
   config.gem 'log_buddy', :version => '0.4.12'
+  config.gem 'lockdown', :lib => false, :version => '1.6.5'
 
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+  config.load_paths += %W( #{RAILS_ROOT}/app/mailers )
+
+  config.action_controller.session_store = :active_record_store
+
 
 end
 # Use sendmail send messages

@@ -5,7 +5,7 @@ namespace :data do
     User.destroy_all 
     puts "Loading seed data.... "
 
-    user = User.create do |u|
+    admin_user = User.create do |u|
       u.email = 'admin@example.com' 
       u.first_name = 'Example' 
       u.last_name = 'Admin' 
@@ -13,6 +13,16 @@ namespace :data do
       u.password =  'admin123'
       u.password_confirmation =  'admin123'
     end
+    Lockdown::System.make_user_administrator(admin_user)
+    reg_user = User.create do |u|
+      u.email = 'mest.hawaii@gmail.com'
+      u.first_name = 'Demo'
+      u.last_name = 'Hawaii'
+      u.title = ''
+      u.password =  'demo'
+      u.password_confirmation =  'demo'
+    end
+
   end
 end
 

@@ -41,7 +41,7 @@ module ExtJS::Data
 
     ##
     # renders the configured store
-    # @param {Boolean} script_tag [true] Not yet implemented.  Always renders <script></script> tags.
+    # @param {Boolean} script_tag [true]
     def render(script_tag = true)
       script = ''
       # ugly hack for DirectProxy API.  Have to add an Ext.onReady() after the Store constructor to set API
@@ -112,9 +112,9 @@ private
       else
         if @config["api"]
           proxy["api"] = {}
-          @config["api"].each {|k,v| proxy["api"][k] = "/#{@controller.controller_name}/#{v}" }
+          @config["api"].each {|k,v| proxy["api"][k] = "/#{@controller.controller_path}/#{v}" }
         else
-          proxy["url"] = "/#{@controller.controller_name}.#{@format.to_s}"
+          proxy["url"] = "/#{@controller.controller_path}.#{@format.to_s}"
         end
       end
       proxy

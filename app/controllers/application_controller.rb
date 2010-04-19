@@ -5,25 +5,50 @@ class ApplicationController < ActionController::Base
   include ExceptionNotifiable
 
   helper :all # include all helpers, all the time
-  helper_method :current_user_session, :current_user
-  filter_parameter_logging :password, :password_confirmation
-  protect_from_forgery # :secret => '8447460760525a05bf14b9942b939c70'
+  helper_method :current_user_session,
+    :current_user,
+    :logged_in?,
+    :current_user_is_admin?
 
-  before_filter :require_user
+  filter_parameter_logging :password, :password_confirmation
+  protect_from_forgery :only => [:create, :update, :destroy]
+
+  #  before_filter :require_user
   before_filter :check_for_session_data
 
 
+  protected
+
+  def clear_authlogic_session
+    sess = current_user_session
+    sess.destroy if sess
+  end
   private
 
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
 
   def current_user
-    return @current_user if defined?(@current_user)
+    if defined?(@current_user) && !@current_user.nil?
+      return @current_user
+    end
     @current_user = current_user_session && current_user_session.user
   end
+
+  def current_user_session
+    if defined?(@current_user_session) && !@current_user_session.nil?
+      return @current_user_session
+    end
+    @current_user_session = UserSession.find
+  end
+  # OLD STUFF
+  #  def current_user_session
+  #    return @current_user_session if defined?(@current_user_session)
+  #    @current_user_session = UserSession.find
+  #  end
+  #
+  #  def current_user
+  #    return @current_user if defined?(@current_user)
+  #    @current_user = current_user_session && current_user_session.user
+  #  end
 
   def require_user
     unless current_user
@@ -48,10 +73,10 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
-  def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default)
-    session[:return_to] = nil
-  end
+#  def redirect_back_or_default(default)
+##    redirect_to(session[:return_to] || default)
+###    session[:return_to] = nil
+#  end
 
   def database_sub_nav
     if request.format.html?

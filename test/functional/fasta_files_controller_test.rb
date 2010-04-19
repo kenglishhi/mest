@@ -3,8 +3,13 @@ require File.dirname(__FILE__) + '/as_controller_test_helper.rb'
 
 class FastaFilesControllerTest < ActionController::TestCase
   include AsControllerTestHelper
+  fixtures :users
+#  fixtures :user_groups_users
+  fixtures :user_groups
   def setup
     activate_authlogic
+
+    Lockdown::System.make_user_administrator(users(:users_001))
     @user = UserSession.create(users(:users_001))
   end
 

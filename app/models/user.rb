@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :job_logs
   has_many :jobs
   has_many :projects
+  has_and_belongs_to_many :user_groups
   belongs_to :default_project,:class_name => "Project"
 
   after_create :create_default_project
@@ -25,6 +26,10 @@ class User < ActiveRecord::Base
     self.save
   end
 
+  def deliver_password_reset_instructions!
+    reset_perishable_token!
+    Notifier.deliver_password_reset_instructions(self)
+  end
 
   # for active scaffold
   def label

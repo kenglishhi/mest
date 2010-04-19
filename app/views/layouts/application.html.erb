@@ -24,7 +24,7 @@
         Ext.namespace('Ext.workbenchMenu');
         Ext.onReady(function(){
   <%= render :partial => "layouts/user_job_notification" %>
-
+    Ext.workbenchMenu.currentUserIsAdmin = <%= current_user_is_admin?   %>;
     Ext.workbenchMenu.currentUserDisplayName = '<%= current_user.full_name %> (<%= current_user.email %>) ' ;
     Ext.workbenchMenu.currentProjectId = <%= current_user.active_project.id %>;
     Ext.workbenchMenu.projectOptions = <%= @project_options.to_json %>;
@@ -33,7 +33,7 @@
 
     Ext.workbenchMenu.mest_html = 'MEST';
     Ext.workbenchMenu.home_html = '<%= link_to "Home", '/' %>  ';
-    Ext.workbenchMenu.workbench_html = '<%= link_to 'Workbench',  "/workbench"  %>' ;
+    Ext.workbenchMenu.workbench_html = '<%= link_to 'Workbench',  "/workbench/home"  %>' ;
 //    Ext.workbenchMenu.databases_html = '<%= link_to 'Databases', fasta_files_path  %>' ;
 //    Ext.workbenchMenu.jobs_html = '<%= link_to 'Jobs', jobs_running_jobs_path %>';
     Ext.workbenchMenu.admin_html = '<%= link_to 'Admin', admin_users_path  %>';
