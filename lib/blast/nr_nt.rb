@@ -50,31 +50,31 @@ class Blast::NrNt < Blast::Base
     bio_result_ff.each do |report|
       if report.num_hits && report.num_hits > 0
         report.each do |hit|
-          if hit && hit.target_def
-          bioseq = Biosequence.find_by_name( hit.target_def)
-          unless bioseq
-            begin
-              bioseq = Biosequence.new(:name => hit.target_def,
-                :seq => hit.target_seq.upcase,
-                :alphabet => 'dna',
-                :nr_sequence_flag => true,
-                :length => hit.target_len,
-                :original_name => hit.target_def)
-              bioseq.save!
-            rescue ActiveRecord::RecordInvalid =>  e
-              suffix = "_#{test_biodatabase.id}_#{test_biodatabase.biosequences.size}"
-              if ((bioseq.name.size + suffix.size) > 255)
-                bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
-              else
-                bioseq.name += suffix
+          if hit && hit.target_seq
+            bioseq = Biosequence.find_by_name( hit.target_def)
+            unless bioseq
+              begin
+                bioseq = Biosequence.new(:name => hit.target_def,
+                  :seq => hit.target_seq.upcase,
+                  :alphabet => 'dna',
+                  :nr_sequence_flag => true,
+                  :length => hit.target_len,
+                  :original_name => hit.target_def)
+                bioseq.save!
+              rescue ActiveRecord::RecordInvalid =>  e
+                suffix = "_#{test_biodatabase.id}_#{test_biodatabase.biosequences.size}"
+                if ((bioseq.name.size + suffix.size) > 255)
+                  bioseq.name = bioseq.name[0..(255 - suffix.size - 1)] + suffix
+                else
+                  bioseq.name += suffix
+                end
+                bioseq.save!
               end
-              bioseq.save!
             end
-          end
-          child_biodatabase ||= create_child_biodatabase(test_biodatabase,params)
-          child_biodatabase.biosequences << bioseq unless child_biodatabase.biosequences.include?(bioseq)
-          match_count += 1
-          break if (match_count >= number_of_sequences_to_save )
+            child_biodatabase ||= create_child_biodatabase(test_biodatabase,params)
+            child_biodatabase.biosequences << bioseq unless child_biodatabase.biosequences.include?(bioseq)
+            match_count += 1
+            break if (match_count >= number_of_sequences_to_save )
           end
         end
         break if (match_count >=number_of_sequences_to_save )
