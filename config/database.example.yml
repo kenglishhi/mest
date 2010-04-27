@@ -18,10 +18,10 @@ development:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: biococonutisland_development
+  database: mest_development
   pool: 5
-  username: biosql
-  password: 
+  username: mest
+  password: mest808
   socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -31,18 +31,18 @@ test:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: biococonutisland_test
+  database: mest_test
   pool: 5
-  username: biosql
-  password: 
+  username: mest
+  password: mest808
   socket: /var/run/mysqld/mysqld.sock
 
 production:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: biococonutisland_production
+  database: mest_production
   pool: 5
-  username: biosql
-  password: 
+  username: mest
+  password: mest808
   socket: /var/run/mysqld/mysqld.sock

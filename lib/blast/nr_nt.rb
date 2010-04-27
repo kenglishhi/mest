@@ -50,7 +50,7 @@ class Blast::NrNt < Blast::Base
     bio_result_ff.each do |report|
       if report.num_hits && report.num_hits > 0
         report.each do |hit|
-
+          if hit && hit.target_def
           bioseq = Biosequence.find_by_name( hit.target_def)
           unless bioseq
             begin
@@ -75,6 +75,7 @@ class Blast::NrNt < Blast::Base
           child_biodatabase.biosequences << bioseq unless child_biodatabase.biosequences.include?(bioseq)
           match_count += 1
           break if (match_count >= number_of_sequences_to_save )
+          end
         end
         break if (match_count >=number_of_sequences_to_save )
       end

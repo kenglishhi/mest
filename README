@@ -6,20 +6,29 @@ The goals of the MEST project is to provide a small application that can be
 extended or used as a starting point for other bioinformatics software developers. 
 MEST is not built from the ground up. It incorporates existing technology including Ruby on Rails,
  BioRuby and a Ruby on Rails plugin for background job execution (delayed_job).
-== REQUIRED GEMS
-
-  rcov
 
 
 == INSTALLATION
 
-This is a Ruby on Rails application. You must first install Ruby on Rails. Go to http://rubyonrails.org/download for more information.
+MEST is a Ruby on Rails application. You should must first install Ruby, Ruby on Rails and MySQL. 
+Go to http://rubyonrails.org/download for more information.
+
+Installing M.E.S.T is simple.
+
+0) Create the databases:
+
+CREATE DATABASE mest_development ;
+CREATE DATABASE mest_test ;
+CREATE DATABASE mest_production ;
+
 
 1) Clone the repository:
 
 git clone git://github.com/kenglishhi/mest.git
 
-2) Configure your  database.
+
+
+2) Configure your database.
 
 cp config/database.example.yml config/database.yml
 (Edit database.yml, change username, password & database name to match your setup.)
