@@ -38,3 +38,4 @@ cp config/database.example.yml config/database.yml
 rake db:rebirth
 
 4) Lauch the server
+and,..
